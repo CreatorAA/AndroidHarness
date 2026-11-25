@@ -14,7 +14,7 @@ data class PendingShare(
     val mime: String? = null,
 ) {
     fun isFor(sessionId: String?, conversation: ConversationConfig): Boolean =
-        conversation.isChat && targetSessionId != null && targetSessionId == sessionId
+        conversation.kind == ConversationKind.CHAT && targetSessionId != null && targetSessionId == sessionId
 
     companion object {
         fun fromIntent(intent: Intent): PendingShare? {

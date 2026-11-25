@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">“%1$s” bölümünde uyarılar kapalı olsa da hatırlatıcılar burada kalır.</string>
+    <string name="phone_events_title">Telefon etkinliği hatırlatıcıları</string>
+    <string name="phone_events_intro">Seçtiğiniz bir uygulama açıldığında veya bildirim gönderdiğinde hatırlatıcı alın. Bağlı bir görev varsa çalıştırmadan önce inceleyin.</string>
+    <string name="phone_event_ready">Telefon etkinliği hatırlatıcısı</string>
+    <string name="phone_event_open_reminder">%1$s hatırlatıcınızı tetikledi. İncelemek için dokunun.</string>
+    <string name="phone_events_grant_notifications">Bildirim erişimine izin ver</string>
+    <string name="phone_events_grant_window">Erişilebilirlik bölümünde Harness telefon kontrollerini etkinleştir</string>
+    <string name="phone_events_show_alerts">Hatırlatıcı bildirimlerine izin ver</string>
+    <string name="phone_event_opened">%1$s açıldığında</string>
+    <string name="phone_event_notified">%1$s bildirim gönderdiğinde</string>
+    <string name="phone_event_review_task">İncele: %1$s</string>
+    <string name="phone_event_dismiss">Kapat</string>
+    <string name="phone_event_remind_only">Yalnızca hatırlat</string>
+    <string name="phone_event_task_missing">Bağlı görev artık kullanılamıyor</string>
+    <string name="phone_event_edit">Kuralı düzenle</string>
+    <string name="phone_event_remove">Kuralı kaldır</string>
+    <string name="phone_event_add">Uygulama kuralı ekle</string>
+    <string name="phone_event_view_notices">Etkin bildirimler (%1$d)</string>
+    <string name="phone_event_active_notices">Mevcut bildirimler</string>
+    <string name="phone_event_metadata_only">Yalnızca uygulama ve saat gösterilir. Bildirimi okumak için ilgili uygulamada açın.</string>
+    <string name="phone_event_no_notices">Seçtiğiniz uygulamalardan mevcut bildirim yok.</string>
+    <string name="phone_event_no_listener">Bildirim dinleyicisi bağlı değil.</string>
+    <string name="phone_event_open_source">Uygulamada aç</string>
+    <string name="phone_event_mark_read">Okundu olarak işaretle</string>
+    <string name="phone_event_read_confirm">%1$s uygulamasından bu bildirimi okundu olarak işaretlemesi istensin mi?</string>
+    <string name="phone_event_task_busy">Bu görev duraklatılmış, zaten çalışıyor veya artık manuel olarak çalıştırılamıyor.</string>
+    <string name="phone_event_run_task">Görevi çalıştır</string>
+    <string name="phone_event_unavailable">Bu öğe artık kullanılamıyor.</string>
+    <string name="phone_event_choose_app">Uygulama seçin</string>
+    <string name="phone_event_search">Uygulama adı veya paket adı</string>
+    <string name="phone_event_when">Ne zaman</string>
+    <string name="phone_event_when_open">Bu uygulamayı açtığımda</string>
+    <string name="phone_event_when_notified">Bu uygulama bildirim gönderdiğinde</string>
+    <string name="phone_event_then">İncelemem için hatırlat</string>
+    <string name="phone_event_save">Kuralı kaydet</string>
+    <string name="phone_event_all_rules">Her iki etkinlik için de kural oluşturulmuş. Aşağıdaki mevcut kuralları düzenleyin.</string>
+</resources>

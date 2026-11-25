@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Скрипты AutoJs6</string>
+    <string name="autojs_allow">Разрешить ассистенту использовать AutoJs6</string>
+    <string name="autojs_allow_hint">Добавляет сопряжённый драйвер и скрипты интерфейса. Встроенная служба остаётся доступной, если она включена.</string>
+    <string name="autojs_need_pair">Создавайте и проверяйте скрипты. Перед запуском на телефоне настройте локальный плагин AutoJs6.</string>
+    <string name="autojs_new">Новый скрипт</string>
+    <string name="autojs_back">Назад</string>
+    <string name="autojs_source">Скрипт интерфейса</string>
+    <string name="autojs_sample_source">text(\"Продолжить\").waitFor();</string>
+    <string name="autojs_name">Название (необязательно для пробного запуска)</string>
+    <string name="autojs_name_exists">Скрипт с таким названием уже существует. Откройте его для редактирования или выберите другое название.</string>
+    <string name="autojs_format">Используйте text, desc или id для поиска элемента, затем дождитесь его появления, нажмите на него или введите текст. Указывайте по одной инструкции на строку.</string>
+    <string name="autojs_check">Проверить шаги</string>
+    <string name="autojs_prepare">Попробовать в целевом приложении</string>
+    <string name="autojs_preview">Корректных шагов: %1$d · ничего не выполнено</string>
+    <string name="autojs_empty">Нажмите «Новый скрипт», чтобы создать действие для повторного использования. Оставьте название пустым, чтобы попробовать скрипт без сохранения.</string>
+    <string name="autojs_enabled_hint">Ассистент может использовать включённые скрипты из этой библиотеки.</string>
+    <string name="autojs_disabled_hint">Включите этот скрипт в библиотеке, прежде чем пробовать его.</string>
+    <string name="autojs_delete">Удалить «%1$s»?</string>
+    <string name="autojs_delete_action">Удалить</string>
+    <string name="autojs_changed">Этот скрипт изменился в библиотеке. Откройте его заново перед сохранением или запуском.</string>
+    <string name="autojs_write_failed">Не удалось сохранить скрипт.</string>
+    <string name="autojs_anonymous">Несохранённый скрипт</string>
+    <string name="autojs_prepared">Пробный запуск подготовлен: %1$s. Откройте целевое приложение и вызовите ассистента на телефоне в течение 10 минут.</string>
+    <string name="autojs_trial_title">Запустить скрипт · %1$s</string>
+    <string name="autojs_trial_here">Только в %1$s</string>
+    <string name="autojs_trial_other">Откройте приложение, в котором хотите провести проверку, и вызовите там ассистента.</string>
+    <string name="autojs_trial_steps">Шагов: %1$d · нажмите, чтобы просмотреть</string>
+    <string name="autojs_trial_less">Скрыть шаги</string>
+    <string name="autojs_trial_allow">Разрешить и запустить здесь</string>
+    <string name="autojs_trial_stale">Время пробного запуска истекло или приложение изменилось. Подготовьте запуск заново в библиотеке скриптов.</string>
+    <string name="autojs_trial_request">Запустить «%1$s» в %2$s.</string>
+    <string name="autojs_trial_done">Выполнено шагов скрипта: %1$d из %2$d в %3$s.</string>
+    <string name="autojs_trial_stopped">Скрипт остановлен в %3$s после выполнения %1$d из %2$d шагов.</string>
+    <string name="autojs_trial_error">Не удалось запустить этот скрипт в текущем приложении.</string>
+    <string name="autojs_trial_interrupted">Выполнение скрипта прервано. Проверьте приложение перед повторной попыткой.</string>
+    <string name="autojs_not_selected">Включите AutoJs6 перед подготовкой скрипта.</string>
+    <string name="autojs_activity_running">Выполняется скрипт AutoJs6</string>
+    <string name="autojs_activity_ran">Скрипт AutoJs6 выполнен</string>
+    <string name="autojs_activity_run_failed">Скрипт AutoJs6 не завершён</string>
+    <string name="autojs_activity_library_working">Используется библиотека скриптов AutoJs6</string>
+    <string name="autojs_activity_library_done">Библиотека скриптов AutoJs6 использована</string>
+    <string name="autojs_activity_library_failed">Не удалось выполнить действие с библиотекой скриптов AutoJs6</string>
+</resources>

@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Default ng provider"</string>
     <string name="ui_add_custom_command">"Magdagdag ng custom na command"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Hawakan ang CPU habang aktibo ang isang run o terminal para hindi mamatay ang terminal kapag na-minimize ang app."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Ibinukod: Hindi i-throttle ng Android ang mga pagtakbo sa background."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Naka-on: Ang Samsung at iba pang OEM ay maaaring pumatay sa background work. Ibukod ang app para sa maaasahang mahabang pagtakbo."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Naka-off ang pag-optimize ng baterya ng Android para sa AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Naka-on ang pag-optimize ng baterya ng Android. Kung humihinto ang mahahabang gawain kapag nakapatay ang screen, payagan ang AndroidHarness na gumamit ng baterya nang walang limitasyon."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Kasalukuyang bersyon %1$s. Sinusuri ang GitHub Release para sa mga mas bagong build."</string>
     <string name="ui_available_see_the_dialog">"Available ang %1$s, tingnan ang dialog"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Isang coding agent na nakatira sa iyong telepono."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"Bilis sa pagbasa"</string>
     <string name="lms_field_prompt_threads_help">"Mga core ng CPU habang binabasa ang mensahe mo."</string>
     <string name="lms_unit_cores">"core"</string>
+    <string name="voice_no_result">Walang kumpletong transcript na natanggap. Subukang magsalita muli o i-type ang iyong mensahe.</string>
+    <string name="voice_service_interrupted">Huminto ang speech service ng system bago ito matapos. Subukang magdikta muli o i-type ang natitira.</string>
+    <string name="voice_try_again">Magdikta muli</string>
+    <string name="voice_continue">Ipagpatuloy ang pagdidikta</string>
+    <string name="voice_finish_to_send">Nakikinig. I-tap ang Ipadala kapag tapos na.</string>
 </resources>

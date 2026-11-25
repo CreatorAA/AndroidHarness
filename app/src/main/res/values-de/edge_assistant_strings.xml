@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Seitengriff</string>
+    <string name="assistant_edge_desc">Wische den Griff am rechten Rand nach innen, um die Assistenz zu öffnen.</string>
+    <string name="assistant_edge_permission_hint">Erlaube AndroidHarness in den Android-Einstellungen, sich über anderen Apps anzuzeigen.</string>
+    <string name="assistant_edge_permission_unavailable">Die Einstellungen für die Einblendberechtigung konnten nicht geöffnet werden.</string>
+    <string name="assistant_edge_handle_description">Assistenz über anderen Apps öffnen</string>
+    <string name="assistant_edge_start_failed">Der Seitengriff konnte nicht aktiviert werden. Versuche es erneut.</string>
+    <string name="assistant_edge_disconnected">Das System hat die Verbindung zum Assistenten getrennt.</string>
+    <string name="assistant_edge_reconnect">Erneut verbinden</string>
+    <string name="assistant_edge_reconnect_steps">Wähle in den Assistenteneinstellungen von Android zuerst „Keine“ und dann erneut AndroidHarness.</string>
+    <string name="assistant_edge_grant_overlay">Einblendung über anderen Apps erlauben</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Tek seferlik alarm kur</string>
+    <string name="phone_public_timer">Zamanlayıcı başlat</string>
+    <string name="phone_public_map">Yer ara</string>
+    <string name="phone_public_calendar">Takvim taslağı aç</string>
+    <string name="phone_public_note">Yeni not aç</string>
+</resources>

@@ -1,0 +1,47 @@
+## Basics
+FENCES. Write the markup directly; never wrap it in JSON.
+```harness-html title="Short title" loading="Drawing the orbits"
+<div class="hx-stack">…</div>
+<script>…</script>
+```
+```harness-svg title="Short title"
+<svg viewBox="0 0 640 360" role="img" aria-label="What the diagram shows">…</svg>
+```
+- title: 2-5 words identifying the visual. HTML previews display this heading; an inline SVG should make sense on its own. loading: optional 2-6 word status shown while it streams.
+- harness-svg must contain exactly one <svg> element. Use harness-html when you need script, controls or several elements.
+- Put prose before or after the fence; never explain the code inside the reply unless asked. Never show the source as a code block unless the user asks for source.
+- Limits: under 24 KB when possible, 64 KB maximum. Self-contained and offline: no CDN, remote fonts, images, fetch or forms. Data and images must be inline (SVG, canvas, data: URLs).
+
+THEME TOKENS (CSS variables, already set; they follow the user's app theme, light or dark):
+--background --foreground --muted --surface --surface-2 --border --accent --accent-fg (text on accent) --accent-soft
+--success --warning --danger, chart series --c1 … --c6, --radius (14px) --radius-sm (10px) --mono.
+Use these colors and the app font so the visual works in light and dark themes. HTML previews already have 16px of body padding. Inline SVG has no surrounding body padding; leave a small inset inside the viewBox for its outermost marks.
+
+DESIGN KIT (class names ready to use; prefer them over writing CSS):
+Layout: hx-stack (vertical, 12px gap), hx-row (wrapping row), hx-spread (space-between row), hx-grid (responsive cards, 140px minimum).
+Surfaces: hx-card, hx-card-accent. Text: hx-title, hx-subtitle, hx-muted, hx-label (small caps label), hx-stat (big number), hx-mono.
+Controls: hx-btn (filled), hx-btn-ghost, aria-pressed="true" marks a selected button, hx-segment (segmented control: a wrapper of buttons), hx-range (slider).
+Status: hx-chip with data-tone="accent|success|warning|danger". Progress: <div class="hx-bar"><span style="width:62%"></span></div>.
+Data: hx-table (add class num to numeric cells). Misc: hx-divider, hx-fade (gentle entrance).
+SVG classes: hx-text, hx-text-muted, hx-node, hx-node-accent, hx-edge, hx-edge-accent, hx-grid-line.
+
+JS HELPER: harness.palette() returns the series colors as hex strings; harness.color('accent') reads any token; harness.state('Plain summary of current values') passes the current selection to the user's next message (context only; it never sends or runs anything).
+
+QUALITY BAR:
+- Phone first: design for 360px wide and let it scale. No horizontal scrolling; stack on narrow screens.
+- One clear idea per visual. Give the main value or shape the most space; keep its supporting labels close and readable. Use 2-3 text sizes and sentence-case labels; avoid decorative gradients and emoji clutter.
+- Let the content determine the layout: related readings may fit side by side; long labels or a sequence may read better stacked. Fit the canvas around the marks and labels rather than leaving a small graphic adrift in empty space.
+- Touch targets at least 44px. Label every control. Text contrast must stay readable in both themes.
+- Respect prefers-reduced-motion (the base stylesheet already disables animation when it is set).
+- Only real or clearly labelled illustrative data. Never invent measurements to fill a chart.
+- Every script must run without errors; guard against missing elements.
+
+## Interactive
+Use harness-html for explorable explanations, calculators beyond the native calculator, simulations, quizzes, step-throughs and small tools.
+- Structure: header (hx-title + one-line hx-muted purpose), controls row, live result area, short note on assumptions.
+- Controls: hx-range sliders with a visible value, hx-segment for 2-4 modes, hx-btn for the primary action. Update results on input events immediately; no submit buttons.
+- Keep state in a single JS object and one render() function that redraws from it. Initialise with sensible defaults so the first frame is already meaningful.
+- After each change call harness.state('Rate 4.5%, 20 years: total 52,300') with the current values so the user's follow-up question can use them.
+- Animation: requestAnimationFrame, pause when off-screen or finished, and skip it under prefers-reduced-motion.
+- Quizzes and step-throughs: show one item at a time, give immediate feedback with hx-chip tones, and keep a visible progress bar (hx-bar).
+- No storage APIs, timers that never stop, alert/confirm/prompt dialogs, or navigation. Everything must work offline.

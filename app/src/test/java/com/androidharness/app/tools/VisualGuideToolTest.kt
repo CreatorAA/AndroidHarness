@@ -1,6 +1,7 @@
 package com.androidharness.app.tools
 
 import com.androidharness.app.artifacts.ArtifactSandbox
+import com.androidharness.app.core.response.RichResponse
 import com.androidharness.app.workspace.FileFs
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonPrimitive
@@ -22,7 +23,14 @@ class VisualGuideToolTest {
         val text = result.output
         assertTrue(text.startsWith("## Basics"))
         assertTrue(text.indexOf("## Diagram") in 1 until text.indexOf("## Chart"))
+        assertFalse(text.contains("## Interactive"))
         assertFalse(text.contains("## Mockup"))
+    }
+
+    @Test fun `interactive guide preserves live JS values without adding its example to the shared prompt`() {
+        val template = "`Rate \${S.rate}% -> total \${total.toFixed(0)}`"
+        assertTrue(VisualGuide.read(listOf("interactive")).contains(template))
+        assertFalse(RichResponse.INSTRUCTIONS.contains(template))
     }
 
     @Test fun `comma separated strings work and unknown modules fail clearly`() = runBlocking {

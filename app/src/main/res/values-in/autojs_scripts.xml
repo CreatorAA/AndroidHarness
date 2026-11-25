@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Skrip AutoJs6</string>
+    <string name="autojs_allow">Izinkan asisten menggunakan AutoJs6</string>
+    <string name="autojs_allow_hint">Menambahkan driver dan skrip UI yang dipasangkan. Layanan bawaan tetap tersedia jika diaktifkan.</string>
+    <string name="autojs_need_pair">Tulis dan periksa skrip sekarang. Konfigurasikan plugin AutoJs6 lokal sebelum menjalankannya di ponsel.</string>
+    <string name="autojs_new">Skrip baru</string>
+    <string name="autojs_back">Kembali</string>
+    <string name="autojs_source">Skrip UI</string>
+    <string name="autojs_sample_source">text(\"Lanjutkan\").waitFor();</string>
+    <string name="autojs_name">Nama (opsional untuk uji coba)</string>
+    <string name="autojs_name_exists">Nama ini sudah digunakan oleh skrip lain. Buka skrip tersebut untuk mengeditnya, atau pilih nama lain.</string>
+    <string name="autojs_format">Gunakan text, desc, atau id untuk menemukan kontrol, lalu tunggu, ketuk, atau masukkan teks ke dalamnya. Gunakan satu instruksi per baris.</string>
+    <string name="autojs_check">Periksa langkah</string>
+    <string name="autojs_prepare">Coba di aplikasi tujuan</string>
+    <string name="autojs_preview">Langkah valid: %1$d · belum ada yang dijalankan</string>
+    <string name="autojs_empty">Ketuk Skrip baru untuk membuat tindakan yang dapat digunakan kembali. Kosongkan nama untuk mencoba tanpa menyimpan.</string>
+    <string name="autojs_enabled_hint">Asisten dapat menggunakan skrip yang diaktifkan di pustaka ini.</string>
+    <string name="autojs_disabled_hint">Aktifkan skrip ini di pustaka sebelum mencobanya.</string>
+    <string name="autojs_delete">Hapus “%1$s”?</string>
+    <string name="autojs_delete_action">Hapus</string>
+    <string name="autojs_changed">Skrip ini telah berubah di pustaka. Buka kembali sebelum menyimpan atau menjalankannya.</string>
+    <string name="autojs_write_failed">Skrip tidak dapat disimpan.</string>
+    <string name="autojs_anonymous">Skrip belum disimpan</string>
+    <string name="autojs_prepared">Uji coba siap: %1$s. Buka aplikasi tujuan dan panggil asisten ponsel dalam 10 menit.</string>
+    <string name="autojs_trial_title">Jalankan skrip · %1$s</string>
+    <string name="autojs_trial_here">Hanya di %1$s</string>
+    <string name="autojs_trial_other">Buka aplikasi yang ingin diuji, lalu panggil asisten di sana.</string>
+    <string name="autojs_trial_steps">%1$d langkah · ketuk untuk meninjau</string>
+    <string name="autojs_trial_less">Sembunyikan langkah</string>
+    <string name="autojs_trial_allow">Izinkan dan jalankan di sini</string>
+    <string name="autojs_trial_stale">Uji coba ini kedaluwarsa atau aplikasi telah berubah. Siapkan kembali di pustaka skrip.</string>
+    <string name="autojs_trial_request">Jalankan “%1$s” di %2$s.</string>
+    <string name="autojs_trial_done">Selesai menjalankan %1$d dari %2$d langkah skrip di %3$s.</string>
+    <string name="autojs_trial_stopped">Skrip berhenti di %3$s setelah %1$d dari %2$d langkah.</string>
+    <string name="autojs_trial_error">Skrip ini tidak dapat dimulai di aplikasi saat ini.</string>
+    <string name="autojs_trial_interrupted">Skrip terhenti. Periksa aplikasi sebelum mencoba lagi.</string>
+    <string name="autojs_not_selected">Aktifkan AutoJs6 sebelum menyiapkan skrip.</string>
+    <string name="autojs_activity_running">Menjalankan skrip AutoJs6</string>
+    <string name="autojs_activity_ran">Skrip AutoJs6 telah dijalankan</string>
+    <string name="autojs_activity_run_failed">Skrip AutoJs6 tidak selesai</string>
+    <string name="autojs_activity_library_working">Menggunakan pustaka skrip AutoJs6</string>
+    <string name="autojs_activity_library_done">Pustaka skrip AutoJs6 telah digunakan</string>
+    <string name="autojs_activity_library_failed">Tindakan pada pustaka skrip AutoJs6 gagal</string>
+</resources>

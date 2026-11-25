@@ -45,7 +45,7 @@ flowchart TD
 
 ## Page Model
 
-`SettingsPage` has 38 values covering Learn, Language, Chat Options, Memory, Coding, Rumble, GitHub, Connected Accounts, 9Router, Models, Subagent, Local Models, Plugins, Configuration, Agent, Chat, Code Intelligence, Caveman, Voice, Live Mode, Skills, Appearance, Privacy, Search, MCP, Telegram, Workspace, Background, Storage, Environment, Troubleshooting, Sync, FTP Server, Backup, Usage, Updates, Setup, and About.
+`SettingsPage` identifies settings destinations such as Learn, Assistant, Memory, Models, Background, Backup, Setup, and About. Use the enum in [SettingsNavigation.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt) for the current list.
 
 Two lists decide where pages appear:
 

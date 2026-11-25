@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Начать новый диалог</string>
+    <string name="slash_menu_compact">Сжать контекст</string>
+    <string name="slash_menu_compact_hint">Кратко изложить предыдущий контекст</string>
+    <string name="slash_menu_cost">Стоимость</string>
+    <string name="slash_menu_cost_hint">Показать общее число токенов и стоимость</string>
+    <string name="slash_menu_btw_hint">Спросить о текущем контексте без записи в чат</string>
+    <string name="slash_menu_doctor">Диагностика Harness</string>
+    <string name="slash_menu_doctor_hint">Запустить самопроверку инструментов Harness</string>
+    <string name="slash_menu_init">Инициализировать проект</string>
+    <string name="slash_menu_init_hint">Создать или обновить AGENTS.md</string>
+    <string name="slash_menu_review_hint">Проверить текущие изменения без редактирования. Укажите цель проверки после команды.</string>
+    <string name="slash_menu_plan_hint">Загрузить навык планирования и включить режим плана</string>
+    <string name="slash_menu_skills">Просмотреть навыки</string>
+    <string name="slash_menu_skills_hint">Открыть полный список навыков</string>
+    <string name="slash_menu_env_hint">Проверить, обновить, установить или восстановить окружение Linux</string>
+    <string name="slash_menu_snippet">Фрагмент</string>
+    <string name="slash_menu_snippet_hint">Сохранённый фрагмент запроса</string>
+</resources>

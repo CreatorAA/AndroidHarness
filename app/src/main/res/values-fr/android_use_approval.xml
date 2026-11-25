@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Appuyer</string>
+    <string name="phone_review_long_press">Appuyer de manière prolongée</string>
+    <string name="phone_review_type">Saisir du texte</string>
+    <string name="phone_review_volume">Régler le volume des contenus multimédias</string>
+    <string name="phone_review_scroll_forward">Faire défiler vers l’avant</string>
+    <string name="phone_review_scroll_backward">Faire défiler vers l’arrière</string>
+    <string name="phone_review_swipe">Balayer</string>
+    <string name="phone_review_drag">Faire glisser</string>
+    <string name="phone_review_home">Revenir à l’écran d’accueil</string>
+    <string name="android_use_launcher_trip">Depuis %1$s, recherchez %2$s sur l’écran d’accueil et appuyez dessus, puis poursuivez cette tâche dans %3$s.</string>
+    <string name="android_use_action_approval">Autoriser cette action une seule fois ?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Autoriser le contrôle du téléphone pour cette conversation ? L’agent pourra envoyer l’écran de l’application cible au modèle sélectionné, appuyer sur des éléments et saisir du texte. Les commandes autorisées dans cette conversation pourront aussi lire et modifier des fichiers et des paramètres. Une nouvelle autorisation sera demandée pour valider une modification dans l’application cible.</string>
+    <string name="android_use_submit_approval">Autoriser cette validation une seule fois ?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Poursuivre cette tâche dans une autre application ? L’agent pourra lire son écran et interagir avec elle.\n\n%1$s</string>
+    <string name="android_use_code_entry">Envoyer une tâche à l’assistant du téléphone</string>
+    <string name="android_use_code_hint">Ajoutez une instruction ou envoyez /phone seul pour ouvrir les paramètres.</string>
+    <string name="android_use_draft_ready">Ouvrez l’application cible et sélectionnez « Contrôler le téléphone » dans l’assistant sous 10 minutes. Utilisez /phone --result ici pour consulter la conversation.</string>
+    <string name="android_use_draft_expired">Ce brouillon a expiré, a été annulé ou remplacé. Fermez cette boîte de dialogue et sélectionnez à nouveau « Contrôler le téléphone ».</string>
+    <string name="android_use_draft_cancelled">Brouillon de tâche sur le téléphone annulé.</string>
+    <string name="android_use_no_draft">Cette conversation ne contient aucun brouillon de tâche sur le téléphone en attente.</string>
+    <string name="android_use_no_result">Aucune tâche sur le téléphone n’a été lancée depuis cette conversation.</string>
+    <string name="android_use_local_only">Lancez une tâche sur le téléphone depuis un espace de travail Code local.</string>
+    <string name="android_use_from_code">Brouillon depuis Code</string>
+</resources>

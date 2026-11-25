@@ -1,5 +1,6 @@
 package com.androidharness.app.ui.chat
 
+import com.androidharness.app.ui.settings.SettingsPage
 import com.androidharness.app.ui.theme.*
 import com.kyant.backdrop.backdrops.rememberCombinedBackdrop
 import androidx.compose.ui.layout.layout
@@ -1286,7 +1287,14 @@ private fun ChatScreenContent(
         viewModel.navEvents.collect { event ->
             when (event) {
                 is NavEvent.NewChat -> onNewChat()
+                NavEvent.PhoneSetup -> {
+                    val anchor = if (com.androidharness.app.ui.settings.isHarnessAssistant(uiContext))
+                        R.string.assistant_phone_action else R.string.assistant_settings_title
+                    viewModel.container.pendingSettingsScroll.value = settingsTarget(SettingsPage.ASSISTANT, anchor)
+                    onOpenSettings()
+                }
                 is NavEvent.OpenSession -> onNavigateToSession(event.id)
+                is NavEvent.PhoneNotice -> scope.launch { snackbar.showSnackbar(uiContext.getString(event.message)) }
                 is NavEvent.SelectSection -> viewModel.prepareSectionSwitch(composerValue.text) {
                     sectionFocus.clearFocus(force = true)
                     scheduleKeyboard?.hide()
@@ -1495,7 +1503,7 @@ private fun ChatScreenContent(
                         voiceController.startGroqRecording(locked = pendingLockedRecord, autoSilenceTimeoutMs = silenceMs) {
                             val base = composerText
                             // Silence fired in controller: transcribe then auto-send if still enabled.
-                            voiceController.stopAndTranscribeGroq(model = state.groqWhisperModel) { transcribed ->
+                            voiceController.stopAndTranscribe(providerId = state.voiceEngine) { transcribed ->
                                 if (transcribed.isBlank() || isPunctuationOnly(transcribed)) {
                                     setComposerText(base)
                                 } else if (state.voiceAutoSend && !state.busy && !autoSendSuppressed) {
@@ -1533,9 +1541,23 @@ private fun ChatScreenContent(
         }
     }
 
+    LaunchedEffect(voiceController.offlineHandoff) {
+        voiceController.offlineHandoff?.let { messageId ->
+            Toast.makeText(toastContext, messageId, Toast.LENGTH_LONG).show()
+            voiceController.acknowledgeOfflineHandoff()
+        }
+    }
     LaunchedEffect(voiceController.errorMessage) {
-        voiceController.errorMessage?.let {
-            Toast.makeText(toastContext, it, Toast.LENGTH_SHORT).show()
+        voiceController.errorMessage?.let { message ->
+            if (voiceController.canContinueOffline) {
+                val result = snackbar.showSnackbar(message, actionLabel = uiContext.getString(R.string.voice_continue_offline))
+                if (result == SnackbarResult.ActionPerformed && !voiceController.isListening && !voiceController.isTranscribing) {
+                    val base = composerText
+                    voiceController.startNativeListening({ text, _ ->
+                        if (text.isNotBlank()) setComposerText(if (base.isBlank()) text else "$base $text")
+                    }, offlineMandarin = true)
+                }
+            } else Toast.makeText(toastContext, message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -2005,6 +2027,10 @@ private fun ChatScreenContent(
                                         hasProvider = state.activeProvider != null,
                                         chatOnly = state.conversation.isChat,
                                         agent = state.conversation.agent,
+                                        onPhoneSettings = if (!state.conversation.isPhone) null else ({
+                                            viewModel.container.pendingSettingsScroll.value = settingsTarget(SettingsPage.ASSISTANT)
+                                            onOpenSettings()
+                                        }),
                                         agentSetup = {
                                             com.androidharness.app.ui.chat.components.ChatAgentDropdown(
                                                 selected = null, agents = globalSettings.chatAgents,
@@ -2548,12 +2574,12 @@ private fun ChatScreenContent(
                             }
                             Role.SYSTEM -> {
                                 if (state.conversation.isChat) continue
-                                if (message.text.startsWith("Compaction failed:") || message.text.startsWith("Compaction stopped.") ||
-                                    message.text.startsWith("Chat compacted, but")) {
+                                val compaction = CompactionResult.fromStoredText(message.text)
+                                if (compaction != null) {
                                     indexedItem(key = "message-$messageKey-system", contentType = ChatListContentType.System) {
-                                        CompactionResultCard(message.text,
+                                        CompactionResultCard(compaction, message.text,
                                             showRetry = state.messages.lastOrNull { m ->
-                                                m.role == Role.SYSTEM && (m.text.startsWith("Compaction failed:") || m.text.startsWith("Compaction stopped.") ||
+                                                m.role == Role.SYSTEM && (CompactionResult.fromStoredText(m.text)?.canRetry == true ||
                                                     m.text.startsWith(com.androidharness.app.agent.ContextHygiene.COMPACTION_NOTICE_PREFIX))
                                             }?.id == message.id,
                                             busy = state.busy, onRetry = { viewModel.send("/compact") })
@@ -3014,7 +3040,8 @@ private fun ChatScreenContent(
                     onAttachImage = { galleryLauncher.launch(androidx.activity.result.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
                     onAttachFile = { fileLauncher.launch("*/*") },
                     onLiveMode = startLive,
-                    voiceEngine = state.voiceEngine,
+                    voiceEngine = if (voiceController.isListeningInbuilt || voiceController.nativePending)
+                        AppSettings.VOICE_ENGINE_INBUILT else state.voiceEngine,
                     groqRecordState = voiceController.groqRecordState,
                     recordingDurationMs = voiceController.recordingDurationMs,
                     levels = voiceController.levels,
@@ -3023,8 +3050,9 @@ private fun ChatScreenContent(
                     onToggleInbuiltVoice = {
                         if (!state.voicePromoSeen) {
                             viewModel.promptVoicePromo()
-                        } else if (voiceController.isListeningInbuilt) {
-                            voiceController.stopNativeListening()
+                        } else if (voiceController.isListeningInbuilt || voiceController.nativePending) {
+                            autoSendSuppressed = true
+                            voiceController.finishNativeListening()
                         } else {
                             if (androidx.core.content.ContextCompat.checkSelfPermission(
                                     toastContext,
@@ -3072,10 +3100,7 @@ private fun ChatScreenContent(
                             autoSendSuppressed = false
                             voiceController.startGroqRecording(locked = locked, autoSilenceTimeoutMs = silenceMs) {
                                 val base = composerText
-                                voiceController.stopAndTranscribe(
-                                    model = state.groqWhisperModel,
-                                    providerId = state.voiceEngine,
-                                ) { transcribed ->
+                                voiceController.stopAndTranscribe(providerId = state.voiceEngine) { transcribed ->
                                     if (transcribed.isBlank() || isPunctuationOnly(transcribed)) {
                                         setComposerText(base)
                                     } else if (state.voiceAutoSend && !state.busy && !autoSendSuppressed) {
@@ -3096,9 +3121,7 @@ private fun ChatScreenContent(
                     onLockGroqRecord = voiceController::lockGroqRecording,
                     onCancelGroqRecord = voiceController::cancelGroqRecording,
                     onStopAndTranscribeGroq = {
-                        voiceController.stopAndTranscribeGroq(
-                            model = state.groqWhisperModel,
-                        ) { transcribed ->
+                        voiceController.stopAndTranscribe(providerId = state.voiceEngine) { transcribed ->
                             if (transcribed.isBlank() || isPunctuationOnly(transcribed)) {
                                 setComposerText(composerText)
                             } else if (state.voiceAutoSend && !state.busy && !autoSendSuppressed) {
@@ -3123,10 +3146,7 @@ private fun ChatScreenContent(
                     autoSendShowInPlus = state.voiceAutoSendShowInPlus,
                     autoSendTimeoutMs = state.voiceAutoSendTimeoutMs,
                     onSilenceDetected = {
-                        voiceController.stopAndTranscribe(
-                            model = state.groqWhisperModel,
-                            providerId = state.voiceEngine,
-                        ) { transcribed ->
+                        voiceController.stopAndTranscribe(providerId = state.voiceEngine) { transcribed ->
                             if (transcribed.isBlank() || isPunctuationOnly(transcribed)) {
                                 setComposerText(composerText)
                                 return@stopAndTranscribe

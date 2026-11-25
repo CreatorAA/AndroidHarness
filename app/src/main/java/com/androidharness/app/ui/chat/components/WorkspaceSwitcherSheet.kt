@@ -48,6 +48,7 @@ import com.androidharness.app.ui.theme.HarnessGlassModalBottomSheet as ModalBott
 import com.androidharness.app.ui.theme.expressiveEffectsSpec
 import com.androidharness.app.ui.theme.expressiveSpatialSpec
 import com.androidharness.app.workspace.ChatWorkspaceSelection
+import com.androidharness.app.workspace.displayWorkspaceName
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
@@ -176,7 +177,7 @@ private fun WorkspaceSwitcherSheet(
                     if (project != null && selection != null) {
                         val members = selection.grants.mapNotNull { grant -> workspaces.firstOrNull { it.id == grant.projectId }?.let { it to grant } }
                         itemsIndexed(members, key = { _, it -> it.first.id }) { index, (workspace, grant) ->
-                            ExpressiveListRow(index, members.size, workspace.name, subtitle = describe(workspace).kindLabel,
+                            ExpressiveListRow(index, members.size, workspace.displayWorkspaceName(context), subtitle = describe(workspace).kindLabel,
                                 modifier = Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec()),
                                 leading = { ExpressiveIconBadge(workspaceKindIcon(workspace.kind), selected = workspace.id == selection.primaryId) },
                                 trailing = {
@@ -193,7 +194,7 @@ private fun WorkspaceSwitcherSheet(
                         itemsIndexed(workspaces, key = { _, it -> it.id }) { index, workspace ->
                             val current = workspace.id == currentWorkspaceId
                             val description = describe(workspace)
-                            ExpressiveListRow(index, workspaces.size, workspace.name,
+                            ExpressiveListRow(index, workspaces.size, workspace.displayWorkspaceName(context),
                                 subtitle = description.kindLabel + " · " + context.getString(if (description.shellCapable) R.string.wp_full_shell else R.string.wp_file_tools),
                                 selected = current, onClick = { onSelect(workspace.id) },
                                 modifier = Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec()),

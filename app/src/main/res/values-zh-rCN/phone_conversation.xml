@@ -1,0 +1,7 @@
+<resources>
+    <string name="conversation_phone">手机助手</string>
+    <string name="conversation_new_phone">新建手机助手会话</string>
+    <string name="phone_conversation_intro">你可以在这里继续提问。要让助手操作手机，先切到目标应用，再用系统助理手势或侧边白线唤起助手。</string>
+    <string name="phone_conversation_settings">手机助手设置</string>
+    <string name="settings_start_phone_desc">打开手机助手会话。</string>
+</resources>

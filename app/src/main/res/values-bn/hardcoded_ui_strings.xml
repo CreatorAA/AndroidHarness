@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">এই পর্বে ফেরানোর মতো কোনো পরিবর্তন নেই।</string>
+    <string name="chat_compaction_preparing">চ্যাটের সারাংশ প্রস্তুত হচ্ছে…</string>
+    <string name="chat_compaction_too_few_messages">সংক্ষিপ্ত করার মতো যথেষ্ট বার্তা এখনো নেই।</string>
+    <string name="chat_compaction_retrying">সারাংশ তৈরির পুনরায় চেষ্টা · %1$d নম্বর চেষ্টা · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">সংক্ষিপ্ত করা বন্ধ হয়েছে। ইতিহাস সংরক্ষিত আছে। প্রস্তুত হলে আবার /compact চালান।</string>
+    <string name="chat_compaction_refresh_failed">চ্যাট সংক্ষিপ্ত হয়েছে, তবে কাজের সেটিংস বা প্রসঙ্গের আনুমানিক হিসাব হালনাগাদ করা যায়নি: %1$s</string>
+    <string name="chat_compaction_failed_notice">সংক্ষিপ্ত করা যায়নি: %1$s। ইতিহাস সংরক্ষিত আছে। আবার /compact চালান বা অন্য মডেল বেছে নিন।</string>
+    <string name="reasoning_from_catalog">মডেলের তালিকায় যুক্তিবিচারের সমর্থন উল্লেখ আছে</string>
+    <string name="reasoning_from_provider">প্রদানকারী যুক্তিবিচারের সমর্থনের কথা জানিয়েছে</string>
+    <string name="reasoning_from_user">যুক্তিবিচারের সমর্থন আপনি সেট করেছেন</string>
+    <string name="reasoning_from_name">মডেলের নাম দেখে যুক্তিবিচারের সমর্থন অনুমান করা হয়েছে</string>
+    <string name="automation_every_day">প্রতিদিন</string>
+    <string name="automation_daily_at">প্রতিদিন %1$02d:%2$02d-এ</string>
+    <string name="automation_instructions_example">ডিবাগ APK বিল্ড করুন এবং বিল্ডের ত্রুটি ঠিক করুন।</string>
+    <string name="app_update_checking">আপডেট খোঁজা হচ্ছে…</string>
+    <string name="app_update_up_to_date">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন</string>
+    <string name="files_directory">ফোল্ডার</string>
+    <string name="cache_status_unavailable">ক্যাশের তথ্য পাওয়া যায়নি</string>
+    <string name="cache_status_hit">ক্যাশে পাওয়া গেছে · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · আংশিক</string>
+    <string name="cache_estimated_price">প্রায় %1$s</string>
+    <string name="chat_live_sites_suffix">টি সাইট</string>
+    <string name="chat_research_sources_suffix">/%1$dটি উৎস</string>
+    <string name="chat_research_read_suffix">টি পড়া হয়েছে</string>
+    <string name="package_status_failed">ইনস্টল করা যায়নি</string>
+    <string name="package_hide_details">ইনস্টলের বিবরণ লুকান</string>
+    <string name="package_show_details">ইনস্টলের বিবরণ দেখান</string>
+    <string name="package_recently_unpacked">সম্প্রতি আনপ্যাক করা হয়েছে · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$dটি আইটেম</item>
+        <item quantity="other">%1$dটি আইটেম</item>
+    </plurals>
+</resources>

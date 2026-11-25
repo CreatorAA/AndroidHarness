@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 脚本库</string>
+    <string name="autojs_allow">允许助手使用 AutoJs6</string>
+    <string name="autojs_allow_hint">增加已配对的界面控制和脚本。已启用的内置服务仍可使用。</string>
+    <string name="autojs_need_pair">可先编写和检查脚本。在手机上运行前，请配置本机 AutoJs6 插件。</string>
+    <string name="autojs_new">新建脚本</string>
+    <string name="autojs_back">返回</string>
+    <string name="autojs_source">界面脚本</string>
+    <string name="autojs_sample_source">text(\"下一步\").waitFor();</string>
+    <string name="autojs_name">脚本名称（不保存可留空）</string>
+    <string name="autojs_name_exists">已有同名脚本。请打开它编辑，或换一个名称。</string>
+    <string name="autojs_format">用 text、desc 或 id 找控件，再等待、点击或填字。每行写一条指令。</string>
+    <string name="autojs_check">检查步骤</string>
+    <string name="autojs_prepare">在目标应用试运行</string>
+    <string name="autojs_preview">检查通过，共 %1$d 步，尚未操作手机</string>
+    <string name="autojs_empty">点「新建脚本」保存常用操作。不起名字也可以直接试运行。</string>
+    <string name="autojs_enabled_hint">助手可以使用这里已启用的脚本。</string>
+    <string name="autojs_disabled_hint">这个脚本已停用。要试运行，请先回脚本库启用。</string>
+    <string name="autojs_delete">删除「%1$s」？</string>
+    <string name="autojs_delete_action">删除</string>
+    <string name="autojs_changed">脚本库中的版本已变，请重新打开后再保存或运行。</string>
+    <string name="autojs_write_failed">脚本未保存。</string>
+    <string name="autojs_anonymous">未保存的脚本</string>
+    <string name="autojs_prepared">「%1$s」已准备试运行。请在十分钟内切换到目标应用，唤起手机助手。</string>
+    <string name="autojs_trial_title">试运行 · %1$s</string>
+    <string name="autojs_trial_here">仅在%1$s中运行</string>
+    <string name="autojs_trial_other">请打开要测试的应用，再从那个页面唤起助手。</string>
+    <string name="autojs_trial_steps">查看 %1$d 个步骤</string>
+    <string name="autojs_trial_less">收起步骤</string>
+    <string name="autojs_trial_allow">允许在此应用运行</string>
+    <string name="autojs_trial_stale">本次试运行已过期或目标应用已变。请回脚本库重新准备。</string>
+    <string name="autojs_trial_request">在%2$s中运行「%1$s」。</string>
+    <string name="autojs_trial_done">已在%3$s中完成 %1$d/%2$d 个脚本步骤。</string>
+    <string name="autojs_trial_stopped">脚本已停止，在%3$s中完成了 %1$d/%2$d 个步骤。</string>
+    <string name="autojs_trial_error">未能在当前应用启动脚本。</string>
+    <string name="autojs_trial_interrupted">脚本已中断。请先核对页面结果，再决定是否重试。</string>
+    <string name="autojs_not_selected">请先开启 AutoJs6，再准备试运行。</string>
+    <string name="autojs_activity_running">正在运行 AutoJs6 脚本</string>
+    <string name="autojs_activity_ran">已运行 AutoJs6 脚本</string>
+    <string name="autojs_activity_run_failed">AutoJs6 脚本未完成</string>
+    <string name="autojs_activity_library_working">正在使用 AutoJs6 脚本库</string>
+    <string name="autojs_activity_library_done">已使用 AutoJs6 脚本库</string>
+    <string name="autojs_activity_library_failed">AutoJs6 脚本库操作失败</string>
+</resources>

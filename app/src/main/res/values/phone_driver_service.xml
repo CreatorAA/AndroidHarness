@@ -1,0 +1,4 @@
+<resources>
+    <string name="phone_driver_service_name">Harness phone controls</string>
+    <string name="phone_driver_service_description">Lets you ask the assistant to read a screen, tap controls and enter text. Phone controls work only during a task you start. Stop the task to take over.</string>
+</resources>

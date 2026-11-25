@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">隱藏助理</string>
+    <string name="phone_background_off_hint">背景執行已關閉。離開應用程式就會暫停這項任務。</string>
+    <string name="phone_background_paused">背景執行已關閉，因此任務已暫停。請在應用程式中開啟這個對話以繼續。</string>
+    <string name="phone_island_title">手機助理</string>
+    <string name="phone_island_planning">正在規劃下一步</string>
+    <string name="phone_island_looking">正在檢查畫面</string>
+    <string name="phone_island_finding">正在主畫面尋找應用程式</string>
+    <string name="phone_island_tap">正在選取元件</string>
+    <string name="phone_island_type">正在輸入文字</string>
+    <string name="phone_island_swipe">正在瀏覽畫面</string>
+    <string name="phone_island_gesture">正在拖曳項目</string>
+    <string name="phone_island_action">正在執行步驟</string>
+    <string name="phone_island_batch">第 %1$d 步，共 %2$d 步</string>
+    <string name="phone_island_check">正在檢查結果</string>
+    <string name="phone_island_done">已完成</string>
+    <string name="phone_island_ended">已結束 · 請確認結果</string>
+    <string name="phone_island_stopped">已停止</string>
+    <string name="phone_island_failed">未完成</string>
+    <string name="phone_island_review">需要您確認</string>
+    <string name="phone_island_paused">手機控制已暫停</string>
+    <string name="phone_island_chat">查看對話</string>
+    <string name="phone_island_resume">繼續任務</string>
+    <string name="phone_island_stop">停止任務</string>
+    <string name="phone_island_details">任務進度：%1$s</string>
+</resources>

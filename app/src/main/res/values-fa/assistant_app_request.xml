@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s باز شود؟</string>
+    <string name="app_request_search">«%2$s» در %1$s جست‌وجو شود؟</string>
+    <string name="app_request_choose_open">کدام برنامه باز شود؟</string>
+    <string name="app_request_choose_map">«%1$s» در کدام برنامهٔ نقشه جست‌وجو شود؟</string>
+    <string name="app_request_missing">برنامه‌ای به نام «%1$s» که روی این گوشی قابل باز کردن باشد پیدا نشد.</string>
+    <string name="app_request_alternative">می‌توانید «%1$s» را در یکی از برنامه‌های نقشهٔ زیر جست‌وجو کنید.</string>
+    <string name="app_request_open_only">%1$s باز می‌شود، اما امکان جست‌وجوی عمومی مکان‌ها را ندارد. بدون جست‌وجو باز شود؟</string>
+    <string name="app_request_no_map">هیچ‌یک از برنامه‌های نصب‌شده امکان جست‌وجوی «%1$s» روی نقشه را ندارد.</string>
+    <string name="app_request_no_entry">%1$s راهی برای دریافت این درخواست در اختیار نمی‌گذارد.</string>
+    <string name="app_request_opened">درخواست باز کردن %1$s ارسال شد.</string>
+    <string name="app_request_sent">درخواست جست‌وجوی «%2$s» به %1$s ارسال شد.</string>
+    <string name="app_request_failed">ارسال این درخواست به %1$s ممکن نشد. دوباره درخواست کنید تا برنامه‌های در دسترس بررسی شوند.</string>
+    <string name="app_request_cancelled">درخواست لغو شد. هیچ برنامه‌ای باز نشد.</string>
+</resources>

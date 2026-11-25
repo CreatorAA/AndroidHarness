@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Actualizaciones, configuración e información de la aplicación",
-      "summary": "Encuentre su versión, vuelva a conectar la configuración y comprenda las opciones de soporte.",
-      "location": "Configuración → Actualizaciones, Guía de configuración o Acerca de.",
+      "title": "Versión y configuración",
+      "summary": "Consulta la versión instalada o instala una versión personalizada más reciente.",
+      "location": "Ajustes → Acerca de o Guía de configuración.",
       "before": [
-        "Una conexión de red para comprobaciones de actualizaciones y páginas de soporte externo."
+        "Puedes consultar la versión sin conexión."
       ],
       "steps": [
         {
           "title": "Verifique la versión instalada",
-          "body": "Abra Acerca de o Actualizaciones para ver la versión/compilación instalada real. Incluya esa versión al describir un problema reproducible."
+          "body": "Abre Acerca de. La versión aparece bajo el nombre de la aplicación. En esa página también encontrarás el código fuente, la licencia y los créditos."
         },
         {
-          "title": "Utilice la ruta de actualización ofrecida",
-          "body": "Busque actualizaciones y lea los detalles de la versión. Utilice la acción de descarga/instalación que se ofrece para esta distribución y siga cualquier paso del instalador de Android."
+          "title": "Instalar una versión más reciente",
+          "body": "Abre el APK que te facilite el responsable de esta edición personalizada y sigue las indicaciones de Android."
         },
         {
           "title": "Revise la configuración cuando sea necesario",
           "body": "Utilice Configuración para revisar las opciones de incorporación y los permisos/conexiones requeridos. Marque cada opción en lugar de asumir que es necesaria una reinstalación."
-        },
-        {
-          "title": "Encuentre créditos y soporte",
-          "body": "Acerca de enumera la fuente/licencia/créditos y enlaces de soporte o donación disponibles. Una donación apoya la aplicación; no compra créditos API ni una suscripción de proveedor."
         }
       ],
-      "outcome": "Usted conoce la versión instalada, la ruta de actualización/configuración disponible y dónde se encuentra la información de la aplicación.",
+      "outcome": "Incluye la versión instalada cuando informes de un problema.",
       "limits": [
-        "El comportamiento de entrega e instalación de actualizaciones difiere según la distribución y los permisos de dispositivo disponibles.",
+        "Esta edición no busca ni instala versiones del proyecto original.",
         "Una actualización de la aplicación no puede garantizar un nuevo acceso a un modelo externo, solucionar una interrupción del proveedor o restaurar archivos eliminados."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Abrir actualizaciones"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Revisar configuración"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Haz que AndroidHarness sea el asistente de tu teléfono y pregunta sobre la app en la que estés.",
       "location": "Ajustes → Asistente sobre otras apps; luego mantén el botón de encendido o inicio, o desliza hacia arriba desde una esquina inferior.",
       "before": [
-        "Elige primero un modelo de Chat y añade su clave. El asistente usa el mismo modelo y ajustes que Chat.",
+        "El asistente usa el modelo de Chat de forma predeterminada. Puedes elegir otro en los ajustes del asistente.",
         "Android debe permitir que AndroidHarness sea la app de asistente digital. En algunos teléfonos está en Apps predeterminadas."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Pregunta sobre la pantalla",
-          "body": "Escribe una pregunta o toca una sugerencia como Resumir. Solo mira la pantalla cuando tu pregunta trata sobre ella, y nada de la pantalla aparece en el panel. Funciona como Chat, así que puede buscar en la web, leer páginas y mostrar sus fuentes."
+          "body": "Pregunta por lo que ves o explica qué quieres que haga en la aplicación. Por defecto, revisas la tarea antes de que empiece."
         },
         {
           "title": "Habla en vez de escribir",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Continúa en la app",
-          "body": "El panel crece con la respuesta y puedes arrastrarlo a cualquier altura. Continuar en la app abre la misma conversación en Chat, donde queda junto a tus otros chats."
+          "body": "«Continuar en la app» abre la misma conversación en la aplicación completa. La próxima vez que invoques al asistente en este proyecto, retomará tu última conversación."
         }
       ],
-      "outcome": "Puedes preguntar sobre la app en pantalla sin salir de ella, y cada conversación se guarda como un Chat normal.",
+      "outcome": "Entre todos los proyectos se conservan las 10 conversaciones más recientes del asistente del teléfono. Las más antiguas se eliminan con sus mensajes cuando dejan de estar activas. El historial de Chat y Código no cambia.",
       "limits": [
         "Las apps que bloquean capturas, como las de banca, y las pantallas protegidas por Android no envían imagen ni texto. Aun así puedes preguntar.",
-        "La imagen de la pantalla solo se envía si el modelo de Chat puede leer imágenes. Si no, solo se envía el texto de la pantalla, y algunas apps comparten muy poco texto."
+        "La imagen de la pantalla solo se envía si el modelo de Chat puede leer imágenes. Si no, solo se envía el texto de la pantalla, y algunas apps comparten muy poco texto.",
+        "La autorización sin intervención cubre la tarea actual, incluso enviar o eliminar contenido. Si activas las tareas automáticas, las próximas comenzarán sin confirmación inicial. Los comandos y los scripts siguen necesitando aprobación."
       ],
       "fixes": [
         {

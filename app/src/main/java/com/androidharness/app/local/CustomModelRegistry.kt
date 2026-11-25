@@ -1,6 +1,9 @@
 package com.androidharness.app.local
 
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption.ATOMIC_MOVE
+import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import kotlinx.serialization.json.*
 
@@ -39,7 +42,7 @@ class CustomModelRegistry(private val root: File) {
                 it.write(json.encodeToString(next).toByteArray())
                 it.fd.sync()
             }
-            check(temporary.renameTo(target)) { "Cannot save custom model." }
+            Files.move(temporary.toPath(), target.toPath(), ATOMIC_MOVE, REPLACE_EXISTING)
             models = next
             loadError = null
         } finally { temporary.delete() }

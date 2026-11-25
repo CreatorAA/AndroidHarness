@@ -7,6 +7,19 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SlashCommandsTest {
+    @Test fun phoneSetupStaysLocalAndDoesNotOverrideCustomCommands() {
+        val setup = SlashCommands.resolve("/phone", emptySet(), emptyMap()) { null }
+        assertEquals(SlashCommands.Kind.PHONE, setup.kind)
+        assertFalse(setup.startsAgent)
+        assertEquals(SlashCommands.Kind.SNIPPET, SlashCommands.resolve("/phone", emptySet(), mapOf("phone" to "saved")) { null }.kind)
+        val draft = resolve("/phone 填写你好 🐦，不要发送")
+        assertEquals(SlashCommands.Kind.PHONE, draft.kind)
+        assertEquals("填写你好 🐦，不要发送", draft.phoneArgument)
+        assertFalse(draft.startsAgent)
+        assertEquals(SlashCommands.Pick.Insert("/phone 打开地图"), SlashCommands.pick("/phone", "打开地图", SlashCommands.Kind.PHONE))
+        assertEquals("/phone 打开地图", SlashCommands.moveTrailingCommand("打开地图 /phone"))
+        assertEquals(SlashCommands.Pick.Insert("/phone "), SlashCommands.pickAction("/phone", "/ph", SlashCommands.Kind.PHONE))
+    }
     @Test fun `auto compact aliases stay local and preserve the full amount`() {
         for (command in listOf("/autocompact", "/auto-compact", "/auto_compact", "/auto compact")) {
             val result = resolve("$command 1 million")

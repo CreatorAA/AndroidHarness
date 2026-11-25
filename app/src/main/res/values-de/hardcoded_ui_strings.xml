@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">In diesem Schritt gibt es nichts rückgängig zu machen.</string>
+    <string name="chat_compaction_preparing">Chatzusammenfassung wird vorbereitet…</string>
+    <string name="chat_compaction_too_few_messages">Es gibt noch zu wenige Nachrichten zum Komprimieren.</string>
+    <string name="chat_compaction_retrying">Erneuter Zusammenfassungsversuch · Versuch %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Komprimierung gestoppt. Der Verlauf bleibt erhalten. Starte /compact erneut, wenn du bereit bist.</string>
+    <string name="chat_compaction_refresh_failed">Der Chat wurde komprimiert, aber Aufgabeneinstellungen oder Kontextschätzung konnten nicht aktualisiert werden: %1$s</string>
+    <string name="chat_compaction_failed_notice">Komprimierung fehlgeschlagen: %1$s. Der Verlauf bleibt erhalten. Wiederhole /compact oder wähle ein anderes Modell.</string>
+    <string name="reasoning_from_catalog">Schlussfolgern laut Modellkatalog verfügbar</string>
+    <string name="reasoning_from_provider">Schlussfolgern laut Anbieter verfügbar</string>
+    <string name="reasoning_from_user">Schlussfolgern von dir festgelegt</string>
+    <string name="reasoning_from_name">Schlussfolgern aus Modellnamen abgeleitet</string>
+    <string name="automation_every_day">Jeden Tag</string>
+    <string name="automation_daily_at">täglich um %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Erstelle die Debug-APK und behebe alle Buildfehler.</string>
+    <string name="app_update_checking">Suche nach Updates…</string>
+    <string name="app_update_up_to_date">Du nutzt die neueste Version</string>
+    <string name="files_directory">Ordner</string>
+    <string name="cache_status_unavailable">Cache-Daten nicht verfügbar</string>
+    <string name="cache_status_hit">Cache-Treffer · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · teilweise erfasst</string>
+    <string name="cache_estimated_price">ca. %1$s</string>
+    <string name="chat_live_sites_suffix">" Websites"</string>
+    <string name="chat_research_sources_suffix">/%1$d Quellen</string>
+    <string name="chat_research_read_suffix">" gelesen"</string>
+    <string name="package_status_failed">Installation fehlgeschlagen</string>
+    <string name="package_hide_details">Installationsdetails ausblenden</string>
+    <string name="package_show_details">Installationsdetails anzeigen</string>
+    <string name="package_recently_unpacked">Kürzlich entpackt · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d Eintrag</item>
+        <item quantity="other">%1$d Einträge</item>
+    </plurals>
+</resources>

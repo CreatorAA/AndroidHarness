@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness-Handy-Steuerung</string>
+    <string name="phone_driver_service_description">Der Assistent kann den Bildschirm lesen, Bedienelemente antippen und Text eingeben, wenn du ihn darum bittest. Das funktioniert nur während einer von dir gestarteten Aufgabe. Beende die Aufgabe, um selbst zu übernehmen.</string>
+</resources>

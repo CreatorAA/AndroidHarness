@@ -131,7 +131,7 @@ internal fun ResponseNode(node: RichResponse.Node, onOpenUrl: ((String) -> Unit)
             node.children.forEachIndexed { index, child -> key(index) { ResponseNode(child, onOpenUrl, onFollowUp) } }
             if (node.actions.isNotEmpty() && onFollowUp != null) {
                 // Stack at narrow widths and large text rather than squeezing action labels.
-                node.actions.forEach { action -> OutlinedButton(onClick = { onFollowUp(RichResponse.followUp(action.prompt, node.title, RichResponse.describe(node))) }, modifier = Modifier.fillMaxWidth().harnessGlassControl()) { Text(action.label) } }
+                node.actions.forEach { action -> OutlinedButton(onClick = { onFollowUp(RichResponse.followUp(action.prompt, node.title, RichResponse.describe(node), visibleRequest = action.label)) }, modifier = Modifier.fillMaxWidth().harnessGlassControl()) { Text(action.label) } }
             }
         }
         is RichResponse.Node.Metrics -> AdaptiveItems(node.items.size) { index ->
@@ -163,7 +163,7 @@ internal fun ResponseNode(node: RichResponse.Node, onOpenUrl: ((String) -> Unit)
                     }
                 }
                 onFollowUp?.let { follow -> val option = node.options[selected.coerceIn(node.options.indices)]
-                    OutlinedButton(onClick = { follow(RichResponse.followUp(option.prompt.ifBlank { "Tell me more about ${option.label}." }, node.title, "Selected: ${option.label}\n${option.description}")) }, Modifier.fillMaxWidth().harnessGlassControl()) { Text(uiContext.getString(R.string.ui_discuss_selection)) }
+                    OutlinedButton(onClick = { follow(RichResponse.followUp(option.prompt.ifBlank { "Tell me more about ${option.label}." }, node.title, "Selected: ${option.label}\n${option.description}", visibleRequest = uiContext.getString(R.string.ui_discuss_selection) + ": " + option.label)) }, Modifier.fillMaxWidth().harnessGlassControl()) { Text(uiContext.getString(R.string.ui_discuss_selection)) }
                 }
             }
         }

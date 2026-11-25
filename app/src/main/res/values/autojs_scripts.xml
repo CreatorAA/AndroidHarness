@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 scripts</string>
+    <string name="autojs_allow">Allow the assistant to use AutoJs6</string>
+    <string name="autojs_allow_hint">Adds the paired driver and UI scripts. The built-in service remains available when enabled.</string>
+    <string name="autojs_need_pair">Write and check scripts now. Configure the local AutoJs6 plugin before running them on the phone.</string>
+    <string name="autojs_new">New script</string>
+    <string name="autojs_back">Back</string>
+    <string name="autojs_source">UI script</string>
+    <string name="autojs_sample_source">text(\"Continue\").waitFor();</string>
+    <string name="autojs_name">Name (optional for a trial)</string>
+    <string name="autojs_name_exists">A script already uses this name. Open it to edit, or choose a different name.</string>
+    <string name="autojs_format">Use text, desc or id to find a control, then wait for it, tap it or enter text. Use one instruction per line.</string>
+    <string name="autojs_check">Check steps</string>
+    <string name="autojs_prepare">Try in target app</string>
+    <string name="autojs_preview">Valid steps: %1$d · nothing executed</string>
+    <string name="autojs_empty">Tap New script to create a reusable action. Leave the name empty to try it without saving.</string>
+    <string name="autojs_enabled_hint">The assistant can use enabled scripts in this library.</string>
+    <string name="autojs_disabled_hint">Enable this script in the library before you try it.</string>
+    <string name="autojs_delete">Delete “%1$s”?</string>
+    <string name="autojs_delete_action">Delete</string>
+    <string name="autojs_changed">This script changed in the library. Reopen it before saving or running.</string>
+    <string name="autojs_write_failed">Could not save the script.</string>
+    <string name="autojs_anonymous">Unsaved script</string>
+    <string name="autojs_prepared">Trial ready: %1$s. Open the target app and call the phone assistant within 10 minutes.</string>
+    <string name="autojs_trial_title">Run script · %1$s</string>
+    <string name="autojs_trial_here">In %1$s only</string>
+    <string name="autojs_trial_other">Open the app you want to test, then call the assistant there.</string>
+    <string name="autojs_trial_steps">%1$d steps · tap to review</string>
+    <string name="autojs_trial_less">Hide steps</string>
+    <string name="autojs_trial_allow">Allow and run here</string>
+    <string name="autojs_trial_stale">This trial expired, or the app changed. Prepare it again in the script library.</string>
+    <string name="autojs_trial_request">Run “%1$s” in %2$s.</string>
+    <string name="autojs_trial_done">Finished %1$d of %2$d script steps in %3$s.</string>
+    <string name="autojs_trial_stopped">Script stopped in %3$s after %1$d of %2$d steps.</string>
+    <string name="autojs_trial_error">Could not start this script in the current app.</string>
+    <string name="autojs_trial_interrupted">Script interrupted. Check the app before trying again.</string>
+    <string name="autojs_not_selected">Enable AutoJs6 before preparing a script.</string>
+    <string name="autojs_activity_running">Running AutoJs6 script</string>
+    <string name="autojs_activity_ran">Ran AutoJs6 script</string>
+    <string name="autojs_activity_run_failed">AutoJs6 script did not finish</string>
+    <string name="autojs_activity_library_working">Using AutoJs6 script library</string>
+    <string name="autojs_activity_library_done">Used AutoJs6 script library</string>
+    <string name="autojs_activity_library_failed">AutoJs6 script library action failed</string>
+</resources>

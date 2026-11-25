@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Anbieter-Standard"</string>
     <string name="ui_add_custom_command">"Benutzerdefinierten Befehl hinzufügen"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Halte die CPU aktiv, während ein Lauf oder Terminal aktiv ist, damit das Terminal nicht beendet wird, wenn die App minimiert wird."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Ausgeschlossen: Android drosselt Hintergrundläufe nicht."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"An: Samsung und andere OEMs können Hintergrundarbeit beenden. Schließe die App aus für zuverlässige lange Läufe."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Die Android-Akkuoptimierung ist für AndroidHarness ausgeschaltet."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Die Android-Akkuoptimierung ist eingeschaltet. Wenn längere Aufgaben bei ausgeschaltetem Display hängen bleiben, erlaube AndroidHarness die uneingeschränkte Akkunutzung."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Aktuelle Version %1$s. Prüft GitHub Releases auf neuere Builds."</string>
     <string name="ui_available_see_the_dialog">"%1$s verfügbar, siehe Dialog"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Ein Coding-Agent, der auf deinem Telefon lebt."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"Lesegeschwindigkeit"</string>
     <string name="lms_field_prompt_threads_help">"CPU-Kerne beim Lesen deiner Nachricht."</string>
     <string name="lms_unit_cores">"Kerne"</string>
+    <string name="voice_no_result">Keine vollständige Transkription erhalten. Versuche es noch einmal oder tippe deine Nachricht.</string>
+    <string name="voice_service_interrupted">Die Spracherkennung von Android wurde vorzeitig beendet. Diktiere erneut oder tippe den Rest.</string>
+    <string name="voice_try_again">Erneut diktieren</string>
+    <string name="voice_continue">Weiter diktieren</string>
+    <string name="voice_finish_to_send">Mikrofon an. Tippe auf „Senden“, wenn du fertig bist.</string>
 </resources>

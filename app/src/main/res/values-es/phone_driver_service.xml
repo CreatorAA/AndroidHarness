@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Controles del teléfono de Harness</string>
+    <string name="phone_driver_service_description">Permite pedirle al asistente que lea la pantalla, toque controles e introduzca texto. Los controles del teléfono solo funcionan durante una tarea que inicies. Detén la tarea para retomar el control.</string>
+</resources>

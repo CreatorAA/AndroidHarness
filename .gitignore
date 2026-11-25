@@ -14,6 +14,10 @@ key.properties
 *.aab
 *.ap_
 captures/
+# Keep raw phone request captures local. Only the two synthetic examples are public.
+/dist/assistant-context/*-request.json
+!/dist/assistant-context/first-phone-request.json
+!/dist/assistant-context/first-phone-shared-screen-request.json
 
 # --- IDE ---
 .idea/
@@ -37,6 +41,8 @@ graphify-out/
 docs/*
 !docs/configuration/
 !docs/harness.schema.json
+!docs/phone-assistant.md
+!docs/phone-assistant-zh.md
 screenshots/
 mock-server.js
 README.full.md

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">नई बातचीत शुरू करें</string>
+    <string name="slash_menu_compact">संदर्भ संक्षिप्त करें</string>
+    <string name="slash_menu_compact_hint">पुराने संदर्भ का सार बनाएँ</string>
+    <string name="slash_menu_cost">लागत</string>
+    <string name="slash_menu_cost_hint">कुल टोकन और लागत दिखाएँ</string>
+    <string name="slash_menu_btw_hint">चैट में जोड़े बिना मौजूदा संदर्भ पर सवाल पूछें</string>
+    <string name="slash_menu_doctor">Harness निदान</string>
+    <string name="slash_menu_doctor_hint">Harness टूल की स्व-जाँच चलाएँ</string>
+    <string name="slash_menu_init">प्रोजेक्ट शुरू करें</string>
+    <string name="slash_menu_init_hint">AGENTS.md बनाएँ या अपडेट करें</string>
+    <string name="slash_menu_review_hint">लंबित बदलावों को बिना संपादन के देखें। कमांड के बाद समीक्षा का विषय लिखें।</string>
+    <string name="slash_menu_plan_hint">योजना कौशल लोड करके योजना मोड पर जाएँ</string>
+    <string name="slash_menu_skills">कौशल देखें</string>
+    <string name="slash_menu_skills_hint">कौशल चुनने की पूरी सूची खोलें</string>
+    <string name="slash_menu_env_hint">Linux परिवेश की जाँच, अपडेट, इंस्टॉल या मरम्मत करें</string>
+    <string name="slash_menu_snippet">अंश</string>
+    <string name="slash_menu_snippet_hint">सहेजा गया प्रॉम्प्ट अंश</string>
+</resources>

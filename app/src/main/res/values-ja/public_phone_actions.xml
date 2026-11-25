@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">1 回限りのアラームを設定</string>
+    <string name="phone_public_timer">タイマーを開始</string>
+    <string name="phone_public_map">場所を検索</string>
+    <string name="phone_public_calendar">カレンダーの下書きを開く</string>
+    <string name="phone_public_note">新しいメモを開く</string>
+</resources>

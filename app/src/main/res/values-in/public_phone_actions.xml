@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Atur alarm sekali</string>
+    <string name="phone_public_timer">Mulai timer</string>
+    <string name="phone_public_map">Cari tempat</string>
+    <string name="phone_public_calendar">Buka draf kalender</string>
+    <string name="phone_public_note">Buka catatan baru</string>
+</resources>

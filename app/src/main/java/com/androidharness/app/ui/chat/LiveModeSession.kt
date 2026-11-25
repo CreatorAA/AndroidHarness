@@ -16,6 +16,7 @@ import com.androidharness.app.data.AppSettings
 import com.androidharness.app.data.LiveModeAccess
 import com.androidharness.app.data.audio.SpeechText
 import com.androidharness.app.data.audio.TtsPhase
+import com.androidharness.app.data.audio.VoiceGateway
 import com.androidharness.app.llm.ProviderConfig
 import com.androidharness.app.llm.effectiveApiKey
 import com.androidharness.app.tools.ToolResult
@@ -72,9 +73,14 @@ class LiveModeSession(
     val listener = LiveListener(
         c.appContext,
         scope,
-        // Live Mode transcribes with Groq Whisper; the key lives in the Groq
-        // provider slot now, with the legacy single-key value as a fallback.
-        groqKey = { c.keys.voiceApiKey(com.androidharness.app.data.audio.VoicePresets.GROQ) ?: c.keys.groqApiKey() },
+        selectedCloud = { file ->
+            val p = c.voiceProviders.current().firstOrNull { it.id == settings.voiceEngine && it.supportsStt }
+            if (p == null) Result.failure(IllegalStateException(c.appContext.getString(R.string.settings_voice_status_missing_body)))
+            else {
+                val model = p.transcriptionModel(settings)
+                VoiceGateway.transcribe(p, c.voiceProviders.apiKeyFor(p.id).orEmpty(), file, model)
+            }
+        },
     )
 
     private var settings = AppSettings()
@@ -127,6 +133,7 @@ class LiveModeSession(
         _state.update { it.copy(phase = LivePhase.LISTENING) }
         listener.start(
             useGroq = settings.voiceEngine != AppSettings.VOICE_ENGINE_INBUILT,
+            offlineMandarinOnly = settings.offlineMandarinOnly,
             model = settings.groqWhisperModel,
             silence = settings.liveMode.silenceMs,
             onUtterance = ::answer,

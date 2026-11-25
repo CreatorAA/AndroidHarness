@@ -40,7 +40,7 @@ Report a behavior problem privately if you can:
   GitHub's rules.
 - Otherwise open an issue that only asks for a private contact, with no details
   in the public issue. You will get a private way to reply:
-  https://github.com/Sanuu7/AndroidHarness/issues/new
+  https://github.com/CreatorAA/AndroidHarness/issues/new?template=private_contact.yml
 
 Say what happened, where, and include links or screenshots if you have them. Only
 the maintainer reads reports, and they are handled privately. Reporting in good

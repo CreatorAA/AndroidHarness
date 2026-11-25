@@ -195,10 +195,10 @@ internal fun ScheduleMessageSheet(
                                     }
                                     var expanded by remember { mutableStateOf(false) }
                                     Box {
-                                        ScheduleRow(Icons.Outlined.Repeat, uiContext.getString(R.string.ui_repeat), schedule.scheduleLabel()) { expanded = true }
+                                        ScheduleRow(Icons.Outlined.Repeat, uiContext.getString(R.string.ui_repeat), uiContext.getString(schedule.labelRes())) { expanded = true }
                                         DropdownMenu(expanded, { expanded = false }) {
                                             AutomationSchedule.entries.forEach { option ->
-                                                DropdownMenuItem(text = { Text(option.scheduleLabel()) }, onClick = { schedule = option; expanded = false })
+                                                DropdownMenuItem(text = { Text(uiContext.getString(option.labelRes())) }, onClick = { schedule = option; expanded = false })
                                             }
                                         }
                                     }
@@ -238,7 +238,7 @@ internal fun ScheduleMessageSheet(
                         if (page == SchedulePage.CHAT) {
                             item { ScheduleRow(Icons.Outlined.Add, uiContext.getString(R.string.settings_telegram_new_chat), uiContext.getString(R.string.ui_start_a_fresh_conversation)) { sessionId = null; page = SchedulePage.DETAILS } }
                             items(sessions.filter { it.title.contains(query, ignoreCase = true) }, key = { it.id }) { chat ->
-                                ScheduleRow(Icons.AutoMirrored.Outlined.Chat, chat.title, projects.firstOrNull { it.id == chat.projectId }?.name ?: "Workspace unavailable",
+                                ScheduleRow(Icons.AutoMirrored.Outlined.Chat, chat.title, projects.firstOrNull { it.id == chat.projectId }?.name ?: uiContext.getString(R.string.ui_workspace_unavailable),
                                     enabled = projects.any { it.id == chat.projectId }) {
                                     sessionId = chat.id; projectId = chat.projectId; page = SchedulePage.DETAILS
                                 }
@@ -335,9 +335,9 @@ private fun ConnectionChoice(title: String, subtitle: String, selected: Boolean,
         }
 }
 
-internal fun AutomationSchedule.scheduleLabel(): String = when (this) {
-    AutomationSchedule.ONCE -> "Once"
-    AutomationSchedule.DAILY -> "Every day"
-    AutomationSchedule.HOURLY -> "Every hour"
-    AutomationSchedule.MANUAL -> "Manual"
+internal fun AutomationSchedule.labelRes(): Int = when (this) {
+    AutomationSchedule.ONCE -> R.string.ui_once
+    AutomationSchedule.DAILY -> R.string.automation_every_day
+    AutomationSchedule.HOURLY -> R.string.ui_every_hour
+    AutomationSchedule.MANUAL -> R.string.ui_manual
 }

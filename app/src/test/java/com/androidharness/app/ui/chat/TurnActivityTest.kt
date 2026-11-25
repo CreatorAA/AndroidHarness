@@ -4,11 +4,26 @@ import com.androidharness.app.core.ChatMessage
 import com.androidharness.app.core.Role
 import com.androidharness.app.core.ToolCallData
 import com.androidharness.app.ui.chat.components.activeToolIds
+import com.androidharness.app.ui.chat.components.activityLabelRes
+import com.androidharness.app.R
+import com.androidharness.app.androiduse.AutoJsUiScripts
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TurnActivityTest {
+    @Test fun autoJsActivityDistinguishesExecutionFromLibraryAndInterruptedWork() {
+        for ((name, labels) in mapOf(
+            AutoJsUiScripts.RUN to listOf(R.string.autojs_activity_running, R.string.autojs_activity_ran, R.string.autojs_activity_run_failed),
+            AutoJsUiScripts.LIBRARY to listOf(R.string.autojs_activity_library_working, R.string.autojs_activity_library_done, R.string.autojs_activity_library_failed),
+        )) {
+            assertEquals(labels[0], activityLabelRes(name, running = true, resultError = null))
+            assertEquals(labels[1], activityLabelRes(name, running = false, resultError = false))
+            assertEquals(labels[2], activityLabelRes(name, running = false, resultError = true))
+            assertEquals(R.string.chat_activity_interrupted, activityLabelRes(name, running = false, resultError = null))
+        }
+    }
+
     @Test
     fun `completed groups stay idle while a later group runs`() {
         val first = ToolCallData("one", "grep", "{}")

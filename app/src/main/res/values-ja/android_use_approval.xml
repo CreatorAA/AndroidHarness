@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">タップ</string>
+    <string name="phone_review_long_press">長押し</string>
+    <string name="phone_review_type">テキストを入力</string>
+    <string name="phone_review_volume">メディアの音量を設定</string>
+    <string name="phone_review_scroll_forward">前方にスクロール</string>
+    <string name="phone_review_scroll_backward">後方にスクロール</string>
+    <string name="android_use_launcher_trip">%1$s からホーム画面に戻り、%2$s を見つけてタップしてから、%3$s でこのタスクを続けます。</string>
+    <string name="android_use_action_approval">今回だけこの操作を許可しますか？\n\n%1$s</string>
+    <string name="android_use_chat_approval">このチャットでスマートフォンの操作を許可しますか？ エージェントは対象アプリの画面を選択中のモデルに送信し、タップや文字入力ができます。このチャットで許可されたスマートフォン用コマンドは、ファイルや設定の読み取りと変更もできます。対象アプリで変更を送信する前に、もう一度確認します。</string>
+    <string name="android_use_submit_approval">今回だけこの送信を許可しますか？\n\n%1$s</string>
+    <string name="android_use_retarget_approval">このタスクの対象を別のアプリに切り替えますか？ エージェントは切り替え先の画面を読み取り、操作できるようになります。\n\n%1$s</string>
+    <string name="android_use_code_entry">スマートフォンのアシスタントにタスクを送る</string>
+    <string name="android_use_code_hint">指示を入力してください。設定を開くには /phone だけを送信します。</string>
+    <string name="android_use_draft_ready">対象アプリを開き、10 分以内にアシスタントで「スマートフォンを操作」を選んでください。会話を確認するには、ここで /phone --result を使います。</string>
+    <string name="android_use_draft_expired">下書きは期限切れ、取り消し、または置き換えにより使えなくなりました。この画面を閉じ、「スマートフォンを操作」をもう一度選んでください。</string>
+    <string name="android_use_draft_cancelled">スマートフォン用タスクの下書きを取り消しました。</string>
+    <string name="android_use_no_draft">この会話には保留中のスマートフォン用タスクの下書きがありません。</string>
+    <string name="android_use_no_result">この会話から開始したスマートフォンのタスクはありません。</string>
+    <string name="android_use_local_only">スマートフォンのタスクはローカルの Code ワークスペースから開始してください。</string>
+    <string name="android_use_from_code">Code からの下書き</string>
+    <string name="phone_review_swipe">スワイプ</string>
+    <string name="phone_review_drag">ドラッグ</string>
+    <string name="phone_review_home">ホーム画面に戻る</string>
+</resources>

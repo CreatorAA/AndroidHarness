@@ -1,6 +1,7 @@
 package com.androidharness.app.agent
 
 import android.content.Context
+import com.androidharness.app.tools.AndroidUseScope
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.builtins.serializer
@@ -56,7 +57,7 @@ internal object GrantPolicy {
     fun canSave(key: String): Boolean {
         if (key.startsWith("config:") || key.startsWith("app_settings:")) return false
         val base = key.replace(workspacePrefix, "")
-        if (base.isBlank() || base in neverSaved || base.startsWith(PHONE_CONTROL_KEY)) return false
+        if (base.isBlank() || base in neverSaved || base in AndroidUseScope.names || base.startsWith(PHONE_CONTROL_KEY)) return false
         val hash = base.indexOf('#')
         if (hash < 0) return true
         val tool = base.substring(0, hash)

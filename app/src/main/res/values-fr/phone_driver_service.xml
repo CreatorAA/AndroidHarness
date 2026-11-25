@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Commandes du téléphone Harness</string>
+    <string name="phone_driver_service_description">Permet de demander à l’assistant de lire un écran, d’appuyer sur des éléments et de saisir du texte. Les commandes du téléphone ne fonctionnent que pendant une tâche que vous lancez. Arrêtez la tâche pour reprendre la main.</string>
+</resources>

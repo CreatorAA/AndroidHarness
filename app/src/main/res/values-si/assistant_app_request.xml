@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s විවෘත කරන්නද?</string>
+    <string name="app_request_search">%1$s තුළ “%2$s” සොයන්නද?</string>
+    <string name="app_request_choose_open">විවෘත කළ යුත්තේ කුමන යෙදුමද?</string>
+    <string name="app_request_choose_map">“%1$s” සෙවිය යුත්තේ කුමන සිතියම් යෙදුමෙන්ද?</string>
+    <string name="app_request_missing">මෙම දුරකථනයට විවෘත කළ හැකි “%1$s” නම් යෙදුමක් සොයාගත නොහැකි විය.</string>
+    <string name="app_request_alternative">පහත සිතියම් යෙදුමකින් ඔබට “%1$s” සෙවිය හැක.</string>
+    <string name="app_request_open_only">%1$s විවෘත කළ හැකි නමුත් එහි පොදු ස්ථාන සෙවිය නොහැක. සෙවීමකින් තොරව එය විවෘත කරන්නද?</string>
+    <string name="app_request_no_map">ස්ථාපනය කර ඇති කිසිදු යෙදුමකින් “%1$s” සිතියමේ සෙවිය නොහැක.</string>
+    <string name="app_request_no_entry">මෙම ඉල්ලීම සඳහා %1$s තුළ භාවිත කළ හැකි පිවිසුම් ස්ථානයක් නැත.</string>
+    <string name="app_request_opened">%1$s විවෘත කිරීමට ඉල්ලීම යවන ලදී.</string>
+    <string name="app_request_sent">“%2$s” සෙවීම %1$s වෙත යවන ලදී.</string>
+    <string name="app_request_failed">මෙම ඉල්ලීම %1$s වෙත යැවීමට නොහැකි විය. ලබා ගත හැකි යෙදුම් පරීක්ෂා කිරීමට නැවත ඉල්ලන්න.</string>
+    <string name="app_request_cancelled">අවලංගු කරන ලදී. කිසිදු යෙදුමක් විවෘත කළේ නැත.</string>
+</resources>

@@ -9,21 +9,31 @@ import kotlinx.serialization.json.*
 internal object ImageInspectionDelivery {
     private const val marker = "\n[screenshot result; page text read successfully]\n"
     private val contextErrors = setOf("not_in_current_context", "image_evicted", "images_disabled", "attachment_unavailable")
-    data class Envelope(val prefix: String, val body: JsonObject)
+    data class Envelope(val prefix: String, val body: JsonObject, val suffix: String)
 
     fun envelope(text: String): Envelope? {
         val prefix = text.indexOf(marker).takeIf { it >= 0 }?.let { text.substring(0, it + marker.length) }.orEmpty()
-        val body = runCatching { Json.parseToJsonElement(text.removePrefix(prefix).substringBefore("\n[took ")) as? JsonObject }.getOrNull()
+        val content = text.removePrefix(prefix)
+        val json = content.substringBefore("\n\n[Harness note for you, not the user: ").substringBefore("\n[took ")
+        val body = runCatching { Json.parseToJsonElement(json) as? JsonObject }.getOrNull()
             ?.takeIf { "image_attached" in it } ?: return null
-        return Envelope(prefix, body)
+        return Envelope(prefix, body, content.removePrefix(json))
     }
 
     fun update(message: ChatMessage, data: List<ImageData>, error: String = "attachment_unavailable",
         note: String = "No image bytes could be attached. A saved-image reference alone is not visual evidence."): ChatMessage {
-        if (message.role != Role.TOOL || message.toolName !in setOf("view_chat_image", "zoom_chat_image", "browser_read"))
+        if (message.role != Role.TOOL || message.toolName !in setOf("view_chat_image", "zoom_chat_image", "browser_read", AndroidUseScope.OBSERVE))
             return message.copy(imageData = data)
         val parsed = envelope(message.text) ?: return message.copy(imageData = data)
         val body = parsed.body
+        if (message.toolName == AndroidUseScope.OBSERVE) {
+            // A missing screenshot does not erase a valid node observation or turn it into a tool error.
+            val attached = !message.isError && data.singleOrNull()?.base64?.isNotEmpty() == true && message.images.size == 1
+            val output = JsonObject(body + mapOf("image_attached" to JsonPrimitive(attached), "delivered" to JsonPrimitive(attached),
+                "context_status" to JsonPrimitive(if (attached) "included" else "omitted"),
+                "image_error" to (if (attached) JsonNull else JsonPrimitive(error))))
+            return message.copy(text = parsed.prefix + output + parsed.suffix, imageData = if (attached) data else emptyList())
+        }
         val previousError = (body["error"] as? JsonPrimitive)?.contentOrNull
         val recoverable = previousError == null || previousError in contextErrors
         val included = data.isNotEmpty() && recoverable
@@ -41,7 +51,7 @@ internal object ImageInspectionDelivery {
             else if (included && !wasIncluded) put("message", JsonPrimitive("The saved image is attached to this request and is available for visual inspection."))
         })
         // A screenshot delivery issue does not turn a successful page-text read into a failed read.
-        return message.copy(text = parsed.prefix + output, imageData = if (included) data else emptyList(),
+        return message.copy(text = parsed.prefix + output + parsed.suffix, imageData = if (included) data else emptyList(),
             isError = if (parsed.prefix.isNotEmpty()) false else !included)
     }
 }

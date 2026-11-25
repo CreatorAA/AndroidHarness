@@ -1,0 +1,26 @@
+<resources>
+    <string name="phone_hide_panel">收起助手</string>
+    <string name="phone_background_off_hint">后台运行已关闭。离开应用后，任务会暂停。</string>
+    <string name="phone_background_paused">后台运行已关闭，任务已暂停。可在应用内打开此对话并继续。</string>
+    <string name="phone_island_title">手机助手</string>
+    <string name="phone_island_planning">正在规划下一步</string>
+    <string name="phone_island_looking">正在查看页面</string>
+    <string name="phone_island_finding">正在桌面寻找应用</string>
+    <string name="phone_island_tap">正在点选控件</string>
+    <string name="phone_island_type">正在输入文字</string>
+    <string name="phone_island_swipe">正在翻动页面</string>
+    <string name="phone_island_gesture">正在拖动项目</string>
+    <string name="phone_island_action">正在执行操作</string>
+    <string name="phone_island_batch">正在执行 %1$d / %2$d</string>
+    <string name="phone_island_check">正在核对结果</string>
+    <string name="phone_island_done">已完成</string>
+    <string name="phone_island_ended">任务已结束 · 请查看结果</string>
+    <string name="phone_island_stopped">已停止</string>
+    <string name="phone_island_failed">未完成</string>
+    <string name="phone_island_review">需要你处理</string>
+    <string name="phone_island_paused">手机操作已暂停</string>
+    <string name="phone_island_chat">查看对话</string>
+    <string name="phone_island_resume">继续执行</string>
+    <string name="phone_island_stop">停止任务</string>
+    <string name="phone_island_details">任务进度：%1$s</string>
+</resources>

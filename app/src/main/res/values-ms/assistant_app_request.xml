@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Buka %1$s?</string>
+    <string name="app_request_search">Cari “%2$s” dalam %1$s?</string>
+    <string name="app_request_choose_open">Apl manakah yang hendak dibuka?</string>
+    <string name="app_request_choose_map">Peta manakah yang hendak digunakan untuk mencari “%1$s”?</string>
+    <string name="app_request_missing">Apl bernama “%1$s” yang boleh dibuka oleh telefon ini tidak ditemui.</string>
+    <string name="app_request_alternative">Anda boleh mencari “%1$s” menggunakan salah satu apl peta di bawah.</string>
+    <string name="app_request_open_only">%1$s boleh dibuka, tetapi tidak menawarkan carian tempat awam. Buka tanpa mencari?</string>
+    <string name="app_request_no_map">Tiada apl yang dipasang menawarkan carian peta untuk “%1$s”.</string>
+    <string name="app_request_no_entry">%1$s tidak mempunyai titik masuk yang tersedia untuk permintaan ini.</string>
+    <string name="app_request_opened">Permintaan untuk membuka %1$s telah dihantar.</string>
+    <string name="app_request_sent">Carian untuk “%2$s” telah dihantar kepada %1$s.</string>
+    <string name="app_request_failed">Permintaan ini tidak dapat dihantar kepada %1$s. Minta sekali lagi untuk menyemak apl yang tersedia.</string>
+    <string name="app_request_cancelled">Dibatalkan. Tiada apl dibuka.</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Masquer l’assistant</string>
+    <string name="phone_background_off_hint">L’exécution en arrière-plan est désactivée. Quitter l’application met cette tâche en pause.</string>
+    <string name="phone_background_paused">En pause car l’exécution en arrière-plan est désactivée. Ouvrez cette discussion dans l’application pour reprendre.</string>
+    <string name="phone_island_title">Assistant du téléphone</string>
+    <string name="phone_island_planning">Planification des prochaines étapes</string>
+    <string name="phone_island_looking">Vérification de la page</string>
+    <string name="phone_island_finding">Recherche de l’application sur l’écran d’accueil</string>
+    <string name="phone_island_tap">Sélection d’un élément</string>
+    <string name="phone_island_type">Saisie de texte</string>
+    <string name="phone_island_swipe">Défilement de la page</string>
+    <string name="phone_island_gesture">Déplacement d’un élément</string>
+    <string name="phone_island_action">Exécution d’une étape</string>
+    <string name="phone_island_batch">Étape %1$d sur %2$d</string>
+    <string name="phone_island_check">Vérification du résultat</string>
+    <string name="phone_island_done">Tâche accomplie</string>
+    <string name="phone_island_ended">Fin de la tâche · résultat à vérifier</string>
+    <string name="phone_island_stopped">Arrêté</string>
+    <string name="phone_island_failed">Non terminé</string>
+    <string name="phone_island_review">Nécessite votre attention</string>
+    <string name="phone_island_paused">Commandes du téléphone en pause</string>
+    <string name="phone_island_chat">Voir la discussion</string>
+    <string name="phone_island_resume">Continuer la tâche</string>
+    <string name="phone_island_stop">Arrêter la tâche</string>
+    <string name="phone_island_details">Progression de la tâche : %1$s</string>
+</resources>

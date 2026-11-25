@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Mulakan perbualan baharu</string>
+    <string name="slash_menu_compact">Padatkan konteks</string>
+    <string name="slash_menu_compact_hint">Ringkaskan konteks terdahulu</string>
+    <string name="slash_menu_cost">Kos</string>
+    <string name="slash_menu_cost_hint">Paparkan jumlah token dan kos</string>
+    <string name="slash_menu_btw_hint">Tanya tentang konteks semasa tanpa menambahkannya ke sembang</string>
+    <string name="slash_menu_doctor">Diagnostik Harness</string>
+    <string name="slash_menu_doctor_hint">Jalankan ujian kendiri alat Harness</string>
+    <string name="slash_menu_init">Mulakan projek</string>
+    <string name="slash_menu_init_hint">Cipta atau kemas kini AGENTS.md</string>
+    <string name="slash_menu_review_hint">Semak perubahan belum selesai tanpa menyunting. Nyatakan fokus selepas arahan.</string>
+    <string name="slash_menu_plan_hint">Muatkan kemahiran perancangan dan tukar ke mod Rancang</string>
+    <string name="slash_menu_skills">Semak imbas kemahiran</string>
+    <string name="slash_menu_skills_hint">Buka senarai penuh kemahiran</string>
+    <string name="slash_menu_env_hint">Semak, kemas kini, pasang atau baiki persekitaran Linux</string>
+    <string name="slash_menu_snippet">Coretan</string>
+    <string name="slash_menu_snippet_hint">Coretan prom yang disimpan</string>
+</resources>

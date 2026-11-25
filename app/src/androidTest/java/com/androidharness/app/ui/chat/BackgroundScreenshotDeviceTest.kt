@@ -1,8 +1,8 @@
 package com.androidharness.app.ui.chat
 
-import android.graphics.Rect
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.SystemClock
-import android.view.MotionEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewModelScope
@@ -14,6 +14,7 @@ import com.androidharness.app.core.ChatMessage
 import com.androidharness.app.core.Role
 import com.androidharness.app.tools.BrowserScreenshotTool
 import com.androidharness.app.tools.ToolContext
+import com.androidharness.app.ui.bringTestTargetToForeground
 import com.androidharness.app.ui.theme.HarnessTheme
 import com.androidharness.app.workspace.FileFs
 import java.io.File
@@ -68,20 +69,31 @@ class BackgroundScreenshotDeviceTest {
             val result = tool.execute(JsonObject(emptyMap()), ToolContext(fs))
             val seen = nodes().mapNotNull { (it.className?.toString()?.substringAfterLast('.') ?: "") + ":" + (it.text ?: it.contentDescription ?: "") }.take(60)
             assertTrue("$label: ${result.output}\nOn screen: $seen", result.ok)
+            val image = requireNotNull(result.image)
+            try {
+                val saved = File(root, ".harness/screenshots/${image.name}")
+                val bitmap = requireNotNull(BitmapFactory.decodeFile(saved.path)) { "Workspace screenshot missing: $saved" }
+                try {
+                    val middle = bitmap.getPixel(bitmap.width / 2, bitmap.height / 2)
+                    assertTrue("$label: screenshot did not contain the fixture's red background",
+                        Color.red(middle) > 150 && Color.green(middle) < 50 && Color.blue(middle) < 50)
+                } finally { bitmap.recycle() }
+            } finally { c.images.delete(image.name) }
         }
         try {
             instrumentation.runOnMainSync { vm = ChatViewModel(c, sid) }
             withTimeout(10000) { vm!!.state.first { !it.isLoadingMessages } }
+            bringTestTargetToForeground()
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> activity.setContent { HarnessTheme {
                     ChatScreen(vm!!, {}, { _, _ -> }, {}, {}, onOpenSubagent = {})
                 } } }
-                await("Open GitHub")
+                eventually { nodes().any { it.isEditable } }
                 c.browser.navigate("http://localhost:$port/", fs)
 
                 // Chat on screen, preview closed: captured offscreen, and the sheet stays closed.
                 shoot("sheet closed")
-                assertTrue(find("Web & HTML Preview") == null && nodes().none { it.className?.toString()?.contains("WebView") == true })
+                assertTrue(find(c.appContext.getString(com.androidharness.app.R.string.ui_web_html_preview)) == null && nodes().none { it.className?.toString()?.contains("WebView") == true })
 
                 // The app in the background.
                 scenario.moveToState(androidx.lifecycle.Lifecycle.State.CREATED)
@@ -104,19 +116,6 @@ class BackgroundScreenshotDeviceTest {
         instrumentation.uiAutomation.rootInActiveWindow?.let(::visit)
     }
     private fun find(text: String) = nodes().firstOrNull { it.text?.toString() == text || it.contentDescription?.toString() == text }
-    private fun await(text: String): AccessibilityNodeInfo {
-        eventually { find(text) != null }
-        return requireNotNull(find(text))
-    }
-    private fun tap(text: String) {
-        val bounds = Rect().also(await(text)::getBoundsInScreen)
-        val time = SystemClock.uptimeMillis()
-        for (action in listOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP)) {
-            val event = MotionEvent.obtain(time, SystemClock.uptimeMillis(), action, bounds.exactCenterX(), bounds.exactCenterY(), 0)
-            try { assertTrue(instrumentation.uiAutomation.injectInputEvent(event, true)) } finally { event.recycle() }
-        }
-        instrumentation.waitForIdleSync()
-    }
     private fun eventually(check: () -> Boolean) {
         val end = SystemClock.uptimeMillis() + 12000
         while (SystemClock.uptimeMillis() < end) { if (check()) return; SystemClock.sleep(60) }

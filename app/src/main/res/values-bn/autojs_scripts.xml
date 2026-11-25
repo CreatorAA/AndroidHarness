@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 স্ক্রিপ্ট</string>
+    <string name="autojs_allow">অ্যাসিস্ট্যান্টকে AutoJs6 ব্যবহারের অনুমতি দিন</string>
+    <string name="autojs_allow_hint">পেয়ার করা ড্রাইভার ও UI স্ক্রিপ্ট যোগ করে। চালু থাকলে বিল্ট-ইন পরিষেবাটিও ব্যবহার করা যায়।</string>
+    <string name="autojs_need_pair">এখন স্ক্রিপ্ট লিখুন ও যাচাই করুন। ফোনে চালানোর আগে লোকাল AutoJs6 প্লাগইন কনফিগার করুন।</string>
+    <string name="autojs_new">নতুন স্ক্রিপ্ট</string>
+    <string name="autojs_back">ফিরে যান</string>
+    <string name="autojs_source">UI স্ক্রিপ্ট</string>
+    <string name="autojs_sample_source">text(\"চালিয়ে যান\").waitFor();</string>
+    <string name="autojs_name">নাম (পরীক্ষার জন্য ঐচ্ছিক)</string>
+    <string name="autojs_name_exists">এই নামে একটি স্ক্রিপ্ট আগে থেকেই আছে। সেটি সম্পাদনা করতে খুলুন অথবা অন্য নাম দিন।</string>
+    <string name="autojs_format">কোনো কন্ট্রোল খুঁজতে text, desc বা id ব্যবহার করুন। তারপর সেটির জন্য অপেক্ষা করুন, সেটিতে ট্যাপ করুন বা টেক্সট লিখুন। প্রতি লাইনে একটি নির্দেশ দিন।</string>
+    <string name="autojs_check">ধাপ যাচাই করুন</string>
+    <string name="autojs_prepare">নির্দিষ্ট অ্যাপে পরীক্ষা করুন</string>
+    <string name="autojs_preview">বৈধ ধাপ: %1$d · কিছুই চালানো হয়নি</string>
+    <string name="autojs_empty">আবার ব্যবহারযোগ্য অ্যাকশন তৈরি করতে নতুন স্ক্রিপ্ট-এ ট্যাপ করুন। সংরক্ষণ না করে পরীক্ষা করতে নাম খালি রাখুন।</string>
+    <string name="autojs_enabled_hint">অ্যাসিস্ট্যান্ট এই লাইব্রেরিতে চালু থাকা স্ক্রিপ্ট ব্যবহার করতে পারে।</string>
+    <string name="autojs_disabled_hint">পরীক্ষা করার আগে লাইব্রেরিতে এই স্ক্রিপ্ট চালু করুন।</string>
+    <string name="autojs_delete">“%1$s” মুছবেন?</string>
+    <string name="autojs_delete_action">মুছুন</string>
+    <string name="autojs_changed">লাইব্রেরিতে এই স্ক্রিপ্ট পরিবর্তিত হয়েছে। সংরক্ষণ বা চালানোর আগে এটি আবার খুলুন।</string>
+    <string name="autojs_write_failed">স্ক্রিপ্ট সংরক্ষণ করা যায়নি।</string>
+    <string name="autojs_anonymous">অসংরক্ষিত স্ক্রিপ্ট</string>
+    <string name="autojs_prepared">%1$s পরীক্ষা করার জন্য প্রস্তুত। নির্দিষ্ট অ্যাপটি খুলে ১০ মিনিটের মধ্যে ফোন অ্যাসিস্ট্যান্টকে ডাকুন।</string>
+    <string name="autojs_trial_title">স্ক্রিপ্ট চালান · %1$s</string>
+    <string name="autojs_trial_here">শুধু %1$s-এ</string>
+    <string name="autojs_trial_other">যে অ্যাপটি পরীক্ষা করতে চান সেটি খুলুন, তারপর সেখানে অ্যাসিস্ট্যান্ট চালু করুন।</string>
+    <string name="autojs_trial_steps">%1$dটি ধাপ · দেখতে ট্যাপ করুন</string>
+    <string name="autojs_trial_less">ধাপ লুকান</string>
+    <string name="autojs_trial_allow">অনুমতি দিয়ে এখানে চালান</string>
+    <string name="autojs_trial_stale">এই পরীক্ষার মেয়াদ শেষ হয়েছে অথবা অ্যাপ বদলে গেছে। স্ক্রিপ্ট লাইব্রেরিতে এটি আবার প্রস্তুত করুন।</string>
+    <string name="autojs_trial_request">%2$s-এ “%1$s” চালান।</string>
+    <string name="autojs_trial_done">%3$s-এ স্ক্রিপ্টের %2$dটি ধাপের মধ্যে %1$dটি সম্পন্ন হয়েছে।</string>
+    <string name="autojs_trial_stopped">%3$s-এ স্ক্রিপ্টের %2$dটি ধাপের মধ্যে %1$dটি সম্পন্ন হওয়ার পর সেটি বন্ধ হয়েছে।</string>
+    <string name="autojs_trial_error">বর্তমান অ্যাপে এই স্ক্রিপ্ট চালু করা যায়নি।</string>
+    <string name="autojs_trial_interrupted">স্ক্রিপ্টে বাধা পড়েছে। আবার চেষ্টা করার আগে অ্যাপটি যাচাই করুন।</string>
+    <string name="autojs_not_selected">স্ক্রিপ্ট প্রস্তুত করার আগে AutoJs6 চালু করুন।</string>
+    <string name="autojs_activity_running">AutoJs6 স্ক্রিপ্ট চলছে</string>
+    <string name="autojs_activity_ran">AutoJs6 স্ক্রিপ্ট চালানো হয়েছে</string>
+    <string name="autojs_activity_run_failed">AutoJs6 স্ক্রিপ্ট সম্পন্ন হয়নি</string>
+    <string name="autojs_activity_library_working">AutoJs6 স্ক্রিপ্ট লাইব্রেরি ব্যবহার করা হচ্ছে</string>
+    <string name="autojs_activity_library_done">AutoJs6 স্ক্রিপ্ট লাইব্রেরি ব্যবহার করা হয়েছে</string>
+    <string name="autojs_activity_library_failed">AutoJs6 স্ক্রিপ্ট লাইব্রেরির অ্যাকশন ব্যর্থ হয়েছে</string>
+</resources>

@@ -4,11 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class StartScreen {
-    CODE, CHAT, LAST_SELECTED;
+    CODE, CHAT, LAST_SELECTED, PHONE;
 
     fun kind(last: ConversationKind): ConversationKind = when (this) {
         CODE -> ConversationKind.CODE
         CHAT -> ConversationKind.CHAT
+        PHONE -> ConversationKind.PHONE
         LAST_SELECTED -> last
     }
 
@@ -45,6 +46,7 @@ internal data class ConversationStartup(val kind: ConversationKind, val sessionI
             val resume = when (kind) {
                 ConversationKind.CHAT -> settings.chatStart == ChatStartMode.LAST_CHAT
                 ConversationKind.CODE -> settings.codeStart == CodeStartMode.LAST_CODE
+                ConversationKind.PHONE -> true
             }
             val session = settings.lastActiveSessionId?.takeIf {
                 resume && lastSessionKind == kind && it.isNotBlank() && it !in settings.archivedSessions

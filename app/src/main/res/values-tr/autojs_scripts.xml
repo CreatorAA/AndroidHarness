@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 betikleri</string>
+    <string name="autojs_allow">Asistanın AutoJs6 kullanmasına izin ver</string>
+    <string name="autojs_allow_hint">Eşleştirilmiş sürücü ve arayüz betiklerini ekler. Yerleşik hizmet etkinleştirildiğinde kullanılmaya devam eder.</string>
+    <string name="autojs_need_pair">Betikleri şimdi yazıp kontrol edin. Bunları telefonda çalıştırmadan önce yerel AutoJs6 eklentisini yapılandırın.</string>
+    <string name="autojs_new">Yeni betik</string>
+    <string name="autojs_back">Geri</string>
+    <string name="autojs_source">Arayüz betiği</string>
+    <string name="autojs_sample_source">text(\"Devam\").waitFor();</string>
+    <string name="autojs_name">Ad (deneme için isteğe bağlı)</string>
+    <string name="autojs_name_exists">Bu adla bir betik zaten var. Düzenlemek için onu açın veya başka bir ad seçin.</string>
+    <string name="autojs_format">Bir kontrolü bulmak için text, desc veya id kullanın; ardından kontrolün görünmesini bekleyin, ona dokunun veya metin girin. Her satıra bir komut yazın.</string>
+    <string name="autojs_check">Adımları kontrol et</string>
+    <string name="autojs_prepare">Hedef uygulamada dene</string>
+    <string name="autojs_preview">Geçerli adım: %1$d · hiçbir şey çalıştırılmadı</string>
+    <string name="autojs_empty">Yeniden kullanılabilir bir işlem oluşturmak için Yeni betik\'e dokunun. Kaydetmeden denemek için ad alanını boş bırakın.</string>
+    <string name="autojs_enabled_hint">Asistan bu kitaplıkta etkinleştirilen betikleri kullanabilir.</string>
+    <string name="autojs_disabled_hint">Denemeden önce bu betiği kitaplıkta etkinleştirin.</string>
+    <string name="autojs_delete">“%1$s” silinsin mi?</string>
+    <string name="autojs_delete_action">Sil</string>
+    <string name="autojs_changed">Bu betik kitaplıkta değiştirildi. Kaydetmeden veya çalıştırmadan önce yeniden açın.</string>
+    <string name="autojs_write_failed">Betik kaydedilemedi.</string>
+    <string name="autojs_anonymous">Kaydedilmemiş betik</string>
+    <string name="autojs_prepared">Deneme hazır: %1$s. Hedef uygulamayı açın ve 10 dakika içinde telefon asistanını çağırın.</string>
+    <string name="autojs_trial_title">Betiği çalıştır · %1$s</string>
+    <string name="autojs_trial_here">Yalnızca %1$s içinde</string>
+    <string name="autojs_trial_other">Test etmek istediğiniz uygulamayı açın, ardından asistanı orada çağırın.</string>
+    <string name="autojs_trial_steps">%1$d adım · incelemek için dokunun</string>
+    <string name="autojs_trial_less">Adımları gizle</string>
+    <string name="autojs_trial_allow">İzin ver ve burada çalıştır</string>
+    <string name="autojs_trial_stale">Bu denemenin süresi doldu veya uygulama değişti. Betik kitaplığında yeniden hazırlayın.</string>
+    <string name="autojs_trial_request">“%1$s” betiğini %2$s içinde çalıştır.</string>
+    <string name="autojs_trial_done">%3$s içinde %2$d betik adımından %1$d tanesi tamamlandı.</string>
+    <string name="autojs_trial_stopped">Betik, %3$s içinde %2$d adımdan %1$d tanesi tamamlandıktan sonra durduruldu.</string>
+    <string name="autojs_trial_error">Bu betik geçerli uygulamada başlatılamadı.</string>
+    <string name="autojs_trial_interrupted">Betik kesintiye uğradı. Tekrar denemeden önce uygulamayı kontrol edin.</string>
+    <string name="autojs_not_selected">Bir betik hazırlamadan önce AutoJs6\'yı etkinleştirin.</string>
+    <string name="autojs_activity_running">AutoJs6 betiği çalıştırılıyor</string>
+    <string name="autojs_activity_ran">AutoJs6 betiği çalıştırıldı</string>
+    <string name="autojs_activity_run_failed">AutoJs6 betiği tamamlanmadı</string>
+    <string name="autojs_activity_library_working">AutoJs6 betik kitaplığı kullanılıyor</string>
+    <string name="autojs_activity_library_done">AutoJs6 betik kitaplığı kullanıldı</string>
+    <string name="autojs_activity_library_failed">AutoJs6 betik kitaplığı işlemi başarısız oldu</string>
+</resources>

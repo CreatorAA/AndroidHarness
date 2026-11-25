@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Sağlayıcı varsayılanı"</string>
     <string name="ui_add_custom_command">"Özel komut ekle"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Uygulama simge durumuna küçültüldüğünde terminalin ölmemesi için bir çalıştırma veya terminal etkinken CPU\'yi basılı tutun."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Hariç tutuldu: Android arka plandaki çalıştırmaları kısıtlamaz."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Açık: Samsung ve diğer OEM\'ler arka plan çalışmasını sonlandırabilir. Güvenilir uzun çalışmalar için uygulamayı hariç tutun."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness için Android pil optimizasyonu kapalı."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android pil optimizasyonu açık. Ekran kapalıyken uzun süren görevler duruyorsa AndroidHarness uygulamasının pili kısıtlama olmadan kullanmasına izin ver."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Güncel sürüm %1$s. Daha yeni yapılar için GitHub Sürümlerini kontrol eder."</string>
     <string name="ui_available_see_the_dialog">"%1$s mevcut, iletişim kutusuna bakın"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Telefonunuzda yaşayan bir kodlama aracısı."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"Okuma hızı"</string>
     <string name="lms_field_prompt_threads_help">"Mesajını okurken kullanılan CPU çekirdekleri."</string>
     <string name="lms_unit_cores">"çekirdek"</string>
+    <string name="voice_no_result">Tam bir ses dökümü alınamadı. Tekrar konuşmayı deneyin veya mesajınızı yazın.</string>
+    <string name="voice_service_interrupted">Sistem konuşma hizmeti tamamlanmadan durdu. Yeniden dikte etmeyi deneyin veya kalanını yazın.</string>
+    <string name="voice_try_again">Yeniden dikte et</string>
+    <string name="voice_continue">Dikteye devam et</string>
+    <string name="voice_finish_to_send">Dinleniyor. Bitirdiğinizde Gönder\'e dokunun.</string>
 </resources>

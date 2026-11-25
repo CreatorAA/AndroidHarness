@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Pemegang tepi</string>
+    <string name="assistant_edge_desc">Leret pemegang di tepi kanan ke dalam untuk membuka pembantu.</string>
+    <string name="assistant_edge_permission_hint">Dalam Tetapan Android, benarkan AndroidHarness dipaparkan di atas apl lain.</string>
+    <string name="assistant_edge_permission_unavailable">Tetapan kebenaran paparan di atas apl lain tidak dapat dibuka.</string>
+    <string name="assistant_edge_handle_description">Buka pembantu di atas apl lain</string>
+    <string name="assistant_edge_start_failed">Pemegang tepi tidak dapat dihidupkan. Cuba lagi.</string>
+    <string name="assistant_edge_disconnected">Sistem telah memutuskan sambungan pembantu.</string>
+    <string name="assistant_edge_reconnect">Sambung semula</string>
+    <string name="assistant_edge_reconnect_steps">Dalam tetapan pembantu Android, pilih Tiada, kemudian pilih AndroidHarness semula.</string>
+    <string name="assistant_edge_grant_overlay">Benarkan paparan di atas apl lain</string>
+</resources>

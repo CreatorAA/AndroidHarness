@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness 手機控制</string>
+    <string name="phone_driver_service_description">您可以請助理讀取畫面、輕觸元件或輸入文字。手機控制只會在您啟動的任務執行期間生效。若要自行操作，請停止任務。</string>
+</resources>

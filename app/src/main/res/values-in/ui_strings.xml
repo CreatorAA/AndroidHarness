@@ -1140,8 +1140,8 @@
     <string name="ui_provider_default">"Default penyedia"</string>
     <string name="ui_add_custom_command">"Tambah perintah kustom"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Jaga CPU tetap aktif saat eksekusi atau terminal berjalan agar terminal tidak berhenti saat aplikasi diminimalkan."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Dikecualikan: Android tidak membatasi eksekusi latar belakang."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Aktif: Samsung dan produsen lain dapat menghentikan pekerjaan latar belakang. Kecualikan aplikasi agar eksekusi panjang lebih andal."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Pengoptimalan baterai Android dinonaktifkan untuk AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Pengoptimalan baterai Android diaktifkan. Jika tugas yang berjalan lama terhenti saat layar mati, izinkan AndroidHarness menggunakan baterai tanpa batasan."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Versi saat ini %1$s. Memeriksa GitHub Releases untuk versi lebih baru."</string>
     <string name="ui_available_see_the_dialog">"%1$s tersedia, lihat dialog"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Agen pemrograman yang berjalan di ponsel Anda."</string>
@@ -1841,4 +1841,9 @@
     <string name="lms_field_prompt_threads">"Kecepatan membaca"</string>
     <string name="lms_field_prompt_threads_help">"Inti CPU saat membaca pesan Anda."</string>
     <string name="lms_unit_cores">"inti"</string>
+    <string name="voice_no_result">Transkrip lengkap tidak diterima. Coba bicara lagi atau ketik pesan Anda.</string>
+    <string name="voice_service_interrupted">Layanan suara sistem berhenti sebelum selesai. Coba dikte lagi atau ketik sisanya.</string>
+    <string name="voice_try_again">Dikte lagi</string>
+    <string name="voice_continue">Lanjutkan dikte</string>
+    <string name="voice_finish_to_send">Mendengarkan. Ketuk kirim setelah selesai.</string>
 </resources>

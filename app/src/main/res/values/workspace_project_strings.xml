@@ -109,4 +109,22 @@
     <string name="wp_app_workspace_reset_title">Reset app workspace?</string>
     <string name="wp_app_workspace_reset_body">Deletes %1$s, %2$s and every file in the app workspace folder on this device (%3$s in total), including project memory and undo history. The workspace stays as an empty default. This cannot be undone.</string>
     <string name="wp_app_workspace_reset_confirm">Reset workspace</string>
+    <string name="wp_delete_shared_blocked">Used by chats in other projects: %1$s. Remove this workspace from those chats before deleting it. Chats with saved changes must keep their workspace access.</string>
+    <string name="wp_delete_running_blocked">Stop running tasks in this project before deleting it.</string>
+    <string name="wp_reset_shared_blocked">Other chats also use the app workspace: %1$s. Remove this workspace from those chats before resetting it.</string>
+    <string name="wp_reset_running_blocked">Stop running tasks in this workspace before resetting it.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d automation</item>
+        <item quantity="other">%1$d automations</item>
+    </plurals>
+    <string name="wp_picked_folder">Picked folder</string>
+    <string name="wp_review_changed">The details have changed. Close this dialog and review the action again.</string>
+    <string name="wp_editor_toggle_wrap">Toggle word wrap</string>
+    <string name="wp_editor_undo_available">Undo available</string>
+    <string name="wp_reset_app_only">Only the app workspace can be reset.</string>
+    <string name="wp_editor_find_replace">Search and replace in project</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d changed file</item>
+        <item quantity="other">%1$d changed files</item>
+    </plurals>
 </resources>

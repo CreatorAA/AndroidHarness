@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness telefon kontrolleri</string>
+    <string name="phone_driver_service_description">Asistandan ekranı okumasını, kontrollere dokunmasını ve metin girmesini istemenizi sağlar. Telefon kontrolleri yalnızca sizin başlattığınız bir görev sırasında çalışır. Kontrolü devralmak için görevi durdurun.</string>
+</resources>

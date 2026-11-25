@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">ภาษาจีนกลางแบบออฟไลน์เท่านั้น</string>
+    <string name="voice_local_only_on">ใช้โมเดลภาษาจีนกลางที่มาพร้อมแอป เสียงของคุณจะอยู่ในโทรศัพท์</string>
+    <string name="voice_system_first">ใช้บริการรู้จำเสียงของ Android เป็นหลัก หากไม่พร้อมใช้งาน จะถอดเสียงภาษาจีนกลางต่อบนโทรศัพท์</string>
+    <string name="voice_live_handoff">กำลังทำงานต่อบนโทรศัพท์เครื่องนี้ ข้อความที่แสดงแล้วจะยังอยู่ พูดต่อได้เลย</string>
+    <string name="voice_local_stopped">การถอดเสียงบนอุปกรณ์หยุดแล้ว คุณเก็บข้อความที่แสดงไว้และพูดต่อหรือพิมพ์ส่วนที่เหลือได้</string>
+    <string name="voice_clip_unavailable">ไม่สามารถกู้คืนข้อความถอดเสียงที่สมบูรณ์จากไฟล์บันทึกนี้ได้</string>
+    <string name="voice_continue_offline">ดำเนินการต่อบนอุปกรณ์</string>
+    <string name="voice_clip_handoff">บริการรู้จำเสียงไม่พร้อมใช้งาน กำลังถอดเสียงจากไฟล์บันทึกนี้บนโทรศัพท์</string>
+</resources>

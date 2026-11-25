@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Edge handle</string>
+    <string name="assistant_edge_desc">Swipe inward to open the assistant. Drag the handle up or down to move it.</string>
+    <string name="assistant_edge_permission_hint">In Android settings, allow AndroidHarness to display over other apps.</string>
+    <string name="assistant_edge_permission_unavailable">Could not open overlay permission settings.</string>
+    <string name="assistant_edge_handle_description">Open cross-app assistant</string>
+    <string name="assistant_edge_start_failed">Could not start the edge handle. Try again.</string>
+    <string name="assistant_edge_disconnected">The system disconnected the assistant.</string>
+    <string name="assistant_edge_reconnect">Reconnect</string>
+    <string name="assistant_edge_reconnect_steps">In Android’s assistant settings, choose None, then choose AndroidHarness again.</string>
+    <string name="assistant_edge_grant_overlay">Allow overlay</string>
+</resources>

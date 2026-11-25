@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Einmaligen Wecker stellen</string>
+    <string name="phone_public_timer">Timer starten</string>
+    <string name="phone_public_map">Ort suchen</string>
+    <string name="phone_public_calendar">Terminentwurf öffnen</string>
+    <string name="phone_public_note">Neue Notiz öffnen</string>
+</resources>

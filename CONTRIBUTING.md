@@ -10,7 +10,7 @@ If you're reporting a bug, tell us what you tried, what you expected, and what h
 
 ## Build and test
 
-You'll need JDK 17 or newer and the Android SDK. The app is a Kotlin and Jetpack Compose project with a single `app` module.
+Use Temurin JDK 21 and the Android SDK versions in the [build instructions](README.md#build-from-source). The Kotlin and Jetpack Compose app lives in `app/`.
 
 ```bash
 ./gradlew :app:assembleDebug
@@ -29,7 +29,7 @@ Join the project, pick a language, and translate as much or as little as you lik
 
 - English, in `app/src/main/res/values/`, is the source of truth. Missing translations fall back to English at runtime.
 - Existing translations live in `app/src/main/res/values-<locale>/`, for example `values-zh-rCN` for Simplified Chinese.
-- The app uses two string files, `strings.xml` and `ui_extra_strings.xml`. POEditor covers both.
+- Find the resource name in `app/src/main/res/values/`, then put the translation in the matching feature file under the locale. For example, assistant labels live in `assistant_strings.xml`. Learn lessons are separate: update the matching lesson in `app/src/main/assets/learn/guide-<locale>.json`, keeping its IDs and action targets intact.
 - Keep placeholders such as `%1$s` and `%d` exactly as they are, and keep XML escaping (for example `\'`). Changing them breaks formatted text.
 - Community translations are reviewed before they ship in a release.
 - To see your work in the app, open **Settings → Language → App language** and choose the language; the system language is also honored.

@@ -32,7 +32,7 @@ internal object ChatImageInventory {
     fun remoteId(url: String): String = id("url:" + (httpImageUrl(url) ?: url))
     fun from(messages: List<ChatMessage>): List<ChatImageSource> = messages.asReversed().asSequence()
         .filter { it.role == Role.USER || it.role == Role.ASSISTANT && it.toolCallId == null ||
-            it.role == Role.TOOL && it.toolName in setOf("view_chat_image", "browser_read") &&
+            it.role == Role.TOOL && it.toolName in setOf("view_chat_image", "browser_read", "read_screen", AndroidUseScope.OBSERVE) &&
                 (!it.isError || ImageInspectionDelivery.envelope(it.text)?.body?.get("available_image") is JsonObject) }
         .flatMap { message ->
             val role = message.role.name.lowercase()
@@ -73,7 +73,7 @@ internal object ChatImageInventory {
         ref.origin == "browser_screenshot" -> "browser_screenshot"
         ref.sourceUrl != null || ref.origin in setOf("web_image", "remote_web") -> "remote_web"
         ref.origin == "user_upload" || role == Role.USER -> "user_upload"
-        ref.origin in setOf("generated_image", "image_crop", "tool_image") -> ref.origin!!
+        ref.origin in setOf("generated_image", "image_crop", "tool_image", AndroidUseScope.OBSERVE) -> ref.origin!!
         role == Role.TOOL -> "tool_image"
         else -> "unknown_saved"
     }

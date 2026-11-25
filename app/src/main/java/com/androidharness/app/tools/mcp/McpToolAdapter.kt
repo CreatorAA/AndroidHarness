@@ -1,5 +1,7 @@
 package com.androidharness.app.tools.mcp
 
+import com.androidharness.app.data.ImageStore
+import kotlinx.coroutines.CancellationException
 import com.androidharness.app.tools.Tool
 import com.androidharness.app.tools.ToolContext
 import com.androidharness.app.tools.ToolFailure
@@ -15,12 +17,15 @@ import kotlinx.serialization.json.putJsonObject
  * the wire. Always non-read-only, so every call goes through the harness's
  * normal permission gating.
  */
-class McpToolAdapter(
+class McpToolAdapter internal constructor(
     private val serverName: String,
     private val info: McpToolInfo,
     private val connection: McpConnection,
-    private val onDead: () -> Unit = {},
+    private val imageStore: ImageStore?,
+    private val onDead: () -> Unit,
 ) : Tool {
+    constructor(serverName: String, info: McpToolInfo, connection: McpConnection, onDead: () -> Unit = {}) :
+        this(serverName, info, connection, null, onDead)
 
     override val name: String = McpNames.toolName(serverName, info.name)
     override val description: String =
@@ -42,8 +47,13 @@ class McpToolAdapter(
             )
         }
         return try {
-            val (text, isError) = connection.callTool(info.name, args)
-            ToolResult(!isError, text)
+            val result = McpOutput.parse(connection.callToolResult(info.name, args, 60_000))
+            result.deliver(ctx.imageInputAllowed, imageStore?.let { store -> { block ->
+                val image = decodeMcpRaster(block)
+                store.saveEncodedImage(image.bytes, image.mime, image.width, image.height, "mcp").copy(origin = "mcp")
+            } })
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: ToolFailure) {
             if (!connection.isAlive) onDead()
             ToolResult(false, e.message ?: "MCP tool '${info.name}' failed")

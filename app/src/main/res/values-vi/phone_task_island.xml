@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Ẩn trợ lý</string>
+    <string name="phone_background_off_hint">Tính năng chạy trong nền đang tắt. Khi bạn rời ứng dụng, tác vụ này sẽ tạm dừng.</string>
+    <string name="phone_background_paused">Đã tạm dừng vì tính năng chạy trong nền đang tắt. Mở cuộc trò chuyện này trong ứng dụng để tiếp tục.</string>
+    <string name="phone_island_title">Trợ lý điện thoại</string>
+    <string name="phone_island_planning">Đang lên kế hoạch cho các bước tiếp theo</string>
+    <string name="phone_island_looking">Đang kiểm tra trang</string>
+    <string name="phone_island_finding">Đang tìm ứng dụng trên màn hình chính</string>
+    <string name="phone_island_tap">Đang chọn nút điều khiển</string>
+    <string name="phone_island_type">Đang nhập văn bản</string>
+    <string name="phone_island_swipe">Đang di chuyển trên trang</string>
+    <string name="phone_island_gesture">Đang kéo một mục</string>
+    <string name="phone_island_action">Đang thực hiện một bước</string>
+    <string name="phone_island_batch">Bước %1$d trên %2$d</string>
+    <string name="phone_island_check">Đang kiểm tra kết quả</string>
+    <string name="phone_island_done">Đã hoàn thành</string>
+    <string name="phone_island_ended">Đã kết thúc · kiểm tra kết quả</string>
+    <string name="phone_island_stopped">Đã dừng</string>
+    <string name="phone_island_failed">Chưa hoàn thành</string>
+    <string name="phone_island_review">Cần bạn chú ý</string>
+    <string name="phone_island_paused">Đã tạm dừng điều khiển điện thoại</string>
+    <string name="phone_island_chat">Xem cuộc trò chuyện</string>
+    <string name="phone_island_resume">Tiếp tục tác vụ</string>
+    <string name="phone_island_stop">Dừng tác vụ</string>
+    <string name="phone_island_details">Tiến trình tác vụ: %1$s</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">สคริปต์ AutoJs6</string>
+    <string name="autojs_allow">อนุญาตให้ผู้ช่วยใช้ AutoJs6</string>
+    <string name="autojs_allow_hint">เพิ่มไดรเวอร์ที่จับคู่แล้วและสคริปต์ UI โดยบริการในตัวยังคงใช้งานได้เมื่อเปิดใช้งาน</string>
+    <string name="autojs_need_pair">เขียนและตรวจสอบสคริปต์ได้ทันที ตั้งค่าปลั๊กอิน AutoJs6 ในเครื่องก่อนเรียกใช้สคริปต์บนโทรศัพท์</string>
+    <string name="autojs_new">สคริปต์ใหม่</string>
+    <string name="autojs_back">กลับ</string>
+    <string name="autojs_source">สคริปต์ UI</string>
+    <string name="autojs_sample_source">text(\"ดำเนินการต่อ\").waitFor();</string>
+    <string name="autojs_name">ชื่อ (ไม่จำเป็นสำหรับการทดลอง)</string>
+    <string name="autojs_name_exists">มีสคริปต์ใช้ชื่อนี้อยู่แล้ว เปิดสคริปต์นั้นเพื่อแก้ไข หรือเลือกชื่ออื่น</string>
+    <string name="autojs_format">ใช้ text, desc หรือ id เพื่อค้นหาตัวควบคุม แล้วรอให้ปรากฏ แตะ หรือป้อนข้อความ ใช้หนึ่งคำสั่งต่อบรรทัด</string>
+    <string name="autojs_check">ตรวจสอบขั้นตอน</string>
+    <string name="autojs_prepare">ทดลองในแอปเป้าหมาย</string>
+    <string name="autojs_preview">ขั้นตอนที่ถูกต้อง: %1$d · ยังไม่ได้ดำเนินการใดๆ</string>
+    <string name="autojs_empty">แตะสคริปต์ใหม่เพื่อสร้างการดำเนินการที่ใช้ซ้ำได้ เว้นชื่อว่างไว้เพื่อทดลองโดยไม่บันทึก</string>
+    <string name="autojs_enabled_hint">ผู้ช่วยใช้สคริปต์ที่เปิดใช้งานในคลังนี้ได้</string>
+    <string name="autojs_disabled_hint">เปิดใช้งานสคริปต์นี้ในคลังก่อนทดลอง</string>
+    <string name="autojs_delete">ลบ “%1$s” ไหม</string>
+    <string name="autojs_delete_action">ลบ</string>
+    <string name="autojs_changed">สคริปต์นี้มีการเปลี่ยนแปลงในคลัง เปิดใหม่ก่อนบันทึกหรือเรียกใช้</string>
+    <string name="autojs_write_failed">บันทึกสคริปต์ไม่ได้</string>
+    <string name="autojs_anonymous">สคริปต์ที่ยังไม่ได้บันทึก</string>
+    <string name="autojs_prepared">พร้อมทดลอง: %1$s เปิดแอปเป้าหมายและเรียกผู้ช่วยบนโทรศัพท์ภายใน 10 นาที</string>
+    <string name="autojs_trial_title">เรียกใช้สคริปต์ · %1$s</string>
+    <string name="autojs_trial_here">ใน %1$s เท่านั้น</string>
+    <string name="autojs_trial_other">เปิดแอปที่ต้องการทดสอบ แล้วเรียกผู้ช่วยในแอปนั้น</string>
+    <string name="autojs_trial_steps">%1$d ขั้นตอน · แตะเพื่อตรวจสอบ</string>
+    <string name="autojs_trial_less">ซ่อนขั้นตอน</string>
+    <string name="autojs_trial_allow">อนุญาตและเรียกใช้ที่นี่</string>
+    <string name="autojs_trial_stale">การทดลองนี้หมดอายุแล้วหรือแอปมีการเปลี่ยนแปลง โปรดเตรียมการทดลองอีกครั้งในคลังสคริปต์</string>
+    <string name="autojs_trial_request">เรียกใช้ “%1$s” ใน %2$s</string>
+    <string name="autojs_trial_done">ดำเนินการสคริปต์ใน %3$s เสร็จแล้ว %1$d จาก %2$d ขั้นตอน</string>
+    <string name="autojs_trial_stopped">สคริปต์หยุดใน %3$s หลังจากทำไป %1$d จาก %2$d ขั้นตอน</string>
+    <string name="autojs_trial_error">เริ่มสคริปต์นี้ในแอปปัจจุบันไม่ได้</string>
+    <string name="autojs_trial_interrupted">สคริปต์ถูกขัดจังหวะ ตรวจสอบแอปก่อนลองอีกครั้ง</string>
+    <string name="autojs_not_selected">เปิดใช้งาน AutoJs6 ก่อนเตรียมสคริปต์</string>
+    <string name="autojs_activity_running">กำลังเรียกใช้สคริปต์ AutoJs6</string>
+    <string name="autojs_activity_ran">เรียกใช้สคริปต์ AutoJs6 แล้ว</string>
+    <string name="autojs_activity_run_failed">สคริปต์ AutoJs6 ทำงานไม่เสร็จ</string>
+    <string name="autojs_activity_library_working">กำลังใช้คลังสคริปต์ AutoJs6</string>
+    <string name="autojs_activity_library_done">ใช้คลังสคริปต์ AutoJs6 แล้ว</string>
+    <string name="autojs_activity_library_failed">การดำเนินการในคลังสคริปต์ AutoJs6 ล้มเหลว</string>
+</resources>

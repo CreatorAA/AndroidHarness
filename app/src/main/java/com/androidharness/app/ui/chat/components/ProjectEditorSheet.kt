@@ -57,6 +57,7 @@ import com.androidharness.app.ui.common.ExpressiveListRow
 import com.androidharness.app.ui.common.ExpressiveSectionLabel
 import com.androidharness.app.ui.common.ExpressiveSheetHeader
 import com.androidharness.app.ui.common.workspaceKindIcon
+import com.androidharness.app.workspace.displayWorkspaceName
 import com.androidharness.app.ui.settings.SettingsChoiceGroup
 import com.androidharness.app.ui.settings.SettingsExpressiveTheme
 import com.androidharness.app.ui.theme.HarnessGlassModalBottomSheet as ModalBottomSheet
@@ -147,7 +148,7 @@ fun ProjectEditorSheet(
                         val grant = draft.grants.firstOrNull { it.projectId == workspace.id }
                         val primary = grant != null && draft.primaryId == workspace.id
                         Column(Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec())) {
-                            ExpressiveListRow(0, 1, workspace.name, subtitle = container.workspace.describe(workspace).kindLabel,
+                            ExpressiveListRow(0, 1, workspace.displayWorkspaceName(context), subtitle = container.workspace.describe(workspace).kindLabel,
                                 selected = grant != null, enabled = !saving,
                                 onClick = {
                                     update(draft.copy(grants = if (grant == null) draft.grants + ChatWorkspaceGrant(workspace.id, true)

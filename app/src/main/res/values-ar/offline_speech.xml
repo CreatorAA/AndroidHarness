@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">الماندرين فقط بلا اتصال</string>
+    <string name="voice_local_only_on">يستخدم نموذج الماندرين المضمّن. يبقى تسجيلك الصوتي على الهاتف.</string>
+    <string name="voice_system_first">تُفضّل خدمة التعرّف على الكلام في Android. إذا لم تكن متاحة، يستمر الإملاء بالماندرين على الهاتف.</string>
+    <string name="voice_live_handoff">تستمر العملية على هذا الهاتف. ستبقى الكلمات التي ظهرت؛ واصل التحدث.</string>
+    <string name="voice_local_stopped">توقف الإملاء على الجهاز. يمكنك الاحتفاظ بالكلمات التي ظهرت ومتابعة الإملاء أو كتابة الباقي.</string>
+    <string name="voice_clip_unavailable">تعذّر استعادة نص كامل لهذا التسجيل.</string>
+    <string name="voice_continue_offline">المتابعة على الجهاز</string>
+    <string name="voice_clip_handoff">خدمة التعرّف على الكلام غير متاحة. جارٍ تفريغ هذا التسجيل على هاتفك.</string>
+</resources>

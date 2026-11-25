@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">ফোন</string>
+    <string name="conversation_new_phone">ফোনে নতুন কথোপকথন</string>
+    <string name="phone_conversation_intro">এখানে একটি প্রশ্ন করুন। অ্যাসিস্ট্যান্টকে কোনো অ্যাপ ব্যবহার করতে দিতে সেই অ্যাপে গিয়ে অ্যাসিস্ট্যান্ট চালু করুন।</string>
+    <string name="phone_conversation_settings">অ্যাসিস্ট্যান্ট সেটিংস</string>
+    <string name="settings_start_phone_desc">আপনার ফোন অ্যাসিস্ট্যান্টের কথোপকথন খুলুন।</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Скрыть ассистента</string>
+    <string name="phone_background_off_hint">Работа в фоновом режиме отключена. При выходе из приложения задача будет приостановлена.</string>
+    <string name="phone_background_paused">Задача приостановлена, поскольку работа в фоновом режиме отключена. Откройте этот чат в приложении, чтобы продолжить.</string>
+    <string name="phone_island_title">Ассистент на телефоне</string>
+    <string name="phone_island_planning">Планирование следующих шагов</string>
+    <string name="phone_island_looking">Просмотр страницы</string>
+    <string name="phone_island_finding">Поиск приложения на главном экране</string>
+    <string name="phone_island_tap">Выбор элемента управления</string>
+    <string name="phone_island_type">Ввод текста</string>
+    <string name="phone_island_swipe">Перемещение по странице</string>
+    <string name="phone_island_gesture">Перетаскивание элемента</string>
+    <string name="phone_island_action">Выполнение шага</string>
+    <string name="phone_island_batch">Шаг %1$d из %2$d</string>
+    <string name="phone_island_check">Проверка результата</string>
+    <string name="phone_island_done">Выполнено</string>
+    <string name="phone_island_ended">Завершено · проверьте результат</string>
+    <string name="phone_island_stopped">Остановлено</string>
+    <string name="phone_island_failed">Не выполнено</string>
+    <string name="phone_island_review">Требуется ваше внимание</string>
+    <string name="phone_island_paused">Управление телефоном приостановлено</string>
+    <string name="phone_island_chat">Открыть чат</string>
+    <string name="phone_island_resume">Продолжить задачу</string>
+    <string name="phone_island_stop">Остановить задачу</string>
+    <string name="phone_island_details">Ход выполнения задачи: %1$s</string>
+</resources>

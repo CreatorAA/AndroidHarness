@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Scripts de AutoJs6</string>
+    <string name="autojs_allow">Permitir que el asistente use AutoJs6</string>
+    <string name="autojs_allow_hint">Añade el controlador vinculado y los scripts de interfaz. El servicio integrado sigue disponible cuando está activado.</string>
+    <string name="autojs_need_pair">Escribe y comprueba los scripts ahora. Configura el complemento local de AutoJs6 antes de ejecutarlos en el teléfono.</string>
+    <string name="autojs_new">Nuevo script</string>
+    <string name="autojs_back">Atrás</string>
+    <string name="autojs_source">Script de interfaz</string>
+    <string name="autojs_sample_source">text(\"Continuar\").waitFor();</string>
+    <string name="autojs_name">Nombre (opcional para una prueba)</string>
+    <string name="autojs_name_exists">Ya hay un script con este nombre. Ábrelo para editarlo o elige otro nombre.</string>
+    <string name="autojs_format">Usa text, desc o id para buscar un control y después espera a que aparezca, tócalo o introduce texto. Usa una instrucción por línea.</string>
+    <string name="autojs_check">Comprobar pasos</string>
+    <string name="autojs_prepare">Probar en la app de destino</string>
+    <string name="autojs_preview">Pasos válidos: %1$d · no se ha ejecutado nada</string>
+    <string name="autojs_empty">Toca Nuevo script para crear una acción reutilizable. Deja el nombre vacío para probarla sin guardarla.</string>
+    <string name="autojs_enabled_hint">El asistente puede usar los scripts activados en esta biblioteca.</string>
+    <string name="autojs_disabled_hint">Activa este script en la biblioteca antes de probarlo.</string>
+    <string name="autojs_delete">¿Eliminar «%1$s»?</string>
+    <string name="autojs_delete_action">Eliminar</string>
+    <string name="autojs_changed">Este script ha cambiado en la biblioteca. Vuelve a abrirlo antes de guardarlo o ejecutarlo.</string>
+    <string name="autojs_write_failed">No se ha podido guardar el script.</string>
+    <string name="autojs_anonymous">Script sin guardar</string>
+    <string name="autojs_prepared">Prueba lista: %1$s. Abre la app de destino y llama al asistente del teléfono antes de que pasen 10 minutos.</string>
+    <string name="autojs_trial_title">Ejecutar script · %1$s</string>
+    <string name="autojs_trial_here">Solo en %1$s</string>
+    <string name="autojs_trial_other">Abre la app que quieras probar y llama al asistente desde allí.</string>
+    <string name="autojs_trial_steps">%1$d pasos · toca para revisarlos</string>
+    <string name="autojs_trial_less">Ocultar pasos</string>
+    <string name="autojs_trial_allow">Permitir y ejecutar aquí</string>
+    <string name="autojs_trial_stale">Esta prueba ha caducado o la app ha cambiado. Prepárala de nuevo en la biblioteca de scripts.</string>
+    <string name="autojs_trial_request">Ejecutar «%1$s» en %2$s.</string>
+    <string name="autojs_trial_done">Se han completado %1$d de %2$d pasos del script en %3$s.</string>
+    <string name="autojs_trial_stopped">El script se ha detenido en %3$s después de %1$d de %2$d pasos.</string>
+    <string name="autojs_trial_error">No se ha podido iniciar este script en la app actual.</string>
+    <string name="autojs_trial_interrupted">Script interrumpido. Comprueba la app antes de volver a intentarlo.</string>
+    <string name="autojs_not_selected">Activa AutoJs6 antes de preparar un script.</string>
+    <string name="autojs_activity_running">Ejecutando script de AutoJs6</string>
+    <string name="autojs_activity_ran">Script de AutoJs6 ejecutado</string>
+    <string name="autojs_activity_run_failed">El script de AutoJs6 no ha finalizado</string>
+    <string name="autojs_activity_library_working">Usando la biblioteca de scripts de AutoJs6</string>
+    <string name="autojs_activity_library_done">Biblioteca de scripts de AutoJs6 utilizada</string>
+    <string name="autojs_activity_library_failed">Ha fallado la acción en la biblioteca de scripts de AutoJs6</string>
+</resources>

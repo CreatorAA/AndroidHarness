@@ -41,9 +41,9 @@ internal fun ProjectDeletionDialog(
                 val review = preview
                 if (review == null && error == null) Text(uiContext.getString(R.string.wp_workspace_delete_checking))
                 if (review != null) {
-                    val chats = "${review.chatIds.size} saved ${if (review.chatIds.size == 1) "chat" else "chats"}"
-                    val automations = "${review.automationIds.size} ${if (review.automationIds.size == 1) "automation" else "automations"}"
-                    Text(uiContext.getString(R.string.wp_workspace_delete_body, (chats).toString(), (automations).toString()))
+                    val chats = uiContext.resources.getQuantityString(R.plurals.backup_chip_chats, review.chatIds.size, review.chatIds.size)
+                    val automations = uiContext.resources.getQuantityString(R.plurals.wp_automation_count, review.automationIds.size, review.automationIds.size)
+                    Text(uiContext.getString(R.string.wp_workspace_delete_body, chats, automations))
                     Text(uiContext.getString(R.string.ui_your_folder_and_files_stay_on_disk), style = MaterialTheme.typography.bodyMedium)
                     review.blocker?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 }

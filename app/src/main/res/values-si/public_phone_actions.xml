@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">එක් වරක් නාද වන එලාමයක් සකසන්න</string>
+    <string name="phone_public_timer">ටයිමරයක් අරඹන්න</string>
+    <string name="phone_public_map">ස්ථානයක් සොයන්න</string>
+    <string name="phone_public_calendar">දින දර්ශන කෙටුම්පතක් විවෘත කරන්න</string>
+    <string name="phone_public_note">නව සටහනක් විවෘත කරන්න</string>
+</resources>

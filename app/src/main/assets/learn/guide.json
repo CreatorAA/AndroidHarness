@@ -5639,39 +5639,35 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Updates, setup, and app information",
-      "summary": "Find your version, reconnect setup, and understand support options.",
-      "location": "Settings → Updates, Setup guide, or About.",
+      "title": "Version and setup",
+      "summary": "Find the installed version or install a newer custom build.",
+      "location": "Settings → About or Setup guide.",
       "before": [
-        "A network connection for update checks and external support pages."
+        "You can check the version offline."
       ],
       "steps": [
         {
           "title": "Check the installed version",
-          "body": "Open About or Updates to see the actual installed version/build. Include that version when describing a reproducible problem."
+          "body": "Open About. The version appears beneath the app name. The same page lists the source code, license and open-source credits."
         },
         {
-          "title": "Use the offered update path",
-          "body": "Check for updates and read the release details. Use the download/install action offered for this distribution and follow any Android installer step."
+          "title": "Install a newer build",
+          "body": "Open the APK supplied for this custom build and follow the Android installer."
         },
         {
           "title": "Revisit setup when needed",
           "body": "Use Setup to review the onboarding choices and required permissions/connections. Check each choice rather than assuming a reinstall is necessary."
-        },
-        {
-          "title": "Find credits and support",
-          "body": "About lists source/licence/credits and available support or donation links. A donation supports the app; it does not buy API credits or a provider subscription."
         }
       ],
-      "outcome": "You know the installed version, available update/setup path, and where the app’s own information lives.",
+      "outcome": "Include the installed version when reporting a problem.",
       "limits": [
-        "Update delivery and installation behavior differ by distribution and available device permissions.",
+        "This build does not check for or install upstream releases.",
         "An app update cannot guarantee new access to an external model, fix a provider outage, or restore deleted files."
       ],
       "fixes": [
         {
-          "problem": "The update cannot install",
-          "solution": "Check the exact installer/download error, available storage, install permission, and distribution/signature compatibility. Keep existing data backed up before changing installations."
+          "problem": "Android will not install the new APK",
+          "solution": "Read the installer error. For a signature mismatch, ask the maintainer for a build signed with the same key as your installed app. Uninstalling the app clears its data."
         }
       ],
       "related": [
@@ -5680,11 +5676,6 @@
         "api-billing"
       ],
       "actions": [
-        {
-          "kind": "settings",
-          "target": "UPDATES",
-          "label": "Open Updates"
-        },
         {
           "kind": "settings",
           "target": "SETUP",
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Make AndroidHarness your phone's assistant and ask about whatever app you are in.",
       "location": "Settings → Assistant over other apps; then hold the power or home button, or swipe up from a bottom corner.",
       "before": [
-        "Pick a Chat model and add its key first. The assistant uses the same model and settings as Chat.",
+        "The assistant uses your Chat model by default. You can choose a different model in assistant settings.",
         "Android has to let AndroidHarness be the digital assistant app. Some phones keep this under Default apps."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Ask about the screen",
-          "body": "Type a question or tap a suggestion like Summarize. It only looks at the screen when your question is about it, and nothing from the screen is shown in the panel. It works like Chat, so it can search the web, read pages and show its sources."
+          "body": "Ask about what you see, or say what you want done in the app. By default, you review a phone task before it starts."
         },
         {
           "title": "Talk instead of typing",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Keep going in the app",
-          "body": "The panel grows with the answer, and you can drag it to any height. Continue in app opens the same conversation in Chat, where it stays with your other chats."
+          "body": "“Continue in app” opens the same Phone conversation in the full app. The next time you summon the assistant in this project, it resumes your last conversation."
         }
       ],
-      "outcome": "You can ask about the app on screen without leaving it, and each conversation is saved as a normal Chat.",
+      "outcome": "Across all projects, the app keeps the 10 most recently used Phone conversations. Older conversations and their messages are deleted once inactive. Chat and Code history is unaffected.",
       "limits": [
         "Apps that block screenshots, such as banking apps, and screens Android protects send no picture or text. You can still ask a question.",
-        "The screen picture is only sent when the Chat model can read images. Otherwise only the screen text is sent, and some apps share very little text."
+        "The screen picture is only sent when the Chat model can read images. Otherwise only the screen text is sent, and some apps share very little text.",
+        "Hands-free approval covers the current task, including sending or deleting. Turn on automatic phone tasks to skip the start confirmation for future tasks. Commands and scripts still need approval."
       ],
       "fixes": [
         {

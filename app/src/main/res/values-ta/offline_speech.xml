@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">ஆஃப்லைனில் மாண்டரின் மட்டும்</string>
+    <string name="voice_local_only_on">உடன் வழங்கப்படும் மாண்டரின் மாதிரியைப் பயன்படுத்துகிறது. உங்கள் ஆடியோ மொபைலிலேயே இருக்கும்.</string>
+    <string name="voice_system_first">முதலில் Android பேச்சுச் சேவை பயன்படுத்தப்படும். அது கிடைக்காவிட்டால், மாண்டரின் குரல் தட்டச்சு மொபைலில் தொடரும்.</string>
+    <string name="voice_live_handoff">இந்த மொபைலில் தொடர்கிறது. ஏற்கனவே காட்டப்பட்ட சொற்கள் அப்படியே இருக்கும்; தொடர்ந்து பேசவும்.</string>
+    <string name="voice_local_stopped">சாதனத்தில் குரல் தட்டச்சு நிறுத்தப்பட்டது. ஏற்கனவே காட்டப்பட்ட சொற்களை வைத்துக்கொண்டு தொடரலாம் அல்லது மீதியைத் தட்டச்சு செய்யலாம்.</string>
+    <string name="voice_clip_unavailable">இந்தப் பதிவிலிருந்து முழுமையான உரையை மீட்டெடுக்க முடியவில்லை.</string>
+    <string name="voice_continue_offline">சாதனத்தில் தொடரவும்</string>
+    <string name="voice_clip_handoff">பேச்சுச் சேவை கிடைக்கவில்லை. இந்தப் பதிவு உங்கள் மொபைலில் உரையாக மாற்றப்படுகிறது.</string>
+</resources>

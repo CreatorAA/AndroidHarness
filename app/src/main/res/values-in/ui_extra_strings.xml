@@ -488,7 +488,7 @@
     <string name="settings_voice_status_ready">Voice is ready</string>
     <string name="settings_voice_status_ready_body">Hearing you with %1$s and speaking with %2$s.</string>
     <string name="settings_voice_status_attention">One step left</string>
-    <string name="settings_voice_status_attention_body">%1$s needs an API key before it can work.</string>
+    <string name="settings_voice_status_attention_body">%1$s memerlukan kunci API agar dapat berfungsi.</string>
     <string name="settings_voice_status_missing_body">The provider you picked was removed. Choose another one below.</string>
     <string name="settings_voice_status_add_key">Add key</string>
     <string name="settings_voice_hear_title">Listening</string>
@@ -497,7 +497,7 @@
     <string name="settings_voice_speak_desc">Text to speech. Reads replies out loud.</string>
     <string name="settings_voice_engine_phone">This phone</string>
     <string name="settings_voice_engine_phone_lower">this phone</string>
-    <string name="settings_voice_engine_phone_hear">Uses the speech recognizer built into Android. It works offline and your audio stays on this phone.</string>
+    <string name="settings_voice_engine_phone_hear">@string/voice_system_first</string>
     <string name="settings_voice_engine_phone_speak">Uses the text-to-speech voice installed on this phone. It works offline.</string>
     <string name="settings_voice_chip_add">Add</string>
     <string name="settings_voice_pill_ready">Ready</string>

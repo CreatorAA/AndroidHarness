@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Pembaruan, pengaturan, dan informasi aplikasi",
-      "summary": "Temukan versi Anda, sambungkan kembali penyiapan, dan pahami opsi dukungan.",
-      "location": "Pengaturan → Pembaruan, Panduan pengaturan, atau Tentang.",
+      "title": "Versi dan penyiapan",
+      "summary": "Lihat versi yang terpasang atau pasang versi kustom yang lebih baru.",
+      "location": "Setelan → Tentang atau Panduan penyiapan.",
       "before": [
-        "Koneksi jaringan untuk pemeriksaan pembaruan dan halaman dukungan eksternal."
+        "Nomor versi dapat dilihat tanpa koneksi internet."
       ],
       "steps": [
         {
           "title": "Periksa versi yang diinstal",
-          "body": "Buka Tentang atau Pembaruan untuk melihat versi/build yang diinstal sebenarnya. Sertakan versi tersebut ketika menjelaskan masalah yang dapat direproduksi."
+          "body": "Buka Tentang. Nomor versi tertera di bawah nama aplikasi. Di halaman ini juga ada kode sumber, lisensi, dan daftar proyek sumber terbuka yang digunakan."
         },
         {
-          "title": "Gunakan jalur pembaruan yang ditawarkan",
-          "body": "Periksa pembaruan dan baca detail rilis. Gunakan tindakan unduh/instal yang ditawarkan untuk distribusi ini dan ikuti setiap langkah penginstal Android."
+          "title": "Pasang versi kustom yang lebih baru",
+          "body": "Buka APK dari pengelola versi kustom ini, lalu ikuti petunjuk pemasang Android."
         },
         {
           "title": "Kunjungi kembali pengaturan bila diperlukan",
           "body": "Gunakan Pengaturan untuk meninjau pilihan orientasi dan izin/koneksi yang diperlukan. Periksa setiap pilihan daripada menganggap perlu menginstal ulang."
-        },
-        {
-          "title": "Temukan kredit dan dukungan",
-          "body": "Tentang daftar sumber/lisensi/kredit dan tautan dukungan atau donasi yang tersedia. Sumbangan mendukung aplikasi; itu tidak membeli kredit API atau langganan penyedia."
         }
       ],
-      "outcome": "Anda mengetahui versi yang diinstal, jalur pembaruan/penyiapan yang tersedia, dan lokasi informasi aplikasi itu sendiri.",
+      "outcome": "Cantumkan versi yang terpasang saat melaporkan masalah.",
       "limits": [
-        "Perilaku pengiriman dan penginstalan pembaruan berbeda menurut distribusi dan izin perangkat yang tersedia.",
+        "Versi ini tidak memeriksa atau memasang rilis dari proyek asal.",
         "Pembaruan aplikasi tidak dapat menjamin akses baru ke model eksternal, memperbaiki gangguan penyedia, atau memulihkan file yang terhapus."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Buka Pembaruan"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Tinjau Pengaturan"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Jadikan AndroidHarness asisten ponsel Anda dan tanyakan tentang aplikasi yang sedang Anda pakai.",
       "location": "Pengaturan → Asisten di atas aplikasi lain; lalu tekan lama tombol daya atau beranda, atau geser ke atas dari sudut bawah.",
       "before": [
-        "Pilih model Chat dan tambahkan kuncinya dulu. Asisten memakai model dan pengaturan yang sama dengan Chat.",
+        "Secara default, asisten menggunakan model Chat. Anda dapat memilih model lain di setelan asisten.",
         "Android harus mengizinkan AndroidHarness menjadi aplikasi asisten digital. Di sebagian ponsel ini ada di Aplikasi default."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Tanyakan tentang layar",
-          "body": "Ketik pertanyaan atau ketuk saran seperti Ringkas. Ia hanya melihat layar saat pertanyaan Anda tentang layar itu, dan tidak ada isi layar yang ditampilkan di panel. Cara kerjanya seperti Chat, jadi bisa mencari di web, membaca halaman, dan menampilkan sumber."
+          "body": "Tanyakan apa yang terlihat di layar atau jelaskan apa yang ingin Anda lakukan di aplikasi. Secara default, Anda meninjau tugas ponsel sebelum tugas dimulai."
         },
         {
           "title": "Bicara alih-alih mengetik",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Lanjutkan di aplikasi",
-          "body": "Panel tumbuh bersama jawaban dan bisa diseret ke ketinggian apa pun. Lanjutkan di aplikasi membuka percakapan yang sama di Chat, tempat ia tetap bersama obrolan lain."
+          "body": "“Lanjutkan di aplikasi” membuka percakapan yang sama di aplikasi lengkap. Saat Anda memanggil asisten lagi di proyek ini, percakapan terakhir akan dilanjutkan."
         }
       ],
-      "outcome": "Anda bisa bertanya tentang aplikasi di layar tanpa meninggalkannya, dan setiap percakapan disimpan sebagai Chat biasa.",
+      "outcome": "Aplikasi menyimpan 10 percakapan asisten ponsel yang terakhir digunakan dari seluruh proyek. Percakapan lama beserta pesannya dihapus setelah tidak aktif. Riwayat Chat dan Kode tidak terpengaruh.",
       "limits": [
         "Aplikasi yang memblokir tangkapan layar, seperti aplikasi bank, dan layar yang dilindungi Android tidak mengirim gambar atau teks. Anda tetap bisa bertanya.",
-        "Gambar layar hanya dikirim jika model Chat dapat membaca gambar. Jika tidak, hanya teks layar yang dikirim, dan sebagian aplikasi hanya membagikan sedikit teks."
+        "Gambar layar hanya dikirim jika model Chat dapat membaca gambar. Jika tidak, hanya teks layar yang dikirim, dan sebagian aplikasi hanya membagikan sedikit teks.",
+        "Izin untuk menjalankan tugas tanpa konfirmasi per tindakan berlaku untuk tugas saat ini, termasuk mengirim atau menghapus. Aktifkan tugas ponsel otomatis untuk melewati konfirmasi awal pada tugas berikutnya. Perintah dan skrip tetap memerlukan persetujuan."
       ],
       "fixes": [
         {

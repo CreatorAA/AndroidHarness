@@ -20,7 +20,10 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.androidharness.app.HarnessApp
+import com.androidharness.app.R
 import com.androidharness.app.config.HarnessConfigRepository
+import com.androidharness.app.tools.mcp.WorkspaceTrustMode
+import com.androidharness.app.ui.bringTestTargetToForeground
 import com.androidharness.app.ui.chat.ChatListTestActivity
 import com.androidharness.app.ui.settings.PluginManagerSection
 import com.androidharness.app.ui.settings.PluginMcpServersSection
@@ -53,9 +56,10 @@ class PluginManagerDeviceTest {
         val workspace = FileFs(root.resolve("workspace").apply { mkdirs() })
         override fun close() { root.deleteRecursively() }
     }
-    private fun archive(root: File, version: String, instruction: String, name: String = "device-plugin"): PluginOrigin {
+    private fun archive(root: File, version: String, instruction: String, name: String = "device-plugin",
+        serverEnabled: Boolean = false): PluginOrigin {
         val files = mapOf(
-            "plugin.json" to """{"name":"$name","version":"$version","instructions":["instructions.md"],"skills":["skills"],"hooks":["prompt.before"],"entry":"index.js","mcp":{"fixture":{"type":"remote","url":"https://example.invalid/mcp","enabled":false}}}""",
+            "plugin.json" to """{"name":"$name","version":"$version","instructions":["instructions.md"],"skills":["skills"],"hooks":["prompt.before"],"entry":"index.js","mcp":{"fixture":{"type":"remote","url":"https://example.invalid/mcp","enabled":$serverEnabled}}}""",
             "instructions.md" to instruction,
             "skills/device-skill/SKILL.md" to "---\nname: device-skill\ndescription: Review device fixture changes.\n---\nDEVICE_SKILL_CONTENT\n",
             "index.js" to "module.exports={'prompt.before':()=>({instructions:'INSTALLED_HOOK_$version'})};"
@@ -297,29 +301,46 @@ class PluginManagerDeviceTest {
 
     @Test fun installedMcpServersAppearInConnectedToolsForProjectAndGlobalScopes() = runBlocking {
         Fixture(c.appContext).use { f ->
-            val (local) = f.manager.install(f.manager.prepare(archive(f.root, "1.0.0", "LOCAL", "project-plugin")),
+            val (local) = f.manager.install(f.manager.prepare(archive(f.root, "1.0.0", "LOCAL", "project-plugin", serverEnabled = true)),
                 f.manager.workspaceScope(f.workspace), "Fixture project")
-            val (global) = f.manager.install(f.manager.prepare(archive(f.root, "1.0.0", "GLOBAL", "global-plugin")), "global", "Global")
+            val (global) = f.manager.install(f.manager.prepare(archive(f.root, "1.0.0", "GLOBAL", "global-plugin", serverEnabled = true)), "global", "Global")
             val directBefore = c.mcp.servers.value
             val repo = HarnessConfigRepository(f.context, c.keys, f.manager, f.manager.revision)
             val snapshot = repo.load(f.workspace)
             assertEquals(setOf("project-plugin", "global-plugin"), snapshot.serverSources.values.mapNotNull { it.plugin }.toSet())
+            assertEquals(snapshot.servers.map { "server:${it.name}" }.toSet(),
+                c.mcp.trustItems(f.workspace, snapshot).map { it.key }.filter { it.startsWith("server:") }.toSet())
             assertFalse(c.mcp.isWorkspaceApproved(f.workspace, snapshot))
+            bringTestTargetToForeground()
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> activity.setContent { HarnessTheme {
                     Surface { Column(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp)) {
                         PluginMcpServersSection(c, {}, {}, f.workspace, f.manager, repo)
                     } }
                 } } }
-                awaitText("MCP servers from plugins")
-                awaitText("global-plugin · Global")
-                awaitText("project-plugin · Project")
+                val strings = instrumentation.targetContext
+                val heading = strings.getString(R.string.pm_mcp_from_plugins)
+                val globalScope = "global-plugin · ${strings.getString(R.string.config_global)}"
+                val projectScope = "project-plugin · ${strings.getString(R.string.config_project)}"
+                awaitText(heading)
+                awaitText(globalScope)
+                awaitText(projectScope)
                 screenshot("plugins-connected-mcp")
+                fun serverKey(plugin: String) =
+                    "server:${snapshot.serverSources.entries.single { it.value.plugin == plugin }.key}"
+                c.mcp.approveWorkspace(f.workspace, snapshot, setOf(serverKey("global-plugin")))
+                awaitText(strings.getString(R.string.pm_mcp_ready))
+                awaitText(strings.getString(R.string.pm_mcp_approval_pending))
+                c.mcp.declineWorkspace(f.workspace, snapshot, setOf(serverKey("project-plugin")))
+                awaitText(strings.getString(R.string.trust_state_declined))
+                c.mcp.setTrustMode(f.workspace, WorkspaceTrustMode.BLOCK_ALL, snapshot)
+                awaitText(strings.getString(R.string.trust_state_blocked))
+                assertNull(find(uiRoot()) { it.text?.toString() == strings.getString(R.string.pm_mcp_ready) })
                 f.manager.store.setEnabled(global.id, false)
-                waitUntil { find(uiRoot()) { it.text?.toString() == "global-plugin · Global" } == null }
-                awaitText("project-plugin · Project")
+                waitUntil { find(uiRoot()) { it.text?.toString() == globalScope } == null }
+                awaitText(projectScope)
                 f.manager.store.uninstall(local.id)
-                waitUntil { find(uiRoot()) { it.text?.toString() == "MCP servers from plugins" } == null }
+                waitUntil { find(uiRoot()) { it.text?.toString() == heading } == null }
                 assertEquals(directBefore, c.mcp.servers.value)
             }
         }

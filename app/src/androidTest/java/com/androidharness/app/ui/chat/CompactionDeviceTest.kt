@@ -138,6 +138,32 @@ class CompactionDeviceTest {
         }
     }
 
+    @Test fun quickPhoneHistoryUsesConfiguredThresholdAndKeepsEarlierTurns() = runBlocking {
+        val requests = Collections.synchronizedList(mutableListOf<JsonObject>())
+        val server = FixtureServer(requests).apply { mode = "stop" }
+        val previous = c.settings.settings.first().autoCompactTokens
+        val provider = c.providers.add("Phone history fixture", ProviderType.OPENAI_COMPAT,
+            "http://127.0.0.1:${server.port}/v1", "fixture-model", "fixture")
+        val sid = c.sessions.createSession("Phone continuity", conversation = ConversationConfig(ConversationKind.PHONE))
+        try {
+            c.settings.setAutoCompactTokens(35_000)
+            repeat(20) { c.sessions.addMessage(sid, ChatMessage(Role.USER, "Phone goal $it " + "x".repeat(8_000))); delay(2) }
+            val originals = c.sessions.messages(sid).map { it.id }
+            c.runManager.startRun(sid, "Continue this phone task", emptyList(), provider, "fixture", PermissionMode.CONFIRM_ALL,
+                AgentMode.ACT, 2_000, 250_000, ThinkingLevel.OFF, 3, notifyOnFinish = false)
+            withTimeout(60_000) { while (c.runManager.isRunning(sid)) delay(20) }
+            assertNull(c.runManager.live(sid).value.error)
+            assertEquals("Preserve the goal and tool outcomes", c.sessions.session(sid)!!.compactionSummary)
+            assertTrue(c.sessions.messages(sid).map { it.id }.containsAll(originals))
+            assertTrue(c.sessions.historyFor(sid).second.first().text.contains("Preserve the goal"))
+        } finally {
+            c.runManager.stopAndJoin(sid)
+            c.settings.setAutoCompactTokens(previous)
+            c.sessions.session(sid)?.let { c.sessions.deleteSession(it) }
+            c.providers.delete(provider.id); server.close()
+        }
+    }
+
     @Test fun atomicSummaryRetainsRecentMessagesAcrossReopeningAndNeverDeletesHistory() = runBlocking {
         val context = instrumentation.targetContext
         val name = "compaction-${System.nanoTime()}.db"

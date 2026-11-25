@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">در این نوبت چیزی برای بازگردانی نیست.</string>
+    <string name="chat_compaction_preparing">در حال آماده‌سازی خلاصهٔ گفتگو…</string>
+    <string name="chat_compaction_too_few_messages">هنوز پیام‌های کافی برای فشرده‌سازی وجود ندارد.</string>
+    <string name="chat_compaction_retrying">تلاش دوباره برای خلاصه‌سازی · تلاش %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">فشرده‌سازی متوقف شد. تاریخچه حفظ شد. هر وقت آماده بودید، /compact را دوباره اجرا کنید.</string>
+    <string name="chat_compaction_refresh_failed">گفتگو فشرده شد، اما تنظیمات وظیفه یا برآورد زمینه به‌روزرسانی نشد: %1$s</string>
+    <string name="chat_compaction_failed_notice">فشرده‌سازی ناموفق بود: %1$s. تاریخچه حفظ شد. دوباره /compact را اجرا کنید یا مدل دیگری انتخاب کنید.</string>
+    <string name="reasoning_from_catalog">استدلال در فهرست مدل‌ها ذکر شده است</string>
+    <string name="reasoning_from_provider">ارائه‌دهنده پشتیبانی از استدلال را گزارش کرده است</string>
+    <string name="reasoning_from_user">شما قابلیت استدلال را تنظیم کرده‌اید</string>
+    <string name="reasoning_from_name">قابلیت استدلال از نام مدل استنباط شده است</string>
+    <string name="automation_every_day">هر روز</string>
+    <string name="automation_daily_at">هر روز ساعت %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">APK اشکال‌زدایی را بسازید و خطاهای ساخت را رفع کنید.</string>
+    <string name="app_update_checking">در حال بررسی به‌روزرسانی‌ها…</string>
+    <string name="app_update_up_to_date">از جدیدترین نسخه استفاده می‌کنید</string>
+    <string name="files_directory">پوشه</string>
+    <string name="cache_status_unavailable">داده‌های حافظهٔ نهان در دسترس نیست</string>
+    <string name="cache_status_hit">یافت‌شده در حافظهٔ نهان · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · داده‌های ناقص</string>
+    <string name="cache_estimated_price">حدود %1$s</string>
+    <string name="chat_live_sites_suffix">" سایت"</string>
+    <string name="chat_research_sources_suffix">/%1$d منبع</string>
+    <string name="chat_research_read_suffix">" خوانده‌شده"</string>
+    <string name="package_status_failed">نصب ناموفق بود</string>
+    <string name="package_hide_details">پنهان کردن جزئیات نصب</string>
+    <string name="package_show_details">نمایش جزئیات نصب</string>
+    <string name="package_recently_unpacked">به‌تازگی استخراج‌شده · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d مورد</item>
+        <item quantity="other">%1$d مورد</item>
+    </plurals>
+</resources>

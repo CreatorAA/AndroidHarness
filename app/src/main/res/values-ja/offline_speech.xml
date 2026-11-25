@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">オフラインの中国語（標準語）のみ</string>
+    <string name="voice_local_only_on">同梱の中国語（標準語）モデルを使います。音声は端末の外に送信されません。</string>
+    <string name="voice_system_first">通常は Android の音声認識を使います。利用できないときは、中国語（標準語）の音声入力を端末内で続けます。</string>
+    <string name="voice_live_handoff">この端末で音声入力を続けます。表示済みの文字はそのままです。続けてお話しください。</string>
+    <string name="voice_local_stopped">端末での音声入力が停止しました。表示済みの文字は残るので、続けて話すか、残りを入力してください。</string>
+    <string name="voice_clip_unavailable">この録音から完全な文字起こしを復元できませんでした。</string>
+    <string name="voice_continue_offline">端末で続ける</string>
+    <string name="voice_clip_handoff">音声サービスを利用できないため、この録音を端末内で文字に起こしています。</string>
+</resources>

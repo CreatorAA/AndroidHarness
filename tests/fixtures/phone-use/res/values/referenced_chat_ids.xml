@@ -1,0 +1,6 @@
+<resources>
+    <!-- Ordinary opaque view IDs; the model and the emulator regression must use the title
+         and the current observation's verified clickable container, not these strings. -->
+    <item type="id" name="c4q" />
+    <item type="id" name="v9a" />
+</resources>

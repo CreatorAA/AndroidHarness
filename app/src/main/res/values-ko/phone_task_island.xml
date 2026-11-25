@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">어시스턴트 숨기기</string>
+    <string name="phone_background_off_hint">백그라운드 실행이 꺼져 있습니다. 앱을 벗어나면 이 작업이 일시중지됩니다.</string>
+    <string name="phone_background_paused">백그라운드 실행이 꺼져 있어 일시중지했습니다. 재개하려면 앱에서 이 채팅을 여세요.</string>
+    <string name="phone_island_title">휴대전화 어시스턴트</string>
+    <string name="phone_island_planning">다음 단계 계획 중</string>
+    <string name="phone_island_looking">화면 확인 중</string>
+    <string name="phone_island_finding">홈 화면에서 앱 찾는 중</string>
+    <string name="phone_island_tap">화면 요소 선택 중</string>
+    <string name="phone_island_type">텍스트 입력 중</string>
+    <string name="phone_island_swipe">화면 이동 중</string>
+    <string name="phone_island_gesture">항목 드래그 중</string>
+    <string name="phone_island_action">단계 수행 중</string>
+    <string name="phone_island_batch">전체 %2$d단계 중 %1$d단계</string>
+    <string name="phone_island_check">결과 확인 중</string>
+    <string name="phone_island_done">완료</string>
+    <string name="phone_island_ended">종료됨 · 결과 확인 필요</string>
+    <string name="phone_island_stopped">중지됨</string>
+    <string name="phone_island_failed">완료되지 않음</string>
+    <string name="phone_island_review">확인이 필요합니다</string>
+    <string name="phone_island_paused">휴대전화 제어 일시중지됨</string>
+    <string name="phone_island_chat">채팅 보기</string>
+    <string name="phone_island_resume">작업 재개</string>
+    <string name="phone_island_stop">작업 중지</string>
+    <string name="phone_island_details">작업 진행 상태: %1$s</string>
+</resources>

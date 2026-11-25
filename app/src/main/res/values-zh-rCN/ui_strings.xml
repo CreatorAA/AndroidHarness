@@ -1140,8 +1140,8 @@
     <string name="ui_provider_default">"提供商默认值"</string>
     <string name="ui_add_custom_command">"添加自定义命令"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"运行任务或终端时保持 CPU 活动，避免应用最小化后终端被终止。"</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"已豁免：Android 不会限制后台运行。"</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"已开启：Samsung 等厂商可能终止后台工作。请豁免此应用以保证长时间运行。"</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness 已免于 Android 电池优化。"</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android 电池优化已开启。如果长任务在熄屏后停顿，可允许 AndroidHarness 不受电池优化限制。"</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"当前版本 %1$s。通过 GitHub Releases 检查新版本。"</string>
     <string name="ui_available_see_the_dialog">"%1$s 可用，请查看对话框"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"手机上的编程智能体。"</string>
@@ -1624,6 +1624,11 @@
     <plurals name="answer_table_columns"><item quantity="one">%1$d 列</item><item quantity="other">%1$d 列</item></plurals>
     <plurals name="answer_table_rows"><item quantity="one">%1$d 行</item><item quantity="other">%1$d 行</item></plurals>
     <string name="voice_transcribing">正在转写…</string>
+    <string name="voice_no_result">没能识别出完整的话。请再说一次，或用键盘输入。</string>
+    <string name="voice_service_interrupted">系统语音服务中途停止了。可以再说一次，或用键盘补全。</string>
+    <string name="voice_try_again">重新听写</string>
+    <string name="voice_continue">继续听写</string>
+    <string name="voice_finish_to_send">正在听，说完点发送</string>
     <string name="donate_funding_message">我们用于持续开发 AndroidHarness 的资金不足。您的支持能帮助我们继续开发。</string>
     <string name="donate_dismiss_message">关闭捐赠提示</string>
     <string name="background_settings_title">后台与通知</string>

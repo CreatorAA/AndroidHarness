@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">सिर्फ़ ऑफ़लाइन मंदारिन</string>
+    <string name="voice_local_only_on">साथ में दिया गया मंदारिन मॉडल इस्तेमाल होता है। आपका ऑडियो फ़ोन पर ही रहता है।</string>
+    <string name="voice_system_first">Android की वॉइस टाइपिंग को प्राथमिकता दी जाती है। अगर वह उपलब्ध न हो, तो मंदारिन वॉइस टाइपिंग फ़ोन पर जारी रहती है।</string>
+    <string name="voice_live_handoff">इसी फ़ोन पर जारी है। पहले से दिखे शब्द बने रहेंगे; बोलते रहें।</string>
+    <string name="voice_local_stopped">डिवाइस पर वॉइस टाइपिंग रुक गई। पहले से दिखे शब्द रखकर आगे बोल सकते हैं या बाकी टाइप कर सकते हैं।</string>
+    <string name="voice_clip_unavailable">इस रिकॉर्डिंग का पूरा टेक्स्ट वापस नहीं मिल सका।</string>
+    <string name="voice_continue_offline">डिवाइस पर जारी रखें</string>
+    <string name="voice_clip_handoff">वॉइस सेवा उपलब्ध नहीं है। इस रिकॉर्डिंग को आपके फ़ोन पर टेक्स्ट में बदला जा रहा है।</string>
+</resources>

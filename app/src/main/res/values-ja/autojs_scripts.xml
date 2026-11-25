@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 スクリプト</string>
+    <string name="autojs_allow">アシスタントに AutoJs6 の使用を許可</string>
+    <string name="autojs_allow_hint">ペア設定したドライバーと UI スクリプトを追加します。内蔵サービスも、有効になっていれば引き続き使えます。</string>
+    <string name="autojs_need_pair">スクリプトの作成と確認は今すぐできます。端末で実行する前に、ローカルの AutoJs6 プラグインを設定してください。</string>
+    <string name="autojs_new">新規スクリプト</string>
+    <string name="autojs_back">戻る</string>
+    <string name="autojs_source">UI スクリプト</string>
+    <string name="autojs_sample_source">text(\"続行\").waitFor();</string>
+    <string name="autojs_name">名前（試すだけなら省略可）</string>
+    <string name="autojs_name_exists">この名前のスクリプトは既にあります。編集するにはそのスクリプトを開くか、別の名前を付けてください。</string>
+    <string name="autojs_format">text、desc、id で操作対象を指定し、表示を待つ、タップする、文字を入力するなどの操作を記述します。1 行に 1 つの指示を入力してください。</string>
+    <string name="autojs_check">手順を確認</string>
+    <string name="autojs_prepare">対象アプリで試す</string>
+    <string name="autojs_preview">有効な手順：%1$d 件 · 未実行</string>
+    <string name="autojs_empty">繰り返し使う操作を作るには「新規スクリプト」をタップします。保存せずに試すには、名前を空欄にしてください。</string>
+    <string name="autojs_enabled_hint">アシスタントは、このライブラリで有効にしたスクリプトを使えます。</string>
+    <string name="autojs_disabled_hint">試す前に、ライブラリでこのスクリプトを有効にしてください。</string>
+    <string name="autojs_delete">「%1$s」を削除しますか？</string>
+    <string name="autojs_delete_action">削除</string>
+    <string name="autojs_changed">ライブラリ内のスクリプトが変更されました。保存または実行する前に、開き直してください。</string>
+    <string name="autojs_write_failed">スクリプトを保存できませんでした。</string>
+    <string name="autojs_anonymous">未保存のスクリプト</string>
+    <string name="autojs_prepared">「%1$s」を試す準備ができました。対象アプリを開き、10 分以内にスマートフォンのアシスタントを呼び出してください。</string>
+    <string name="autojs_trial_title">スクリプトを実行 · %1$s</string>
+    <string name="autojs_trial_here">%1$s 内のみ</string>
+    <string name="autojs_trial_other">試したいアプリを開き、そこでアシスタントを呼び出してください。</string>
+    <string name="autojs_trial_steps">%1$d 件の手順 · タップして確認</string>
+    <string name="autojs_trial_less">手順を隠す</string>
+    <string name="autojs_trial_allow">許可してここで実行</string>
+    <string name="autojs_trial_stale">試行の期限が切れたか、アプリが変わりました。スクリプトライブラリからもう一度準備してください。</string>
+    <string name="autojs_trial_request">%2$s で「%1$s」を実行します。</string>
+    <string name="autojs_trial_done">%3$s で全 %2$d 件中 %1$d 件の手順が完了しました。</string>
+    <string name="autojs_trial_stopped">%3$s で全 %2$d 件中 %1$d 件の手順を終えたところでスクリプトが停止しました。</string>
+    <string name="autojs_trial_error">現在のアプリでこのスクリプトを起動できませんでした。</string>
+    <string name="autojs_trial_interrupted">スクリプトが中断されました。再試行する前にアプリの状態を確認してください。</string>
+    <string name="autojs_not_selected">スクリプトを準備する前に AutoJs6 を有効にしてください。</string>
+    <string name="autojs_activity_running">AutoJs6 スクリプトを実行中</string>
+    <string name="autojs_activity_ran">AutoJs6 スクリプトを実行しました</string>
+    <string name="autojs_activity_run_failed">AutoJs6 スクリプトが完了しませんでした</string>
+    <string name="autojs_activity_library_working">AutoJs6 スクリプトライブラリを使用中</string>
+    <string name="autojs_activity_library_done">AutoJs6 スクリプトライブラリを使用しました</string>
+    <string name="autojs_activity_library_failed">AutoJs6 スクリプトライブラリでの操作に失敗しました</string>
+</resources>

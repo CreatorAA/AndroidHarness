@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Solo mandarín sin conexión</string>
+    <string name="voice_local_only_on">Usa el modelo de mandarín incluido. El audio permanece en el teléfono.</string>
+    <string name="voice_system_first">Se prioriza el reconocimiento de voz de Android. Si no está disponible, el dictado en mandarín continúa en el teléfono.</string>
+    <string name="voice_live_handoff">Continuando en este teléfono. Se conserva el texto que ya se muestra; puedes seguir hablando.</string>
+    <string name="voice_local_stopped">El dictado en el dispositivo se ha detenido. Puedes conservar el texto que ya se muestra y continuar o escribir el resto.</string>
+    <string name="voice_clip_unavailable">No se ha podido recuperar una transcripción completa de esta grabación.</string>
+    <string name="voice_continue_offline">Continuar en el dispositivo</string>
+    <string name="voice_clip_handoff">El proveedor de voz no está disponible. Transcribiendo esta grabación en el teléfono.</string>
+</resources>

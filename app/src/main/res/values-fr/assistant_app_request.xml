@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Ouvrir %1$s ?</string>
+    <string name="app_request_search">Rechercher « %2$s » dans %1$s ?</string>
+    <string name="app_request_choose_open">Quelle application ouvrir ?</string>
+    <string name="app_request_choose_map">Quelle application de cartographie utiliser pour rechercher « %1$s » ?</string>
+    <string name="app_request_missing">Impossible de trouver une application nommée « %1$s » que ce téléphone peut ouvrir.</string>
+    <string name="app_request_alternative">Vous pouvez rechercher « %1$s » avec l’une des applications de cartographie ci-dessous.</string>
+    <string name="app_request_open_only">%1$s peut s’ouvrir, mais ne propose pas de recherche publique de lieux. L’ouvrir sans effectuer de recherche ?</string>
+    <string name="app_request_no_map">Aucune application installée ne propose de recherche cartographique pour « %1$s ».</string>
+    <string name="app_request_no_entry">%1$s ne dispose d’aucun point d’entrée pour cette demande.</string>
+    <string name="app_request_opened">Demande d’ouverture de %1$s envoyée.</string>
+    <string name="app_request_sent">Recherche de « %2$s » envoyée à %1$s.</string>
+    <string name="app_request_failed">Impossible d’envoyer cette demande à %1$s. Réessayez pour vérifier les applications disponibles.</string>
+    <string name="app_request_cancelled">Annulé. Aucune application n’a été ouverte.</string>
+</resources>

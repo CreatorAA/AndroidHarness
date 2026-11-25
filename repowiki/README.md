@@ -99,7 +99,7 @@ Since the previous edition (September 2026) the app grew a separate Chat section
 
 - [Theme Palettes and Harness Canvas](64-theme-palettes-and-canvas.md)
 - [Motion, Glass, and Haptics](65-motion-glass-and-haptics.md)
-- [Learn, Tips, and What's New](66-learn-tips-and-whats-new.md)
+- [Learn and In-Run Tips](66-learn-tips-and-whats-new.md)
 - [Localization](67-localization.md)
 
 ### Data, Security and Operations
@@ -108,7 +108,7 @@ Since the previous edition (September 2026) the app grew a separate Chat section
 - [Backups and Encryption](69-backups-and-encryption.md)
 - [Security Model and Approvals](70-security-model-and-approvals.md)
 - [Background Reliability and Live Activities](71-background-reliability-and-live-activities.md)
-- [Update Manager and Install Routes](72-update-manager-and-install-routes.md)
+- [App Version and Manual Upgrades](72-update-manager-and-install-routes.md)
 - [Troubleshooting and Diagnostics](73-troubleshooting-and-diagnostics.md)
 - [Build, CI, and Testing](74-build-ci-and-testing.md)
 - [Shared Core Models and Pure Utilities](75-shared-core-models.md)

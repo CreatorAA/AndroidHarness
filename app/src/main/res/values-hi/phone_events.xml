@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">“%1$s” में अलर्ट बंद होने पर भी रिमाइंडर यहाँ मिलेंगे।</string>
+    <string name="phone_events_title">फ़ोन इवेंट रिमाइंडर</string>
+    <string name="phone_events_intro">चुना गया ऐप खुलने या नोटिफ़िकेशन भेजने पर रिमाइंडर पाएं। लिंक किए गए टास्क को चलाने से पहले जांच लें।</string>
+    <string name="phone_event_ready">फ़ोन इवेंट रिमाइंडर</string>
+    <string name="phone_event_open_reminder">%1$s की वजह से आपका रिमाइंडर आया है। जांचने के लिए टैप करें।</string>
+    <string name="phone_events_grant_notifications">नोटिफ़िकेशन ऐक्सेस की अनुमति दें</string>
+    <string name="phone_events_grant_window">सुलभता सेटिंग में Harness फ़ोन नियंत्रण चालू करें</string>
+    <string name="phone_events_show_alerts">रिमाइंडर नोटिफ़िकेशन की अनुमति दें</string>
+    <string name="phone_event_opened">%1$s खुलता है</string>
+    <string name="phone_event_notified">%1$s नोटिफ़िकेशन भेजता है</string>
+    <string name="phone_event_review_task">जांचें: %1$s</string>
+    <string name="phone_event_dismiss">हटाएं</string>
+    <string name="phone_event_remind_only">सिर्फ़ रिमाइंडर दें</string>
+    <string name="phone_event_task_missing">लिंक किया गया टास्क अब उपलब्ध नहीं है</string>
+    <string name="phone_event_edit">नियम बदलें</string>
+    <string name="phone_event_remove">नियम हटाएं</string>
+    <string name="phone_event_add">ऐप का नियम जोड़ें</string>
+    <string name="phone_event_view_notices">सक्रिय नोटिफ़िकेशन (%1$d)</string>
+    <string name="phone_event_active_notices">मौजूदा नोटिफ़िकेशन</string>
+    <string name="phone_event_metadata_only">सिर्फ़ ऐप और समय दिखाए जाते हैं। नोटिफ़िकेशन पढ़ने के लिए उसे उसके मूल ऐप में खोलें।</string>
+    <string name="phone_event_no_notices">आपके चुने हुए ऐप्स से अभी कोई नोटिफ़िकेशन नहीं है।</string>
+    <string name="phone_event_no_listener">नोटिफ़िकेशन लिसनर कनेक्ट नहीं है।</string>
+    <string name="phone_event_open_source">ऐप में खोलें</string>
+    <string name="phone_event_mark_read">पढ़ा हुआ मार्क करें</string>
+    <string name="phone_event_read_confirm">क्या %1$s से इस नोटिफ़िकेशन को पढ़ा हुआ मार्क करने के लिए कहें?</string>
+    <string name="phone_event_task_busy">यह टास्क ठहराया गया है, पहले से चल रहा है या अब मैन्युअल नहीं है।</string>
+    <string name="phone_event_run_task">टास्क चलाएं</string>
+    <string name="phone_event_unavailable">यह आइटम अब उपलब्ध नहीं है।</string>
+    <string name="phone_event_choose_app">ऐप चुनें</string>
+    <string name="phone_event_search">ऐप या पैकेज का नाम</string>
+    <string name="phone_event_when">कब</string>
+    <string name="phone_event_when_open">मैं यह ऐप खोलूं</string>
+    <string name="phone_event_when_notified">यह ऐप नोटिफ़िकेशन भेजे</string>
+    <string name="phone_event_then">मुझे जांचने की याद दिलाएं</string>
+    <string name="phone_event_save">नियम सेव करें</string>
+    <string name="phone_event_all_rules">दोनों इवेंट पहले से सेट हैं। नीचे मौजूदा नियम बदलें।</string>
+</resources>

@@ -32,6 +32,8 @@
 # or logging adapters. Their dependencies are absent from the existing APK;
 # Android SSH/SFTP uses the socket transport and the app's own logger.
 -dontwarn com.sun.jna.**
+# sherpa-onnx JNI uses literal class/field names for recognizer and VAD configs/results.
+-keep class com.k2fsa.sherpa.onnx.** { *; }
 -dontwarn org.ietf.jgss.**
 -dontwarn org.newsclub.net.unix.**
 -dontwarn org.apache.logging.log4j.**

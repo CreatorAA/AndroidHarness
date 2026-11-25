@@ -1,8 +1,10 @@
 package com.androidharness.app.ui.chat.rich
 
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.MotionEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -11,7 +13,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStore
 import androidx.test.core.app.ActivityScenario
@@ -48,6 +52,58 @@ class RichReplyFeaturesDeviceTest {
     private fun ui(json: String) = "```harness-ui\n$json\n```"
     private fun tabbed(): String = ui("""{"type":"tabs","title":"Explore results","tabs":[{"title":"Compare","children":[$table]},{"title":"Calculate","children":[$calc]}]}""")
 
+    @Test fun rtlChartTapSelectsTheCategoryBelowTheBarWithoutRoundingItsValue() {
+        val chart = RichResponse.Node.Chart("Measured delay", listOf(
+            RichResponse.Point("A", .001), RichResponse.Point("B", .002), RichResponse.Point("C", .006),
+        ), "bar", "s", "")
+        var selected = ""
+        ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
+            scenario.onActivity { host -> host.setContent { HarnessTheme(dynamicColor = false) {
+                Column(Modifier.fillMaxSize().safeDrawingPadding().padding(12.dp)) {
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                        ResponseChart(chart) { selected = it.context }
+                    }
+                }
+            } } }
+            await("Measured delay: 0.006 s")
+            val bounds = Rect().also { await("Measured delay. 3 values. Use Show data for all values.").getBoundsInScreen(it) }
+            val label = Rect().also { await("A").getBoundsInScreen(it) }
+            assertTrue("A is the rightmost category", label.centerX() > bounds.centerX())
+            val down = SystemClock.uptimeMillis()
+            for (action in listOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP)) {
+                val event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, label.exactCenterX(), bounds.exactCenterY(), 0)
+                try { instrumentation.sendPointerSync(event) } finally { event.recycle() }
+            }
+            await("Measured delay: 0.001 s")
+            screenshot("rtl-chart-precision")
+            tap("Ask about this chart")
+            assertTrue(selected.contains("Selected: A"))
+            assertTrue(selected.contains("0.001 s"))
+        }
+    }
+
+    @Test fun chartFenceFromPhonePromptRendersAndSelectingAPointPreservesItsValue() {
+        val fence = Regex("(?m)^```harness-ui\\n\\{[^\\n]+\\}\\n```$").find(ChatExperience.systemPrompt(phoneConversation = true))!!.value
+        var follow = RichResponse.FollowUp("", "", "")
+        ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
+            scenario.onActivity { host -> host.setContent { HarnessTheme(dynamicColor = false) {
+                Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(12.dp)) {
+                    AssistantText(fence, onFollowUp = { follow = it })
+                }
+            } } }
+            await("Daily runtime: 6 min")
+            screenshot("chart-phone-prompt-runtime")
+            tap("Show data")
+            await("12 min"); await("9 min"); await("6 min")
+            tap("Select Tue")
+            await("Daily runtime: 9 min")
+            tap("Ask about this chart")
+            assertTrue(follow.context.contains("Range: Mon to Wed"))
+            assertTrue(follow.context.contains("Selected: Tue"))
+            assertTrue(follow.context.contains("Daily runtime: 9 min"))
+        }
+    }
+
     @Test fun tableTabsCalculatorChartAndSavedStateWorkWithCurrentValues() {
         val mode = mutableStateOf(0)
         val scale = mutableStateOf(1f)
@@ -69,18 +125,21 @@ class RichReplyFeaturesDeviceTest {
             frames()
             await("Device scores")
             assertEquals("No automatic context on initial display", "", attached)
-            tap("Score ↕")
+            tableOption("Sort rows")
+            tap("Score"); await("Score ↑")
             assertTrue(attached.contains("Sort: Score ascending"))
+            tableOption("Select rows")
             val beta = await("Beta"); var row: AccessibilityNodeInfo? = beta
             while (row != null && !row.isCheckable) row = row.parent
             assertTrue(requireNotNull(row).performAction(AccessibilityNodeInfo.ACTION_CLICK))
             waitFor { attached.contains("Beta | 2") }
             tap("Discuss selected rows")
             assertTrue(follow.context.contains("Beta | 2")); assertFalse(follow.context.contains("Alpha | 10"))
+            tableOption("Filter rows")
             edit("Filter rows", "Gamma")
             waitFor { find("Alpha") == null && attached.contains("Filter: Gamma") }
             await("Gamma")
-            tap("Copy"); await("Copied")
+            tableOption("Copy")
             instrumentation.runOnMainSync {
                 val clip = c.appContext.getSystemService(android.content.ClipboardManager::class.java).primaryClip!!.getItemAt(0).text.toString()
                 assertTrue(clip.contains("Gamma")); assertFalse(clip.contains("Alpha"))
@@ -198,11 +257,11 @@ class RichReplyFeaturesDeviceTest {
                         override fun streamChat(config: ProviderConfig, apiKey: String, systemPrompt: String, messages: List<ChatMessage>, tools: List<ToolSchema>, options: RequestOptions) = flow {
                             calls++
                             types.forEach { assertTrue("$kind knows $it", systemPrompt.contains("\"type\":\"$it\"")) }
-                            assertTrue("$kind receives answer layout guidance", systemPrompt.contains("Answer readability:"))
-                            assertTrue("$kind chooses an appropriate format", systemPrompt.contains("simplest presentation that helps"))
-                            assertTrue("$kind keeps non-tabular rich responses", systemPrompt.contains("Prefer cards or choices"))
-                            assertTrue("$kind allows useful comparisons", systemPrompt.contains("qualitative attributes as well as measurements"))
-                            assertTrue("$kind rejects invented chart scores", systemPrompt.contains("never invent scores"))
+                            assertTrue("$kind receives answer layout guidance", systemPrompt.contains("one idea per short paragraph"))
+                            assertTrue("$kind chooses an appropriate format", systemPrompt.contains("Would the user grasp or act on this faster by seeing it than by reading it?"))
+                            assertTrue("$kind keeps non-tabular rich responses", systemPrompt.contains("`card`/`columns` (distinct alternatives)"))
+                            assertTrue("$kind allows useful comparisons", systemPrompt.contains("Exact lookup or multi-attribute comparison"))
+                            assertTrue("$kind rejects invented chart scores", systemPrompt.contains("Never invent numbers, scores"))
                             assertFalse("$kind has no component percentage target", systemPrompt.contains("70–80%"))
                             ui(table).chunked(31).forEach { emit(StreamEvent.TextDelta(it)) }
                             emit(StreamEvent.Done("stop"))
@@ -222,6 +281,7 @@ class RichReplyFeaturesDeviceTest {
                     frames()
                     await("Device scores")
                     assertNull(find("Response · Device scores"))
+                    tableOption("Select rows")
                     var row: AccessibilityNodeInfo? = await("Beta")
                     while (row != null && !row.isCheckable) row = row.parent
                     assertTrue(requireNotNull(row).performAction(AccessibilityNodeInfo.ACTION_CLICK))
@@ -286,6 +346,10 @@ class RichReplyFeaturesDeviceTest {
         }
         frames()
     }
+    private fun tableOption(label: String) {
+        tap("Table options")
+        tap(label)
+    }
     private fun edit(label: String, text: String) {
         fun editable(node: AccessibilityNodeInfo?): AccessibilityNodeInfo? {
             node ?: return null
@@ -293,11 +357,16 @@ class RichReplyFeaturesDeviceTest {
             for (i in 0 until node.childCount) editable(node.getChild(i))?.let { return it }
             return null
         }
-        var node: AccessibilityNodeInfo? = await(label)
-        while (node != null && editable(node) == null) node = node.parent
-        assertTrue(requireNotNull(editable(node)).performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
-            putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
-        }))
+        await(label)
+        // The outgoing popup item and the incoming filter field have the same label.
+        // Re-resolve the actual editor after the popup has left the active window.
+        waitFor {
+            var node: AccessibilityNodeInfo? = find(label)
+            while (node != null && editable(node) == null) node = node.parent
+            editable(node)?.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
+                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
+            }) == true
+        }
         frames()
     }
     private fun screenshot(name: String) {

@@ -32,4 +32,21 @@ class BackgroundSettingsTest {
             assertTrue(AppRuntimeState(ready = true, runInBackground = true, notificationsEnabled = notifications).canRun)
         }
     }
+
+    @Test fun `cold assistant binding waits for a visible entry to start the idle service`() {
+        val cold = AppRuntimeState()
+        val bound = AppRuntimeState(ready = true, runInBackground = true)
+        val opened = bound.copy(visible = true)
+        assertFalse(bound.shouldStartKeepaliveAfter(cold, serviceRunning = false, activeWork = false))
+        assertTrue(opened.shouldStartKeepaliveAfter(bound, serviceRunning = false, activeWork = false))
+        assertFalse(opened.shouldStartKeepaliveAfter(bound, serviceRunning = true, activeWork = false))
+        assertFalse(opened.copy(notificationsEnabled = true).shouldStartKeepaliveAfter(opened, serviceRunning = false, activeWork = false))
+        assertFalse(bound.shouldStartKeepaliveAfter(opened, serviceRunning = false, activeWork = false))
+    }
+
+    @Test fun `background preference still gates starts and active work can reacquire on opt in`() {
+        val disabled = AppRuntimeState(ready = true)
+        assertFalse(disabled.copy(visible = true).shouldStartKeepaliveAfter(disabled, serviceRunning = false, activeWork = true))
+        assertTrue(disabled.copy(runInBackground = true).shouldStartKeepaliveAfter(disabled, serviceRunning = true, activeWork = true))
+    }
 }

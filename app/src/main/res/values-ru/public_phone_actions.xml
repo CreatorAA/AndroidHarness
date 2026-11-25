@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Установить одноразовый будильник</string>
+    <string name="phone_public_timer">Запустить таймер</string>
+    <string name="phone_public_map">Найти место</string>
+    <string name="phone_public_calendar">Открыть черновик события в календаре</string>
+    <string name="phone_public_note">Открыть новую заметку</string>
+</resources>

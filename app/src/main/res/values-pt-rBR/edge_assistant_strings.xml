@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Alça lateral</string>
+    <string name="assistant_edge_desc">Deslize a alça da borda direita para dentro para abrir o assistente.</string>
+    <string name="assistant_edge_permission_hint">Nas configurações do Android, permita que o AndroidHarness apareça sobre outros apps.</string>
+    <string name="assistant_edge_permission_unavailable">Não foi possível abrir as configurações de permissão de sobreposição.</string>
+    <string name="assistant_edge_handle_description">Abrir o assistente sobre outros apps</string>
+    <string name="assistant_edge_start_failed">Não foi possível ativar a alça lateral. Tente de novo.</string>
+    <string name="assistant_edge_disconnected">O sistema desconectou o assistente.</string>
+    <string name="assistant_edge_reconnect">Reconectar</string>
+    <string name="assistant_edge_reconnect_steps">Nas configurações de assistente do Android, selecione Nenhum e depois selecione AndroidHarness novamente.</string>
+    <string name="assistant_edge_grant_overlay">Permitir sobreposição</string>
+</resources>

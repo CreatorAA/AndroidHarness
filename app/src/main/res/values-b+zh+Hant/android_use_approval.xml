@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">輕觸</string>
+    <string name="phone_review_long_press">按住</string>
+    <string name="phone_review_type">輸入文字</string>
+    <string name="phone_review_volume">設定媒體音量</string>
+    <string name="phone_review_scroll_forward">向前捲動</string>
+    <string name="phone_review_scroll_backward">向後捲動</string>
+    <string name="android_use_launcher_trip">從 %1$s 返回主畫面，找到並輕觸 %2$s，接著在 %3$s 繼續這項任務。</string>
+    <string name="android_use_action_approval">只允許這次操作嗎？\n\n%1$s</string>
+    <string name="android_use_chat_approval">允許在這個對話中操控手機嗎？代理程式可以將目標應用程式的畫面傳送給選取的模型，也可以輕觸畫面和輸入文字。這個對話中已獲授權的手機指令也可以讀取及變更檔案和設定。在目標應用程式中提交變更時，仍會再次徵求同意。</string>
+    <string name="android_use_submit_approval">只允許這次提交嗎？\n\n%1$s</string>
+    <string name="android_use_retarget_approval">要切換到其他應用程式繼續這項任務嗎？代理程式將能讀取該應用程式的畫面並進行操作。\n\n%1$s</string>
+    <string name="android_use_code_entry">傳送任務給手機助理</string>
+    <string name="android_use_code_hint">請加上指示，或單獨傳送 /phone 以開啟設定。</string>
+    <string name="android_use_draft_ready">請在 10 分鐘內開啟目標應用程式，並在助理中選取「操作手機」。在這裡使用 /phone --result 即可查看對話。</string>
+    <string name="android_use_draft_expired">這份草稿已過期、取消或被取代。請關閉這個對話方塊，再選取「操作手機」。</string>
+    <string name="android_use_draft_cancelled">已取消手機任務草稿。</string>
+    <string name="android_use_no_draft">這個對話沒有待處理的手機任務草稿。</string>
+    <string name="android_use_no_result">這個對話尚未啟動任何手機任務。</string>
+    <string name="android_use_local_only">請從本機的 Code 工作區啟動手機任務。</string>
+    <string name="android_use_from_code">來自 Code 的草稿</string>
+    <string name="phone_review_swipe">滑動</string>
+    <string name="phone_review_drag">拖曳</string>
+    <string name="phone_review_home">返回主畫面</string>
+</resources>

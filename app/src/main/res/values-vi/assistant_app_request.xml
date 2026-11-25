@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Mở %1$s?</string>
+    <string name="app_request_search">Tìm “%2$s” trong %1$s?</string>
+    <string name="app_request_choose_open">Bạn muốn mở ứng dụng nào?</string>
+    <string name="app_request_choose_map">Bạn muốn tìm “%1$s” bằng ứng dụng bản đồ nào?</string>
+    <string name="app_request_missing">Không tìm thấy ứng dụng có tên “%1$s” mà điện thoại này có thể mở.</string>
+    <string name="app_request_alternative">Bạn có thể tìm “%1$s” bằng một trong các ứng dụng bản đồ bên dưới.</string>
+    <string name="app_request_open_only">Có thể mở %1$s, nhưng ứng dụng này không cung cấp tính năng tìm kiếm địa điểm công khai. Mở ứng dụng mà không tìm kiếm?</string>
+    <string name="app_request_no_map">Không có ứng dụng nào đã cài đặt hỗ trợ tìm “%1$s” trên bản đồ.</string>
+    <string name="app_request_no_entry">%1$s không có điểm truy cập khả dụng cho yêu cầu này.</string>
+    <string name="app_request_opened">Đã gửi yêu cầu mở %1$s.</string>
+    <string name="app_request_sent">Đã gửi yêu cầu tìm “%2$s” đến %1$s.</string>
+    <string name="app_request_failed">Không thể gửi yêu cầu này đến %1$s. Hãy yêu cầu lại để kiểm tra các ứng dụng khả dụng.</string>
+    <string name="app_request_cancelled">Đã hủy. Không có ứng dụng nào được mở.</string>
+</resources>

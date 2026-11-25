@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">टैप करें</string>
+    <string name="phone_review_long_press">छूकर दबाए रखें</string>
+    <string name="phone_review_type">टेक्स्ट डालें</string>
+    <string name="phone_review_volume">मीडिया का वॉल्यूम सेट करें</string>
+    <string name="phone_review_scroll_forward">आगे स्क्रोल करें</string>
+    <string name="phone_review_scroll_backward">पीछे स्क्रोल करें</string>
+    <string name="phone_review_swipe">स्वाइप करें</string>
+    <string name="phone_review_drag">खींचें</string>
+    <string name="phone_review_home">होम स्क्रीन पर लौटें</string>
+    <string name="android_use_launcher_trip">%1$s से होम स्क्रीन पर जाएँ, वहाँ %2$s ढूँढकर उस पर टैप करें और फिर %3$s में यह काम जारी रखें।</string>
+    <string name="android_use_action_approval">इस कार्रवाई की सिर्फ़ एक बार अनुमति दें?\n\n%1$s</string>
+    <string name="android_use_chat_approval">इस चैट के लिए फ़ोन कंट्रोल की अनुमति दें? एजेंट उस ऐप की स्क्रीन चुने गए मॉडल को भेज सकता है, स्क्रीन पर टैप कर सकता है और टाइप कर सकता है। इस चैट में अनुमति वाले फ़ोन कमांड फ़ाइलें और सेटिंग पढ़ और बदल भी सकते हैं। उस ऐप में कोई बदलाव सबमिट करने से पहले फिर से अनुमति माँगी जाएगी।</string>
+    <string name="android_use_submit_approval">इसे सिर्फ़ एक बार सबमिट करने की अनुमति दें?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">यह काम किसी दूसरे ऐप में जारी रखें? एजेंट उस ऐप की स्क्रीन पढ़ सकेगा और ऐप में कार्रवाई कर सकेगा।\n\n%1$s</string>
+    <string name="android_use_code_entry">फ़ोन असिस्टेंट को काम भेजें</string>
+    <string name="android_use_code_hint">निर्देश जोड़ें या सेटिंग खोलने के लिए सिर्फ़ /phone भेजें।</string>
+    <string name="android_use_draft_ready">जिस ऐप में काम करना है, उसे खोलें और 10 मिनट के अंदर असिस्टेंट में “फ़ोन चलाएँ” चुनें। बातचीत देखने के लिए यहाँ /phone --result इस्तेमाल करें।</string>
+    <string name="android_use_draft_expired">इस ड्राफ़्ट की समय-सीमा खत्म हो गई है, इसे रद्द कर दिया गया है या इसकी जगह दूसरा ड्राफ़्ट आ गया है। यह डायलॉग बंद करें और फिर से “फ़ोन चलाएँ” चुनें।</string>
+    <string name="android_use_draft_cancelled">फ़ोन का ड्राफ़्ट रद्द कर दिया गया।</string>
+    <string name="android_use_no_draft">इस बातचीत में फ़ोन का कोई ड्राफ़्ट बाकी नहीं है।</string>
+    <string name="android_use_no_result">इस बातचीत से फ़ोन पर कोई काम शुरू नहीं किया गया है।</string>
+    <string name="android_use_local_only">फ़ोन पर काम शुरू करने के लिए लोकल Code वर्कस्पेस का इस्तेमाल करें।</string>
+    <string name="android_use_from_code">Code से आया ड्राफ़्ट</string>
+</resources>

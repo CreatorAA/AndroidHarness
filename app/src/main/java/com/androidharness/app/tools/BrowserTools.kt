@@ -249,7 +249,7 @@ class BrowserReadTool(
             "final URL and title. Use it when web_fetch reports that a page requires JavaScript or returns " +
             "almost no readable text. max_chars caps the returned text. Set images=true to collect the " +
             "image URLs the rendered page actually shows, including lazy-loaded gallery images. These are assets, not screenshots of HTML/CSS mockups. " +
-            "Set screenshot=viewport or full_page to inspect the rendered page itself. A screenshot requires the unlocked app to be visible; the screenshot result explicitly reports whether an image was attached."
+            "Set screenshot=viewport or full_page to inspect the rendered page itself. The page can render offscreen without opening the preview. The result reports whether an image was actually attached."
     override val parametersSchema = Schema.obj(
         mapOf(
             "url" to Schema.string("The http(s) URL to render."),

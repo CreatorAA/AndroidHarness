@@ -105,6 +105,22 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">다른 프로젝트의 채팅에서 이 작업 공간을 사용 중입니다: %1$s. 삭제하기 전에 해당 채팅에서 이 작업 공간을 제거하세요. 저장된 변경 사항이 있는 채팅은 작업 공간 접근 권한을 유지해야 합니다.</string>
+    <string name="wp_delete_running_blocked">삭제하기 전에 이 프로젝트에서 실행 중인 작업을 중지하세요.</string>
+    <string name="wp_reset_shared_blocked">다른 채팅에서도 앱 작업 공간을 사용 중입니다: %1$s. 초기화하기 전에 해당 채팅에서 이 작업 공간을 제거하세요.</string>
+    <string name="wp_reset_running_blocked">초기화하기 전에 이 작업 공간에서 실행 중인 작업을 중지하세요.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="other">자동화 %1$d개</item>
+    </plurals>
+    <string name="wp_picked_folder">선택한 폴더</string>
+    <string name="wp_review_changed">세부 정보가 변경되었습니다. 이 창을 닫고 작업을 다시 확인하세요.</string>
+    <string name="wp_editor_toggle_wrap">자동 줄 바꿈 전환</string>
+    <string name="wp_editor_undo_available">실행 취소 가능</string>
+    <string name="wp_reset_app_only">앱 작업 공간만 초기화할 수 있습니다.</string>
+    <string name="wp_editor_find_replace">프로젝트에서 찾기 및 바꾸기</string>
+    <plurals name="wp_changed_files">
+        <item quantity="other">파일 %1$d개 변경됨</item>
+    </plurals>
     <string name="wp_add_shared">"공유 폴더"</string>
     <string name="wp_add_shared_sub">"앱을 삭제해도 유지됩니다. 안정판과 나이틀리 빌드 모두 볼 수 있습니다"</string>
     <string name="wp_add_shared_failed">"%1$s을(를) 만들지 못했습니다. 모든 파일 접근이 켜져 있는지 확인한 뒤 다시 시도하세요."</string>

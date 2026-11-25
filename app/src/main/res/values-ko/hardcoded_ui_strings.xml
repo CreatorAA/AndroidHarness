@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">이 차례에는 되돌릴 내용이 없습니다.</string>
+    <string name="chat_compaction_preparing">채팅 요약을 준비하는 중…</string>
+    <string name="chat_compaction_too_few_messages">압축할 메시지가 아직 너무 적습니다.</string>
+    <string name="chat_compaction_retrying">요약 재시도 중 · %1$d번째 시도 · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">압축을 중지했습니다. 기록은 유지됩니다. 준비되면 /compact를 다시 실행하세요.</string>
+    <string name="chat_compaction_refresh_failed">채팅을 압축했지만 작업 설정이나 컨텍스트 추정치를 새로 고치지 못했습니다: %1$s</string>
+    <string name="chat_compaction_failed_notice">압축에 실패했습니다: %1$s. 기록은 유지됩니다. /compact를 다시 실행하거나 다른 모델을 선택하세요.</string>
+    <string name="reasoning_from_catalog">모델 카탈로그에 추론 지원이 표시됨</string>
+    <string name="reasoning_from_provider">제공업체에서 추론 지원을 보고함</string>
+    <string name="reasoning_from_user">사용자가 추론 지원을 설정함</string>
+    <string name="reasoning_from_name">모델 이름에서 추론 지원을 추정함</string>
+    <string name="automation_every_day">매일</string>
+    <string name="automation_daily_at">매일 %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">디버그 APK를 빌드하고 빌드 오류를 수정하세요.</string>
+    <string name="app_update_checking">업데이트 확인 중…</string>
+    <string name="app_update_up_to_date">최신 버전을 사용 중입니다</string>
+    <string name="files_directory">폴더</string>
+    <string name="cache_status_unavailable">캐시 데이터를 사용할 수 없음</string>
+    <string name="cache_status_hit">캐시 적중 · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · 일부만 집계됨</string>
+    <string name="cache_estimated_price">약 %1$s</string>
+    <string name="chat_live_sites_suffix">개 사이트</string>
+    <string name="chat_research_sources_suffix">/%1$d개 출처</string>
+    <string name="chat_research_read_suffix">개 읽음</string>
+    <string name="package_status_failed">설치 실패</string>
+    <string name="package_hide_details">설치 세부정보 숨기기</string>
+    <string name="package_show_details">설치 세부정보 보기</string>
+    <string name="package_recently_unpacked">최근 압축 해제 · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">항목 %1$d개</item>
+    </plurals>
+</resources>

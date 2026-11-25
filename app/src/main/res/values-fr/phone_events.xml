@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Les rappels restent disponibles ici même si les alertes sont désactivées dans « %1$s ».</string>
+    <string name="phone_events_title">Rappels d’événements du téléphone</string>
+    <string name="phone_events_intro">Recevez un rappel lorsqu’une application choisie s’ouvre ou publie une notification. Examinez toute tâche associée avant de l’exécuter.</string>
+    <string name="phone_event_ready">Rappel d’événement du téléphone</string>
+    <string name="phone_event_open_reminder">%1$s a déclenché votre rappel. Appuyez pour le consulter.</string>
+    <string name="phone_events_grant_notifications">Autoriser l’accès aux notifications</string>
+    <string name="phone_events_grant_window">Activer les commandes du téléphone Harness dans les paramètres d’accessibilité</string>
+    <string name="phone_events_show_alerts">Autoriser les notifications de rappel</string>
+    <string name="phone_event_opened">%1$s s’ouvre</string>
+    <string name="phone_event_notified">%1$s publie une notification</string>
+    <string name="phone_event_review_task">Examiner : %1$s</string>
+    <string name="phone_event_dismiss">Ignorer</string>
+    <string name="phone_event_remind_only">Me rappeler uniquement</string>
+    <string name="phone_event_task_missing">La tâche associée n’est plus disponible</string>
+    <string name="phone_event_edit">Modifier la règle</string>
+    <string name="phone_event_remove">Supprimer la règle</string>
+    <string name="phone_event_add">Ajouter une règle pour une application</string>
+    <string name="phone_event_view_notices">Notifications actives (%1$d)</string>
+    <string name="phone_event_active_notices">Notifications actuelles</string>
+    <string name="phone_event_metadata_only">Seules l’application et l’heure sont affichées. Ouvrez une notification dans son application d’origine pour la lire.</string>
+    <string name="phone_event_no_notices">Aucune notification actuelle de vos applications sélectionnées.</string>
+    <string name="phone_event_no_listener">Le service d’écoute des notifications n’est pas connecté.</string>
+    <string name="phone_event_open_source">Ouvrir dans l’application</string>
+    <string name="phone_event_mark_read">Marquer comme lu</string>
+    <string name="phone_event_read_confirm">Demander à %1$s de marquer cette notification comme lue ?</string>
+    <string name="phone_event_task_busy">Cette tâche est en pause, déjà en cours ou n’est plus manuelle.</string>
+    <string name="phone_event_run_task">Exécuter la tâche</string>
+    <string name="phone_event_unavailable">Cet élément n’est plus disponible.</string>
+    <string name="phone_event_choose_app">Choisir une application</string>
+    <string name="phone_event_search">Nom de l’application ou du package</string>
+    <string name="phone_event_when">Quand</string>
+    <string name="phone_event_when_open">J’ouvre cette application</string>
+    <string name="phone_event_when_notified">Cette application publie une notification</string>
+    <string name="phone_event_then">Me rappeler d’examiner</string>
+    <string name="phone_event_save">Enregistrer la règle</string>
+    <string name="phone_event_all_rules">Les deux événements sont déjà configurés. Modifiez les règles existantes ci-dessous.</string>
+</resources>

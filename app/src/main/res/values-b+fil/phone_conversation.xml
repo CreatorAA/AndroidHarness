@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Telepono</string>
+    <string name="conversation_new_phone">Bagong pag-uusap sa telepono</string>
+    <string name="phone_conversation_intro">Magtanong dito. Para gumamit ang assistant ng app, lumipat sa app na iyon at tawagin ang assistant.</string>
+    <string name="phone_conversation_settings">Mga setting ng assistant</string>
+    <string name="settings_start_phone_desc">Buksan ang iyong mga pag-uusap sa assistant ng telepono.</string>
+</resources>

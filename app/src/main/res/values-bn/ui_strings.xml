@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"প্রদানকারী ডিফল্ট"</string>
     <string name="ui_add_custom_command">"কাস্টম কমান্ড যোগ করুন"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"একটি রান বা টার্মিনাল সক্রিয় থাকাকালীন CPU ধরে রাখুন যাতে অ্যাপটি ছোট করা হলে টার্মিনালটি মারা না যায়।"</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"বাদ দেওয়া হয়েছে: Android ব্যাকগ্রাউন্ড রান থ্রোটল করবে না।"</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"চালু: Samsung এবং অন্যান্য OEMগুলি ব্যাকগ্রাউন্ডের কাজকে মেরে ফেলতে পারে। নির্ভরযোগ্য দীর্ঘ রানের জন্য অ্যাপটি বাদ দিন।"</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness-এর জন্য Android-এর ব্যাটারি অপ্টিমাইজেশন বন্ধ আছে।"</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android-এর ব্যাটারি অপ্টিমাইজেশন চালু আছে। স্ক্রিন বন্ধ থাকলে দীর্ঘ সময়ের কাজ থেমে গেলে AndroidHarness-কে কোনো বিধিনিষেধ ছাড়া ব্যাটারি ব্যবহার করতে দিন।"</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"বর্তমান সংস্করণ %1$s। নতুন বিল্ডের জন্য GitHub রিলিজ চেক করে।"</string>
     <string name="ui_available_see_the_dialog">"%1$s উপলব্ধ, ডায়ালগ দেখুন"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"একটি কোডিং এজেন্ট যা আপনার ফোনে থাকে।"</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"পড়ার গতি"</string>
     <string name="lms_field_prompt_threads_help">"আপনার বার্তা পড়ার সময় CPU কোর।"</string>
     <string name="lms_unit_cores">"কোর"</string>
+    <string name="voice_no_result">সম্পূর্ণ কথার লিখিত রূপ পাওয়া যায়নি। আবার বলুন বা বার্তা টাইপ করুন।</string>
+    <string name="voice_service_interrupted">কথা লেখা শেষ হওয়ার আগেই সিস্টেমের স্পিচ পরিষেবা বন্ধ হয়ে গেছে। আবার বলুন বা বাকিটা টাইপ করুন।</string>
+    <string name="voice_try_again">আবার বলে লিখুন</string>
+    <string name="voice_continue">বলে লেখা চালিয়ে যান</string>
+    <string name="voice_finish_to_send">শুনছে। শেষ হলে পাঠান বোতামে ট্যাপ করুন।</string>
 </resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">I-tap</string>
+    <string name="phone_review_long_press">Pindutin nang matagal</string>
+    <string name="phone_review_type">Maglagay ng text</string>
+    <string name="phone_review_volume">Itakda ang volume ng media</string>
+    <string name="phone_review_scroll_forward">Mag-scroll pasulong</string>
+    <string name="phone_review_scroll_backward">Mag-scroll pabalik</string>
+    <string name="phone_review_swipe">Mag-swipe</string>
+    <string name="phone_review_drag">I-drag</string>
+    <string name="phone_review_home">Bumalik sa Home screen</string>
+    <string name="android_use_launcher_trip">Mula sa %1$s, hanapin at i-tap ang %2$s sa Home screen, pagkatapos ay ipagpatuloy ang task na ito sa %3$s.</string>
+    <string name="android_use_action_approval">Payagan ang pagkilos na ito nang isang beses?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Payagan ang pagkontrol sa telepono para sa chat na ito? Maaaring ipadala ng agent ang screen ng target na app sa napiling model, mag-tap, at mag-type. Pinapayagan din nito ang mga awtorisadong command sa telepono sa chat na ito na magbasa at magbago ng mga file at setting. Hihingi muli ng pahintulot bago magsumite ng pagbabago sa target na app.</string>
+    <string name="android_use_submit_approval">Payagan ang pagsusumiteng ito nang isang beses?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Ilipat ang task na ito sa ibang app? Mababasa at makakagamit ng agent ang screen nito.\n\n%1$s</string>
+    <string name="android_use_code_entry">Magpadala ng task sa assistant ng telepono</string>
+    <string name="android_use_code_hint">Magdagdag ng tagubilin, o ipadala ang /phone lang para buksan ang mga setting.</string>
+    <string name="android_use_draft_ready">Buksan ang target na app at piliin ang Gamitin ang telepono sa assistant sa loob ng 10 minuto. Gamitin ang /phone --result dito para tingnan ang pag-uusap.</string>
+    <string name="android_use_draft_expired">Nag-expire, kinansela, o napalitan ang draft na ito. Isara ang dialog na ito at piliin muli ang Gamitin ang telepono.</string>
+    <string name="android_use_draft_cancelled">Kinansela ang draft para sa telepono.</string>
+    <string name="android_use_no_draft">Walang nakabinbing draft para sa telepono sa pag-uusap na ito.</string>
+    <string name="android_use_no_result">Wala pang nasimulang task sa telepono mula sa pag-uusap na ito.</string>
+    <string name="android_use_local_only">Magsimula ng task sa telepono mula sa lokal na workspace ng Code.</string>
+    <string name="android_use_from_code">Draft mula sa Code</string>
+</resources>

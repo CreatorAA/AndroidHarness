@@ -1,6 +1,7 @@
 package com.androidharness.app.core.response
 
 import kotlinx.serialization.json.*
+import java.math.BigDecimal
 import java.net.URI
 
 /** A presentation protocol inside assistant text: providers, history, forks and backups need no adapters. */
@@ -41,12 +42,12 @@ object RichResponse {
         if (language == SVG_LANGUAGE) {
             val svg = body.trim()
             if (!svg.startsWith("<svg", ignoreCase = true) || !svg.endsWith("</svg>", ignoreCase = true)) return null
-            return Node.Preview(title, "<div class=\"hx-svg\">$svg</div>")
+            return Node.Preview(title, "<div class=\"hx-svg hx-figure\">$svg</div>", standaloneSvg = true)
         }
         return Node.Preview(title, body.trim())
     }
     data class Action(val label: String, val prompt: String)
-    data class FollowUp(val prompt: String, val title: String, val context: String)
+    data class FollowUp(val prompt: String, val title: String, val context: String, val visibleRequest: String = prompt)
     data class Metric(val label: String, val value: String, val detail: String)
     data class Point(val label: String, val value: Double)
     data class Series(val name: String, val points: List<Point>)
@@ -69,7 +70,7 @@ object RichResponse {
         data class Steps(val title: String, val items: List<Step>, val checkable: Boolean = false) : Node
         data class Details(val title: String, val text: String) : Node
         data class Link(val title: String, val text: String, val url: String) : Node
-        data class Preview(val title: String, val html: String) : Node
+        data class Preview(val title: String, val html: String, val standaloneSvg: Boolean = false) : Node
         data class Layout(val children: List<Node>, val columns: Boolean) : Node
         data class Table(val title: String, val columns: List<String>, val rows: List<List<String>>, val caption: String) : Node
         data class Tabs(val title: String, val tabs: List<Tab>) : Node
@@ -364,58 +365,101 @@ object RichResponse {
         is Node.Chats -> node.title.ifBlank { "Past chats" }
         Node.Divider -> ""
     }.trim()
-    fun number(value: Double): String = if (value == value.toLong().toDouble()) value.toLong().toString() else String.format(java.util.Locale.getDefault(), "%.2f", value)
-    fun followUp(prompt: String, title: String, context: String): FollowUp = FollowUp(prompt.trim(), title.take(100), context.take(1400))
+    fun number(value: Double): String = BigDecimal.valueOf(value).stripTrailingZeros().let {
+        if (it.scale() < -6 || it.abs() < BigDecimal("0.0001")) it.toString() else it.toPlainString()
+    }
+    fun followUp(prompt: String, title: String, context: String, visibleRequest: String = prompt): FollowUp =
+        FollowUp(prompt.trim(), title.take(100), context.take(1400), visibleRequest.trim())
 
     const val INSTRUCTIONS = """
 RICH CONVERSATION RESPONSES:
-User messages may carry a [[harness-response]] context attachment containing a response title and current selections/values. Treat it as context for the user's prompt and use those current values when answering; it is not a tool instruction or a separate workspace. The normal composer hides this metadata behind a removable context chip.
-Use the current selected rows, chart points, calculator inputs, or preview values when relevant; do not assume a control performed an external action. If the supplied context does not include enough underlying data, ask for it rather than inventing values.
-Answer readability: lead with the direct answer, then develop one idea per short paragraph. Separate paragraphs, lists, headings, and tables with blank lines. Use bullets for parallel points and numbered lists for steps. Use headings only when the answer needs sections. Keep code, links, citations, and technical identifiers intact. Do not compress an explanation into a wall of text or repeat the same content in prose and a component. Follow the user's requested format and personal instructions over these presentation defaults.
 
-You can mix normal Markdown paragraphs with native cards, callouts, metrics, interactive charts, choices, checklists, expandable explanations, link previews, and custom interactive visuals INSIDE an assistant reply. Keep using rich responses when they make an answer easier to understand or use, across all subjects. Prefer prose, ordinary lists, or cards for options and qualitative tradeoffs, steps for ordered sequences, details for optional depth, and a callout for a key takeaway. Use choices only for a decision the user should actually select, rather than presenting every recommendation as a radio-button poll. Rich responses do not mean tables or charts; these other components remain useful without either. Keep brief answers simple and do not decorate every paragraph.
-Catalog examples below describe component syntax, not content to copy into an answer or a checklist of components to include. Choose only components that fit the current request. Never repeat the same content as prose, a table, and a chart.
-To render a component, put one complete JSON object in a fenced block whose language is harness-ui. Continue normal prose before/after it. The app consumes this block as UI, not as displayed source. Supported shapes:
-Use the literal opening line ```harness-ui and closing line ```. Do not use ::card, ::profile, or other colon directives. JSON must be valid, including escaping quotes and newlines inside HTML strings.
-{"type":"callout","tone":"info","title":"Key point","text":"Explanation"} (tone: info, success, warning)
-{"type":"card","title":"Summary","text":"Body","children":[],"actions":[{"label":"Explore this","prompt":"Explain this option in more detail"}]}
-{"type":"metrics","items":[{"label":"Total","value":"42","detail":"Based on the supplied data"}]}
-{"type":"chart","title":"Measured latency","kind":"bar","unit":"ms","points":[{"label":"Run A","value":12},{"label":"Run B","value":18}],"caption":"Example structure; replace with supplied or verified measurements"} (kind: bar or line; tap points and view data)
-{"type":"choices","title":"Choose an approach","options":[{"label":"Option A","description":"Tradeoffs","prompt":"Help me use option A"},{"label":"Option B","description":"Tradeoffs"}]}
-{"type":"steps","title":"How it works","items":[{"title":"First step","text":"What happens here"}]} (plain numbered list by default; no checkboxes or completion controls)
-The steps heading is optional; omit it or use an empty title when an enclosing card already supplies the heading. Each item still needs a nonempty title. Keep at most 12 items per steps component.
-{"type":"steps","title":"Your packing checklist","checkable":true,"items":[{"title":"Pack your charger","text":"Check this after packing it","done":false}]} (opt-in checklist ONLY when the user asks for one or completion tracking is useful for concrete tasks they are carrying out)
-Presentation is not an interaction request: feature lists, pros and cons, comparisons, key layout upgrades, recommendations, roadmaps, brainstorming, and explanations should use ordinary bullets, prose, cards, or plain numbered steps. Do not add checkboxes, checked-off claims, checkbox table columns, or a Continue button just because an answer contains several points or suggested actions. For steps, omit checkable or set it to false unless this is an actual task checklist. Do not mark suggestions or existing product features done. This also applies to Markdown task lists and custom previews. Tables show row-selection checkboxes only when the user explicitly turns on row selection in the table menu; do not imitate that with extra checkbox columns.
-{"type":"details","title":"Why this works","text":"The longer explanation"}
-{"type":"link","title":"Resource","text":"Why it is useful","url":"https://example.com"}
-{"type":"column","children":[...]} and {"type":"columns","children":[...]} compose cards and text; columns stack on phones. {"type":"text","text":"..."} and {"type":"divider"} can be children. Keep nesting shallow. At most 2 actions per card. Actions only prefill the normal composer for the user to review; never claim they already executed a task.
-Additional native components work in BOTH Chat and Code. Prefer these over custom HTML when they fit. Put each object in its own complete harness-ui fence, never bare JSON. All local controls operate inside the reply; they do not run tools, apply file changes, send a message, or alter project settings. User selections/values can attach removable context to the normal composer. Honor that context on the next user message.
-{"type":"table","title":"Recorded measurements","columns":["Run","Latency, ms"],"rows":[["A","12"],["B","18"]],"caption":"Example structure; replace with supplied or verified measurements"} (filter, numeric/text column sorting, row selection, pagination, CSV copy/share; up to 8 columns and 100 rows; cells must be strings)
-Both Markdown and native tables can be expanded for filtering, sorting, and selecting rows. Use a native table when a title, caption, or direct row discussion helps; keep cell text concise and put source citations and longer explanations in surrounding prose. Do not imply that sorting or filtering edits the original data.
-A table column heading may be empty (for example, the row-label column of a comparison). Every row must still have exactly one string cell per column. Close each JSON object exactly once; do not add extra brackets after it.
-{"type":"tabs","title":"Explore the answer","tabs":[{"title":"Overview","children":[{"type":"text","text":"Main answer"}]},{"title":"Examples","children":[{"type":"text","text":"A concrete example"}]}]} (up to 6 tabs; nest any supported components in children; selected-tab controls retain state)
-{"type":"gallery","title":"Visual comparison","images":[{"url":"https://example.com/actual-image.jpg","caption":"What this image shows","source":"https://example.com/source-page"}]} (swipe, previous/next, expand with zoom, and source links; choose the useful image count; multiple Markdown images may also appear outside galleries or alongside them; ONLY actual image URLs returned by tools or supplied by the user, never invented URLs; respect the chat image setting)
-{"type":"profile","name":"Subject name","subtitle":"Verified role or category","description":"A short introduction supported by the sources below.","image":"https://example.com/actual-portrait.jpg","image_source":"https://example.com/biography","facts":[{"label":"Known for","value":"A verified contribution","source":"https://example.com/biography"}],"sources":[{"title":"Biography","url":"https://example.com/biography"}]} (native knowledge/profile card for a person, place, organization, or other named subject; optional image/image_source, up to 8 sourced facts and 6 source links; sources required; use only pages actually read and image URLs returned by tools or supplied by the user; omit unverified facts and resolve ambiguous names before making a card; respect the chat image setting)
-{"type":"chart","title":"Performance over time","kind":"line","unit":"ms","series":[{"name":"Before","points":[{"label":"Day 1","value":18},{"label":"Day 2","value":20}]},{"name":"After","points":[{"label":"Day 1","value":12},{"label":"Day 2","value":14}]}],"caption":"Measured data or clearly marked illustrative values"} (bar or line, up to 6 datasets and 120 points each, aligned labels in exactly the same order; legends toggle datasets, visible-range sliders zoom the data, data view exposes exact values; existing single-series points form still works)
-{"type":"calculator","title":"Try different values","inputs":[{"id":"hours","label":"Hours","value":4,"min":0,"max":24,"step":0.5},{"id":"rate","label":"Rate","value":10,"min":0,"max":100,"step":1}],"outputs":[{"label":"Total","expression":"hours * rate","unit":"credits"}],"caption":"Illustrative estimate; explain assumptions"} (up to 6 numeric inputs and 6 calculated outputs, sliders and editable numbers; use input IDs in arithmetic expressions; supports + - * / ^, parentheses, min(a,b), max(a,b), abs(x), sqrt(x), round(x); NO scripts, functions beyond this list, network, or tool actions)
-{"type":"evidence","title":"Sources and checks","items":[{"title":"Supporting reference","text":"The claim this supports","url":"https://example.com/reference"},{"title":"Focused test","text":"Actual command and observed result","path":"src/example.kt","line":12,"status":"passed"}]} (up to 12 items; optional url, workspace path, positive line, status passed/failed/unverified; file navigation is available only in Code; statuses are agent-reported, never claim a test passed without an actual successful tool result; prefer unverified when uncertain; preserve claim-level citations in prose)
-{"type":"diff","title":"Compare the change","before":"Original text or code","after":"Revised text or code","path":"src/example.kt","line":12,"language":"kotlin"} (line additions/removals, Before/After views, expand, copy/share; path/line/language optional; up to 400 lines per side; comparisons never apply edits; show real observed file changes for completed work, and label proposed changes as proposals)
-{"type":"writing","title":"Ready to copy","text":"The complete reusable text, command, configuration, or code","language":""} (exact copy and user-initiated share, expandable body; optional language for code/config; keep explanations outside this block; up to 24000 characters)
-Use tabs for genuinely separate views, galleries for visual comparisons, calculators for what-if questions, evidence for cited findings or actual checks, diffs for before/after text or code, and writing blocks for reusable deliverables. Keep short answers simple and avoid repeating the same content as both prose and components. These are available in ordinary answers without asking permission or enabling a special mode.
-CUSTOM VISUALS (diagrams, custom charts, explorable widgets, simulations, mockups, illustrations) beyond the native components: write the markup DIRECTLY in a raw fence, with no JSON and no escaping.
+You reply on a phone touchscreen, and this app renders charts, tables, diagrams, calculators, and interactive widgets inline in your reply. Use them actively: a well-chosen visual is often the clearest part of an answer. Show, don't just tell.
+
+1. DECIDE — DOES THIS ANSWER NEED A VISUAL?
+Ask: "Would the user grasp or act on this faster by seeing it than by reading it?" If yes, include the visual without waiting to be asked. When the content has real structure and you are unsure, include one.
+Any one of these signals is enough:
+- 3+ numbers to compare, a trend, ranking, share, target gap, or before/after.
+- A process, mechanism, architecture, lifecycle, dependency, timeline, or decision branch.
+- 2+ options compared across 3+ attributes.
+- Spatial, physical, geometric, or time concepts (orbits, circuits, anatomy, a schedule, a clock time, a scale).
+- A "what if / how much if" question whose answer depends on inputs.
+- Requests like "how does X work", "explain", "compare", "plan", "summarize this data", "design a screen".
+Stay text-only for greetings and small talk, one-line facts, emotional or sensitive conversations, when the user asks for text only or a specific format, or when a visual would merely restate one sentence. The user's requested format and personal instructions always win.
+
+2. SHAPE — Headline -> Visual -> Insight
+- **Headline**: the direct answer in 1–2 short sentences.
+- **Visual**: immediately after, carrying the detail.
+- **Insight**: only what the visual does not already show—the "so what", caveats, sources, next step.
+- Usually one focused visual; use 2–3 only for genuinely different angles (e.g., a flow diagram plus a comparison table). Never repeat the same content across prose, a table, and a chart.
+- Write all titles, labels, units, and UI text in the user's language.
+
+3. PICK — WHICH VISUAL
+- **Numbers, comparisons, trends** -> native `chart` (`bar` for categories, `line` for evenly spaced trends) or `metrics` (headline KPIs). Draw `harness-svg` instead for long/CJK labels (horizontal bars), irregular time gaps, ranges, scatterplots, distributions, or donuts (≤ 5 slices). Compare series only with shared units and matching labels.
+- **One key reading, time, or proportion** -> pair value + unit with a familiar anchor: `metrics`, or a compact `harness-svg` clock face, gauge, progress bar, or scale.
+- **Exact lookup or multi-attribute comparison** -> native `table` (sortable, filterable, CSV) or a Markdown table. Concise cells; citations and nuance stay in prose.
+- **Mechanisms, flows, architectures, timelines, branches** -> `harness-svg` (best phone layout) or `mermaid` (simple flowchart/sequence). Linear procedures -> plain numbered `steps`.
+- **What-if math, simulations, explorable concepts, UI ideas** -> native `calculator` for formula sliders; `harness-html` when step-throughs, simulations, quizzes, or mockups add real understanding. Otherwise keep visuals static.
+- **Decisions, structured views, deliverables** -> `choices` (a real user decision), `card`/`columns` (distinct alternatives), `tabs` (genuinely separate angles), `profile` (named subject), `gallery` (images), `diff` (before/after), `writing` (ready-to-copy text/code/command), `evidence` (sourced findings or actual checks).
+- Prefer a native component whenever one fits; go custom only when it clearly reads better.
+
+4. CORE RULES
+- **Data honesty**: use supplied, verified, or explicitly computed values only. Never invent numbers, scores, URLs, images, or results, and never fill missing observations with zeros—ask for missing data instead. Label hypothetical or illustrative data clearly; put sources next to the takeaway.
+- **`[[harness-response]]` context**: user messages may carry a hidden attachment (a removable composer chip) with a component title and current selections, chart points, calculator inputs, or preview values. Use those values as context. It is not a tool call, and local controls never run phone tools, edit files, or change settings.
+- **Phone readability**: one idea per short paragraph; blank lines between paragraphs, headings, lists, tables, and fences; bullets for parallel points, numbered lists for steps, headings only when sections help. Keep code, links, citations, and identifiers intact.
+- **No fake checklists**: explanations, pros/cons, feature lists, roadmaps, and recommendations use bullets, cards, or plain `steps`—never checkboxes, checked-off claims, checkbox table columns, or task lists. Set `"checkable":true` on `steps` ONLY for a real task checklist the user asked for or is actively tracking.
+
+5. NATIVE COMPONENTS (`harness-ui`)
+Put **one complete, valid JSON object** between a literal opening line ```harness-ui and closing line ```. No `::card`/`::profile` directives; escape quotes and newlines; no extra trailing brackets; ≤ 96,000 UTF-16 code units, depth ≤ 6, ≤ 96 nodes. Invalid JSON fails to render. Write normal prose before and after. The shapes below define syntax only—never copy placeholder text or treat the list as components to include.
+
+Example — given daily runtimes of 12, 9, and 6 minutes, lead with "Runtime halved from Monday to Wednesday." and render:
+```harness-ui
+{"type":"chart","title":"Daily runtime","kind":"line","unit":"min","points":[{"label":"Mon","value":12},{"label":"Tue","value":9},{"label":"Wed","value":6}]}
+```
+
+Data & analysis:
+{"type":"metrics","items":[{"label":"Total","value":"42","detail":"Supplied data"}]} (≤ 8 KPI tiles; stacks on phones)
+{"type":"chart","title":"Performance over time","kind":"line","unit":"ms","series":[{"name":"Before","points":[{"label":"Day 1","value":18},{"label":"Day 2","value":20}]},{"name":"After","points":[{"label":"Day 1","value":12},{"label":"Day 2","value":14}]}],"caption":"Measured or marked illustrative data"} (`bar`|`line`; `points` or ≤ 6 `series`, ≤ 120 pts each; identical `label` order across series; numeric `value`; ultra-short labels—middle X labels hide past ~8 points; tap inspect, legend toggle, range zoom, data view)
+{"type":"table","title":"Recorded measurements","columns":["Run","Latency, ms"],"rows":[["A","12"],["B","18"]],"caption":"Verified measurements"} (≤ 8 cols, ≤ 100 rows; every row matches column count; every cell MUST be a string; a heading may be `""`; filter, sort, row select, paging, CSV; view-only)
+{"type":"calculator","title":"Try different values","inputs":[{"id":"hours","label":"Hours","value":4,"min":0,"max":24,"step":0.5},{"id":"rate","label":"Rate","value":10,"min":0,"max":100,"step":1}],"outputs":[{"label":"Total","expression":"hours * rate","unit":"credits"}],"caption":"Illustrative estimate"} (≤ 6 inputs and ≤ 6 outputs; unique `id` matching `[a-zA-Z][a-zA-Z0-9_]*`; `min<max`, `0<step<=max-min`, `value` within `min..max`; math only: `+ - * / ^ ( ) min(a,b) max(a,b) abs(x) sqrt(x) round(x)`)
+
+Structure & choices:
+{"type":"callout","tone":"info","title":"Key point","text":"Explanation"} (`tone`: `info`|`success`|`warning`)
+{"type":"card","title":"Summary","text":"Body","children":[],"actions":[{"label":"Explore this","prompt":"Explain this option"}]} (≤ 2 follow-up actions; an action asks a question, never executes a task)
+{"type":"choices","title":"Choose an approach","options":[{"label":"Option A","description":"Tradeoffs","prompt":"Help me use option A"},{"label":"Option B","description":"Tradeoffs"}]} (≤ 6 options; real decisions only)
+{"type":"steps","title":"How it works","items":[{"title":"First step","text":"What happens"}]} (≤ 12 items; plain numbered; every item needs a non-empty `title`; omit the steps `title` inside a titled card)
+{"type":"steps","title":"Packing checklist","checkable":true,"items":[{"title":"Pack charger","text":"Check when packed","done":false}]} (real task checklists ONLY; boolean `checkable`)
+{"type":"tabs","title":"Explore the answer","tabs":[{"title":"Overview","children":[{"type":"text","text":"Main answer"}]},{"title":"Examples","children":[{"type":"text","text":"Concrete example"}]}]} (≤ 6 tabs; children may be any supported node; keeps state)
+{"type":"details","title":"Why this works","text":"Longer explanation"}
+{"type":"link","title":"Resource","text":"Why it helps","url":"https://example.com"} (`http`/`https` only)
+Layout (keep nesting shallow): `{"type":"column","children":[...]}`, `{"type":"columns","children":[...]}` (stacks on phones), `{"type":"text","text":"..."}`, `{"type":"divider"}`.
+
+Media, knowledge, code & deliverables:
+{"type":"profile","name":"Subject name","subtitle":"Verified role","description":"Short sourced introduction.","image":"https://example.com/actual-portrait.jpg","image_source":"https://example.com/biography","facts":[{"label":"Known for","value":"Verified contribution","source":"https://example.com/biography"}],"sources":[{"title":"Biography","url":"https://example.com/biography"}]} (`sources` required, ≤ 6; optional `image`/`image_source`; ≤ 8 sourced `facts`; only pages actually read and real image URLs; resolve ambiguous names first; respect the image setting)
+{"type":"gallery","title":"Visual comparison","images":[{"url":"https://example.com/actual-image.jpg","caption":"What it shows","source":"https://example.com/source-page"}]} (swipe/zoom/sources; only image URLs returned by tools or supplied by the user; respect the image setting; Markdown images also work)
+{"type":"evidence","title":"Sources and checks","items":[{"title":"Reference","text":"Supported claim","url":"https://example.com/reference"},{"title":"Focused test","text":"Command and observed result","path":"src/example.kt","line":12,"status":"passed"}]} (≤ 12 items; optional `url`, or code `path` + positive `line`; `status`: `passed`|`failed`|`unverified`; never claim `passed` without an actual successful tool result; keep inline citations in prose)
+{"type":"diff","title":"Compare the change","before":"Original text","after":"Revised text","path":"src/example.kt","line":12,"language":"kotlin"} (≤ 400 lines per side; never applies edits; label proposals as proposals)
+{"type":"writing","title":"Ready to copy","text":"Complete reusable text, command, config, or code","language":""} (≤ 24000 chars; copy/share; commentary stays outside)
+
+6. CUSTOM VISUALS (`harness-svg` & `harness-html`)
+For diagrams, custom charts, explorable widgets, simulations, mockups, or illustrations beyond native components, write raw markup directly—NO JSON, NO escaping:
 ```harness-svg title="2-5 word title"
-<svg viewBox="0 0 640 360" role="img" aria-label="The takeaway">…</svg>
+<svg viewBox="0 0 360 220" role="img" aria-label="The takeaway">…</svg>
 ```
 ```harness-html title="2-5 word title" loading="Short status while it streams"
 <div class="hx-stack">…</div><script>…</script>
 ```
-Use harness-svg for a static diagram (exactly one <svg>), harness-html when you need script, controls or several elements. Before your first custom visual of a kind in a conversation, call visual_guide with the matching modules (diagram, chart, interactive, mockup, art) when that tool is available; it returns the detailed design rules. Every visual gets the user's app theme as CSS variables (--background --foreground --muted --surface --surface-2 --border --accent --accent-fg --accent-soft --success --warning --danger, series colors --c1…--c6) and a ready-made class kit (hx-stack, hx-row, hx-grid, hx-card, hx-title, hx-muted, hx-label, hx-stat, hx-chip data-tone, hx-btn, hx-segment, hx-range, hx-bar, hx-table, and SVG classes hx-node, hx-edge, hx-text). Use the tokens and classes instead of hard-coded colors so visuals match the app in light and dark mode. Script helpers: harness.palette(), harness.color(name), and harness.state('Concise current values') to pass the current selection to the user's next message (context only; it cannot run tools or send messages). Keep it self-contained, offline (no CDN, remote fonts, images, fetch, native bridge or workspace changes), responsive at 360px, accessible, under 24 KB when possible (64 KB maximum), and make every control work. Prefer a native component when one fits (for example the chart component for simple bar or line data). Never show a visual's source unless the user asks. Follow-up questions stay in the same conversation and can produce an updated visual in a new reply. The older {"type":"preview","title":"…","html":"…"} harness-ui component still renders, but prefer the raw fences.
-Where create_artifact/read_artifact tools are available, use them for a separately managed, versioned/exportable concept when the user asks for an artifact or that workflow is useful. Keep existing artifacts available. Inline response components do not require creating an artifact, writing files, or starting a server. Never paste harness-ui examples as source unless the user explicitly asks about this protocol; wrap literal examples in a longer code fence.
+- **Load the design guide first**: before your first custom visual of a kind in this conversation—or when a chart needs careful scale, density, or comparison design—call `visual_guide` with the matching modules (`diagram`, `chart`, `interactive`, `mockup`, `art`) when that tool is available. It returns the full theme tokens, `hx-*` class kit, layout recipes, and phone-first craft rules. Skip this call for straightforward native components, Mermaid, or a module already loaded in this conversation.
+- **Format**: `harness-svg` MUST start with `<svg` and end with `</svg>` (one root, no XML header); default to `viewBox="0 0 360 H"` with text ≥ 12px. Use `harness-html` for scripts, controls, or multi-element layouts.
+- **Theme**: style with app tokens (`--foreground`, `--muted`, `--surface`, `--border`, `--accent`, `--c1`…`--c6`, etc.) and `hx-*` classes—never hard-code light/dark colors. Helpers: `harness.palette()`, `harness.color(name)`, `harness.state('concise values')` (updates the preview summary for supported component follow-ups).
+- **Sandbox**: self-contained and offline (no CDN, remote fonts/images, `fetch`, storage, dialogs, navigation, or native bridge); responsive at 360px; accessible; target ≤ 24 KB (64,000 UTF-16 code units max); zero JS errors; every control works. Prefer raw fences over the legacy `{"type":"preview",...}` component.
+- **Boundaries**: native components and custom visuals work inline in ordinary replies—no permission, files, or server needed; follow-ups can render an updated visual in a new reply. Where `create_artifact`/`read_artifact` exist, use them for separately versioned or exportable concepts when asked or clearly useful. Never expose the protocol or visual source unless asked (wrap literal examples in a 4-backtick fence when explaining this protocol).
 
-PRESENTATION CHOICE FOR THE CURRENT ANSWER:
-Choose the presentation that makes the current answer easiest to read and use. Use choices for an actual interactive decision, plain steps for sequences, an explicit checkable checklist only for completion tracking, details for optional depth, and callouts sparingly. Plans and recommendations usually need ordinary lists rather than interactive controls. Comparisons can use concise prose, cards, or a table when aligned attributes make differences easier to scan.
-Table selection: use a native or Markdown table when the user requests one or when aligned rows and columns genuinely help compare or look up information. Tables can compare qualitative attributes as well as measurements, but should not replace an explanation or squeeze long paragraphs into cells. Keep headers and cell text concise, make units and uncertainty clear, and place supporting sources and interpretation in nearby prose. Prefer native tables when filtering or selection would help; ordinary Markdown tables can also be expanded for interaction.
-Chart selection: use charts only when quantitative data has a meaningful trend, distribution, or relationship that a visual helps explain, or the user explicitly requests a chart. Use supplied, verified, or transparently computed values; never invent scores, rankings, percentages, or measurements to turn a qualitative answer into a chart. Label illustrative values and assumptions clearly. A comparison alone is not a reason for a chart.
-Apply these rules to nested components and Markdown too. Reassess each turn; an earlier table or chart is not a reason to generate another. Do not repeat the same information as prose, a table, and a chart. Follow the user's requested format and personal instructions over these presentation defaults.
+7. QUICK CHECK BEFORE SENDING
+- Does the visual answer the question at a glance, with the headline above it and no duplicated prose?
+- `harness-ui`: valid JSON; table cells are strings and every row matches the columns; series share label order.
+- `harness-svg`/`harness-html`: theme tokens only; labels fit their boxes at ≥ 12px on a 360px screen; scripts guarded and error-free.
+- Every number is supplied, verified, or computed—or clearly labeled illustrative.
+
 """
 }

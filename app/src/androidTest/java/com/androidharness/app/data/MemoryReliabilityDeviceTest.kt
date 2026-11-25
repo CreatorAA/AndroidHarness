@@ -19,6 +19,15 @@ import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class MemoryReliabilityDeviceTest {
+    @Test fun savingAnIdenticalFactNeverReturnsAnotherAgentsRestrictedMemory() = fixture { repo, db ->
+        db.dao().insertMemoryFolder(com.androidharness.app.data.db.MemoryFolderEntity("Private lore", 1, "only-this-agent"))
+        val hidden = repo.add("Store at room temperature", MemoryCategory.FACT, MemoryScope.GLOBAL, null,
+            MemorySection.CHAT, folder = "Private lore")!!
+        val visible = repo.rememberResult(hidden.text, MemoryCategory.FACT, MemoryScope.GLOBAL, "chat").memory
+        assertNotEquals(hidden.id, visible.id)
+        assertNull(visible.folder)
+        assertEquals(hidden.id, db.dao().allMemories().single { it.folder == "Private lore" }.id)
+    }
     private val c get() = (InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as HarnessApp).container
     private fun fixture(block: suspend (MemoryRepository, AppDatabase) -> Unit) = runBlocking {
         val before = c.settings.settings.first()

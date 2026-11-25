@@ -26,6 +26,8 @@ import com.androidharness.app.ui.chat.ChatListTestActivity
 import com.androidharness.app.ui.theme.HarnessTheme
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import okio.buffer
+import okio.source
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -152,8 +154,8 @@ class BackgroundSettingsDeviceTest {
                 assertEquals("idle", c.runManager.controls.flow(sid).value.status)
             }
         } finally {
-            c.runManager.stopAndJoin(sid)
             server.close()
+            c.runManager.stopAndJoin(sid)
             c.settings.restorePortable(saved)
             c.sessions.session(sid)?.let { c.sessions.deleteSession(it) }
         }
@@ -185,15 +187,30 @@ class BackgroundSettingsDeviceTest {
     private class StreamingFixture : AutoCloseable {
         private val server = ServerSocket(0, 1, InetAddress.getByName("127.0.0.1"))
         private val closed = AtomicBoolean(false)
-        private var socket: Socket? = null
+        @Volatile private var socket: Socket? = null
         val url = "http://127.0.0.1:${server.localPort}/v1"
         private val worker = thread(isDaemon = true, name = "background-stream-fixture") {
             runCatching {
-                server.accept().use { client ->
+                while (!closed.get()) server.accept().use { client ->
                     socket = client
-                    val input = client.getInputStream().bufferedReader()
-                    while (!input.readLine().isNullOrEmpty()) Unit
+                    val input = client.getInputStream().source().buffer()
+                    val request = input.readUtf8LineStrict()
+                    var bodyBytes = 0L
+                    while (true) {
+                        val header = input.readUtf8LineStrict()
+                        if (header.isEmpty()) break
+                        if (header.startsWith("Content-Length:", ignoreCase = true))
+                            bodyBytes = header.substringAfter(':').trim().toLong()
+                    }
+                    input.skip(bodyBytes)
                     val output = client.getOutputStream()
+                    // The local provider probes GET /props before opening its completion stream.
+                    // This OpenAI-compatible fixture does not implement llama.cpp metadata.
+                    if (!request.startsWith("POST /v1/chat/completions ")) {
+                        output.write("HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n".toByteArray())
+                        output.flush()
+                        return@use
+                    }
                     output.write("HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nConnection: close\r\n\r\n".toByteArray())
                     while (!closed.get()) {
                         output.write("data: {\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Fixture reply. \"}}]}\n\n".toByteArray())

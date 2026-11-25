@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Eine neue Unterhaltung beginnen</string>
+    <string name="slash_menu_compact">Kontext komprimieren</string>
+    <string name="slash_menu_compact_hint">Älteren Kontext zusammenfassen</string>
+    <string name="slash_menu_cost">Kosten</string>
+    <string name="slash_menu_cost_hint">Tokenanzahl und Gesamtkosten anzeigen</string>
+    <string name="slash_menu_btw_hint">Zum aktuellen Kontext fragen, ohne den Chat zu ergänzen</string>
+    <string name="slash_menu_doctor">Harness-Diagnose</string>
+    <string name="slash_menu_doctor_hint">Selbsttests für die Harness-Werkzeuge ausführen</string>
+    <string name="slash_menu_init">Projekt initialisieren</string>
+    <string name="slash_menu_init_hint">AGENTS.md erstellen oder aktualisieren</string>
+    <string name="slash_menu_review_hint">Ausstehende Änderungen schreibgeschützt prüfen. Einen Schwerpunkt nach dem Befehl angeben.</string>
+    <string name="slash_menu_plan_hint">Planungs-Skill laden und in den Planungsmodus wechseln</string>
+    <string name="slash_menu_skills">Skills durchsuchen</string>
+    <string name="slash_menu_skills_hint">Die vollständige Skill-Auswahl öffnen</string>
+    <string name="slash_menu_env_hint">Die Linux-Umgebung prüfen, aktualisieren, installieren oder reparieren</string>
+    <string name="slash_menu_snippet">Textbaustein</string>
+    <string name="slash_menu_snippet_hint">Gespeicherter Prompt-Textbaustein</string>
+</resources>

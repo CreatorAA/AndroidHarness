@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Walang mababawi sa turn na ito.</string>
+    <string name="chat_compaction_preparing">Inihahanda ang buod ng chat…</string>
+    <string name="chat_compaction_too_few_messages">Kulang pa ang mga mensahe para paikliin ang chat.</string>
+    <string name="chat_compaction_retrying">Sinusubukang muli ang paggawa ng buod · ika-%1$d na pagsubok · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Itinigil ang pagpapaikli. Napanatili ang history. Patakbuhin muli ang /compact kapag handa ka na.</string>
+    <string name="chat_compaction_refresh_failed">Pinaikli ang chat, pero hindi na-update ang mga setting ng gawain o ang tantiya sa konteksto: %1$s</string>
+    <string name="chat_compaction_failed_notice">Nabigo ang pagpapaikli: %1$s. Napanatili ang history. Subukan muli ang /compact o pumili ng ibang modelo.</string>
+    <string name="reasoning_from_catalog">Nakalista ang pangangatwiran sa katalogo ng mga modelo</string>
+    <string name="reasoning_from_provider">Iniulat ng provider ang suporta sa pangangatwiran</string>
+    <string name="reasoning_from_user">Ikaw ang nagtakda ng suporta sa pangangatwiran</string>
+    <string name="reasoning_from_name">Ipinagpalagay ang pangangatwiran batay sa pangalan ng modelo</string>
+    <string name="automation_every_day">Araw-araw</string>
+    <string name="automation_daily_at">araw-araw nang %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Buuin ang debug APK at ayusin ang mga error sa pag-build.</string>
+    <string name="app_update_checking">Tinitingnan kung may update…</string>
+    <string name="app_update_up_to_date">Nasa pinakabagong bersyon ka na</string>
+    <string name="files_directory">Folder</string>
+    <string name="cache_status_unavailable">Walang available na data ng cache</string>
+    <string name="cache_status_hit">Cache hit · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · bahagya</string>
+    <string name="cache_estimated_price">tinatayang %1$s</string>
+    <string name="chat_live_sites_suffix">" site"</string>
+    <string name="chat_research_sources_suffix">/%1$d source</string>
+    <string name="chat_research_read_suffix">" nabasa"</string>
+    <string name="package_status_failed">Hindi na-install</string>
+    <string name="package_hide_details">Itago ang mga detalye ng pag-install</string>
+    <string name="package_show_details">Ipakita ang mga detalye ng pag-install</string>
+    <string name="package_recently_unpacked">Kamakailang na-unpack · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d item</item>
+    </plurals>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">ضربه زدن</string>
+    <string name="phone_review_long_press">لمس و نگه‌داشتن</string>
+    <string name="phone_review_type">وارد کردن متن</string>
+    <string name="phone_review_volume">تنظیم بلندی صدای رسانه</string>
+    <string name="phone_review_scroll_forward">پیمایش به جلو</string>
+    <string name="phone_review_scroll_backward">پیمایش به عقب</string>
+    <string name="phone_review_swipe">تند کشیدن انگشت</string>
+    <string name="phone_review_drag">کشیدن مورد</string>
+    <string name="phone_review_home">بازگشت به صفحهٔ اصلی</string>
+    <string name="android_use_launcher_trip">از %1$s به صفحهٔ اصلی بروید، %2$s را پیدا کنید و روی آن بزنید. سپس این کار را در %3$s ادامه دهید.</string>
+    <string name="android_use_action_approval">اجازه می‌دهید این اقدام فقط همین یک بار انجام شود؟\n\n%1$s</string>
+    <string name="android_use_chat_approval">اجازه می‌دهید دستیار در این گفت‌وگو گوشی را کنترل کند؟ دستیار می‌تواند تصویر صفحهٔ برنامهٔ مقصد را به مدل انتخاب‌شده بفرستد، روی صفحه بزند و تایپ کند. با این مجوز، فرمان‌های مجاز گوشی در این گفت‌وگو هم می‌توانند فایل‌ها و تنظیمات را بخوانند و تغییر دهند. برای ثبت تغییر در برنامهٔ مقصد دوباره از شما اجازه گرفته می‌شود.</string>
+    <string name="android_use_submit_approval">اجازه می‌دهید این مورد فقط همین یک بار ثبت شود؟\n\n%1$s</string>
+    <string name="android_use_retarget_approval">این کار در برنامهٔ دیگری ادامه پیدا کند؟ دستیار می‌تواند صفحهٔ آن برنامه را بخواند و با آن کار کند.\n\n%1$s</string>
+    <string name="android_use_code_entry">ارسال کار به دستیار گوشی</string>
+    <string name="android_use_code_hint">دستور کار را اضافه کنید یا برای باز کردن تنظیمات، /phone را به‌تنهایی بفرستید.</string>
+    <string name="android_use_draft_ready">تا ۱۰ دقیقه فرصت دارید برنامهٔ مقصد را باز کنید و در دستیار «کنترل گوشی» را انتخاب کنید. برای دیدن گفت‌وگو، همین‌جا /phone --result را بفرستید.</string>
+    <string name="android_use_draft_expired">این پیش‌نویس منقضی، لغو یا جایگزین شده است. این پنجره را ببندید و دوباره «کنترل گوشی» را انتخاب کنید.</string>
+    <string name="android_use_draft_cancelled">پیش‌نویس کار گوشی لغو شد.</string>
+    <string name="android_use_no_draft">در این گفت‌وگو پیش‌نویس کاری برای گوشی در انتظار اجرا نیست.</string>
+    <string name="android_use_no_result">از این گفت‌وگو هنوز کاری روی گوشی شروع نشده است.</string>
+    <string name="android_use_local_only">کار گوشی را از یک فضای کاری محلی در Code شروع کنید.</string>
+    <string name="android_use_from_code">پیش‌نویس از Code</string>
+</resources>

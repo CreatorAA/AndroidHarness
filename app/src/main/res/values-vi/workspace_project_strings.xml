@@ -105,6 +105,22 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Các cuộc trò chuyện trong dự án khác đang dùng không gian làm việc này: %1$s. Hãy gỡ không gian làm việc khỏi các cuộc trò chuyện đó trước khi xóa. Các cuộc trò chuyện có thay đổi đã lưu phải giữ quyền truy cập vào không gian làm việc.</string>
+    <string name="wp_delete_running_blocked">Hãy dừng các tác vụ đang chạy trong dự án này trước khi xóa.</string>
+    <string name="wp_reset_shared_blocked">Các cuộc trò chuyện khác cũng dùng không gian làm việc của ứng dụng: %1$s. Hãy gỡ không gian làm việc khỏi các cuộc trò chuyện đó trước khi đặt lại.</string>
+    <string name="wp_reset_running_blocked">Hãy dừng các tác vụ đang chạy trong không gian làm việc này trước khi đặt lại.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="other">%1$d tác vụ tự động</item>
+    </plurals>
+    <string name="wp_picked_folder">Thư mục đã chọn</string>
+    <string name="wp_review_changed">Chi tiết đã thay đổi. Hãy đóng hộp thoại và xem lại thao tác.</string>
+    <string name="wp_editor_toggle_wrap">Bật hoặc tắt ngắt dòng tự động</string>
+    <string name="wp_editor_undo_available">Có thể hoàn tác</string>
+    <string name="wp_reset_app_only">Chỉ có thể đặt lại không gian làm việc của ứng dụng.</string>
+    <string name="wp_editor_find_replace">Tìm và thay thế trong dự án</string>
+    <plurals name="wp_changed_files">
+        <item quantity="other">%1$d tệp đã thay đổi</item>
+    </plurals>
     <string name="wp_add_shared">"Thư mục chia sẻ"</string>
     <string name="wp_add_shared_sub">"Vẫn còn sau khi gỡ cài đặt. Bản ổn định và bản nightly đều thấy nó"</string>
     <string name="wp_add_shared_failed">"Không tạo được %1$s. Kiểm tra quyền truy cập mọi tệp đã bật rồi thử lại."</string>

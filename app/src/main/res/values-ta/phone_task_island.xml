@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">உதவியாளரை மறை</string>
+    <string name="phone_background_off_hint">பின்னணியில் இயங்குவது முடக்கப்பட்டுள்ளது. ஆப்ஸை விட்டு வெளியேறினால் இந்தப் பணி இடைநிறுத்தப்படும்.</string>
+    <string name="phone_background_paused">பின்னணியில் இயங்குவது முடக்கப்பட்டதால் இடைநிறுத்தப்பட்டது. தொடர, ஆப்ஸில் இந்த அரட்டையைத் திறக்கவும்.</string>
+    <string name="phone_island_title">ஃபோன் உதவியாளர்</string>
+    <string name="phone_island_planning">அடுத்த படிகளைத் திட்டமிடுகிறது</string>
+    <string name="phone_island_looking">பக்கத்தைச் சரிபார்க்கிறது</string>
+    <string name="phone_island_finding">முகப்புத் திரையில் ஆப்ஸைக் கண்டறிகிறது</string>
+    <string name="phone_island_tap">கட்டுப்பாட்டைத் தேர்ந்தெடுக்கிறது</string>
+    <string name="phone_island_type">உரையை உள்ளிடுகிறது</string>
+    <string name="phone_island_swipe">பக்கத்தில் நகர்கிறது</string>
+    <string name="phone_island_gesture">உருப்படியை இழுக்கிறது</string>
+    <string name="phone_island_action">ஒரு படியைச் செய்கிறது</string>
+    <string name="phone_island_batch">படி %1$d / %2$d</string>
+    <string name="phone_island_check">முடிவைச் சரிபார்க்கிறது</string>
+    <string name="phone_island_done">முடிந்தது</string>
+    <string name="phone_island_ended">முடிவடைந்தது · முடிவைச் சரிபார்க்கவும்</string>
+    <string name="phone_island_stopped">நிறுத்தப்பட்டது</string>
+    <string name="phone_island_failed">முடிக்கப்படவில்லை</string>
+    <string name="phone_island_review">உங்கள் கவனம் தேவை</string>
+    <string name="phone_island_paused">ஃபோன் கட்டுப்பாடுகள் இடைநிறுத்தப்பட்டன</string>
+    <string name="phone_island_chat">அரட்டையைப் பார்</string>
+    <string name="phone_island_resume">பணியைத் தொடர்க</string>
+    <string name="phone_island_stop">பணியை நிறுத்து</string>
+    <string name="phone_island_details">பணி முன்னேற்றம்: %1$s</string>
+</resources>

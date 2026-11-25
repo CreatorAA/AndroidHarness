@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +21,17 @@ import androidx.compose.ui.unit.dp
 import com.androidharness.app.R
 import com.androidharness.app.data.ConversationConfig
 import com.androidharness.app.data.ConversationKind
+
+internal val ConversationKind.titleRes get() = when (this) {
+    ConversationKind.CODE -> R.string.conversation_code
+    ConversationKind.CHAT -> R.string.conversation_chat
+    ConversationKind.PHONE -> R.string.conversation_phone
+}
+internal val ConversationKind.sectionIcon get() = when (this) {
+    ConversationKind.CODE -> Icons.Outlined.Code
+    ConversationKind.CHAT -> Icons.Outlined.ChatBubbleOutline
+    ConversationKind.PHONE -> Icons.Outlined.PhoneAndroid
+}
 
 @Composable
 internal fun ConversationSectionSwitcher(
@@ -38,8 +50,7 @@ internal fun ConversationSectionSwitcher(
     com.androidharness.app.ui.SlidingSegmentedControl(
         options = kinds.map { kind ->
             com.androidharness.app.ui.SegmentOption(
-                stringResource(if (kind == ConversationKind.CODE) R.string.conversation_code else R.string.conversation_chat),
-                if (kind == ConversationKind.CODE) Icons.Outlined.Code else Icons.Outlined.ChatBubbleOutline,
+                stringResource(kind.titleRes), kind.sectionIcon,
             )
         },
         selectedIndex = kinds.indexOf(shown).coerceAtLeast(0),
@@ -53,9 +64,9 @@ internal fun ConversationSectionSwitcher(
 @Composable
 internal fun ConversationModeLabel(config: ConversationConfig, workspaceName: String? = null) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-        Icon(if (config.isChat) Icons.Outlined.ChatBubbleOutline else Icons.Outlined.Code, null,
+        Icon(config.kind.sectionIcon, null,
             Modifier.size(12.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-        val section = stringResource(if (config.isChat) R.string.conversation_chat else R.string.conversation_code)
+        val section = stringResource(config.kind.titleRes)
         val detail = workspaceName?.takeIf { !config.isChat && it.isNotBlank() }
         Text(section + detail?.let { " · $it" }.orEmpty(), style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1,

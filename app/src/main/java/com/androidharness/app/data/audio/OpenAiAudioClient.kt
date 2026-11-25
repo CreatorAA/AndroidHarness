@@ -24,7 +24,6 @@ import java.io.File
 import java.io.IOException
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
-import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /**
@@ -82,7 +81,7 @@ object OpenAiAudioClient {
             .get()
             .build()
         try {
-            execute(client, request).use { response ->
+            execute(client, request) { response ->
                 if (response.isSuccessful) Result.success(Unit)
                 else Result.failure(
                     apiError(response.body?.string().orEmpty(), response.code, "Voice")
@@ -105,7 +104,7 @@ object OpenAiAudioClient {
                 .get()
                 .build()
             try {
-                execute(httpClient, request).use { response ->
+                execute(httpClient, request) { response ->
                     val body = response.body?.string().orEmpty()
                     if (!response.isSuccessful) {
                         Result.failure(apiError(body, response.code, "Voice"))
@@ -145,7 +144,7 @@ object OpenAiAudioClient {
             .post(builder.build())
             .build()
         try {
-            execute(client, request).use { response ->
+            execute(client, request) { response ->
                 val body = response.body?.string().orEmpty()
                 if (!response.isSuccessful) {
                     Result.failure(safeError(apiError(body, response.code, "Transcription"), apiKey))
@@ -248,7 +247,7 @@ object OpenAiAudioClient {
             .post(payload.toRequestBody(jsonMedia))
             .build()
         return try {
-            execute(httpClient, request).use { response ->
+            execute(httpClient, request) { response ->
                 if (!response.isSuccessful) {
                     Result.failure(safeError(apiError(response.body?.string().orEmpty(), response.code, provider.name), apiKey))
                 } else {
@@ -336,18 +335,18 @@ object OpenAiAudioClient {
         }
     }
 
-    private suspend fun execute(client: OkHttpClient, request: Request): Response =
+    /** Keep cancellation connected to the socket until the response body has been consumed. */
+    private suspend fun <T> execute(client: OkHttpClient, request: Request, read: (Response) -> T): T =
         suspendCancellableCoroutine { continuation ->
             val call = client.newCall(request)
-            continuation.invokeOnCancellation { runCatching { call.cancel() } }
+            continuation.invokeOnCancellation { call.cancel() }
             call.enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     if (continuation.isActive) continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    if (continuation.isActive) continuation.resume(response)
-                    else response.close()
+                    continuation.resumeWith(runCatching { response.use(read) })
                 }
             })
         }

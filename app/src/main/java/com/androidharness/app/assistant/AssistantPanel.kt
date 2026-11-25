@@ -1,10 +1,13 @@
 package com.androidharness.app.assistant
 
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.SystemClock
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.animate
@@ -32,6 +35,8 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -64,6 +69,7 @@ import androidx.compose.material.icons.rounded.Mic
 import androidx.compose.material.icons.rounded.Public
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Screenshot
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -76,6 +82,7 @@ import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -142,6 +149,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.androidharness.app.AppContainer
 import com.androidharness.app.R
+import com.androidharness.app.agent.QuestionRequest
 import com.androidharness.app.agent.ThinkingLevel
 import com.androidharness.app.agent.ThinkingSpecs
 import com.androidharness.app.core.ChatActivityPresentation
@@ -151,6 +159,7 @@ import com.androidharness.app.core.ChatResponseImages
 import com.androidharness.app.core.ImageRef
 import com.androidharness.app.core.Role
 import com.androidharness.app.core.response.ChatRichResponse
+import com.androidharness.app.core.response.ResponseAttachment
 import com.androidharness.app.core.response.RichResponse
 import com.androidharness.app.core.response.UserMessageContent
 import com.androidharness.app.data.AppSettings
@@ -185,10 +194,12 @@ import com.androidharness.app.ui.common.rememberRumble
 import com.androidharness.app.ui.common.rememberRumbleFlow
 import com.androidharness.app.ui.common.rumbleStyle
 import com.androidharness.app.ui.theme.HarnessTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.androidharness.app.androiduse.PageActionList
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -202,6 +213,7 @@ internal fun AssistantPanelRoot(
     onDismiss: () -> Unit,
     onContinue: () -> Unit,
     onOpenUrl: (String) -> Unit,
+    onPageActions: suspend (String) -> PageActionList,
 ) {
     val settings by container.settings.settings.collectAsStateWithLifecycle(initialValue = null)
     val s = settings ?: return
@@ -217,7 +229,7 @@ internal fun AssistantPanelRoot(
         val state by controller.state.collectAsStateWithLifecycle()
         val tts by container.tts.state.collectAsStateWithLifecycle()
         val voice = rememberVoiceInputController(container)
-        AssistantPanel(state, s, tts, voice, controller, showKey, visible, onDismiss, onContinue, onOpenUrl)
+        AssistantPanel(state, s, tts, voice, controller, showKey, visible, onDismiss, onContinue, onOpenUrl, onPageActions)
     }
 }
 
@@ -228,8 +240,12 @@ private val ScrimStops = List(11) { i ->
     at to 0.32f * x * x * (3f - 2f * x)
 }.let { listOf(0f to 0f) + it }
 
-/** How the panel grows with its answer: no bounce, just a soft glide. */
-private val HugSpec = spring<Float>(dampingRatio = 1f, stiffness = 260f)
+/** In automatic mode the scroll viewport measures its children, not its previous height. */
+internal fun Modifier.assistantBodyHeight(limit: Dp, manual: Dp?, reduceMotion: Boolean): Modifier {
+    if (manual != null) return height(manual.coerceIn(0.dp, limit))
+    val bounded = heightIn(max = limit)
+    return if (reduceMotion) bounded else bounded.animateContentSize(spring(dampingRatio = 1f, stiffness = 260f))
+}
 
 /** Sizes the panel's gestures need, kept current for the remembered scroll handler. */
 private data class Sizing(val full: Float, val half: Float, val fit: Float, val conversation: Boolean)
@@ -239,55 +255,95 @@ private class PanelVoice(
     private val voice: VoiceInputController,
     private val settings: () -> AppSettings,
     private val hasMic: () -> Boolean,
+    private val scope: CoroutineScope,
+    private val acceptsVoice: () -> Boolean,
     private val onText: (String) -> Unit,
     private val onNoMic: () -> Unit,
 ) {
+    private var capture: PanelDictationDraft? = null
+    private var nextSegment: Job? by mutableStateOf(null)
+    private var offlineContinuation by mutableStateOf(false)
     var heard by mutableStateOf("")
-    val native get() = settings().voiceEngine == "inbuilt"
-    val listening get() = voice.isListening
-    val transcribing get() = voice.isTranscribing
+        private set
+    val native get() = offlineContinuation || settings().voiceEngine == AppSettings.VOICE_ENGINE_INBUILT
+    val listening get() = voice.isListening || nextSegment != null
+    val transcribing get() = voice.isTranscribing || voice.nativePending
+    val manual get() = capture?.silenceEndsInput == false
 
-    /** 0..1 loudness for the halo, from either engine. */
     fun level(): Float = if (!voice.isListening) 0f
         else if (native) ((voice.rmsDb + 2f) / 12f).coerceIn(0f, 1f) else sqrt(voice.rmsDb.coerceIn(0f, 1f))
 
-    fun start() {
+    fun start(base: String = "", retry: Boolean = false, offline: Boolean = false) {
+        if (!acceptsVoice() || listening || transcribing) return
         if (!hasMic()) { onNoMic(); return }
-        if (voice.isListening || voice.isTranscribing) return
-        heard = ""
-        val silence = settings().voiceAutoSendTimeoutMs.toLong()
-        if (native) {
-            voice.startNativeListening({ text, final ->
-                if (text.isNotBlank()) heard = text
-                if (final) send()
-            }, silenceTimeoutMs = silence)
-        } else {
-            voice.startGroqRecording(locked = true, autoSilenceTimeoutMs = silence) { transcribe() }
-        }
+        offlineContinuation = offline
+        // Even an empty retry is an editing session, not permission to auto-send recovered words.
+        val draft = PanelDictationDraft(base, settings().voiceAutoSend && !retry)
+        capture = draft
+        heard = draft.text
+        val silence = settings().voiceAutoSendTimeoutMs.toLong().takeIf { draft.silenceEndsInput }
+        if (native) listen(draft, silence)
+        else voice.startGroqRecording(locked = true, autoSilenceTimeoutMs = silence ?: 0L) { transcribe(draft) }
     }
 
-    /** Stops listening and sends what was heard. */
+    private fun listen(draft: PanelDictationDraft, silence: Long?) {
+        voice.startNativeListening({ text, final ->
+            if (capture === draft && acceptsVoice()) {
+                if (final) {
+                    if (draft.acceptFinal(text)) submit(draft)
+                    else {
+                        // The engine, not the person, ended this utterance. Keep the complete segment
+                        // and reopen only while the same visible microphone session is still active.
+                        heard = draft.text
+                        nextSegment = scope.launch {
+                            delay(150)
+                            nextSegment = null
+                            if (capture === draft && acceptsVoice()) listen(draft, silence)
+                        }
+                    }
+                } else { draft.preview(text); heard = draft.text }
+            }
+        }, silenceTimeoutMs = silence, offlineMandarin = offlineContinuation)
+    }
+
     fun finish() {
-        if (native) { voice.stopNativeListening(); send() } else if (voice.groqRecordState == GroqRecordState.LOCKED) transcribe()
+        val draft = capture ?: return
+        draft.finish()
+        if (nextSegment != null) {
+            // Between utterances every displayed word is already final.
+            nextSegment?.cancel()
+            nextSegment = null
+            submit(draft)
+        } else if (native) voice.finishNativeListening()
+        else if (voice.groqRecordState == GroqRecordState.LOCKED) transcribe(draft)
     }
 
-    /** Stops listening and hands back what was heard so far, without sending. */
+    private fun transcribe(draft: PanelDictationDraft) =
+        voice.stopAndTranscribe(providerId = settings().voiceEngine) { text ->
+            if (capture === draft && acceptsVoice()) {
+                draft.acceptFinal(text)
+                submit(draft)
+            }
+        }
+
+    private fun submit(draft: PanelDictationDraft) {
+        val text = draft.text
+        capture = null
+        heard = ""
+        if (text.isNotBlank()) onText(text)
+    }
+
+    /** Discard the microphone, never the user's editable text. No partial is a command. */
     fun cancel(): String {
-        val kept = heard
+        val kept = capture?.text.orEmpty()
+        capture = null
+        nextSegment?.cancel()
+        nextSegment = null
         heard = ""
         voice.releaseAll()
         return kept
     }
 
-    private fun transcribe() = voice.stopAndTranscribe(settings().groqWhisperModel, settings().voiceEngine) { text ->
-        heard = text; send()
-    }
-
-    private fun send() {
-        val text = heard.trim()
-        heard = ""
-        if (text.isNotEmpty()) onText(text)
-    }
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -303,6 +359,7 @@ private fun AssistantPanel(
     onDismiss: () -> Unit,
     onContinue: () -> Unit,
     onOpenUrl: (String) -> Unit,
+    onPageActions: suspend (String) -> PageActionList,
 ) {
     val scheme = MaterialTheme.colorScheme
     val density = LocalDensity.current
@@ -314,11 +371,30 @@ private fun AssistantPanel(
             android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
     }
     val latestSettings by rememberUpdatedState(settings)
+    val pendingScript by controller.scriptDrafts.pending.collectAsStateWithLifecycle()
+    val scriptReview = pendingScript?.takeIf { visible && controller.usesAutoJs() && !state.busy }
+    LaunchedEffect(pendingScript) {
+        pendingScript?.let { ticket ->
+            delay(controller.scriptDrafts.remaining(ticket))
+            controller.scriptDrafts.discard(ticket)
+        }
+    }
 
     var draft by remember(showKey) { mutableStateOf("") }
+    var composingTask by remember(showKey) { mutableStateOf(false) }
+    var taskText by remember(showKey) { mutableStateOf("") }
+    var phoneDraft by remember(showKey) { mutableStateOf<CodePhoneHandoff.Draft?>(null) }
+    val proposedTask = state.phoneReview?.takeIf { visible && !state.busy && !composingTask }
+    LaunchedEffect(state.phoneReview) {
+        state.phoneReview?.let { review ->
+            delay(review.remaining(SystemClock.elapsedRealtime()))
+            controller.discardReview(review)
+        }
+    }
     // Typing, dragging or picking a suggestion means the user is busy with the panel, so the halo settles down.
     var engaged by remember(showKey) { mutableStateOf(false) }
     var voiceMode by remember(showKey) { mutableStateOf(settings.assistantVoiceFirst) }
+    var voiceError by remember(showKey) { mutableStateOf<String?>(null) }
     val focus = remember { FocusRequester() }
     var wantsKeyboard by remember(showKey) { mutableStateOf(false) }
     // The user sized the panel by hand; it stops following its content until the next question.
@@ -328,9 +404,10 @@ private fun AssistantPanel(
     // When the latest question was sent, so its bubble rises in once, even when the saved copy replaces it.
     var sentAt by remember(showKey) { mutableLongStateOf(0L) }
 
-    fun send(text: String, spoken: Boolean = false, withScreen: Boolean = false): Boolean {
-        val sent = controller.send(text, spoken, withScreen) != null
+    fun send(text: String, spoken: Boolean = false, refersToScreen: Boolean = false): Boolean {
+        val sent = controller.send(text, spoken, refersToScreen) != null
         if (sent) {
+            voiceError = null
             userSized = false
             following = true
             sentAt = if (reduceMotion) 0L else SystemClock.uptimeMillis()
@@ -338,13 +415,91 @@ private fun AssistantPanel(
         return sent
     }
     val noMic = stringResource(R.string.assistant_mic_permission)
-    val voice = remember(voiceController) {
+    var dictatingFor by remember(showKey) { mutableStateOf<QuestionRequest?>(null) }
+    val onSpoken by rememberUpdatedState<(String) -> Unit> { text ->
+        // A late transcription from ordinary chat must not send while a task is being reviewed.
+        if (visible && !composingTask) {
+            // A late transcript is a draft, not an answer to a different live question.
+            if (dictatingFor === state.question?.takeIf { it.phoneClarification } && send(text, spoken = true)) draft = ""
+            else { draft = text; voiceMode = false }
+        }
+    }
+    val voice = remember(voiceController, showKey) {
+        val invocation = controller.invocation
         PanelVoice(voiceController, { latestSettings },
             hasMic = { ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED },
-            onText = { send(it, spoken = true) },
-            onNoMic = { voiceMode = false; controller.showError(noMic) })
+            scope = scope, acceptsVoice = { controller.acceptsVoice(invocation) },
+            onText = { if (controller.acceptsVoice(invocation)) onSpoken(it) },
+            onNoMic = { voiceMode = false; voiceError = noMic })
     }
-    voiceController.errorMessage?.let { message -> LaunchedEffect(message) { controller.showError(message) } }
+    DisposableEffect(voice) { onDispose { voice.cancel() } }
+    fun composeTask() {
+        if (state.busy) return
+        val spoken = voice.cancel()
+        phoneDraft = controller.pendingCodePhoneTask()
+        taskText = phoneDraft?.instruction ?: draft.ifBlank { spoken }.ifBlank {
+            // The action under a chat reply continues the user's request; keep it editable before consent.
+            state.messages.lastOrNull { it.role == Role.USER }?.let(::questionText).orEmpty()
+        }
+        voiceMode = false
+        engaged = true
+        composingTask = true
+    }
+    val setupError = when {
+        !composingTask -> null
+        phoneDraft != null && controller.pendingCodePhoneTask() !== phoneDraft -> R.string.android_use_draft_expired
+        !settings.runInBackground -> R.string.assistant_phone_need_background
+        else -> null
+    }
+    val canStartTask = !state.busy && !state.screen.packageName.isNullOrBlank() && taskText.isNotBlank() && setupError == null
+    fun startTask(managed: Boolean = false) {
+        val target = state.screen.packageName ?: return
+        if (composingTask && canStartTask && controller.operatePhone(taskText, target, phoneDraft, managed)) {
+            composingTask = false
+            draft = ""
+            taskText = ""
+            phoneDraft = null
+            userSized = false
+            following = true
+            sentAt = if (reduceMotion) 0L else SystemClock.uptimeMillis()
+            keyboard?.hide()
+        }
+    }
+    fun startProposed(managed: Boolean) {
+        val review = proposedTask ?: return
+        if (controller.operatePhone(review.instruction, review.target.orEmpty(), managed = managed, source = review)) {
+            voice.cancel(); keyboard?.hide()
+        } else {
+            controller.dismissAppHandoff()
+            controller.showError(context.getString(R.string.phone_task_review_stale))
+        }
+    }
+    fun listen(retry: Boolean = false, offline: Boolean = false) {
+        dictatingFor = state.question?.takeIf { it.phoneClarification }
+        voiceMode = true
+        voiceError = null
+        engaged = false
+        keyboard?.hide()
+        controller.quiet()
+        voice.start(draft, retry, offline)
+    }
+    LaunchedEffect(voiceController.offlineHandoff) {
+        voiceController.offlineHandoff?.takeIf { visible }?.let { messageId ->
+            Toast.makeText(context, messageId, Toast.LENGTH_LONG).show()
+            voiceController.acknowledgeOfflineHandoff()
+        }
+    }
+    voiceController.errorMessage?.let { message ->
+        LaunchedEffect(voice, message) {
+            voiceController.clearError()
+            if (visible && !composingTask) {
+                val kept = voice.cancel()
+                if (kept.isNotBlank()) draft = kept
+                voiceMode = false
+                voiceError = message
+            }
+        }
+    }
 
     // Entrance, on Material's expressive spatial spring: a small circle rises with the light,
     // then stretches sideways into the pill.
@@ -352,7 +507,8 @@ private fun AssistantPanel(
     val grow = remember { Animatable(0f) }
     // The light shows at once and leaves with the pill.
     val glow = remember { Animatable(0f) }
-    LaunchedEffect(showKey) {
+    LaunchedEffect(showKey, visible) {
+        if (!visible) return@LaunchedEffect
         rise.snapTo(0f); grow.snapTo(0f); glow.snapTo(0f)
         if (reduceMotion) { glow.snapTo(1f); rise.snapTo(1f); grow.animateTo(1f, tween(160)) }
         else {
@@ -364,7 +520,13 @@ private fun AssistantPanel(
     }
     // Voice first: start listening once the pill has opened.
     LaunchedEffect(showKey) {
-        if (settings.assistantVoiceFirst) { delay(if (reduceMotion) 0 else 350); voice.start() }
+        if (settings.assistantVoiceFirst && !state.busy && controller.scriptDrafts.pending.value == null) {
+            delay(if (reduceMotion) 0 else 350)
+            if (!composingTask && controller.acceptsVoice(controller.invocation)) {
+                dictatingFor = state.question?.takeIf { it.phoneClarification }
+                voice.start()
+            }
+        }
     }
     // Android hid the panel (back, home, another app): let go of the microphone.
     LaunchedEffect(visible) { if (!visible) voice.cancel() }
@@ -412,16 +574,17 @@ private fun AssistantPanel(
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             contentAlignment = Alignment.BottomCenter,
         ) {
-            val fullPx = with(density) { (maxHeight - 150.dp).coerceAtLeast(160.dp).toPx() }
+            val fullHeight = (maxHeight - 150.dp).coerceAtLeast(0.dp)
+            val fullPx = with(density) { fullHeight.toPx() }
             val halfPx = minOf(fullPx, with(density) { (maxHeight * 0.42f).toPx() })
 
             var body by remember(showKey) { mutableFloatStateOf(0f) }
             val bodySpeed = remember { FloatArray(1) }
             var pull by remember(showKey) { mutableFloatStateOf(0f) }
             var settle by remember { mutableStateOf<Job?>(null) }
-            // Natural height of everything in the body; the panel hugs it until the user sizes it.
+            // Natural content is a snap stop for a manual drag, never an input to automatic layout.
             var contentPx by remember(showKey) { mutableIntStateOf(0) }
-            val fitPx = contentPx.toFloat().coerceIn(with(density) { 56.dp.toPx() }, fullPx)
+            val fitPx = contentPx.toFloat().coerceIn(0f, fullPx)
             val sizing = rememberUpdatedState(Sizing(fullPx, halfPx, fitPx, state.hasConversation))
 
             fun animateBody(target: Float, velocity: Float = bodySpeed[0], spec: AnimationSpec<Float> = spring(dampingRatio = 0.8f, stiffness = 420f)) {
@@ -446,10 +609,8 @@ private fun AssistantPanel(
             LaunchedEffect(state.hasConversation) {
                 if (!state.hasConversation && body > 0f) animateBody(0f)
             }
-            // While the user has not sized it, the panel grows and shrinks with its content.
-            LaunchedEffect(state.hasConversation, userSized, fitPx) {
-                if (state.hasConversation && !userSized && abs(fitPx - body) > 0.5f) animateBody(fitPx, spec = if (reduceMotion) tween<Float>(0) else HugSpec)
-            }
+            val automatic = state.hasConversation && !userSized
+            LaunchedEffect(automatic) { if (automatic) { settle?.cancel(); bodySpeed[0] = 0f } }
 
             val scroll = remember(showKey) { ScrollState(0) }
             var questionTop by remember(showKey) { mutableIntStateOf(0) }
@@ -536,7 +697,10 @@ private fun AssistantPanel(
                 }
             }
             // The keyboard can shrink the room after the panel opened; never grow past the top.
-            val bodyDp = with(density) { body.coerceAtMost(fullPx).toDp() }
+            val bodyLimit = if (composingTask || proposedTask != null) minOf(fullHeight, maxHeight * 0.35f) else fullHeight
+            val manualHeight = if (automatic) null else with(density) { body.toDp() }
+            val maxTaskPromptHeight = maxHeight * 0.40f
+            val scriptReviewLimit = maxHeight * 0.80f
             val open = (body / halfPx.coerceAtLeast(1f)).coerceIn(0f, 1f)
             val corner = lerp(32.dp, 28.dp, open)
             val shape = RoundedCornerShape(corner)
@@ -549,10 +713,11 @@ private fun AssistantPanel(
             ) {
                 AnimatedVisibility(
                     // They stay while the mic listens too: a tap stops listening and asks that instead.
-                    visible = !state.hasConversation && body < 1f && !leaving,
+                    visible = scriptReview == null && !composingTask && !state.hasConversation && body < 1f && !leaving,
                     enter = fadeIn(tween(160)) + expandVertically(spring(stiffness = 500f)),
                     exit = fadeOut(tween(120)) + shrinkVertically(tween(160)),
-                ) { Suggestions(grow = { grow.value }, onPick = { engaged = true; voice.cancel(); send(it, withScreen = true) }) }
+                ) { Suggestions(grow = { grow.value }, onOperate = ::composeTask,
+                    onPick = { engaged = true; voice.cancel(); send(it, refersToScreen = true) }) }
 
                 Surface(
                     shape = shape,
@@ -587,8 +752,33 @@ private fun AssistantPanel(
                 ) {
                     Column(Modifier.graphicsLayer { alpha = ((grow.value - 0.45f) / 0.5f).coerceIn(0f, 1f) }) {
                         DragHandle(Modifier.fillMaxWidth())
+                        val viewingTask by PhonePanel.reviewing.collectAsStateWithLifecycle()
+                        if (viewingTask != null && viewingTask == state.sessionId) {
+                            Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                                Text(stringResource(R.string.phone_island_paused), style = MaterialTheme.typography.labelMedium)
+                                TextButton(onClick = { PhonePanel.progress?.resume() }) { Text(stringResource(R.string.phone_island_resume)) }
+                                TextButton(onClick = { PhonePanel.progress?.stop() }) { Text(stringResource(R.string.phone_island_stop)) }
+                            }
+                        }
+                        if (scriptReview != null) {
+                            val target = state.screen.packageName
+                            AutoJsScriptReview(scriptReview, state.screen.appName ?: target, controller.canReviewScriptTarget(target),
+                                onRun = {
+                                    if (target != null) {
+                                        voice.cancel()
+                                        keyboard?.hide()
+                                        controller.runReviewedScript(scriptReview, target)
+                                    }
+                                },
+                                onCancel = { controller.scriptDrafts.discard(scriptReview) },
+                                modifier = Modifier.heightIn(max = scriptReviewLimit))
+                        } else {
                         if (body > 0.5f || state.hasConversation) {
-                            Box(Modifier.fillMaxWidth().height(bodyDp).graphicsLayer { alpha = (body / revealPx).coerceIn(0f, 1f) }) {
+                            Box(Modifier.fillMaxWidth()
+                                .onSizeChanged { if (automatic) body = it.height.toFloat() }
+                                .assistantBodyHeight(bodyLimit, manualHeight, reduceMotion)
+                                .graphicsLayer { alpha = if (automatic) 1f else (body / revealPx).coerceIn(0f, 1f) }) {
                                 if (state.hasConversation) {
                                     PanelBody(
                                         state = state, settings = settings, tts = tts, controller = controller, scroll = scroll,
@@ -598,7 +788,14 @@ private fun AssistantPanel(
                                         onAsk = { send(it) },
                                         onOpenUrl = onOpenUrl,
                                         onContinue = onContinue,
-                                        onNewQuestion = { voice.cancel(); controller.newQuestion() },
+                                        onNewQuestion = { voice.cancel(); voiceError = null; controller.newQuestion() },
+                                        onHandoff = { plan, choice ->
+                                            if (controller.confirmAppHandoff(plan, choice)) {
+                                                voice.cancel()
+                                                keyboard?.hide()
+                                                onDismiss()
+                                            }
+                                        },
                                     )
                                 } else {
                                     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 4.dp),
@@ -609,17 +806,49 @@ private fun AssistantPanel(
                                 }
                             }
                         }
+                        if (composingTask) PhoneTaskPrompt(
+                            state = state, fromCode = phoneDraft != null, setupError = setupError,
+                            onManagedStart = if (canStartTask) ({ startTask(true) }) else null,
+                            modifier = Modifier.heightIn(max = maxTaskPromptHeight).padding(horizontal = 16.dp),
+                            onDismiss = { composingTask = false }, onPageActions = onPageActions,
+                        )
+                        if (proposedTask != null) PhoneTaskPrompt(
+                            state = state, setupError = if (!settings.runInBackground) R.string.assistant_phone_need_background else null,
+                            instruction = proposedTask.instruction, onDismiss = controller::dismissAppHandoff, onPageActions = onPageActions,
+                            onManagedStart = if (settings.runInBackground) ({ startProposed(true) }) else null,
+                            onAllowOnce = if (settings.runInBackground) ({ startProposed(false) }) else null,
+                            modifier = Modifier.heightIn(max = maxTaskPromptHeight).padding(horizontal = 16.dp),
+                        )
+                        voiceError?.takeIf { !composingTask && !state.busy }?.let { error ->
+                            Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)) {
+                                Text(error, color = scheme.error, style = MaterialTheme.typography.bodyMedium)
+                                Row(Modifier.align(Alignment.End)) {
+                                    TextButton(onClick = { voiceError = null }) { Text(stringResource(android.R.string.cancel)) }
+                                    TextButton(onClick = { listen(retry = true, offline = voiceController.canContinueOffline) }) {
+                                        Text(stringResource(if (voiceController.canContinueOffline) R.string.voice_continue_offline
+                                            else if (draft.isBlank()) R.string.voice_try_again else R.string.voice_continue))
+                                    }
+                                }
+                            }
+                        }
+                        if (state.busy && !settings.runInBackground) {
+                            Text(stringResource(R.string.phone_background_off_hint), modifier = Modifier.padding(horizontal = 16.dp),
+                                style = MaterialTheme.typography.bodySmall)
+                        }
                         InputRow(
-                            state = state, draft = draft, onDraft = { draft = it }, voiceMode = voiceMode, voice = voice,
+                            state = state, draft = if (composingTask) taskText else draft,
+                            onDraft = { if (composingTask) taskText = it else draft = it },
+                            voiceMode = voiceMode && !composingTask, voice = voice,
+                            phoneTask = composingTask, allowTask = canStartTask, onStartTask = { startTask() },
                             focus = focus,
                             onFocused = { engaged = true },
                             // The keyboard steps aside after sending so the answer has the room.
-                            onSend = { if (send(draft)) { draft = ""; keyboard?.hide() } },
+                            onSend = { if (!composingTask && send(draft)) { draft = ""; keyboard?.hide() } },
                             onStop = controller::stop,
-                            onClose = ::dismiss,
+                            onClose = { if (composingTask) { composingTask = false; phoneDraft = null; taskText = ""; keyboard?.hide() } else dismiss() },
                             onMic = {
                                 if (voice.listening) voice.finish()
-                                else { voiceMode = true; engaged = false; keyboard?.hide(); controller.quiet(); voice.start() }
+                                else listen()
                             },
                             onKeyboard = {
                                 val heard = voice.cancel()
@@ -627,6 +856,7 @@ private fun AssistantPanel(
                                 voiceMode = false; engaged = true; wantsKeyboard = true
                             },
                         )
+                        }
                     }
                 }
             }
@@ -657,8 +887,8 @@ private fun DragHandle(modifier: Modifier) {
 }
 
 @Composable
-private fun Suggestions(grow: () -> Float, onPick: (String) -> Unit) {
-    val picks = listOf(R.string.assistant_suggest_summarize, R.string.assistant_suggest_explain, R.string.assistant_suggest_reply)
+private fun Suggestions(grow: () -> Float, onOperate: () -> Unit, onPick: (String) -> Unit) {
+    val picks = listOf(R.string.assistant_phone_action, R.string.assistant_suggest_summarize, R.string.assistant_suggest_explain, R.string.assistant_suggest_reply)
         .map { stringResource(it) }
     Row(
         Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
@@ -666,14 +896,14 @@ private fun Suggestions(grow: () -> Float, onPick: (String) -> Unit) {
     ) {
         picks.forEachIndexed { i, text ->
             Surface(
-                onClick = { onPick(text) },
+                onClick = { if (i == 0) onOperate() else onPick(text) },
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                color = if (i == 0) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = if (i == 0) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSecondaryContainer,
                 shadowElevation = 3.dp,
                 modifier = Modifier.graphicsLayer {
                     // Each chip pops up a beat after the one before it, once the pill has opened.
-                    val t = ((grow() - 0.5f - 0.1f * i) / 0.3f).coerceIn(0f, 1f)
+                    val t = ((grow() - 0.46f - 0.08f * i) / 0.3f).coerceIn(0f, 1f)
                     translationY = (1f - t) * 18.dp.toPx()
                     scaleX = lerp(0.8f, 1f, t); scaleY = scaleX
                     alpha = t
@@ -701,6 +931,7 @@ private fun InputRow(
     onClose: () -> Unit,
     onMic: () -> Unit,
     onKeyboard: () -> Unit,
+    phoneTask: Boolean, allowTask: Boolean, onStartTask: () -> Unit,
 ) {
     val scheme = MaterialTheme.colorScheme
     Row(
@@ -708,14 +939,15 @@ private fun InputRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        IconButton(onClick = onClose) { Icon(Icons.Rounded.Close, stringResource(R.string.assistant_close)) }
+        IconButton(onClick = onClose) { Icon(if (state.busy && !phoneTask) Icons.Rounded.KeyboardArrowDown else Icons.Rounded.Close,
+            stringResource(if (phoneTask) android.R.string.cancel else if (state.busy) R.string.phone_hide_panel else R.string.assistant_close)) }
 
         Box(Modifier.weight(1f).padding(horizontal = 6.dp), contentAlignment = Alignment.CenterStart) {
             AnimatedContent(voiceMode, transitionSpec = { fadeIn(tween(180)) togetherWith fadeOut(tween(120)) }, label = "assistantMode") { speaking ->
                 if (speaking) VoiceLine(voice)
                 else Box(contentAlignment = Alignment.CenterStart) {
                     if (draft.isEmpty()) Text(
-                        stringResource(if (state.sessionId == null) R.string.assistant_input_hint else R.string.assistant_input_hint_follow_up),
+                        stringResource(if (phoneTask) R.string.assistant_phone_instruction else if (state.sessionId == null) R.string.assistant_input_hint else R.string.assistant_input_hint_follow_up),
                         style = MaterialTheme.typography.bodyLarge, color = scheme.onSurfaceVariant, maxLines = 1,
                     )
                     BasicTextField(
@@ -724,19 +956,28 @@ private fun InputRow(
                         textStyle = MaterialTheme.typography.bodyLarge.copy(color = scheme.onSurface),
                         cursorBrush = SolidColor(scheme.primary),
                         maxLines = 5,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                        keyboardOptions = KeyboardOptions(imeAction = if (phoneTask) ImeAction.Done else ImeAction.Send),
                         keyboardActions = KeyboardActions(onSend = { onSend() }),
                     )
                 }
             }
         }
 
-        if (voiceMode && !state.busy) {
+        if (phoneTask) {
+            FilledTonalButton(onClick = onStartTask, enabled = allowTask) {
+                Text(stringResource(R.string.assistant_phone_allow_once))
+            }
+            return@Row
+        }
+        val interactive = !state.busy || state.question?.phoneClarification == true
+        if (voiceMode && interactive) {
             IconButton(onClick = onKeyboard) { Icon(Icons.Rounded.Keyboard, stringResource(R.string.assistant_keyboard)) }
+        } else if (interactive && draft.isNotBlank()) {
+            IconButton(onClick = onMic) { Icon(Icons.Rounded.Mic, stringResource(R.string.voice_continue)) }
         }
         // One main button that changes job: talk, send, or stop.
         val job = when {
-            state.busy -> ButtonJob.STOP
+            !interactive -> ButtonJob.STOP
             !voiceMode && draft.isNotBlank() -> ButtonJob.SEND
             else -> ButtonJob.MIC
         }
@@ -779,7 +1020,7 @@ private fun VoiceLine(voice: PanelVoice) {
             }
             voice.heard.isNotBlank() -> Text(voice.heard, style = MaterialTheme.typography.bodyLarge, color = scheme.onSurface,
                 maxLines = 2, overflow = TextOverflow.Ellipsis)
-            voice.listening -> Text(stringResource(R.string.assistant_listening), style = MaterialTheme.typography.bodyLarge,
+            voice.listening -> Text(stringResource(if (voice.manual) R.string.voice_finish_to_send else R.string.assistant_listening), style = MaterialTheme.typography.bodyLarge,
                 color = scheme.primary)
             else -> Text(stringResource(R.string.assistant_tap_to_talk), style = MaterialTheme.typography.bodyLarge,
                 color = scheme.onSurfaceVariant)
@@ -803,11 +1044,10 @@ private fun ModelLine(state: AssistantUiState, onThinking: (ThinkingLevel) -> Un
             if (thinking.spec.reasoningSupported) stringResource(R.string.assistant_thinking_auto) else null
         else -> stringResource(R.string.assistant_thinking_level, thinking.label)
     }
-    if (state.modelLabel == null && chip == null) return
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().heightIn(min = 32.dp), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(state.modelLabel.orEmpty(), Modifier.weight(1f), style = MaterialTheme.typography.labelLarge,
+            Text(listOfNotNull(stringResource(R.string.conversation_phone), state.modelLabel).joinToString(" · "), Modifier.weight(1f), style = MaterialTheme.typography.labelLarge,
                 color = scheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
             if (chip != null) {
                 val turn by animateFloatAsState(if (picking) 180f else 0f, spring(dampingRatio = 0.6f, stiffness = 420f), label = "thinkingChevron")
@@ -905,7 +1145,7 @@ private fun questionText(message: ChatMessage): String =
  * The conversation, laid out the way Chat lays out a turn: the question, the live
  * activity (thinking, searching, reading), then the answer with its sources and actions.
  */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalLayoutApi::class)
 @Composable
 private fun PanelBody(
     state: AssistantUiState,
@@ -920,6 +1160,7 @@ private fun PanelBody(
     onOpenUrl: (String) -> Unit,
     onContinue: () -> Unit,
     onNewQuestion: () -> Unit,
+    onHandoff: (AppHandoffPlan, AppHandoffChoice) -> Unit,
 ) {
     val scheme = MaterialTheme.colorScheme
     val messages = state.messages
@@ -1032,7 +1273,31 @@ private fun PanelBody(
             }
             state.question?.let { question ->
                 key("question-${question.callId}") {
-                    QuestionCard(question, onAnswer = controller::answer, autoContinueAt = state.questionAutoAt)
+                    QuestionCard(question, onAnswer = { controller.answer(question, it) }, autoContinueAt = state.questionAutoAt)
+                }
+            }
+            state.appHandoff?.takeIf { it.choices.isNotEmpty() }?.let { plan ->
+                val reveal = remember(plan) { BringIntoViewRequester() }
+                LaunchedEffect(plan) { reveal.bringIntoView() }
+                FlowRow(Modifier.fillMaxWidth().bringIntoViewRequester(reveal), horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    plan.choices.forEach { choice ->
+                        val button = when {
+                            choice.action == "map_search" && plan.status == AppHandoffStatus.APP_NOT_FOUND -> R.string.handoff_use_other_map
+                            choice.action == "map_search" -> R.string.handoff_search_in_map
+                            plan.status == AppHandoffStatus.OPEN_ONLY -> R.string.handoff_open_only
+                            else -> R.string.handoff_open_app
+                        }
+                        FilledTonalButton(onClick = { onHandoff(plan, choice) }, enabled = !state.busy) {
+                            if (plan.choices.any { it.packageName != choice.packageName && it.label == choice.label }) {
+                                Column {
+                                    Text(stringResource(button, choice.label))
+                                    Text(choice.packageName, style = MaterialTheme.typography.labelSmall)
+                                }
+                            } else Text(stringResource(button, choice.label))
+                        }
+                    }
+                    TextButton(onClick = { controller.cancelAppHandoff(plan) }) { Text(stringResource(android.R.string.cancel)) }
                 }
             }
 
@@ -1053,12 +1318,11 @@ private fun PanelBody(
             }
 
             AnimatedVisibility(
-                state.sessionId != null && !state.busy,
+                state.sessionId != null && !state.busy && state.appHandoff?.choices.isNullOrEmpty(),
                 enter = fadeIn(tween(200, delayMillis = 120)) + expandVertically(spring(dampingRatio = 0.9f, stiffness = 420f)),
                 exit = fadeOut(tween(90)) + shrinkVertically(spring(dampingRatio = 1f, stiffness = 700f)),
             ) {
-                Row(Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically) {
+                FlowRow(Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilledTonalButton(onClick = onContinue) {
                         Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, Modifier.size(18.dp))
                         Spacer(Modifier.width(8.dp))
@@ -1130,7 +1394,7 @@ private fun Answer(
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Column(Modifier.keepLiveHeight(live, paced.length)) {
             AssistantText(reply, streaming = live, onOpenUrl = onOpenUrl, chatImages = responseImages,
-                onFollowUp = { onAsk(it.prompt) })
+                onFollowUp = { onAsk(ResponseAttachment.panelRequest(it)) })
             if (live) {
                 val sources = remember(items) { ChatActivityPresentation.sources(items) }
                 LiveSourceChips(sources, turnId, onOpenUrl = onOpenUrl, modifier = Modifier.padding(top = 6.dp))

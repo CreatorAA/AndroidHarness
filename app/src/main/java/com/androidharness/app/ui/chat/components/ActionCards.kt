@@ -58,6 +58,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.androidharness.app.agent.ApprovalRequest
 import com.androidharness.app.agent.describeToolCall
+import com.androidharness.app.agent.requiresPhoneReview
+import com.androidharness.app.androiduse.AutoJsUiScripts
 import com.androidharness.app.data.env.EnvState
 import com.androidharness.app.ui.common.PackageInstallProgress
 import com.androidharness.app.ui.common.packageProgress
@@ -129,6 +131,7 @@ internal fun ApprovalCard(
     val scheme = MaterialTheme.colorScheme
     ActionCard(
         title = when {
+            approval.call.name == AutoJsUiScripts.RUN -> uiContext.getString(R.string.autojs_trial_title, "AutoJs6")
             isPkg -> uiContext.getString(R.string.ui_install_linux_package)
             isPullRequest -> uiContext.getString(R.string.pr_approval_title)
             isReminder -> uiContext.getString(when (approval.call.name) {
@@ -172,6 +175,12 @@ internal fun ApprovalCard(
             }
         },
     ) {
+        if (approval.requiresPhoneReview && isPhone) {
+            // GUI values and scripts can contain arbitrary text, including the shell preview's markers.
+            // Keep the complete value scrollable in-app, separate from the notification.
+            CodePanel(approval.diffPreview.orEmpty())
+            return@ActionCard
+        }
         if (isPhone) {
             val preview = approval.diffPreview.orEmpty()
             val marker = if (PHONE_FIRST_COMMAND in preview) PHONE_FIRST_COMMAND else PHONE_ONE_COMMAND

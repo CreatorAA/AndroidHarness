@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">پنهان کردن دستیار</string>
+    <string name="phone_background_off_hint">اجرا در پس‌زمینه خاموش است. با خروج از برنامه، این کار موقتاً متوقف می‌شود.</string>
+    <string name="phone_background_paused">چون اجرا در پس‌زمینه خاموش است، کار موقتاً متوقف شد. برای ادامه، این گفتگو را در برنامه باز کنید.</string>
+    <string name="phone_island_title">دستیار گوشی</string>
+    <string name="phone_island_planning">در حال برنامه‌ریزی مراحل بعدی</string>
+    <string name="phone_island_looking">در حال بررسی صفحه</string>
+    <string name="phone_island_finding">در حال پیدا کردن برنامه در صفحه اصلی</string>
+    <string name="phone_island_tap">در حال انتخاب یک دکمه</string>
+    <string name="phone_island_type">در حال وارد کردن متن</string>
+    <string name="phone_island_swipe">در حال حرکت در صفحه</string>
+    <string name="phone_island_gesture">در حال کشیدن یک مورد</string>
+    <string name="phone_island_action">در حال انجام یک مرحله</string>
+    <string name="phone_island_batch">مرحله %1$d از %2$d</string>
+    <string name="phone_island_check">در حال بررسی نتیجه</string>
+    <string name="phone_island_done">تکمیل شد</string>
+    <string name="phone_island_ended">پایان یافت · نتیجه را بررسی کنید</string>
+    <string name="phone_island_stopped">متوقف شد</string>
+    <string name="phone_island_failed">تکمیل نشد</string>
+    <string name="phone_island_review">به توجه شما نیاز دارد</string>
+    <string name="phone_island_paused">کنترل‌های گوشی موقتاً متوقف شده‌اند</string>
+    <string name="phone_island_chat">مشاهده گفتگو</string>
+    <string name="phone_island_resume">ادامه کار</string>
+    <string name="phone_island_stop">توقف کار</string>
+    <string name="phone_island_details">پیشرفت کار: %1$s</string>
+</resources>

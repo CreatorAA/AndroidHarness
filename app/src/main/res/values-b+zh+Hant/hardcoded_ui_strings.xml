@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">這輪對話沒有可復原的變更。</string>
+    <string name="chat_compaction_preparing">正在準備對話摘要…</string>
+    <string name="chat_compaction_too_few_messages">訊息太少，暫時無法壓縮。</string>
+    <string name="chat_compaction_retrying">正在重試產生摘要 · 第 %1$d 次 · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">已停止壓縮，對話記錄已保留。準備好後可以重新執行 /compact。</string>
+    <string name="chat_compaction_refresh_failed">對話已壓縮，但無法重新整理工作設定或上下文估算：%1$s</string>
+    <string name="chat_compaction_failed_notice">壓縮失敗：%1$s。對話記錄已保留。請重試 /compact 或選擇其他模型。</string>
+    <string name="reasoning_from_catalog">模型目錄標示支援推理</string>
+    <string name="reasoning_from_provider">服務供應商宣告支援推理</string>
+    <string name="reasoning_from_user">推理能力由你設定</string>
+    <string name="reasoning_from_name">根據模型名稱推斷支援推理</string>
+    <string name="automation_every_day">每天</string>
+    <string name="automation_daily_at">每天 %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">建置偵錯版 APK 並修正建置錯誤。</string>
+    <string name="app_update_checking">正在檢查更新…</string>
+    <string name="app_update_up_to_date">目前已是最新版本</string>
+    <string name="files_directory">資料夾</string>
+    <string name="cache_status_unavailable">快取資料無法使用</string>
+    <string name="cache_status_hit">快取命中 · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · 資料不完整</string>
+    <string name="cache_estimated_price">約 %1$s</string>
+    <string name="chat_live_sites_suffix">" 個網站"</string>
+    <string name="chat_research_sources_suffix">/%1$d 個來源</string>
+    <string name="chat_research_read_suffix">" 頁已讀"</string>
+    <string name="package_status_failed">安裝失敗</string>
+    <string name="package_hide_details">隱藏安裝詳細資料</string>
+    <string name="package_show_details">顯示安裝詳細資料</string>
+    <string name="package_recently_unpacked">最近解壓縮 · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">%1$d 項</item>
+    </plurals>
+</resources>

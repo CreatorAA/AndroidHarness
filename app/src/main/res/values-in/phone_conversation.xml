@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Ponsel</string>
+    <string name="conversation_new_phone">Percakapan baru di ponsel</string>
+    <string name="phone_conversation_intro">Ajukan pertanyaan di sini. Agar asisten menggunakan aplikasi, beralihlah ke aplikasi tersebut dan panggil asisten.</string>
+    <string name="phone_conversation_settings">Setelan asisten</string>
+    <string name="settings_start_phone_desc">Buka percakapan asisten ponsel Anda.</string>
+</resources>

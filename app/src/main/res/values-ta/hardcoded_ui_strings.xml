@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">இந்தச் சுற்றில் செயல்தவிர்க்க எதுவும் இல்லை.</string>
+    <string name="chat_compaction_preparing">அரட்டைச் சுருக்கம் தயாராகிறது…</string>
+    <string name="chat_compaction_too_few_messages">சுருக்குவதற்குப் போதுமான செய்திகள் இன்னும் இல்லை.</string>
+    <string name="chat_compaction_retrying">சுருக்கத்தை மீண்டும் முயல்கிறது · முயற்சி %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">சுருக்கம் நிறுத்தப்பட்டது. வரலாறு தக்கவைக்கப்பட்டது. தயாரானதும் /compact ஐ மீண்டும் இயக்கவும்.</string>
+    <string name="chat_compaction_refresh_failed">அரட்டை சுருக்கப்பட்டது, ஆனால் பணியின் அமைப்புகளையோ சூழல் மதிப்பீட்டையோ புதுப்பிக்க முடியவில்லை: %1$s</string>
+    <string name="chat_compaction_failed_notice">சுருக்கம் தோல்வியடைந்தது: %1$s. வரலாறு தக்கவைக்கப்பட்டது. /compact ஐ மீண்டும் முயலவும் அல்லது வேறு மாதிரியைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="reasoning_from_catalog">மாதிரிப் பட்டியலில் பகுத்தறிதல் ஆதரவு குறிப்பிடப்பட்டுள்ளது</string>
+    <string name="reasoning_from_provider">வழங்குநர் பகுத்தறிதல் ஆதரவைத் தெரிவித்துள்ளார்</string>
+    <string name="reasoning_from_user">பகுத்தறிதல் ஆதரவை நீங்கள் அமைத்துள்ளீர்கள்</string>
+    <string name="reasoning_from_name">மாதிரியின் பெயரிலிருந்து பகுத்தறிதல் ஆதரவு ஊகிக்கப்பட்டது</string>
+    <string name="automation_every_day">ஒவ்வொரு நாளும்</string>
+    <string name="automation_daily_at">தினமும் %1$02d:%2$02d மணிக்கு</string>
+    <string name="automation_instructions_example">பிழைதிருத்த APK ஐ உருவாக்கி, உருவாக்கப் பிழைகளைச் சரிசெய்யவும்.</string>
+    <string name="app_update_checking">புதுப்பிப்புகளைச் சரிபார்க்கிறது…</string>
+    <string name="app_update_up_to_date">நீங்கள் சமீபத்திய பதிப்பைப் பயன்படுத்துகிறீர்கள்</string>
+    <string name="files_directory">கோப்புறை</string>
+    <string name="cache_status_unavailable">தற்காலிகச் சேமிப்புத் தரவு கிடைக்கவில்லை</string>
+    <string name="cache_status_hit">தற்காலிகச் சேமிப்பில் கிடைத்தது · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · பகுதியளவு</string>
+    <string name="cache_estimated_price">சுமார் %1$s</string>
+    <string name="chat_live_sites_suffix">" தளங்கள்"</string>
+    <string name="chat_research_sources_suffix">/%1$d ஆதாரங்கள்</string>
+    <string name="chat_research_read_suffix">" படிக்கப்பட்டன"</string>
+    <string name="package_status_failed">நிறுவல் தோல்வியடைந்தது</string>
+    <string name="package_hide_details">நிறுவல் விவரங்களை மறை</string>
+    <string name="package_show_details">நிறுவல் விவரங்களைக் காட்டு</string>
+    <string name="package_recently_unpacked">அண்மையில் பிரித்தெடுக்கப்பட்டவை · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d உருப்படி</item>
+        <item quantity="other">%1$d உருப்படிகள்</item>
+    </plurals>
+</resources>

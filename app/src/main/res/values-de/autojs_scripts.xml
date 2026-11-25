@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6-Skripte</string>
+    <string name="autojs_allow">Dem Assistenten die Nutzung von AutoJs6 erlauben</string>
+    <string name="autojs_allow_hint">Fügt den zugehörigen Treiber und UI-Skripte hinzu. Der integrierte Dienst bleibt verfügbar, wenn er aktiviert ist.</string>
+    <string name="autojs_need_pair">Du kannst Skripte schon schreiben und prüfen. Richte das lokale AutoJs6-Plug-in ein, bevor du sie auf dem Handy ausführst.</string>
+    <string name="autojs_new">Neues Skript</string>
+    <string name="autojs_back">Zurück</string>
+    <string name="autojs_source">UI-Skript</string>
+    <string name="autojs_sample_source">text(\"Weiter\").waitFor();</string>
+    <string name="autojs_name">Name (für einen Test optional)</string>
+    <string name="autojs_name_exists">Es gibt bereits ein Skript mit diesem Namen. Öffne es zum Bearbeiten oder wähle einen anderen Namen.</string>
+    <string name="autojs_format">Suche mit text, desc oder id nach einem Bedienelement. Warte darauf, tippe es an oder gib Text ein. Schreibe eine Anweisung pro Zeile.</string>
+    <string name="autojs_check">Schritte prüfen</string>
+    <string name="autojs_prepare">In Ziel-App testen</string>
+    <string name="autojs_preview">Gültige Schritte: %1$d · nichts ausgeführt</string>
+    <string name="autojs_empty">Tippe auf „Neues Skript“, um eine wiederverwendbare Aktion zu erstellen. Lass den Namen leer, wenn du sie ohne Speichern ausprobieren möchtest.</string>
+    <string name="autojs_enabled_hint">Der Assistent kann aktivierte Skripte in dieser Bibliothek verwenden.</string>
+    <string name="autojs_disabled_hint">Aktiviere das Skript in der Bibliothek, bevor du es ausprobierst.</string>
+    <string name="autojs_delete">„%1$s“ löschen?</string>
+    <string name="autojs_delete_action">Löschen</string>
+    <string name="autojs_changed">Das Skript wurde in der Bibliothek geändert. Öffne es erneut, bevor du es speicherst oder ausführst.</string>
+    <string name="autojs_write_failed">Das Skript konnte nicht gespeichert werden.</string>
+    <string name="autojs_anonymous">Nicht gespeichertes Skript</string>
+    <string name="autojs_prepared">Test bereit: %1$s. Öffne die Ziel-App und rufe innerhalb von 10 Minuten den Handy-Assistenten auf.</string>
+    <string name="autojs_trial_title">Skript ausführen · %1$s</string>
+    <string name="autojs_trial_here">Nur in %1$s</string>
+    <string name="autojs_trial_other">Öffne die App, die du testen möchtest, und rufe dort den Assistenten auf.</string>
+    <string name="autojs_trial_steps">%1$d Schritte · zum Prüfen tippen</string>
+    <string name="autojs_trial_less">Schritte ausblenden</string>
+    <string name="autojs_trial_allow">Erlauben und hier ausführen</string>
+    <string name="autojs_trial_stale">Der Test ist abgelaufen oder die App hat sich geändert. Bereite ihn in der Skriptbibliothek erneut vor.</string>
+    <string name="autojs_trial_request">„%1$s“ in %2$s ausführen.</string>
+    <string name="autojs_trial_done">%1$d von %2$d Skriptschritten in %3$s abgeschlossen.</string>
+    <string name="autojs_trial_stopped">Skript in %3$s nach %1$d von %2$d Schritten gestoppt.</string>
+    <string name="autojs_trial_error">Dieses Skript konnte in der aktuellen App nicht gestartet werden.</string>
+    <string name="autojs_trial_interrupted">Skript unterbrochen. Prüfe die App, bevor du es erneut versuchst.</string>
+    <string name="autojs_not_selected">Aktiviere AutoJs6, bevor du ein Skript vorbereitest.</string>
+    <string name="autojs_activity_running">AutoJs6-Skript wird ausgeführt</string>
+    <string name="autojs_activity_ran">AutoJs6-Skript ausgeführt</string>
+    <string name="autojs_activity_run_failed">AutoJs6-Skript wurde nicht abgeschlossen</string>
+    <string name="autojs_activity_library_working">AutoJs6-Skriptbibliothek wird verwendet</string>
+    <string name="autojs_activity_library_done">AutoJs6-Skriptbibliothek verwendet</string>
+    <string name="autojs_activity_library_failed">Aktion in der AutoJs6-Skriptbibliothek fehlgeschlagen</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">තට්ටු කරන්න</string>
+    <string name="phone_review_long_press">ස්පර්ශ කරගෙන සිටින්න</string>
+    <string name="phone_review_type">පෙළ ඇතුළත් කරන්න</string>
+    <string name="phone_review_volume">මාධ්‍ය ශබ්ද මට්ටම සකසන්න</string>
+    <string name="phone_review_scroll_forward">ඉදිරියට අනුචලනය කරන්න</string>
+    <string name="phone_review_scroll_backward">පසුපසට අනුචලනය කරන්න</string>
+    <string name="phone_review_swipe">ස්වයිප් කරන්න</string>
+    <string name="phone_review_drag">ඇදගෙන යන්න</string>
+    <string name="phone_review_home">මුල් තිරයට ආපසු යන්න</string>
+    <string name="android_use_launcher_trip">%1$s වෙතින් මුල් තිරයේ %2$s සොයා තට්ටු කරන්න. ඉන්පසු %3$s තුළ මෙම කාර්යය දිගටම කරගෙන යන්න.</string>
+    <string name="android_use_action_approval">මෙම ක්‍රියාවට එක් වරක් අවසර දෙන්නද?\n\n%1$s</string>
+    <string name="android_use_chat_approval">මෙම සංවාදයේදී දුරකථනය පාලනය කිරීමට ඉඩ දෙන්නද? සහායකයාට අදාළ යෙදුමේ තිරය තෝරාගත් AI ආකෘතියට යැවීමටත්, තිරය මත තට්ටු කිරීමටත්, අකුරු ටයිප් කිරීමටත් හැකිය. මෙම සංවාදයේ අවසර ලත් දුරකථන විධානවලට ගොනු සහ සැකසීම් කියවීමට හා වෙනස් කිරීමට ද ඉඩ ලැබේ. අදාළ යෙදුමේ වෙනසක් ඉදිරිපත් කිරීමට පෙර නැවත ඔබේ අවසරය ඉල්ලනු ඇත.</string>
+    <string name="android_use_submit_approval">මෙය ඉදිරිපත් කිරීමට එක් වරක් අවසර දෙන්නද?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">මෙම කාර්යය වෙනත් යෙදුමකට මාරු කරන්නද? සහායකයාට එහි තිරය කියවීමට සහ එය භාවිත කිරීමට හැකි වේ.\n\n%1$s</string>
+    <string name="android_use_code_entry">දුරකථන සහායකයාට කාර්යයක් යවන්න</string>
+    <string name="android_use_code_hint">උපදෙසක් එක් කරන්න, නැතහොත් සැකසීම් විවෘත කිරීමට /phone පමණක් යවන්න.</string>
+    <string name="android_use_draft_ready">මිනිත්තු 10ක් ඇතුළත අදාළ යෙදුම විවෘත කර සහායකයා තුළ \'දුරකථනය ක්‍රියාකරවන්න\' තෝරන්න. සංවාදය බැලීමට මෙහි /phone --result භාවිත කරන්න.</string>
+    <string name="android_use_draft_expired">මෙම කෙටුම්පත කල් ඉකුත් වී, අවලංගු වී හෝ වෙනත් එකකින් ප්‍රතිස්ථාපනය වී ඇත. මෙම සංවාද කොටුව වසා නැවත \'දුරකථනය ක්‍රියාකරවන්න\' තෝරන්න.</string>
+    <string name="android_use_draft_cancelled">දුරකථන කෙටුම්පත අවලංගු කරන ලදී.</string>
+    <string name="android_use_no_draft">මෙම සංවාදයේ පොරොත්තුවෙන් ඇති දුරකථන කෙටුම්පතක් නැත.</string>
+    <string name="android_use_no_result">මෙම සංවාදයෙන් දුරකථන කාර්යයක් ආරම්භ කර නැත.</string>
+    <string name="android_use_local_only">දේශීය Code වැඩබිමකින් දුරකථන කාර්යයක් ආරම්භ කරන්න.</string>
+    <string name="android_use_from_code">Code වෙතින් කෙටුම්පත</string>
+</resources>

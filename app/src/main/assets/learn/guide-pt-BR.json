@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Atualizações, configuração e informações do aplicativo",
-      "summary": "Encontre sua versão, reconecte a configuração e entenda as opções de suporte.",
-      "location": "Configurações → Atualizações, Guia de configuração ou Sobre.",
+      "title": "Versão e configuração",
+      "summary": "Consulte a versão instalada ou instale uma edição personalizada mais recente.",
+      "location": "Configurações → Sobre ou Guia de configuração.",
       "before": [
-        "Uma conexão de rede para verificações de atualizações e páginas de suporte externas."
+        "Você pode consultar a versão sem conexão."
       ],
       "steps": [
         {
           "title": "Verifique a versão instalada",
-          "body": "Abra Sobre ou Atualizações para ver a versão/compilação real instalada. Inclua essa versão ao descrever um problema reproduzível."
+          "body": "Abra Sobre. A versão aparece abaixo do nome do aplicativo. Essa página também traz o código-fonte, a licença e os créditos."
         },
         {
-          "title": "Use o caminho de atualização oferecido",
-          "body": "Verifique se há atualizações e leia os detalhes do lançamento. Use a ação de download/instalação oferecida para esta distribuição e siga qualquer etapa do instalador Android."
+          "title": "Instalar uma edição mais recente",
+          "body": "Abra o APK fornecido para esta edição personalizada e siga as instruções do instalador do Android."
         },
         {
           "title": "Revisite a configuração quando necessário",
           "body": "Use a Configuração para revisar as opções de integração e as permissões/conexões necessárias. Verifique cada opção em vez de presumir que é necessária uma reinstalação."
-        },
-        {
-          "title": "Encontre créditos e suporte",
-          "body": "Sobre listas fontes/licenças/créditos e links de apoio ou doação disponíveis. Uma doação apoia o aplicativo; ele não compra créditos API ou assinatura de provedor."
         }
       ],
-      "outcome": "Você conhece a versão instalada, o caminho de atualização/configuração disponível e onde estão as informações do próprio aplicativo.",
+      "outcome": "Ao relatar um problema, informe a versão instalada.",
       "limits": [
-        "O comportamento de entrega e instalação de atualizações difere de acordo com a distribuição e as permissões de dispositivo disponíveis.",
+        "Esta edição não procura nem instala versões do projeto original.",
         "Uma atualização de aplicativo não pode garantir novo acesso a um modelo externo, corrigir uma interrupção do provedor ou restaurar arquivos excluídos."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Abrir atualizações"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Revisar configuração"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Torne o AndroidHarness o assistente do seu celular e pergunte sobre o app em que você está.",
       "location": "Configurações → Assistente sobre outros apps; depois segure o botão de energia ou início, ou deslize para cima a partir de um canto inferior.",
       "before": [
-        "Escolha primeiro um modelo de Chat e adicione a chave. O assistente usa o mesmo modelo e as mesmas configurações do Chat.",
+        "Por padrão, o assistente usa o modelo do Chat. Você pode escolher outro nas configurações do assistente.",
         "O Android precisa permitir que o AndroidHarness seja o app de assistente digital. Em alguns celulares isso fica em Apps padrão."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Pergunte sobre a tela",
-          "body": "Digite uma pergunta ou toque em uma sugestão como Resumir. Ele só olha a tela quando sua pergunta é sobre ela, e nada da tela aparece no painel. Funciona como o Chat, então pode pesquisar na web, ler páginas e mostrar as fontes."
+          "body": "Pergunte sobre o que está na tela ou diga o que deseja fazer no aplicativo. Por padrão, você revisa a tarefa antes de ela começar."
         },
         {
           "title": "Fale em vez de digitar",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Continue no app",
-          "body": "O painel cresce com a resposta e pode ser arrastado para qualquer altura. Continuar no app abre a mesma conversa no Chat, onde ela fica com suas outras conversas."
+          "body": "“Continuar no app” abre a mesma conversa no aplicativo completo. Na próxima vez que chamar o assistente neste projeto, ele retomará sua última conversa."
         }
       ],
-      "outcome": "Você pode perguntar sobre o app na tela sem sair dele, e cada conversa é salva como um Chat normal.",
+      "outcome": "O aplicativo mantém as 10 conversas mais recentes com o assistente do telefone, somando todos os projetos. As mais antigas são excluídas com suas mensagens quando deixam de estar ativas. Os históricos do Chat e de Código não mudam.",
       "limits": [
         "Apps que bloqueiam capturas, como apps de banco, e telas protegidas pelo Android não enviam imagem nem texto. Você ainda pode perguntar.",
-        "A imagem da tela só é enviada quando o modelo de Chat consegue ler imagens. Caso contrário, só o texto da tela é enviado, e alguns apps compartilham muito pouco texto."
+        "A imagem da tela só é enviada quando o modelo de Chat consegue ler imagens. Caso contrário, só o texto da tela é enviado, e alguns apps compartilham muito pouco texto.",
+        "A autorização para agir sem intervenção vale para a tarefa atual e inclui enviar ou excluir conteúdo. Se ativar as tarefas automáticas, as próximas começarão sem confirmação inicial. Comandos e scripts ainda precisam de aprovação."
       ],
       "fixes": [
         {

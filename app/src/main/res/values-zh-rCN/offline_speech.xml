@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">仅用离线普通话</string>
+    <string name="voice_local_only_on">使用随应用安装的普通话模型，录音不离开手机。</string>
+    <string name="voice_system_first">优先用 Android 系统语音。断网或服务中断时，普通话会自动改为本机听写。</string>
+    <string name="voice_live_handoff">已切到本机听写，屏幕上已有的文字已保留。请接着说。</string>
+    <string name="voice_local_stopped">本机听写已停止。已显示的文字可保留，剩下的可以接着说或打字补全。</string>
+    <string name="voice_clip_unavailable">这段录音没能转成完整文字。</string>
+    <string name="voice_continue_offline">用本机听写继续</string>
+    <string name="voice_clip_handoff">语音服务暂不可用，正在手机上转写刚才的录音。</string>
+</resources>

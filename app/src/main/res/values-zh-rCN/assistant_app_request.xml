@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">要打开%1$s吗？</string>
+    <string name="app_request_search">要用%1$s搜索「%2$s」吗？</string>
+    <string name="app_request_choose_open">找到多个匹配的应用，请选一个。</string>
+    <string name="app_request_choose_map">要用哪个地图搜索「%1$s」？</string>
+    <string name="app_request_missing">这台手机上没找到可打开的「%1$s」。</string>
+    <string name="app_request_alternative">你可以用下面的地图搜索「%1$s」。</string>
+    <string name="app_request_open_only">找到了%1$s，但它没有提供地点搜索接口。要只打开应用吗？</string>
+    <string name="app_request_no_map">这台手机上没找到可接收「%1$s」地点搜索的应用。</string>
+    <string name="app_request_no_entry">找到了%1$s，但它没有可用的入口来接收这个请求。</string>
+    <string name="app_request_opened">已发送打开%1$s的请求。</string>
+    <string name="app_request_sent">已将「%2$s」的搜索请求交给%1$s。</string>
+    <string name="app_request_failed">未能向%1$s发出请求，可以重新询问可用的应用。</string>
+    <string name="app_request_cancelled">已取消，没有打开应用。</string>
+</resources>

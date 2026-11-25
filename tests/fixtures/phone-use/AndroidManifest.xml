@@ -1,0 +1,39 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.androidharness.fixture.phoneuse">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34" />
+    <instrumentation android:name=".ReadPageProbe" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".ReferencedChatTrial" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".ExhibitionScheduleTrial" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".VisualRouteTrial" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".LiveQqReferenceTrial" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".LivePageProbe" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".MapChatProbe" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <instrumentation android:name=".CalculatorJourneyProbe" android:targetPackage="com.androidharness.fixture.phoneuse" />
+    <application android:label="手机操作验证" android:allowBackup="false" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name=".FixtureActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DirectActionFixtureActivity" android:exported="true" />
+        <activity android:name=".ReferencedChatActivity" android:exported="true" />
+        <activity android:name=".ExhibitionScheduleActivity" android:exported="true" />
+        <activity android:name=".VisualRouteActivity" android:exported="true" />
+        <activity android:name=".TransferRecordActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="harness-fixture" android:host="transfer-record" />
+            </intent-filter>
+        </activity>
+        <activity-alias android:name=".TestMap" android:targetActivity=".DirectActionFixtureActivity"
+            android:exported="true" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="geo" />
+            </intent-filter>
+        </activity-alias>
+    </application>
+</manifest>

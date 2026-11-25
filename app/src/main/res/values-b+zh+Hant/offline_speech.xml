@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">僅使用離線國語聽寫</string>
+    <string name="voice_local_only_on">使用內建的國語辨識模型。錄音不會離開手機。</string>
+    <string name="voice_system_first">優先使用 Android 語音辨識。若服務無法使用，手機會改用本機模型繼續國語聽寫。</string>
+    <string name="voice_live_handoff">已切換到手機繼續聽寫。畫面上的文字會保留，請繼續說。</string>
+    <string name="voice_local_stopped">本機聽寫已停止。畫面上的文字會保留；您可以繼續聽寫，或輸入剩下的內容。</string>
+    <string name="voice_clip_unavailable">無法從這段錄音還原完整的逐字稿。</string>
+    <string name="voice_continue_offline">在裝置上繼續</string>
+    <string name="voice_clip_handoff">目前無法使用語音服務，正在您的手機上轉錄這段錄音。</string>
+</resources>

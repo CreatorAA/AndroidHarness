@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness फ़ोन नियंत्रण</string>
+    <string name="phone_driver_service_description">इससे आप असिस्टेंट से स्क्रीन पढ़ने, कंट्रोल पर टैप करने और टेक्स्ट डालने के लिए कह सकते हैं। फ़ोन नियंत्रण सिर्फ़ आपके शुरू किए गए टास्क के दौरान काम करते हैं। खुद नियंत्रण लेने के लिए टास्क रोकें।</string>
+</resources>

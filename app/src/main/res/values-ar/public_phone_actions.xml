@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">ضبط منبّه لمرة واحدة</string>
+    <string name="phone_public_timer">بدء مؤقّت</string>
+    <string name="phone_public_map">البحث عن مكان</string>
+    <string name="phone_public_calendar">فتح مسودة في التقويم</string>
+    <string name="phone_public_note">فتح ملاحظة جديدة</string>
+</resources>

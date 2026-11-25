@@ -43,6 +43,7 @@ import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.CreateNewFolder
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.OpenInNew
+import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Lightbulb
@@ -89,7 +90,21 @@ internal fun EmptyState(
     onStarter: (String) -> Unit = onSuggestion,
     /** Chat hides its starters once the composer has text. */
     startersVisible: Boolean = true,
+    onPhoneSettings: (() -> Unit)? = null,
 ) {
+    if (hasProvider && onPhoneSettings != null) {
+        Box(modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Column(Modifier.verticalScroll(rememberScrollState()).widthIn(max = 420.dp).padding(28.dp),
+                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Icon(Icons.Outlined.PhoneAndroid, null, Modifier.size(36.dp), tint = MaterialTheme.colorScheme.primary)
+                Text(androidx.compose.ui.res.stringResource(R.string.conversation_phone), style = MaterialTheme.typography.headlineSmall)
+                Text(androidx.compose.ui.res.stringResource(R.string.phone_conversation_intro), textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                OutlinedButton(onClick = onPhoneSettings) { Text(androidx.compose.ui.res.stringResource(R.string.phone_conversation_settings)) }
+            }
+        }
+        return
+    }
     if (hasProvider) {
         ChatEmptyState(agent, agentSetup, startersVisible, onSend = onSuggestion, onPrefill = onStarter,
             modifier = modifier, code = !chatOnly)

@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -28,6 +29,7 @@ import kotlinx.coroutines.withContext
 import com.androidharness.app.ui.common.Button
 import com.androidharness.app.ui.common.FilledTonalButton
 import com.androidharness.app.ui.common.TextButton
+import com.androidharness.app.workspace.displayWorkspaceName
 
 internal class EditorActions {
     var ready by mutableStateOf(false)
@@ -136,23 +138,28 @@ internal fun WorkspaceEditorScreen(
         } else { select(tab); pendingClose = tab }
     }
     fun runCommand(action: (() -> Unit)?) { tools = null; action?.invoke() }
+    fun command(label: Int, icon: ImageVector, action: (() -> Unit)?, detail: String = "") =
+        WorkspaceCommand(uiContext.getString(label), detail, icon) { runCommand(action) }
     val commands = listOf(
-        WorkspaceCommand("Save file", "Save the active document · Ctrl+S", Icons.Outlined.Save) { runCommand(actions.save) },
-        WorkspaceCommand("Find in current file", "Search inside the active editor", Icons.Outlined.FindInPage) { runCommand(actions.find) },
-        WorkspaceCommand("Go to line", "Jump to a line in the active document", Icons.Outlined.FormatListNumbered) { runCommand(actions.goToLine) },
-        WorkspaceCommand("Toggle word wrap", "Wrap long lines in the editor", Icons.Outlined.WrapText) { runCommand(actions.toggleWrap) },
+        command(R.string.settings_action_save, Icons.Outlined.Save, actions.save, "Ctrl+S"),
+        command(R.string.ui_find_861, Icons.Outlined.FindInPage, actions.find),
+        command(R.string.ui_go_to_line_870, Icons.Outlined.FormatListNumbered, actions.goToLine),
+        command(R.string.wp_editor_toggle_wrap, Icons.Outlined.WrapText, actions.toggleWrap),
     ).filter { actions.textAvailable } + listOfNotNull(
-        active?.takeIf { SmartEditorSupport.outline(it) }?.let { WorkspaceCommand("Code outline", "Jump to a function, class or document symbol", Icons.Outlined.AccountTree) { runCommand(actions.outline) } },
-        active?.takeIf { SmartEditorSupport.format(it) }?.let { WorkspaceCommand("Format Document", "Format the draft · Undo available", Icons.Outlined.AutoFixHigh) { runCommand(actions.format) } },
-        active?.takeIf { SmartEditorSupport.navigation(it) }?.let { WorkspaceCommand("Go to Definition", "Open the symbol's project definition", Icons.Outlined.SubdirectoryArrowRight) { runCommand(actions.definition) } },
-        active?.takeIf { SmartEditorSupport.navigation(it) }?.let { WorkspaceCommand("Find References", "Find uses of this symbol", Icons.Outlined.ManageSearch) { runCommand(actions.references) } },
-        active?.takeIf { SmartEditorSupport.rename(it) }?.let { WorkspaceCommand("Rename Symbol", "Review semantic edits across the project", Icons.Outlined.DriveFileRenameOutline) { runCommand(actions.rename) } },
+        active?.takeIf { SmartEditorSupport.outline(it) }?.let { command(R.string.ui_code_outline, Icons.Outlined.AccountTree, actions.outline) },
+        active?.takeIf { SmartEditorSupport.format(it) }?.let { command(R.string.ui_format_document, Icons.Outlined.AutoFixHigh, actions.format, uiContext.getString(R.string.wp_editor_undo_available)) },
+        active?.takeIf { SmartEditorSupport.navigation(it) }?.let { command(R.string.ui_go_to_definition, Icons.Outlined.SubdirectoryArrowRight, actions.definition) },
+        active?.takeIf { SmartEditorSupport.navigation(it) }?.let { command(R.string.ui_find_references, Icons.Outlined.ManageSearch, actions.references) },
+        active?.takeIf { SmartEditorSupport.rename(it) }?.let { command(R.string.ui_rename_symbol, Icons.Outlined.DriveFileRenameOutline, actions.rename) },
     ).filter { actions.textAvailable } + listOf(
-        WorkspaceCommand("Open files", "Switch or close an editor tab", Icons.Outlined.Tab) { tools = null; openFiles = true },
-    ) + listOfNotNull(onOpenTerminal?.let { action -> WorkspaceCommand("Open terminal", "Terminal for this workspace", Icons.Outlined.Terminal) { tools = null; actions.close?.invoke(action) ?: action() } })
+        command(R.string.ui_open_files_925, Icons.Outlined.Tab, { openFiles = true }),
+    ) + listOfNotNull(onOpenTerminal?.let { action ->
+        command(R.string.ui_open_terminal, Icons.Outlined.Terminal, { actions.close?.invoke(action) ?: action() },
+            uiContext.getString(R.string.ui_terminal_for_this_workspace))
+    })
     val chrome: @Composable () -> Unit = {
         Column {
-            AppHeader(title = uiContext.getString(R.string.ui_editor), subtitle = if(state?.paths?.size == 1) active else project?.name ?: identity?.substringBefore(" [primary=")?.substringAfterLast('/') ?: "Workspace", onBack = { actions.close?.invoke(onBack) ?: onBack() },
+            AppHeader(title = uiContext.getString(R.string.ui_editor), subtitle = if(state?.paths?.size == 1) active else project?.displayWorkspaceName(uiContext) ?: identity?.substringBefore(" [primary=")?.substringAfterLast('/') ?: uiContext.getString(R.string.wp_workspace_page), onBack = { actions.close?.invoke(onBack) ?: onBack() },
                 actions = {
                     FilledTonalButton(onClick = { openFiles = true }, contentPadding = PaddingValues(horizontal = 12.dp),
                         modifier = Modifier.heightIn(min = 44.dp).semantics { contentDescription = uiContext.getString(R.string.ui_open_files_open, (state?.paths?.size ?: 0).toString()) }) {
@@ -166,7 +173,10 @@ internal fun WorkspaceEditorScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceContainerLow, divider = { HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant) }) {
                     state.paths.forEach { tab ->
                         val unsaved = state.buffers[tab]?.dirty?.value == true
-                        Tab(selected = tab == active, enabled = !saving, onClick = { select(tab) }, modifier = Modifier.semantics { contentDescription = uiContext.getString(R.string.ui_tab, (tab).toString(), (if(unsaved) ", unsaved changes" else "").toString()) },
+                        Tab(selected = tab == active, enabled = !saving, onClick = { select(tab) }, modifier = Modifier.semantics {
+                            val label = uiContext.getString(R.string.ui_tab, tab, "")
+                            contentDescription = if (unsaved) "$label · ${uiContext.getString(R.string.ui_unsaved_changes)}" else label
+                        },
                             text = {
                                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(7.dp)) {
                                     Text(tab.substringAfterLast('/'), maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 170.dp))

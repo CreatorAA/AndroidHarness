@@ -26,6 +26,15 @@ class LocalizationResourcesTest {
         assertEquals(strings("values").keys, strings("values-zh-rCN").keys)
     }
 
+    @Test fun simplifiedChineseRequestLogAndWorkspaceDoNotUseEnglishPlaceholders() {
+        val english = strings("values")
+        val chinese = strings("values-zh-rCN")
+        val untranslated = english.filterKeys { name ->
+            name.startsWith("debug_console_") && name != "debug_console_cause_http" || name.startsWith("wp_")
+        }.filter { (name, text) -> chinese.getValue(name) == text }
+        assertTrue("English text in Simplified Chinese: ${untranslated.keys}", untranslated.isEmpty())
+    }
+
     @Test fun translatedTemplatesKeepValidArgumentTypesAndFormatSuccessfully() {
         val english = strings("values")
         val chinese = strings("values-zh-rCN")

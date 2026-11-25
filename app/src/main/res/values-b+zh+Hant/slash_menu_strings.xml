@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">開始一段新對話</string>
+    <string name="slash_menu_compact">壓縮上下文</string>
+    <string name="slash_menu_compact_hint">摘要先前的上下文</string>
+    <string name="slash_menu_cost">用量與費用</string>
+    <string name="slash_menu_cost_hint">查看 Token 總量與總費用</string>
+    <string name="slash_menu_btw_hint">針對目前的上下文提問，不加入聊天記錄</string>
+    <string name="slash_menu_doctor">Harness 自我診斷</string>
+    <string name="slash_menu_doctor_hint">對 Harness 工具執行自我診斷</string>
+    <string name="slash_menu_init">初始化專案</string>
+    <string name="slash_menu_init_hint">建立或更新 AGENTS.md</string>
+    <string name="slash_menu_review_hint">以唯讀方式檢閱尚未提交的變更，可在指令後指定重點。</string>
+    <string name="slash_menu_plan_hint">載入計畫技能並切換至計畫模式</string>
+    <string name="slash_menu_skills">瀏覽技能</string>
+    <string name="slash_menu_skills_hint">開啟完整的技能選擇清單</string>
+    <string name="slash_menu_env_hint">檢查、更新、安裝或修復 Linux 環境</string>
+    <string name="slash_menu_snippet">片段</string>
+    <string name="slash_menu_snippet_hint">已儲存的提示詞片段</string>
+</resources>

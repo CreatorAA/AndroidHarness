@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">ซ่อนผู้ช่วย</string>
+    <string name="phone_background_off_hint">ปิดการทำงานเบื้องหลังอยู่ การออกจากแอปจะหยุดงานนี้ชั่วคราว</string>
+    <string name="phone_background_paused">หยุดชั่วคราวเพราะปิดการทำงานเบื้องหลังอยู่ เปิดแชทนี้ในแอปเพื่อทำงานต่อ</string>
+    <string name="phone_island_title">ผู้ช่วยโทรศัพท์</string>
+    <string name="phone_island_planning">กำลังวางแผนขั้นตอนถัดไป</string>
+    <string name="phone_island_looking">กำลังตรวจสอบหน้า</string>
+    <string name="phone_island_finding">กำลังค้นหาแอปบนหน้าจอหลัก</string>
+    <string name="phone_island_tap">กำลังเลือกปุ่มควบคุม</string>
+    <string name="phone_island_type">กำลังป้อนข้อความ</string>
+    <string name="phone_island_swipe">กำลังเลื่อนดูหน้า</string>
+    <string name="phone_island_gesture">กำลังลากรายการ</string>
+    <string name="phone_island_action">กำลังดำเนินการ</string>
+    <string name="phone_island_batch">ขั้นตอนที่ %1$d จาก %2$d</string>
+    <string name="phone_island_check">กำลังตรวจสอบผลลัพธ์</string>
+    <string name="phone_island_done">เสร็จสมบูรณ์</string>
+    <string name="phone_island_ended">สิ้นสุดแล้ว · ตรวจสอบผลลัพธ์</string>
+    <string name="phone_island_stopped">หยุดแล้ว</string>
+    <string name="phone_island_failed">ไม่เสร็จสมบูรณ์</string>
+    <string name="phone_island_review">ต้องการให้คุณตรวจสอบ</string>
+    <string name="phone_island_paused">หยุดการควบคุมโทรศัพท์ชั่วคราวแล้ว</string>
+    <string name="phone_island_chat">ดูแชท</string>
+    <string name="phone_island_resume">ทำงานต่อ</string>
+    <string name="phone_island_stop">หยุดงาน</string>
+    <string name="phone_island_details">ความคืบหน้าของงาน: %1$s</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Controles do celular do Harness</string>
+    <string name="phone_driver_service_description">Permite pedir ao assistente que leia a tela, toque em controles e digite texto. Os controles do celular funcionam apenas durante uma tarefa iniciada por você. Interrompa a tarefa para retomar o controle.</string>
+</resources>

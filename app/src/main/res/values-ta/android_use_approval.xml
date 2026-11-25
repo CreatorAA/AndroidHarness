@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">தட்டவும்</string>
+    <string name="phone_review_long_press">தொட்டுப் பிடிக்கவும்</string>
+    <string name="phone_review_type">உரையை உள்ளிடவும்</string>
+    <string name="phone_review_volume">மீடியா ஒலியளவை அமைக்கவும்</string>
+    <string name="phone_review_scroll_forward">முன்னோக்கி உருட்டவும்</string>
+    <string name="phone_review_scroll_backward">பின்னோக்கி உருட்டவும்</string>
+    <string name="phone_review_swipe">ஸ்வைப் செய்யவும்</string>
+    <string name="phone_review_drag">இழுக்கவும்</string>
+    <string name="phone_review_home">முகப்புத் திரைக்குத் திரும்பவும்</string>
+    <string name="android_use_launcher_trip">%1$s இலிருந்து, முகப்புத் திரையில் %2$s என்பதைக் கண்டுபிடித்துத் தட்டி, பிறகு %3$s இல் இந்தப் பணியைத் தொடரவும்.</string>
+    <string name="android_use_action_approval">இந்தச் செயலை ஒருமுறை அனுமதிக்கவா?\n\n%1$s</string>
+    <string name="android_use_chat_approval">இந்த அரட்டையில் ஃபோனைக் கட்டுப்படுத்த அனுமதிக்கவா? உதவியாளர் இலக்கு ஆப்ஸின் திரையைத் தேர்ந்தெடுத்த மாடலுக்கு அனுப்பவும், தட்டவும், தட்டச்சு செய்யவும் முடியும். இந்த அரட்டையில் அங்கீகரிக்கப்பட்ட ஃபோன் கட்டளைகள் கோப்புகளையும் அமைப்புகளையும் படிக்கவும் மாற்றவும் இது அனுமதிக்கும். இலக்கு ஆப்ஸில் மாற்றத்தைச் சமர்ப்பிக்கும்போது மீண்டும் அனுமதி கேட்கப்படும்.</string>
+    <string name="android_use_submit_approval">இந்தச் சமர்ப்பிப்பை ஒருமுறை அனுமதிக்கவா?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">இந்தப் பணியை வேறொரு ஆப்ஸுக்கு மாற்றவா? உதவியாளர் அதன் திரையைப் படிக்கவும் அதில் செயல்படவும் முடியும்.\n\n%1$s</string>
+    <string name="android_use_code_entry">ஃபோன் உதவியாளருக்குப் பணியை அனுப்பவும்</string>
+    <string name="android_use_code_hint">வழிமுறையைச் சேர்க்கவும் அல்லது அமைப்புகளைத் திறக்க /phone என்பதை மட்டும் அனுப்பவும்.</string>
+    <string name="android_use_draft_ready">இலக்கு ஆப்ஸைத் திறந்து, 10 நிமிடங்களுக்குள் உதவியாளரில் \'ஃபோனை இயக்கவும்\' என்பதைத் தேர்ந்தெடுக்கவும். உரையாடலைப் பார்க்க இங்கே /phone --result ஐப் பயன்படுத்தவும்.</string>
+    <string name="android_use_draft_expired">இந்த வரைவு காலாவதியானது, ரத்துசெய்யப்பட்டது அல்லது மாற்றப்பட்டது. இந்த உரையாடல் பெட்டியை மூடிவிட்டு, \'ஃபோனை இயக்கவும்\' என்பதை மீண்டும் தேர்ந்தெடுக்கவும்.</string>
+    <string name="android_use_draft_cancelled">ஃபோன் வரைவு ரத்துசெய்யப்பட்டது.</string>
+    <string name="android_use_no_draft">இந்த உரையாடலில் நிலுவையில் உள்ள ஃபோன் வரைவு இல்லை.</string>
+    <string name="android_use_no_result">இந்த உரையாடலில் இருந்து ஃபோன் பணி எதுவும் தொடங்கப்படவில்லை.</string>
+    <string name="android_use_local_only">உள்ளூர் Code பணியிடத்திலிருந்து ஃபோன் பணியைத் தொடங்கவும்.</string>
+    <string name="android_use_from_code">Code இலிருந்து வரைவு</string>
+</resources>

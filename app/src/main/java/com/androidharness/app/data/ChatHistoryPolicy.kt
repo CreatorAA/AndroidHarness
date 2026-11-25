@@ -4,5 +4,6 @@ package com.androidharness.app.data
 object ChatHistoryPolicy {
     fun canRead(from: ConversationConfig, target: ConversationConfig, settings: AppSettings): Boolean =
         from.personalizationEnabled && ChatAgentPolicy.canReadHistory(from, target) &&
-            (from.kind == target.kind || if (from.isChat) settings.chatSearchCodeChats else settings.codeSearchChatChats)
+            (from.kind == target.kind || !from.isPhone && !target.isPhone &&
+                (if (from.isChat) settings.chatSearchCodeChats else settings.codeSearchChatChats))
 }

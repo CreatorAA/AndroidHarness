@@ -105,6 +105,28 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Эту рабочую область используют чаты в других проектах: %1$s. Перед удалением отключите рабочую область от этих чатов. Чаты с сохранёнными изменениями должны сохранить доступ к ней.</string>
+    <string name="wp_delete_running_blocked">Перед удалением проекта остановите выполняющиеся в нём задачи.</string>
+    <string name="wp_reset_shared_blocked">Рабочую область приложения также используют другие чаты: %1$s. Перед сбросом отключите её от этих чатов.</string>
+    <string name="wp_reset_running_blocked">Перед сбросом рабочей области остановите выполняющиеся в ней задачи.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d автоматизация</item>
+        <item quantity="few">%1$d автоматизации</item>
+        <item quantity="many">%1$d автоматизаций</item>
+        <item quantity="other">%1$d автоматизации</item>
+    </plurals>
+    <string name="wp_picked_folder">Выбранная папка</string>
+    <string name="wp_review_changed">Данные изменились. Закройте это окно и снова проверьте действие.</string>
+    <string name="wp_editor_toggle_wrap">Переключить перенос строк</string>
+    <string name="wp_editor_undo_available">Можно отменить</string>
+    <string name="wp_reset_app_only">Сбросить можно только рабочую область приложения.</string>
+    <string name="wp_editor_find_replace">Поиск и замена в проекте</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d изменённый файл</item>
+        <item quantity="few">%1$d изменённых файла</item>
+        <item quantity="many">%1$d изменённых файлов</item>
+        <item quantity="other">%1$d изменённого файла</item>
+    </plurals>
     <string name="wp_add_shared">"Общая папка"</string>
     <string name="wp_add_shared_sub">"Сохраняется после удаления. Стабильная и ночная сборки видят её обе"</string>
     <string name="wp_add_shared_failed">"Не удалось создать %1$s. Проверьте, что доступ ко всем файлам включён, и попробуйте снова."</string>

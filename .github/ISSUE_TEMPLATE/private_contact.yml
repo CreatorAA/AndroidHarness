@@ -1,0 +1,14 @@
+name: Request a private contact
+description: Ask the fork maintainer how to report a sensitive matter privately.
+title: "Private contact requested"
+body:
+  - type: markdown
+    attributes:
+      value: "This issue is public. Do not include sensitive details, logs, or identifying information."
+  - type: checkboxes
+    id: contact
+    attributes:
+      label: Contact request
+      options:
+        - label: Please provide a private reporting channel.
+          required: true

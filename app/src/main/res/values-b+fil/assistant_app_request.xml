@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Buksan ang %1$s?</string>
+    <string name="app_request_search">Hanapin ang “%2$s” sa %1$s?</string>
+    <string name="app_request_choose_open">Aling app ang bubuksan?</string>
+    <string name="app_request_choose_map">Aling map app ang gagamitin para hanapin ang “%1$s”?</string>
+    <string name="app_request_missing">Walang nahanap na app na may pangalang “%1$s” na maaaring buksan sa teleponong ito.</string>
+    <string name="app_request_alternative">Maaari mong hanapin ang “%1$s” gamit ang isa sa mga map app sa ibaba.</string>
+    <string name="app_request_open_only">Maaaring buksan ang %1$s, pero hindi ito nag-aalok ng pampublikong paghahanap ng lugar. Buksan ito nang hindi naghahanap?</string>
+    <string name="app_request_no_map">Walang naka-install na app na maaaring maghanap ng “%1$s” sa mapa.</string>
+    <string name="app_request_no_entry">Walang available na paraan para simulan ang kahilingang ito sa %1$s.</string>
+    <string name="app_request_opened">Naipadala ang kahilingang buksan ang %1$s.</string>
+    <string name="app_request_sent">Naipadala ang paghahanap ng “%2$s” sa %1$s.</string>
+    <string name="app_request_failed">Hindi maipadala ang kahilingang ito sa %1$s. Magtanong muli para tingnan kung aling mga app ang available.</string>
+    <string name="app_request_cancelled">Kinansela. Walang binuksang app.</string>
+</resources>

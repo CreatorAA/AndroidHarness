@@ -26,6 +26,7 @@ data class SettingsBackupFile(
     val groqKey: String? = null,
     val memories: List<BackupMemory> = emptyList(),
     val providerProxy: com.androidharness.app.llm.ProviderProxy = com.androidharness.app.llm.ProviderProxy(),
+    val memoryFolders: List<BackupMemoryFolder> = emptyList(),
 ) {
     companion object {
         /** v4 includes encrypted key pools and provider proxy controls. */
@@ -188,6 +189,7 @@ object SettingsBackupValidation {
         check(file.servers.map { it.name }.distinct().size == file.servers.size, SettingsBackupProblem.MCP)
         file.servers.forEach { check(it.name.length in 1..200 && it.type in setOf("stdio", "http", "sse"), SettingsBackupProblem.MCP) }
         check(file.memories.size <= 1000, SettingsBackupProblem.MEMORY)
+        check(file.memoryFolders.all { it.valid() }, SettingsBackupProblem.MEMORY)
         check(file.memories.map { it.id }.distinct().size == file.memories.size, SettingsBackupProblem.MEMORY)
         val scopes = MemoryScope.entries.mapTo(mutableSetOf()) { it.name }
         val categories = MemoryCategory.entries.mapTo(mutableSetOf()) { it.name }
@@ -236,6 +238,7 @@ class SettingsBackup(private val c: AppContainer) {
                     } else null,
                     c.keys.providerProxy(config.id).let { if (includeKeys) it else it.withoutCredentials() })
             }
+            val memory = c.memory.backupSnapshot()
             val file = SettingsBackupFile(settings = s, providers = providers,
                 servers = if (includeKeys) c.mcp.servers.value.map { it.copy(enabled = false) } else emptyList(),
                 searchKeys = if (includeKeys) com.androidharness.app.tools.SearchProviders.apiIds.mapNotNull { name -> credential { c.keys.searchApiKey(name) }?.let { name to it } }.toMap() else emptyMap(),
@@ -243,7 +246,7 @@ class SettingsBackup(private val c: AppContainer) {
                     credential { c.keys.searchKeyPool(name) }?.takeIf { it.keys.isNotEmpty() }?.let { name to it }
                 }.toMap() else emptyMap(),
                 groqKey = if (includeKeys) credential { c.keys.groqApiKey() } else null,
-                memories = c.memory.backup(),
+                memories = memory.memories, memoryFolders = memory.folders,
                 providerProxy = c.keys.providerProxy(null).let { if (includeKeys) it else it.withoutCredentials() })
             SettingsBackupValidation.validate(file)
             val plain = json.encodeToString(SettingsBackupFile.serializer(), file).toByteArray(Charsets.UTF_8)
@@ -320,6 +323,6 @@ class SettingsBackup(private val c: AppContainer) {
         // Memories merge instead of replacing. A project that is not on this
         // device is kept as a global memory rather than dropped.
         val availableProjects = c.workspace.projects.first().map { it.id }.toSet()
-        c.memory.importMissing(file.memories) { id -> id?.takeIf { it in availableProjects } }
+        c.memory.importMissing(file.memories, file.memoryFolders) { id -> id?.takeIf { it in availableProjects } }
     }
 }

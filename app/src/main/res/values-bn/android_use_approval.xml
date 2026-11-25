@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">ট্যাপ করুন</string>
+    <string name="phone_review_long_press">টাচ করে ধরে রাখুন</string>
+    <string name="phone_review_type">টেক্সট লিখুন</string>
+    <string name="phone_review_volume">মিডিয়ার ভলিউম সেট করুন</string>
+    <string name="phone_review_scroll_forward">সামনের দিকে স্ক্রল করুন</string>
+    <string name="phone_review_scroll_backward">পেছনের দিকে স্ক্রল করুন</string>
+    <string name="phone_review_swipe">সোয়াইপ করুন</string>
+    <string name="phone_review_drag">টেনে সরান</string>
+    <string name="phone_review_home">হোম স্ক্রিনে ফিরুন</string>
+    <string name="android_use_launcher_trip">%1$s থেকে হোম স্ক্রিনে %2$s খুঁজে ট্যাপ করুন, তারপর %3$s-এ এই কাজটি চালিয়ে যান।</string>
+    <string name="android_use_action_approval">শুধু এই একবার এই পদক্ষেপটির অনুমতি দেবেন?\n\n%1$s</string>
+    <string name="android_use_chat_approval">এই চ্যাটের জন্য ফোন নিয়ন্ত্রণের অনুমতি দেবেন? এজেন্ট নির্দিষ্ট অ্যাপের স্ক্রিন নির্বাচিত মডেলে পাঠাতে, ট্যাপ করতে ও টাইপ করতে পারবে। এতে এই চ্যাটে অনুমোদিত ফোন কমান্ডগুলিও ফাইল ও সেটিংস পড়তে এবং বদলাতে পারবে। নির্দিষ্ট অ্যাপে কোনো পরিবর্তন জমা দেওয়ার আগে আবার অনুমতি চাওয়া হবে।</string>
+    <string name="android_use_submit_approval">শুধু এই একবার জমা দেওয়ার অনুমতি দেবেন?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">এই কাজের জন্য অন্য অ্যাপে যাবেন? এজেন্ট সেই অ্যাপের স্ক্রিন পড়তে ও তাতে কাজ করতে পারবে।\n\n%1$s</string>
+    <string name="android_use_code_entry">ফোন অ্যাসিস্ট্যান্টকে একটি কাজ পাঠান</string>
+    <string name="android_use_code_hint">একটি নির্দেশ যোগ করুন, অথবা সেটিংস খুলতে শুধু /phone পাঠান।</string>
+    <string name="android_use_draft_ready">১০ মিনিটের মধ্যে নির্দিষ্ট অ্যাপটি খুলুন এবং অ্যাসিস্ট্যান্টে ফোন পরিচালনা করুন বেছে নিন। কথোপকথন দেখতে এখানে /phone --result ব্যবহার করুন।</string>
+    <string name="android_use_draft_expired">এই খসড়ার মেয়াদ শেষ হয়েছে, এটি বাতিল হয়েছে অথবা অন্য খসড়া দিয়ে প্রতিস্থাপিত হয়েছে। এই ডায়ালগ বন্ধ করে আবার ফোন পরিচালনা করুন বেছে নিন।</string>
+    <string name="android_use_draft_cancelled">ফোনের খসড়া বাতিল হয়েছে।</string>
+    <string name="android_use_no_draft">এই কথোপকথনে ফোনের কোনো অপেক্ষমাণ খসড়া নেই।</string>
+    <string name="android_use_no_result">এই কথোপকথন থেকে ফোনে কোনো কাজ শুরু করা হয়নি।</string>
+    <string name="android_use_local_only">একটি লোকাল Code ওয়ার্কস্পেস থেকে ফোনে কাজ শুরু করুন।</string>
+    <string name="android_use_from_code">Code থেকে খসড়া</string>
+</resources>

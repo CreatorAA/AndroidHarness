@@ -1,17 +1,113 @@
 package com.androidharness.app.assistant
 
+import android.app.AppOpsManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.speech.RecognitionService
 import android.speech.SpeechRecognizer
 import android.service.voice.VoiceInteractionService
 import android.service.voice.VoiceInteractionSession
 import android.service.voice.VoiceInteractionSessionService
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.androidharness.app.HarnessApp
+import com.androidharness.app.R
+import com.androidharness.app.assistant.edge.AssistantEdgeHandle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 /** Bound by Android while AndroidHarness is the chosen digital assistant app. */
-class HarnessAssistantService : VoiceInteractionService()
+class HarnessAssistantService : VoiceInteractionService() {
+    private var edgeScope: CoroutineScope? = null
+    private var permissionWatcher: AppOpsManager.OnOpChangedListener? = null
+    private var edgeHandle: AssistantEdgeHandle? = null
+    private var destroyed = false
+    private val returnToTask: (String) -> Boolean = { token ->
+        try { showSession(HarnessAssistantSession.returnArgs(token), 0); true }
+        catch (_: IllegalStateException) { false } catch (_: SecurityException) { false }
+    }
+
+    override fun onReady() {
+        super.onReady()
+        if (destroyed || edgeScope != null) return
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        PanelConversation.serviceReturn = returnToTask
+        edgeScope = scope
+        val container = (application as HarnessApp).container
+        val permitted = MutableStateFlow(Settings.canDrawOverlays(this))
+        val appOps = getSystemService(AppOpsManager::class.java)
+        val watcher = AppOpsManager.OnOpChangedListener { _, _ ->
+            permitted.value = Settings.canDrawOverlays(this)
+        }
+        appOps.startWatchingMode(AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW, packageName, watcher)
+        permissionWatcher = watcher
+        permitted.value = Settings.canDrawOverlays(this)
+
+        // The handle itself does not make the app foreground or request screen context.
+        val requested = container.settings.settings.map { it.assistantEdgeHandleEnabled }.distinctUntilChanged()
+        val hideHandle = combine(container.runtimePolicy.assistantPanelVisible, PhonePanel.suppressEdge) { shown, reserved -> shown || reserved }
+        scope.launch {
+            val foreground = container.runtimePolicy.state.map { it.visible }.distinctUntilChanged()
+            combine(requested, permitted, hideHandle, foreground) { enabled, allowed, hidden, _ ->
+                enabled && allowed && !hidden
+            }.collect { visible ->
+                if (visible && edgeHandle == null)
+                    edgeHandle = AssistantEdgeHandle(this@HarnessAssistantService, ::showFromEdge)
+                edgeHandle?.setVisible(visible)
+            }
+        }
+    }
+
+    private fun showFromEdge() {
+        if (!Settings.canDrawOverlays(this)) return
+        try {
+            showSession(Bundle(), VoiceInteractionSession.SHOW_WITH_ASSIST or VoiceInteractionSession.SHOW_WITH_SCREENSHOT)
+        } catch (_: IllegalStateException) {
+            showEdgeError()
+        } catch (_: SecurityException) {
+            showEdgeError()
+        }
+    }
+
+    private fun showEdgeError() {
+        Toast.makeText(ContextCompat.getContextForLanguage(this), R.string.assistant_edge_start_failed, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onShutdown() {
+        val c = (application as HarnessApp).container
+        if (!VoiceInteractionService.isActiveService(this, ComponentName(this, HarnessAssistantService::class.java))) {
+            c.panelConversation?.task?.sid?.let(c.androidUse::end)
+        }
+        stopEdgeHandle()
+        super.onShutdown()
+    }
+
+    override fun onDestroy() {
+        destroyed = true
+        stopEdgeHandle()
+        super.onDestroy()
+    }
+
+    private fun stopEdgeHandle() {
+        if (PanelConversation.serviceReturn === returnToTask) PanelConversation.serviceReturn = null
+        edgeScope?.cancel()
+        edgeScope = null
+        permissionWatcher?.let { getSystemService(AppOpsManager::class.java).stopWatchingMode(it) }
+        permissionWatcher = null
+        edgeHandle?.setVisible(false)
+        edgeHandle = null
+    }
+}
 
 /** Hands Android one floating panel per assistant call. */
 class HarnessAssistantSessionService : VoiceInteractionSessionService() {

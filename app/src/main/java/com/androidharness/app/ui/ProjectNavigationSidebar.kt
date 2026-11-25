@@ -1,11 +1,14 @@
 package com.androidharness.app.ui
 
+import com.androidharness.app.data.ConversationConfig
+import com.androidharness.app.data.ConversationKind
 import com.androidharness.app.ui.theme.*
 import com.androidharness.app.ui.theme.HarnessGlassSurface as Surface
 import com.androidharness.app.ui.common.ExpressiveDropdownMenu as DropdownMenu
 import com.androidharness.app.ui.common.ExpressiveDropdownMenuItem as DropdownMenuItem
 
 import com.androidharness.app.R
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.togetherWith
 import androidx.compose.animation.core.animateDpAsState
@@ -67,6 +70,7 @@ import com.androidharness.app.data.db.SavedAnswerRow
 import com.androidharness.app.ui.common.Button
 import com.androidharness.app.ui.common.Checkbox
 import com.androidharness.app.ui.common.TextButton
+import com.androidharness.app.workspace.displayWorkspaceName
 
 internal enum class SidebarProjectAction { OPEN, RENAME, PIN, ARCHIVE, DELETE }
 internal enum class SidebarChatAction { SELECT, RENAME, PIN, ARCHIVE, DETAILS, DELETE }
@@ -115,7 +119,7 @@ internal fun ProjectNavigationSidebar(
     projectPins: Set<String> = emptySet(), projectArchives: Set<String> = emptySet(),
     onProjectAction: (WorkProjectEntity, SidebarProjectAction) -> Unit = { _, _ -> },
     workProjects: List<WorkProjectEntity> = emptyList(), onCreateProject: () -> Unit = {},
-    chatOnly: Boolean = false,
+    section: ConversationKind = ConversationKind.CODE,
     sectionSwitchEnabled: Boolean = true,
     onSelectSection: (com.androidharness.app.data.ConversationKind) -> Unit = {},
     selectedChats: Set<String> = emptySet(),
@@ -127,6 +131,7 @@ internal fun ProjectNavigationSidebar(
     opened: Boolean = true,
 ) {
     val uiContext = androidx.compose.ui.platform.LocalContext.current
+    val chatOnly = section != ConversationKind.CODE
     val scheme = MaterialTheme.colorScheme
     val glass = LocalHarnessGlass.current.mode != HarnessGlassMode.OFF
     var expandedProjects by rememberSaveable { mutableStateOf(emptyList<String>()) }
@@ -134,7 +139,7 @@ internal fun ProjectNavigationSidebar(
     var collapsedWorkspaces by rememberSaveable { mutableStateOf(emptyList<String>()) }
     var showArchived by rememberSaveable { mutableStateOf(false) }
     var showSaved by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(projectsView, chatOnly) { showArchived = false; showSaved = false }
+    LaunchedEffect(projectsView, section) { showArchived = false; showSaved = false }
     // The Saved button only exists while something is saved, so leave its list rather than strand an empty one.
     LaunchedEffect(savedAnswers.isEmpty()) { if (savedAnswers.isEmpty()) showSaved = false }
     var toolsOpen by rememberSaveable { mutableStateOf(false) }
@@ -161,7 +166,7 @@ internal fun ProjectNavigationSidebar(
     androidx.activity.compose.BackHandler(selecting && !selectionBusy) { onSelectedChatsChange(emptySet()) }
     @Composable fun Chat(chat: SessionEntity, indented: Boolean = false, showProject: Boolean = false) {
         SidebarChatRow(chat, chat.id == selectedSession, chat.id in pinned, chat.id in archived, activity(chat),
-            projectName = if (showProject) projects.firstOrNull { it.id == chat.projectId }?.name else null,
+            projectName = if (showProject) projects.firstOrNull { it.id == chat.projectId }?.displayWorkspaceName(uiContext) else null,
             indented = indented, onClick = { keyboard?.hide(); if (selecting) toggle(chat.id) else onChat(chat.id) },
             onActions = { if (selecting) toggle(chat.id) else onChatActions(chat) },
             onAction = { if (it == SidebarChatAction.SELECT) onSelectedChatsChange(selection + chat.id) else onAction(chat, it) },
@@ -202,9 +207,9 @@ internal fun ProjectNavigationSidebar(
                             androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(120))) {
                         Column(Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                SidebarToolTile("Terminal", Icons.Outlined.Terminal, Modifier.weight(1f),
+                                SidebarToolTile(uiContext.getString(R.string.ui_terminal), Icons.Outlined.Terminal, Modifier.weight(1f),
                                     selected = currentRoute?.startsWith("terminal") == true, onClick = onTerminal)
-                                SidebarToolTile("Build & test", Icons.Outlined.Build, Modifier.weight(1f),
+                                SidebarToolTile(uiContext.getString(R.string.ui_build_test), Icons.Outlined.Build, Modifier.weight(1f),
                                     selected = currentRoute?.startsWith("build-test") == true, onClick = onBuild)
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -261,8 +266,7 @@ internal fun ProjectNavigationSidebar(
                         ExpressiveIconButton(onClick = onCollapse) { Icon(Icons.AutoMirrored.Outlined.MenuOpen, uiContext.getString(R.string.ui_collapse_sidebar), Modifier.size(19.dp)) }
                     }
                     com.androidharness.app.ui.chat.components.ConversationSectionSwitcher(
-                        com.androidharness.app.data.ConversationConfig(
-                            if (chatOnly) com.androidharness.app.data.ConversationKind.CHAT else com.androidharness.app.data.ConversationKind.CODE),
+                        ConversationConfig(section),
                         sectionSwitchEnabled, onSelectSection)
                     Button(onClick = onNewChat, enabled = projectCreationEnabled,
                         colors = if (glass) ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -271,12 +275,16 @@ internal fun ProjectNavigationSidebar(
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 4.dp).heightIn(min = 56.dp)
                             .then(if (glass) Modifier.harnessGlass(scheme.primaryContainer, RoundedCornerShape(20.dp)) else Modifier)) {
                         Icon(Icons.Outlined.EditNote, null, Modifier.size(21.dp)); Spacer(Modifier.width(10.dp))
-                        androidx.compose.animation.AnimatedContent(chatOnly, transitionSpec = {
+                        AnimatedContent(section, transitionSpec = {
                             (androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(180, 60)) +
                                 androidx.compose.animation.slideInVertically(androidx.compose.animation.core.spring(0.8f, 500f)) { it / 2 }) togetherWith
                                 androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(100))
-                        }, label = "new chat label") { chat ->
-                            Text(uiContext.getString(if (chat) R.string.settings_telegram_new_chat else R.string.conversation_new_code_chat),
+                        }, label = "new chat label") { kind ->
+                            Text(uiContext.getString(when (kind) {
+                                ConversationKind.CHAT -> R.string.settings_telegram_new_chat
+                                ConversationKind.CODE -> R.string.conversation_new_code_chat
+                                ConversationKind.PHONE -> R.string.conversation_new_phone
+                            }),
                                 style = MaterialTheme.typography.titleSmall)
                         }
                     }
@@ -319,8 +327,9 @@ internal fun ProjectNavigationSidebar(
                             modifier = Modifier.weight(1f),
                         )
                         ExpressiveIconButton(onClick = { onQueryChange(""); showArchived = !showArchived }) {
+                            val scopeLabel = uiContext.getString(if (projectsView) R.string.ui_projects else R.string.ui_chats)
                             Icon(if (showArchived) Icons.AutoMirrored.Outlined.ArrowBack else Icons.Outlined.Archive,
-                                if (showArchived) uiContext.getString(R.string.ui_back_to_active, (if (projectsView) "projects" else "chats").toString()) else uiContext.getString(R.string.ui_show_archived, (if (projectsView) "projects" else "chats").toString()),
+                                uiContext.getString(if (showArchived) R.string.ui_back_to_active else R.string.ui_show_archived, scopeLabel),
                                 Modifier.size(19.dp), tint = if (showArchived) scheme.primary else scheme.onSurfaceVariant)
                         }
                     }
@@ -547,7 +556,7 @@ private fun SidebarWorkspaceHeader(workspace: ProjectEntity?, count: Int, open: 
     val uiContext = androidx.compose.ui.platform.LocalContext.current
     val scheme = MaterialTheme.colorScheme
     val press = remember { MutableInteractionSource() }
-    val name = workspace?.name ?: uiContext.getString(R.string.sidebar_workspace_other)
+    val name = workspace?.displayWorkspaceName(uiContext) ?: uiContext.getString(R.string.sidebar_workspace_other)
     val turn by androidx.compose.animation.core.animateFloatAsState(if (open) 90f else 0f, expressiveSpatialSpec(), label = "workspace chevron")
     val corner by animateDpAsState(if (open) 14.dp else 22.dp, expressiveSpatialSpec(), label = "workspace row shape")
     val fill by animateColorAsState(if (holdsSelection) scheme.secondaryContainer else if (open) scheme.surface else scheme.surfaceContainer,

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Нажать</string>
+    <string name="phone_review_long_press">Нажать и удерживать</string>
+    <string name="phone_review_type">Ввести текст</string>
+    <string name="phone_review_volume">Установить громкость мультимедиа</string>
+    <string name="phone_review_scroll_forward">Прокрутить вперёд</string>
+    <string name="phone_review_scroll_backward">Прокрутить назад</string>
+    <string name="phone_review_swipe">Смахнуть</string>
+    <string name="phone_review_drag">Перетащить</string>
+    <string name="phone_review_home">Вернуться на главный экран</string>
+    <string name="android_use_launcher_trip">Находясь в %1$s, найдите и нажмите %2$s на главном экране, затем продолжите задачу в %3$s.</string>
+    <string name="android_use_action_approval">Разрешить это действие один раз?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Разрешить управление телефоном в этом чате? Агент сможет отправлять экран целевого приложения выбранной модели, нажимать на элементы и вводить текст. Это также позволит разрешённым командам телефона в этом чате читать и изменять файлы и настройки. Перед подтверждением изменений в целевом приложении разрешение будет запрошено снова.</string>
+    <string name="android_use_submit_approval">Разрешить это подтверждение один раз?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Переключить эту задачу на другое приложение? Агент сможет читать его экран и взаимодействовать с ним.\n\n%1$s</string>
+    <string name="android_use_code_entry">Отправить задачу помощнику на телефоне</string>
+    <string name="android_use_code_hint">Добавьте инструкцию или отправьте только /phone, чтобы открыть настройки.</string>
+    <string name="android_use_draft_ready">Откройте целевое приложение и в течение 10 минут выберите «Управлять телефоном» в помощнике. Чтобы просмотреть диалог, используйте здесь /phone --result.</string>
+    <string name="android_use_draft_expired">Срок действия этого черновика истёк, он был отменён или заменён. Закройте это окно и снова выберите «Управлять телефоном».</string>
+    <string name="android_use_draft_cancelled">Черновик задачи для телефона отменён.</string>
+    <string name="android_use_no_draft">В этом диалоге нет ожидающего черновика задачи для телефона.</string>
+    <string name="android_use_no_result">Из этого диалога ещё не запускались задачи на телефоне.</string>
+    <string name="android_use_local_only">Запустите задачу на телефоне из локального рабочего пространства Code.</string>
+    <string name="android_use_from_code">Черновик из Code</string>
+</resources>

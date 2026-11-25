@@ -3,7 +3,9 @@ package com.androidharness.app.config
 import com.androidharness.app.skills.SkillStore
 import com.androidharness.app.tools.mcp.McpServerConfig
 import com.androidharness.app.workspace.*
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
+import java.io.File
 import java.security.MessageDigest
 import kotlinx.coroutines.CancellationException
 
@@ -21,12 +23,15 @@ data class ConfigAgent(val name: String, val description: String, val instructio
  * A plugin hook. A command hook runs [command] in the Linux shell when [event] fires; a prompt or agent hook ([type]) asks the
  * model with [command] as its prompt. [source] keeps the original event name for the payload.
  */
+@Serializable
 data class ConfigCommandHook(val event: String, val command: String, val matcher: String = "", val timeout: Int = 60, val source: String = "",
     val type: String = "command")
 /** [options] are the plugin's settings, given to its hooks as CLAUDE_PLUGIN_OPTION_<NAME>. */
+@Serializable
 data class ConfigPlugin(val name: String, val script: String, val hooks: Set<String>, val commands: List<ConfigCommandHook> = emptyList(), val root: String = "",
     val options: Map<String, String> = emptyMap())
 /** A language server a plugin ships. [extensions] maps a file extension such as .ts to its language id. */
+@Serializable
 data class ConfigLanguageServer(val name: String, val plugin: String, val command: String, val args: List<String>, val extensions: Map<String, String>,
     val env: Map<String, String>, val root: String, val initializationOptions: JsonObject? = null)
 data class ConfigMemory(val file: String = ".harness/memory.md", val topics: String = ".harness/memory",
@@ -390,7 +395,9 @@ class HarnessConfigLoader(
                         server["initializationOptions"]?.json as? JsonObject)
                 }
                 if (folder != null) manifest["bin"]?.strings().orEmpty().forEach { dir ->
-                    baseFs.shellRoot?.resolve(base)?.resolve(dir)?.canonicalFile?.takeIf { it.isDirectory && it.path.startsWith(folder) }?.let { stagedBins += it.path }
+                    baseFs.shellRoot?.resolve(base)?.resolve(dir)?.canonicalFile?.takeIf {
+                        it.isDirectory && it.toPath().startsWith(File(folder).toPath())
+                    }?.let { stagedBins += it.path }
                 }
                 val hooks = manifest["hooks"]?.strings().orEmpty().toSet()
                 require(hooks.all { it in HookEvents.all }) { "$manifestPath has an unsupported hook." }

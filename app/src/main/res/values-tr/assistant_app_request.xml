@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s açılsın mı?</string>
+    <string name="app_request_search">%1$s içinde “%2$s” aransın mı?</string>
+    <string name="app_request_choose_open">Hangi uygulama açılsın?</string>
+    <string name="app_request_choose_map">“%1$s” hangi harita uygulamasında aransın?</string>
+    <string name="app_request_missing">Bu telefonda açılabilen “%1$s” adlı bir uygulama bulunamadı.</string>
+    <string name="app_request_alternative">“%1$s” için aşağıdaki harita uygulamalarından biriyle arama yapabilirsiniz.</string>
+    <string name="app_request_open_only">%1$s açılabilir, ancak herkese açık yer araması sunmuyor. Arama yapmadan açılsın mı?</string>
+    <string name="app_request_no_map">Yüklü uygulamaların hiçbiri “%1$s” için haritada arama sunmuyor.</string>
+    <string name="app_request_no_entry">%1$s uygulamasında bu istek için kullanılabilir bir giriş noktası yok.</string>
+    <string name="app_request_opened">%1$s uygulamasını açma isteği gönderildi.</string>
+    <string name="app_request_sent">“%2$s” araması %1$s uygulamasına gönderildi.</string>
+    <string name="app_request_failed">Bu istek %1$s uygulamasına gönderilemedi. Kullanılabilir uygulamaları kontrol etmek için yeniden isteyin.</string>
+    <string name="app_request_cancelled">İptal edildi. Hiçbir uygulama açılmadı.</string>
+</resources>

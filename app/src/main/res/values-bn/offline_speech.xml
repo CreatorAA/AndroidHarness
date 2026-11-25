@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">শুধু অফলাইন ম্যান্ডারিন</string>
+    <string name="voice_local_only_on">সঙ্গে দেওয়া ম্যান্ডারিন মডেল ব্যবহার করে। আপনার অডিও ফোনেই থাকে।</string>
+    <string name="voice_system_first">Android-এর স্পিচ পরিষেবা অগ্রাধিকার পায়। সেটি উপলভ্য না হলে ফোনেই ম্যান্ডারিন ডিক্টেশন চলতে থাকে।</string>
+    <string name="voice_live_handoff">এই ফোনে চালিয়ে যাচ্ছে। আগে দেখানো শব্দগুলো রাখা হয়েছে; বলতে থাকুন।</string>
+    <string name="voice_local_stopped">ডিভাইসে ডিক্টেশন বন্ধ হয়েছে। আগে দেখানো শব্দগুলো রেখে আপনি চালিয়ে যেতে পারেন বা বাকিটুকু টাইপ করতে পারেন।</string>
+    <string name="voice_clip_unavailable">এই রেকর্ডিং থেকে সম্পূর্ণ ট্রান্সক্রিপ্ট উদ্ধার করা যায়নি।</string>
+    <string name="voice_continue_offline">ডিভাইসে চালিয়ে যান</string>
+    <string name="voice_clip_handoff">স্পিচ পরিষেবা উপলভ্য নয়। আপনার ফোনেই এই রেকর্ডিং ট্রান্সক্রাইব করা হচ্ছে।</string>
+</resources>

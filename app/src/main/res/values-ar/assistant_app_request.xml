@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">هل تريد فتح %1$s؟</string>
+    <string name="app_request_search">هل تريد البحث عن «%2$s» في %1$s؟</string>
+    <string name="app_request_choose_open">أي تطبيق تريد فتحه؟</string>
+    <string name="app_request_choose_map">أي تطبيق خرائط تريد استخدامه للبحث عن «%1$s»؟</string>
+    <string name="app_request_missing">تعذر العثور على تطبيق باسم «%1$s» يمكن فتحه على هذا الهاتف.</string>
+    <string name="app_request_alternative">يمكنك البحث عن «%1$s» باستخدام أحد تطبيقات الخرائط أدناه.</string>
+    <string name="app_request_open_only">يمكن فتح %1$s، لكنه لا يتيح البحث العام عن الأماكن. هل تريد فتحه بدون بحث؟</string>
+    <string name="app_request_no_map">لا يوجد تطبيق مثبّت يتيح البحث عن «%1$s» على الخريطة.</string>
+    <string name="app_request_no_entry">لا توجد نقطة دخول متاحة في %1$s لهذا الطلب.</string>
+    <string name="app_request_opened">تم إرسال طلب فتح %1$s.</string>
+    <string name="app_request_sent">تم إرسال طلب البحث عن «%2$s» إلى %1$s.</string>
+    <string name="app_request_failed">تعذر إرسال هذا الطلب إلى %1$s. اطلب مجددًا للتحقق من التطبيقات المتاحة.</string>
+    <string name="app_request_cancelled">تم الإلغاء. لم يُفتح أي تطبيق.</string>
+</resources>

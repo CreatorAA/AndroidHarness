@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Nothing to rewind for that turn.</string>
+    <string name="chat_compaction_preparing">Preparing chat summary…</string>
+    <string name="chat_compaction_too_few_messages">There are too few messages to compact yet.</string>
+    <string name="chat_compaction_retrying">Retrying summary · attempt %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Compaction stopped. History was kept. Retry /compact when ready.</string>
+    <string name="chat_compaction_refresh_failed">Chat compacted, but its task settings or context estimate could not refresh: %1$s</string>
+    <string name="chat_compaction_failed_notice">Compaction failed: %1$s. History was kept. Retry /compact or choose another model.</string>
+    <string name="reasoning_from_catalog">Reasoning listed in model directory</string>
+    <string name="reasoning_from_provider">Reasoning reported by provider</string>
+    <string name="reasoning_from_user">Reasoning set by you</string>
+    <string name="reasoning_from_name">Reasoning inferred from model name</string>
+    <string name="automation_every_day">Every day</string>
+    <string name="automation_daily_at">%1$02d:%2$02d daily</string>
+    <string name="automation_instructions_example">Build the debug APK and fix any build errors.</string>
+    <string name="app_update_checking">Checking for updates…</string>
+    <string name="app_update_up_to_date">You’re up to date</string>
+    <string name="files_directory">Folder</string>
+    <string name="cache_status_unavailable">Cache unavailable</string>
+    <string name="cache_status_hit">Cache hit · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · partial</string>
+    <string name="cache_estimated_price">est. %1$s</string>
+    <string name="chat_live_sites_suffix">" sites"</string>
+    <string name="chat_research_sources_suffix">/%1$d sources</string>
+    <string name="chat_research_read_suffix">" read"</string>
+    <string name="package_status_failed">Installation failed</string>
+    <string name="package_hide_details">Hide installation details</string>
+    <string name="package_show_details">Show installation details</string>
+    <string name="package_recently_unpacked">Recently unpacked · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+</resources>

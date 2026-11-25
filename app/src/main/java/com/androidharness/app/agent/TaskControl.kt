@@ -9,6 +9,9 @@ import kotlinx.serialization.encodeToString
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption.ATOMIC_MOVE
+import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 import java.util.UUID
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
@@ -93,14 +96,21 @@ class TaskControlStore(private val directory: File) {
             out.write(json.encodeToString(next).toByteArray(Charsets.UTF_8))
             out.fd.sync()
         }
-        check(tmp.renameTo(target)) { "Could not save task progress" }
+        Files.move(tmp.toPath(), target.toPath(), ATOMIC_MOVE, REPLACE_EXISTING)
         flow.value = next
         return next
     }
+    /** An expired session's prompt and task state do not belong in the recovery store. */
+    @Synchronized internal fun forget(id: String) {
+        flows.remove(id)
+        // Imported ids need not be usable as task-control file names.
+        if (id.matches(SAFE_ID)) Files.deleteIfExists(file(id).toPath())
+    }
     private fun file(id: String): File {
-        require(id.matches(Regex("[a-zA-Z0-9-]+")))
+        require(id.matches(SAFE_ID))
         return File(directory, "$id.json")
     }
+    private companion object { val SAFE_ID = Regex("[a-zA-Z0-9-]+") }
 }
 
 class TaskPaused(val reasonText: String) : RuntimeException(reasonText)

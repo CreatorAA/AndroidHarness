@@ -12,6 +12,12 @@ import android.webkit.MimeTypeMap
 import com.androidharness.app.R
 import java.io.File
 import java.io.FileNotFoundException
+import java.io.IOException
+import java.nio.file.FileVisitResult
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.SimpleFileVisitor
+import java.nio.file.attribute.BasicFileAttributes
 
 /**
  * Lists the app workspace in the system file picker and in file managers that use
@@ -94,7 +100,7 @@ class WorkspaceDocumentsProvider : DocumentsProvider() {
         val file = fileFor(documentId)
         if (file == root) throw FileNotFoundException("The workspace folder cannot be deleted")
         val parentId = file.parentFile?.let(::idFor)
-        if (!file.deleteRecursively()) throw FileNotFoundException("Could not delete $documentId")
+        deleteTree(file)
         parentId?.let(::changed)
     }
 
@@ -161,6 +167,22 @@ class WorkspaceDocumentsProvider : DocumentsProvider() {
             Document.COLUMN_DOCUMENT_ID, Document.COLUMN_DISPLAY_NAME, Document.COLUMN_MIME_TYPE,
             Document.COLUMN_SIZE, Document.COLUMN_LAST_MODIFIED, Document.COLUMN_FLAGS,
         )
+
+        /** Unlink nested symlinks as files; their targets are not part of the selected document. */
+        internal fun deleteTree(file: File) {
+            Files.walkFileTree(file.toPath(), object : SimpleFileVisitor<Path>() {
+                override fun visitFile(path: Path, attrs: BasicFileAttributes): FileVisitResult {
+                    Files.delete(path)
+                    return FileVisitResult.CONTINUE
+                }
+
+                override fun postVisitDirectory(dir: Path, exc: IOException?): FileVisitResult {
+                    if (exc != null) throw exc
+                    Files.delete(dir)
+                    return FileVisitResult.CONTINUE
+                }
+            })
+        }
 
         internal fun mimeOf(file: File): String {
             if (file.isDirectory) return Document.MIME_TYPE_DIR

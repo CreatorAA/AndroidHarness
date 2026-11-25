@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">«%1$s» সেটিংসে সতর্কতা বন্ধ থাকলেও রিমাইন্ডারগুলো এখানে থাকবে।</string>
+    <string name="phone_events_title">ফোন ইভেন্টের রিমাইন্ডার</string>
+    <string name="phone_events_intro">বেছে নেওয়া অ্যাপ খুললে বা নোটিফিকেশন পাঠালে রিমাইন্ডার পান। লিঙ্ক করা টাস্ক চালানোর আগে সেটি যাচাই করুন।</string>
+    <string name="phone_event_ready">ফোন ইভেন্টের রিমাইন্ডার</string>
+    <string name="phone_event_open_reminder">%1$s আপনার রিমাইন্ডার সক্রিয় করেছে। যাচাই করতে ট্যাপ করুন।</string>
+    <string name="phone_events_grant_notifications">নোটিফিকেশন অ্যাক্সেসের অনুমতি দিন</string>
+    <string name="phone_events_grant_window">অ্যাক্সেসিবিলিটিতে Harness ফোন নিয়ন্ত্রণ চালু করুন</string>
+    <string name="phone_events_show_alerts">রিমাইন্ডার নোটিফিকেশনের অনুমতি দিন</string>
+    <string name="phone_event_opened">%1$s খোলে</string>
+    <string name="phone_event_notified">%1$s নোটিফিকেশন পাঠায়</string>
+    <string name="phone_event_review_task">যাচাই করুন: %1$s</string>
+    <string name="phone_event_dismiss">খারিজ করুন</string>
+    <string name="phone_event_remind_only">শুধু আমাকে মনে করিয়ে দিন</string>
+    <string name="phone_event_task_missing">লিঙ্ক করা টাস্কটি আর উপলব্ধ নেই</string>
+    <string name="phone_event_edit">নিয়ম এডিট করুন</string>
+    <string name="phone_event_remove">নিয়ম সরান</string>
+    <string name="phone_event_add">অ্যাপের নিয়ম যোগ করুন</string>
+    <string name="phone_event_view_notices">সক্রিয় নোটিফিকেশন (%1$d)</string>
+    <string name="phone_event_active_notices">বর্তমান নোটিফিকেশন</string>
+    <string name="phone_event_metadata_only">শুধু অ্যাপ ও সময় দেখানো হয়। নোটিফিকেশন পড়তে সেটি মূল অ্যাপে খুলুন।</string>
+    <string name="phone_event_no_notices">বেছে নেওয়া অ্যাপগুলো থেকে বর্তমানে কোনো নোটিফিকেশন নেই।</string>
+    <string name="phone_event_no_listener">নোটিফিকেশন লিসেনার সংযুক্ত নেই।</string>
+    <string name="phone_event_open_source">অ্যাপে খুলুন</string>
+    <string name="phone_event_mark_read">পড়া হয়েছে হিসেবে চিহ্নিত করুন</string>
+    <string name="phone_event_read_confirm">%1$s-কে এই নোটিফিকেশনটি পড়া হয়েছে হিসেবে চিহ্নিত করতে বলবেন?</string>
+    <string name="phone_event_task_busy">এই টাস্কটি বিরতিতে আছে, ইতিমধ্যে চলছে অথবা আর ম্যানুয়াল নেই।</string>
+    <string name="phone_event_run_task">টাস্ক চালান</string>
+    <string name="phone_event_unavailable">এই আইটেমটি আর উপলব্ধ নেই।</string>
+    <string name="phone_event_choose_app">একটি অ্যাপ বেছে নিন</string>
+    <string name="phone_event_search">অ্যাপের নাম বা প্যাকেজের নাম</string>
+    <string name="phone_event_when">কখন</string>
+    <string name="phone_event_when_open">আমি এই অ্যাপ খুলি</string>
+    <string name="phone_event_when_notified">এই অ্যাপ নোটিফিকেশন পাঠায়</string>
+    <string name="phone_event_then">যাচাই করার কথা মনে করিয়ে দিন</string>
+    <string name="phone_event_save">নিয়ম সেভ করুন</string>
+    <string name="phone_event_all_rules">দুটি ইভেন্টই ইতিমধ্যে সেট আপ করা আছে। নিচে থাকা নিয়মগুলো এডিট করুন।</string>
+</resources>

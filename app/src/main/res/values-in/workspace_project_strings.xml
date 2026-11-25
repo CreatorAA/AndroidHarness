@@ -105,6 +105,22 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Chat di proyek lain menggunakan ruang kerja ini: %1$s. Lepaskan ruang kerja dari chat tersebut sebelum menghapusnya. Chat yang memiliki perubahan tersimpan harus tetap memiliki akses ke ruang kerja.</string>
+    <string name="wp_delete_running_blocked">Hentikan tugas yang sedang berjalan di proyek ini sebelum menghapusnya.</string>
+    <string name="wp_reset_shared_blocked">Chat lain juga menggunakan ruang kerja aplikasi: %1$s. Lepaskan ruang kerja dari chat tersebut sebelum menyetel ulang.</string>
+    <string name="wp_reset_running_blocked">Hentikan tugas yang sedang berjalan di ruang kerja ini sebelum menyetel ulang.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="other">%1$d otomatisasi</item>
+    </plurals>
+    <string name="wp_picked_folder">Folder terpilih</string>
+    <string name="wp_review_changed">Detail telah berubah. Tutup dialog ini dan tinjau kembali tindakan tersebut.</string>
+    <string name="wp_editor_toggle_wrap">Alihkan pelipatan baris</string>
+    <string name="wp_editor_undo_available">Dapat diurungkan</string>
+    <string name="wp_reset_app_only">Hanya ruang kerja aplikasi yang dapat disetel ulang.</string>
+    <string name="wp_editor_find_replace">Cari dan ganti dalam proyek</string>
+    <plurals name="wp_changed_files">
+        <item quantity="other">%1$d file berubah</item>
+    </plurals>
     <string name="wp_add_shared">"Folder bersama"</string>
     <string name="wp_add_shared_sub">"Tetap ada setelah uninstal. Build stabil dan nightly keduanya melihatnya"</string>
     <string name="wp_add_shared_failed">"Tidak dapat membuat %1$s. Periksa apakah akses semua file aktif, lalu coba lagi."</string>

@@ -1,6 +1,7 @@
 package com.androidharness.app.llm
 
 import com.androidharness.app.agent.CustomReasoning
+import com.androidharness.app.chatgpt.ChatGptThinking
 import com.androidharness.app.llm.jsonArrayOrAbsent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -44,6 +45,7 @@ data class ModelEntry(
 /** Family-based thinking-capability hint for endpoints that don't report it. */
 fun reasoningCapable(modelId: String): Boolean {
     val m = modelId.lowercase()
+    if (ChatGptThinking.documentedEfforts(m.substringAfterLast('/')) != null) return true
     return Regex(
         "(^|/)(o[1345]([-.]|$)|gpt-5)" +                 // OpenAI reasoning families
             "|deepseek-(r1|reasoner)|deepseek-v[4-9]" +   // DeepSeek reasoners / v4+

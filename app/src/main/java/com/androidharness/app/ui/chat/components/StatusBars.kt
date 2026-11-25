@@ -55,7 +55,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
@@ -65,6 +64,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.androidharness.app.agent.TodoItem
+import com.androidharness.app.ui.chat.CompactionResult
 import com.androidharness.app.ui.chat.ChatUiState
 import com.androidharness.app.ui.common.DotLoading
 import com.androidharness.app.ui.theme.LocalStatusColors
@@ -304,11 +304,11 @@ internal fun CompactionNoticeLine(modifier: Modifier = Modifier) {
 
 /** A saved failure remains readable after the transient snackbar disappears. */
 @Composable
-internal fun CompactionResultCard(message: String, showRetry: Boolean, busy: Boolean, onRetry: () -> Unit) {
+internal fun CompactionResultCard(result: CompactionResult, message: String, showRetry: Boolean, busy: Boolean, onRetry: () -> Unit) {
     val uiContext = androidx.compose.ui.platform.LocalContext.current
     var expanded by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(false) }
-    val stopped = message.startsWith("Compaction stopped.")
-    val saved = message.startsWith("Chat compacted, but")
+    val stopped = result == CompactionResult.STOPPED
+    val saved = result == CompactionResult.SAVED
     val scheme = MaterialTheme.colorScheme
     Surface(
         color = scheme.surfaceContainerLow,
@@ -324,11 +324,11 @@ internal fun CompactionResultCard(message: String, showRetry: Boolean, busy: Boo
                 else uiContext.getString(R.string.ui_your_messages_are_still_here_try_again),
                 style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
             if (expanded) androidx.compose.foundation.text.selection.SelectionContainer {
-                Text(message, style = MaterialTheme.typography.bodySmall,
+                Text(result.localizedDetails(uiContext, message), style = MaterialTheme.typography.bodySmall,
                     color = scheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
             }
             androidx.compose.foundation.layout.FlowRow {
-                if (showRetry && !saved) TextButton(onClick = onRetry, enabled = !busy) { Text(uiContext.getString(R.string.ui_retry)) }
+                if (showRetry && result.canRetry) TextButton(onClick = onRetry, enabled = !busy) { Text(uiContext.getString(R.string.ui_retry)) }
                 TextButton(onClick = { expanded = !expanded }) { Text(if (expanded) uiContext.getString(R.string.settings_shizuku_hide_details) else uiContext.getString(R.string.ui_details)) }
             }
         }

@@ -51,6 +51,7 @@ import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material.icons.outlined.HealthAndSafety
 import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material.icons.outlined.Payments
+import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material.icons.outlined.RateReview
 import androidx.compose.material.icons.outlined.ShortText
 import androidx.compose.material.icons.outlined.Terminal
@@ -64,6 +65,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -117,10 +119,13 @@ internal fun slashRank(entry: SlashEntry, query: String): Int? {
 private fun slashEntries(state: ChatUiState): List<SlashEntry> {
     val ui = LocalContext.current
     fun s(id: Int) = ui.getString(id)
-    return remember(state.skills, state.snippets) {
+    return remember(ui, LocalConfiguration.current, state.skills, state.snippets) {
         val ownGoal = state.skills.any { it.enabled && it.name == "goal" } || state.snippets.any { it.name.equals("goal", ignoreCase = true) }
+        val ownPhone = state.skills.any { it.enabled && it.name == "phone" } || state.snippets.any { it.name.equals("phone", ignoreCase = true) }
         val ownReview = state.skills.any { it.enabled && it.name == "review" } || state.snippets.any { it.name.equals("review", ignoreCase = true) }
         buildList {
+            if (!ownPhone) add(SlashEntry("/phone", s(R.string.android_use_code_entry), s(R.string.android_use_code_hint),
+                SlashCommands.Kind.PHONE, Icons.Outlined.PhoneAndroid))
             if (!ownGoal) add(SlashEntry(SlashCommands.GOAL_COMMAND, s(R.string.goal_command_title), s(R.string.slash_goal_hint),
                 SlashCommands.Kind.GOAL, Icons.Outlined.Flag, s(R.string.slash_usage_goal)))
             add(SlashEntry("/plan", s(R.string.slash_plan_title), s(R.string.slash_plan_hint), SlashCommands.Kind.PLAN,

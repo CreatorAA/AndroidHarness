@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">گوشی</string>
+    <string name="conversation_new_phone">گفت‌وگوی جدید گوشی</string>
+    <string name="phone_conversation_intro">اینجا سؤال بپرسید. برای اینکه دستیار از برنامه‌ای استفاده کند، به آن برنامه بروید و دستیار را فراخوانی کنید.</string>
+    <string name="phone_conversation_settings">تنظیمات دستیار</string>
+    <string name="settings_start_phone_desc">گفت‌وگوهای دستیار گوشی خود را باز کنید.</string>
+</resources>

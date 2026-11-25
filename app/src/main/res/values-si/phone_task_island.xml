@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">සහායකයා සඟවන්න</string>
+    <string name="phone_background_off_hint">පසුබිම් ධාවනය අක්‍රියයි. යෙදුමෙන් ඉවත් වීමෙන් මෙම කාර්යය විරාම වේ.</string>
+    <string name="phone_background_paused">පසුබිම් ධාවනය අක්‍රිය නිසා විරාම කර ඇත. නැවත ආරම්භ කිරීමට යෙදුමේ මෙම සංවාදය විවෘත කරන්න.</string>
+    <string name="phone_island_title">දුරකථන සහායකයා</string>
+    <string name="phone_island_planning">ඊළඟ පියවර සැලසුම් කරමින්</string>
+    <string name="phone_island_looking">පිටුව පරීක්ෂා කරමින්</string>
+    <string name="phone_island_finding">මුල් තිරයේ යෙදුම සොයමින්</string>
+    <string name="phone_island_tap">පාලනයක් තෝරමින්</string>
+    <string name="phone_island_type">පෙළ ඇතුළත් කරමින්</string>
+    <string name="phone_island_swipe">පිටුව තුළ ගමන් කරමින්</string>
+    <string name="phone_island_gesture">අයිතමයක් ඇදගෙන යමින්</string>
+    <string name="phone_island_action">පියවරක් ක්‍රියාත්මක කරමින්</string>
+    <string name="phone_island_batch">පියවර %1$d / %2$d</string>
+    <string name="phone_island_check">ප්‍රතිඵලය පරීක්ෂා කරමින්</string>
+    <string name="phone_island_done">සම්පූර්ණයි</string>
+    <string name="phone_island_ended">අවසන් විය · ප්‍රතිඵලය පරීක්ෂා කරන්න</string>
+    <string name="phone_island_stopped">නවත්වා ඇත</string>
+    <string name="phone_island_failed">සම්පූර්ණ කර නැත</string>
+    <string name="phone_island_review">ඔබේ අවධානය අවශ්‍යයි</string>
+    <string name="phone_island_paused">දුරකථන පාලන විරාම කර ඇත</string>
+    <string name="phone_island_chat">සංවාදය බලන්න</string>
+    <string name="phone_island_resume">කාර්යය දිගටම කරගෙන යන්න</string>
+    <string name="phone_island_stop">කාර්යය නවත්වන්න</string>
+    <string name="phone_island_details">කාර්යයේ ප්‍රගතිය: %1$s</string>
+</resources>

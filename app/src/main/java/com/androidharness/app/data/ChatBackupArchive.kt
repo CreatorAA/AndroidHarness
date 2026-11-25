@@ -43,6 +43,7 @@ data class BackupManifest(
     val memoryProjects: List<String> = emptyList(),
     /** The user-made projects the chats are filed under. */
     val workProjects: List<BackupWorkProject> = emptyList(),
+    val memoryFolders: List<BackupMemoryFolder> = emptyList(),
 )
 
 @Serializable
@@ -84,6 +85,18 @@ object ChatBackupArchive {
             ((item as? JsonObject)?.get("name") as? JsonPrimitive)?.takeIf { it.isString }?.content
         }.filter(::safeName)
     }.getOrDefault(emptyList())
+
+    /** Earlier answers embed their message rows, including the same imagesJson field as current rows. */
+    internal fun referencedImages(messageRefs: List<String>, versionRows: List<String>): Set<String> = buildSet {
+        messageRefs.forEach { addAll(imageNames(it)) }
+        for (rows in versionRows) {
+            val messages = runCatching { json.parseToJsonElement(rows) as? JsonArray }.getOrNull() ?: continue
+            for (message in messages) {
+                val refs = (message as? JsonObject)?.get("imagesJson") as? JsonPrimitive ?: continue
+                addAll(imageNames(refs.content))
+            }
+        }
+    }
 
     fun safeName(name: String): Boolean = name.isNotBlank() && name.length <= 255 && !name.startsWith('.') &&
         '/' !in name && '\\' !in name && name.none { it.isISOControl() }
@@ -152,6 +165,7 @@ object ChatBackupArchive {
                     val manifest = decode(zip, BackupManifest.serializer(), "Not a backup file")
                     if (manifest.format != FORMAT) throw ChatBackupException("Not a backup file")
                     if (manifest.version > VERSION) throw ChatBackupException("This backup was written by a newer version of the app")
+                    if (manifest.memoryFolders.any { !it.valid() }) throw ChatBackupException("Saved memory folders in this backup are damaged")
                     if (!visitor.manifest(manifest)) return
                     continue
                 }

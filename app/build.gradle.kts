@@ -45,6 +45,7 @@ android {
     namespace = "com.androidharness.app"
     // The in-app picker must be able to switch languages without a Play download.
     bundle { language { enableSplit = false } }
+    androidResources { noCompress += "onnx" }
     compileSdk = 37
     if (hasNdk) {
         ndkVersion = pinnedNdk
@@ -62,8 +63,8 @@ android {
         applicationId = "com.androidharness.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 41
-        versionName = "4.1"
+        versionCode = 58
+        versionName = "4.1.0-custom"
         buildConfigField("String", "GITHUB_CLIENT_ID", "\"$githubClientId\"")
         buildConfigField("boolean", "PLAY_DISTRIBUTION", (distributionChannel == "play").toString())
         if (hasNdk) {
@@ -156,6 +157,9 @@ android {
         // Delivered separately by Play or the pinned GitHub runtime package.
         jniLibs.excludes += "**/libggml-vulkan.so"
         jniLibs.excludes += "**/libharness_gpu_unavailable.so"
+        // The Android speech binding uses only the JNI and ONNX Runtime libraries.
+        // The standalone C/C++ client SDKs have no callers in this app.
+        jniLibs.excludes += setOf("**/libsherpa-onnx-c-api.so", "**/libsherpa-onnx-cxx-api.so")
         resources {
             excludes += setOf(
                 "META-INF/DEPENDENCIES", "META-INF/LICENSE", "META-INF/LICENSE.txt", "META-INF/NOTICE", "META-INF/NOTICE.txt",
@@ -188,6 +192,7 @@ configurations.configureEach {
 }
 
 dependencies {
+    implementation("com.k2fsa.sherpa:sherpa-onnx:2.0.3@aar")
     implementation(libs.backdrop)
     if (distributionChannel == "play") implementation("com.google.android.play:feature-delivery:2.1.0")
     constraints {
@@ -210,6 +215,7 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.mlkit.text.recognition)
+    implementation(libs.mlkit.chinese.ocr)
     implementation(libs.activity.compose)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.runtime.compose)

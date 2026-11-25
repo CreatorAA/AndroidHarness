@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">ستبقى التذكيرات هنا ما دامت التنبيهات متوقفة في إعدادات «%1$s».</string>
+    <string name="phone_events_title">تذكيرات أحداث الهاتف</string>
+    <string name="phone_events_intro">احصل على تذكير عند فتح تطبيق تختاره أو نشره إشعارًا. راجع أي مهمة مرتبطة قبل تشغيلها.</string>
+    <string name="phone_event_ready">تذكير بحدث على الهاتف</string>
+    <string name="phone_event_open_reminder">فعّل %1$s التذكير. انقر للمراجعة.</string>
+    <string name="phone_events_grant_notifications">السماح بالوصول إلى الإشعارات</string>
+    <string name="phone_events_grant_window">تفعيل عناصر التحكم في الهاتف من Harness في تسهيل الاستخدام</string>
+    <string name="phone_events_show_alerts">السماح بإشعارات التذكير</string>
+    <string name="phone_event_opened">فتح %1$s</string>
+    <string name="phone_event_notified">نشر %1$s إشعارًا</string>
+    <string name="phone_event_review_task">مراجعة: %1$s</string>
+    <string name="phone_event_dismiss">تجاهل</string>
+    <string name="phone_event_remind_only">تذكيري فقط</string>
+    <string name="phone_event_task_missing">المهمة المرتبطة لم تعد متاحة</string>
+    <string name="phone_event_edit">تعديل القاعدة</string>
+    <string name="phone_event_remove">إزالة القاعدة</string>
+    <string name="phone_event_add">إضافة قاعدة لتطبيق</string>
+    <string name="phone_event_view_notices">الإشعارات النشطة (%1$d)</string>
+    <string name="phone_event_active_notices">الإشعارات الحالية</string>
+    <string name="phone_event_metadata_only">يظهر التطبيق والوقت فقط. افتح الإشعار في تطبيقه الأصلي لقراءته.</string>
+    <string name="phone_event_no_notices">لا توجد إشعارات حالية من تطبيقاتك المحددة.</string>
+    <string name="phone_event_no_listener">خدمة الاستماع إلى الإشعارات غير متصلة.</string>
+    <string name="phone_event_open_source">فتح في التطبيق</string>
+    <string name="phone_event_mark_read">وضع علامة كمقروء</string>
+    <string name="phone_event_read_confirm">هل تريد أن تطلب من %1$s وضع علامة على هذا الإشعار كمقروء؟</string>
+    <string name="phone_event_task_busy">هذه المهمة متوقفة مؤقتًا، أو قيد التشغيل بالفعل، أو لم تعد يدوية.</string>
+    <string name="phone_event_run_task">تشغيل المهمة</string>
+    <string name="phone_event_unavailable">هذا العنصر لم يعد متاحًا.</string>
+    <string name="phone_event_choose_app">اختيار تطبيق</string>
+    <string name="phone_event_search">اسم التطبيق أو اسم الحزمة</string>
+    <string name="phone_event_when">عندما</string>
+    <string name="phone_event_when_open">أفتح هذا التطبيق</string>
+    <string name="phone_event_when_notified">ينشر هذا التطبيق إشعارًا</string>
+    <string name="phone_event_then">ذكّرني بمراجعة</string>
+    <string name="phone_event_save">حفظ القاعدة</string>
+    <string name="phone_event_all_rules">تم إعداد الحدثين بالفعل. عدّل القواعد الحالية أدناه.</string>
+</resources>

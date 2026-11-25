@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Kontrol ponsel Harness</string>
+    <string name="phone_driver_service_description">Memungkinkan Anda meminta asisten membaca layar, mengetuk kontrol, dan memasukkan teks. Kontrol ponsel hanya berfungsi selama tugas yang Anda mulai. Hentikan tugas untuk mengambil alih.</string>
+</resources>

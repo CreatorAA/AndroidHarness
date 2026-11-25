@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"공급자 기본값"</string>
     <string name="ui_add_custom_command">"사용자 정의 명령 추가"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"실행 또는 터미널이 활성화된 동안 CPU를 잡고 있으면 앱이 최소화될 때 터미널이 죽지 않습니다."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"제외: Android는 백그라운드 실행을 제한하지 않습니다."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"켜기: Samsung 및 기타 OEM은 백그라운드 작업을 종료할 수 있습니다. 안정적인 장기 실행을 위해 앱을 제외하세요."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness의 Android 배터리 최적화가 꺼져 있습니다."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android 배터리 최적화가 켜져 있습니다. 화면을 끄면 오래 걸리는 작업이 중단되는 경우 AndroidHarness의 배터리 사용을 제한 없이 허용하세요."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"현재 버전 %1$s. 최신 빌드에 대한 GitHub 릴리스를 확인합니다."</string>
     <string name="ui_available_see_the_dialog">"%1$s 사용 가능, 대화상자 참조"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"귀하의 휴대폰에 존재하는 코딩 에이전트입니다."</string>
@@ -1845,4 +1845,9 @@
     <string name="lms_field_prompt_threads">"읽기 속도"</string>
     <string name="lms_field_prompt_threads_help">"메시지를 읽을 때 사용하는 CPU 코어 수."</string>
     <string name="lms_unit_cores">"코어"</string>
+    <string name="voice_no_result">완전한 받아쓰기 결과를 받지 못했습니다. 다시 말하거나 메시지를 입력하세요.</string>
+    <string name="voice_service_interrupted">받아쓰기를 마치기 전에 시스템 음성 서비스가 중지되었습니다. 다시 말하거나 나머지를 입력하세요.</string>
+    <string name="voice_try_again">다시 받아쓰기</string>
+    <string name="voice_continue">받아쓰기 계속</string>
+    <string name="voice_finish_to_send">듣고 있습니다. 다 말했으면 보내기를 탭하세요.</string>
 </resources>

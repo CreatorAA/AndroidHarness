@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Skrip AutoJs6</string>
+    <string name="autojs_allow">Benarkan pembantu menggunakan AutoJs6</string>
+    <string name="autojs_allow_hint">Menambahkan pemacu yang dipasangkan dan skrip UI. Perkhidmatan terbina dalam masih tersedia apabila didayakan.</string>
+    <string name="autojs_need_pair">Tulis dan semak skrip sekarang. Konfigurasikan pemalam AutoJs6 setempat sebelum menjalankannya pada telefon.</string>
+    <string name="autojs_new">Skrip baharu</string>
+    <string name="autojs_back">Kembali</string>
+    <string name="autojs_source">Skrip UI</string>
+    <string name="autojs_sample_source">text(\"Teruskan\").waitFor();</string>
+    <string name="autojs_name">Nama (pilihan untuk percubaan)</string>
+    <string name="autojs_name_exists">Nama ini sudah digunakan oleh skrip lain. Buka skrip itu untuk mengeditnya, atau pilih nama lain.</string>
+    <string name="autojs_format">Gunakan text, desc atau id untuk mencari kawalan, kemudian tunggunya, ketik padanya atau masukkan teks. Gunakan satu arahan bagi setiap baris.</string>
+    <string name="autojs_check">Semak langkah</string>
+    <string name="autojs_prepare">Cuba dalam apl sasaran</string>
+    <string name="autojs_preview">Langkah sah: %1$d · tiada apa-apa dijalankan</string>
+    <string name="autojs_empty">Ketik Skrip baharu untuk membuat tindakan yang boleh digunakan semula. Biarkan nama kosong untuk mencubanya tanpa menyimpan.</string>
+    <string name="autojs_enabled_hint">Pembantu boleh menggunakan skrip yang didayakan dalam pustaka ini.</string>
+    <string name="autojs_disabled_hint">Dayakan skrip ini dalam pustaka sebelum mencubanya.</string>
+    <string name="autojs_delete">Padamkan “%1$s”?</string>
+    <string name="autojs_delete_action">Padam</string>
+    <string name="autojs_changed">Skrip ini telah berubah dalam pustaka. Buka semula sebelum menyimpan atau menjalankannya.</string>
+    <string name="autojs_write_failed">Tidak dapat menyimpan skrip.</string>
+    <string name="autojs_anonymous">Skrip belum disimpan</string>
+    <string name="autojs_prepared">Percubaan sedia: %1$s. Buka apl sasaran dan panggil pembantu telefon dalam masa 10 minit.</string>
+    <string name="autojs_trial_title">Jalankan skrip · %1$s</string>
+    <string name="autojs_trial_here">Dalam %1$s sahaja</string>
+    <string name="autojs_trial_other">Buka apl yang ingin diuji, kemudian panggil pembantu di situ.</string>
+    <string name="autojs_trial_steps">%1$d langkah · ketik untuk menyemak</string>
+    <string name="autojs_trial_less">Sembunyikan langkah</string>
+    <string name="autojs_trial_allow">Benarkan dan jalankan di sini</string>
+    <string name="autojs_trial_stale">Percubaan ini telah tamat tempoh atau apl telah berubah. Sediakannya semula dalam pustaka skrip.</string>
+    <string name="autojs_trial_request">Jalankan “%1$s” dalam %2$s.</string>
+    <string name="autojs_trial_done">Selesai %1$d daripada %2$d langkah skrip dalam %3$s.</string>
+    <string name="autojs_trial_stopped">Skrip dihentikan dalam %3$s selepas %1$d daripada %2$d langkah.</string>
+    <string name="autojs_trial_error">Tidak dapat memulakan skrip ini dalam apl semasa.</string>
+    <string name="autojs_trial_interrupted">Skrip terganggu. Semak apl sebelum mencuba lagi.</string>
+    <string name="autojs_not_selected">Dayakan AutoJs6 sebelum menyediakan skrip.</string>
+    <string name="autojs_activity_running">Menjalankan skrip AutoJs6</string>
+    <string name="autojs_activity_ran">Skrip AutoJs6 telah dijalankan</string>
+    <string name="autojs_activity_run_failed">Skrip AutoJs6 tidak selesai</string>
+    <string name="autojs_activity_library_working">Menggunakan pustaka skrip AutoJs6</string>
+    <string name="autojs_activity_library_done">Pustaka skrip AutoJs6 telah digunakan</string>
+    <string name="autojs_activity_library_failed">Tindakan pustaka skrip AutoJs6 gagal</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Kenar tutamacı</string>
+    <string name="assistant_edge_desc">Asistanı açmak için sağ kenardaki tutamacı içeri kaydırın.</string>
+    <string name="assistant_edge_permission_hint">Android ayarlarında AndroidHarness uygulamasının diğer uygulamaların üzerinde gösterilmesine izin verin.</string>
+    <string name="assistant_edge_permission_unavailable">Diğer uygulamaların üzerinde gösterme izni ayarları açılamadı.</string>
+    <string name="assistant_edge_handle_description">Asistanı diğer uygulamaların üzerinde aç</string>
+    <string name="assistant_edge_start_failed">Kenar tutamacı açılamadı. Tekrar deneyin.</string>
+    <string name="assistant_edge_disconnected">Sistem asistanın bağlantısını kesti.</string>
+    <string name="assistant_edge_reconnect">Yeniden bağlan</string>
+    <string name="assistant_edge_reconnect_steps">Android\'in asistan ayarlarında Önce Hiçbiri\'ni, ardından tekrar AndroidHarness\'ı seçin.</string>
+    <string name="assistant_edge_grant_overlay">Diğer uygulamaların üzerinde gösterime izin ver</string>
+</resources>

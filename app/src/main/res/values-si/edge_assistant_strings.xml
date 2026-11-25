@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">පැති හසුරුව</string>
+    <string name="assistant_edge_desc">සහායකය විවෘත කිරීමට දකුණු දාරයේ හසුරුව ඇතුළට අදින්න.</string>
+    <string name="assistant_edge_permission_hint">Android සැකසීම්වල, AndroidHarness වෙනත් යෙදුම් මත පෙන්වීමට ඉඩ දෙන්න.</string>
+    <string name="assistant_edge_permission_unavailable">වෙනත් යෙදුම් මත පෙන්වීමේ අවසර සැකසීම් විවෘත කළ නොහැකි විය.</string>
+    <string name="assistant_edge_handle_description">වෙනත් යෙදුම් මත සහායකය විවෘත කරන්න</string>
+    <string name="assistant_edge_start_failed">පැති හසුරුව සක්‍රිය කළ නොහැකි විය. නැවත උත්සාහ කරන්න.</string>
+    <string name="assistant_edge_disconnected">පද්ධතිය සහායක විසන්ධි කළා.</string>
+    <string name="assistant_edge_reconnect">නැවත සම්බන්ධ කරන්න</string>
+    <string name="assistant_edge_reconnect_steps">Android සහායක සැකසීම් තුළ කිසිවක් නැත තෝරා, ඉන්පසු නැවත AndroidHarness තෝරන්න.</string>
+    <string name="assistant_edge_grant_overlay">වෙනත් යෙදුම් මත පෙන්වීමට ඉඩ දෙන්න</string>
+</resources>

@@ -105,6 +105,22 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">แชทในโปรเจกต์อื่นกำลังใช้พื้นที่ทำงานนี้: %1$s โปรดนำพื้นที่ทำงานนี้ออกจากแชทเหล่านั้นก่อนลบ แชทที่มีการเปลี่ยนแปลงที่บันทึกไว้ต้องยังคงเข้าถึงพื้นที่ทำงานได้</string>
+    <string name="wp_delete_running_blocked">หยุดงานที่กำลังทำในโปรเจกต์นี้ก่อนลบ</string>
+    <string name="wp_reset_shared_blocked">แชทอื่นกำลังใช้พื้นที่ทำงานของแอปด้วย: %1$s โปรดนำพื้นที่ทำงานนี้ออกจากแชทเหล่านั้นก่อนรีเซ็ต</string>
+    <string name="wp_reset_running_blocked">หยุดงานที่กำลังทำในพื้นที่ทำงานนี้ก่อนรีเซ็ต</string>
+    <plurals name="wp_automation_count">
+        <item quantity="other">ระบบอัตโนมัติ %1$d รายการ</item>
+    </plurals>
+    <string name="wp_picked_folder">โฟลเดอร์ที่เลือก</string>
+    <string name="wp_review_changed">รายละเอียดเปลี่ยนไป โปรดปิดกล่องโต้ตอบนี้แล้วตรวจสอบการดำเนินการอีกครั้ง</string>
+    <string name="wp_editor_toggle_wrap">สลับการตัดบรรทัด</string>
+    <string name="wp_editor_undo_available">ย้อนกลับได้</string>
+    <string name="wp_reset_app_only">รีเซ็ตได้เฉพาะพื้นที่ทำงานของแอป</string>
+    <string name="wp_editor_find_replace">ค้นหาและแทนที่ในโปรเจกต์</string>
+    <plurals name="wp_changed_files">
+        <item quantity="other">ไฟล์ที่เปลี่ยน %1$d ไฟล์</item>
+    </plurals>
     <string name="wp_add_shared">"โฟลเดอร์ที่แชร์"</string>
     <string name="wp_add_shared_sub">"ยังอยู่หลังถอนการติดตั้ง ทั้งเวอร์ชันเสถียรและ nightly เห็นโฟลเดอร์นี้"</string>
     <string name="wp_add_shared_failed">"สร้าง %1$s ไม่ได้ ตรวจสอบว่าเปิดการเข้าถึงไฟล์ทั้งหมดแล้วหรือยัง แล้วลองอีกครั้ง"</string>

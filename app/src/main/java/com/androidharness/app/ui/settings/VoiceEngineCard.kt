@@ -46,6 +46,7 @@ import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
@@ -162,8 +163,13 @@ internal fun VoiceListeningCard(
                 }
             }
             when {
-                engine.onPhone -> item {
-                    VoiceNote(Icons.Rounded.Lock, stringResource(R.string.settings_voice_engine_phone_hear))
+                engine.onPhone -> item(onClick = { scope.launch { container.settings.setOfflineMandarinOnly(!settings.offlineMandarinOnly) } }) {
+                    SettingsItemRow(title = stringResource(R.string.voice_local_only),
+                        subtitle = stringResource(if (settings.offlineMandarinOnly) R.string.voice_local_only_on else R.string.voice_system_first),
+                        leading = { SettingsIconBadge(Icons.Rounded.Lock, SettingsTone.SECONDARY, 40.dp) },
+                        trailing = { Switch(checked = settings.offlineMandarinOnly, onCheckedChange = {
+                            scope.launch { container.settings.setOfflineMandarinOnly(it) }
+                        }) })
                 }
                 provider == null -> item {
                     VoiceNote(Icons.Rounded.Key, stringResource(R.string.settings_voice_status_missing_body))

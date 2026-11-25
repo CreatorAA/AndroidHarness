@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Tay nắm cạnh màn hình</string>
+    <string name="assistant_edge_desc">Vuốt tay nắm ở cạnh phải vào trong để mở trợ lý.</string>
+    <string name="assistant_edge_permission_hint">Trong cài đặt Android, cho phép AndroidHarness hiển thị trên các ứng dụng khác.</string>
+    <string name="assistant_edge_permission_unavailable">Không mở được cài đặt quyền hiển thị trên các ứng dụng khác.</string>
+    <string name="assistant_edge_handle_description">Mở trợ lý trên các ứng dụng khác</string>
+    <string name="assistant_edge_start_failed">Không bật được tay nắm cạnh màn hình. Thử lại.</string>
+    <string name="assistant_edge_disconnected">Hệ thống đã ngắt kết nối trợ lý.</string>
+    <string name="assistant_edge_reconnect">Kết nối lại</string>
+    <string name="assistant_edge_reconnect_steps">Trong phần cài đặt trợ lý của Android, hãy chọn Không có, sau đó chọn lại AndroidHarness.</string>
+    <string name="assistant_edge_grant_overlay">Cho phép hiển thị trên ứng dụng khác</string>
+</resources>

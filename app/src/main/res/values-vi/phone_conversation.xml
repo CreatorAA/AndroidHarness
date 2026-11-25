@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Điện thoại</string>
+    <string name="conversation_new_phone">Cuộc trò chuyện mới trên điện thoại</string>
+    <string name="phone_conversation_intro">Đặt câu hỏi tại đây. Để trợ lý sử dụng một ứng dụng, hãy chuyển sang ứng dụng đó và gọi trợ lý.</string>
+    <string name="phone_conversation_settings">Cài đặt trợ lý</string>
+    <string name="settings_start_phone_desc">Mở các cuộc trò chuyện với trợ lý trên điện thoại.</string>
+</resources>

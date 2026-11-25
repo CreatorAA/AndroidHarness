@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Bắt đầu cuộc trò chuyện mới</string>
+    <string name="slash_menu_compact">Nén ngữ cảnh</string>
+    <string name="slash_menu_compact_hint">Tóm tắt ngữ cảnh trước đó</string>
+    <string name="slash_menu_cost">Chi phí</string>
+    <string name="slash_menu_cost_hint">Xem tổng số token và chi phí</string>
+    <string name="slash_menu_btw_hint">Hỏi về ngữ cảnh hiện tại mà không thêm vào cuộc trò chuyện</string>
+    <string name="slash_menu_doctor">Chẩn đoán Harness</string>
+    <string name="slash_menu_doctor_hint">Chạy tự kiểm tra các công cụ Harness</string>
+    <string name="slash_menu_init">Khởi tạo dự án</string>
+    <string name="slash_menu_init_hint">Tạo hoặc cập nhật AGENTS.md</string>
+    <string name="slash_menu_review_hint">Xem xét các thay đổi đang chờ mà không chỉnh sửa. Ghi trọng tâm sau lệnh.</string>
+    <string name="slash_menu_plan_hint">Nạp kỹ năng lập kế hoạch và chuyển sang chế độ Lập kế hoạch</string>
+    <string name="slash_menu_skills">Duyệt kỹ năng</string>
+    <string name="slash_menu_skills_hint">Mở danh sách chọn kỹ năng đầy đủ</string>
+    <string name="slash_menu_env_hint">Kiểm tra, cập nhật, cài đặt hoặc sửa môi trường Linux</string>
+    <string name="slash_menu_snippet">Đoạn trích</string>
+    <string name="slash_menu_snippet_hint">Đoạn lời nhắc đã lưu</string>
+</resources>

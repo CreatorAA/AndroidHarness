@@ -17,6 +17,14 @@ data class ResponseAttachment(val title: String, val context: String) {
                 require(ref.title.isNotBlank() && ref.title.length <= 100 && ref.context.length <= 1500)
             } }.getOrNull()
         }
+        /** Panel buttons send immediately: only the visible label is a request. */
+        fun panelRequest(action: RichResponse.FollowUp): String = attach(
+            action.visibleRequest,
+            if (action.context.isBlank()) null else ResponseAttachment(
+                action.title.ifBlank { action.visibleRequest.take(100) }, action.context,
+            ),
+        )
+
         fun fromPrompt(text: String): ResponseAttachment? {
             if (!text.startsWith(START)) return null
             val end = text.indexOf(END, START.length).takeIf { it in START.length..12_000 } ?: return null

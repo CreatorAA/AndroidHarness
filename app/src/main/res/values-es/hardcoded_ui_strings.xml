@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">No hay nada que deshacer en este turno.</string>
+    <string name="chat_compaction_preparing">Preparando el resumen del chat…</string>
+    <string name="chat_compaction_too_few_messages">Todavía hay muy pocos mensajes para compactar.</string>
+    <string name="chat_compaction_retrying">Reintentando el resumen · intento %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Se detuvo la compactación. Se conservó el historial. Cuando quieras, vuelve a ejecutar /compact.</string>
+    <string name="chat_compaction_refresh_failed">Se compactó el chat, pero no se pudo actualizar la configuración de la tarea o la estimación del contexto: %1$s</string>
+    <string name="chat_compaction_failed_notice">Falló la compactación: %1$s. Se conservó el historial. Reintenta /compact o elige otro modelo.</string>
+    <string name="reasoning_from_catalog">Razonamiento indicado en el catálogo de modelos</string>
+    <string name="reasoning_from_provider">Razonamiento indicado por el proveedor</string>
+    <string name="reasoning_from_user">Razonamiento configurado por ti</string>
+    <string name="reasoning_from_name">Razonamiento inferido del nombre del modelo</string>
+    <string name="automation_every_day">Todos los días</string>
+    <string name="automation_daily_at">todos los días a las %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Compila el APK de depuración y corrige los errores de compilación.</string>
+    <string name="app_update_checking">Buscando actualizaciones…</string>
+    <string name="app_update_up_to_date">Tienes la versión más reciente</string>
+    <string name="files_directory">Carpeta</string>
+    <string name="cache_status_unavailable">Datos de caché no disponibles</string>
+    <string name="cache_status_hit">Acierto de caché · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · parcial</string>
+    <string name="cache_estimated_price">aprox. %1$s</string>
+    <string name="chat_live_sites_suffix">" sitios"</string>
+    <string name="chat_research_sources_suffix">/%1$d fuentes</string>
+    <string name="chat_research_read_suffix">" leídas"</string>
+    <string name="package_status_failed">Falló la instalación</string>
+    <string name="package_hide_details">Ocultar detalles de instalación</string>
+    <string name="package_show_details">Mostrar detalles de instalación</string>
+    <string name="package_recently_unpacked">Desempaquetado recientemente · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d elemento</item>
+        <item quantity="other">%1$d elementos</item>
+    </plurals>
+</resources>

@@ -2,13 +2,18 @@ package com.androidharness.app.agent
 
 import com.androidharness.app.core.ChatMessage
 import com.androidharness.app.core.ImageData
+import com.androidharness.app.core.ImageRef
 import com.androidharness.app.core.Role
 
 /** Attach recent pictures actually shown in assistant messages to the next Chat request. */
 internal object ChatImageContext {
     private val markdownImage = Regex("!\\[([^\\]]*)]\\((https?://(?:[^()\\s]|\\([^()\\s]*\\))+)\\)")
 
-    suspend fun attach(history: List<ChatMessage>, resolve: (com.androidharness.app.core.ImageRef) -> ImageData? = { null }, load: suspend (String) -> ImageData?): List<ChatMessage> {
+    suspend fun attach(history: List<ChatMessage>, livePhoneTask: Boolean = false,
+        resolve: (ImageRef) -> ImageData? = { null }, load: suspend (String) -> ImageData?): List<ChatMessage> {
+        // A live task gets its current pixels from android_observe. Keep previous pictures in
+        // their original messages (and addressable by image_id), never on the new instruction.
+        if (livePhoneTask) return history
         val userIndex = history.indexOfLast { it.role == Role.USER }
         if (userIndex < 0) return history
         val available = (ContextHygiene.MAX_CONTEXT_IMAGES - history[userIndex].imageData.size).coerceAtLeast(0)

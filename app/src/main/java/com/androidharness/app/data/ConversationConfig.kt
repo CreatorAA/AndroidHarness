@@ -7,7 +7,7 @@ import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonObject
 
 @Serializable
-enum class ConversationKind { CODE, CHAT }
+enum class ConversationKind { CODE, CHAT, PHONE }
 
 @Serializable
 enum class ChatTool { WEB_SEARCH, WEB_PAGES, ARTIFACTS }
@@ -33,8 +33,14 @@ data class ConversationConfig(
     /** Old nonempty per-chat instructions remain overrides; other chats inherit the app setting. */
     val useGlobalInstructions: Boolean = instructions.isBlank(),
     val agent: ChatAgentProfile? = null,
+    /** Origin of a separately confirmed phone task; this is a navigation link, not a tool grant. */
+    val phoneOriginCodeId: String? = null,
 ) {
-    val isChat: Boolean get() = kind == ConversationKind.CHAT
+    /** Phone shares the restricted conversational runtime, not the Code workspace or its tools. */
+    val usesChatRuntime: Boolean get() = kind != ConversationKind.CODE
+    val isPhone: Boolean get() = kind == ConversationKind.PHONE
+    /** Existing chat-surface callers select presentation, model routing and sandbox behavior. */
+    val isChat: Boolean get() = usesChatRuntime
 
     fun effectiveInstructions(global: String): String =
         if (!isChat || !personalizationEnabled) "" else

@@ -13,6 +13,7 @@ object ChatGptThinking {
     private val standard = listOf("low", "medium", "high", "xhigh", "max")
     // https://developers.openai.com/api/docs/models/<model>
     private val documented = mapOf(
+        "gpt-6.2-sol" to (standard + "ultra"),
         "gpt-6.1-sol" to standard,
         "gpt-6-astra" to standard,
         "gpt-6-sol" to (listOf("none") + standard),
@@ -30,11 +31,14 @@ object ChatGptThinking {
         "gpt-5" to listOf("minimal", "low", "medium", "high"),
     )
 
+    private val snapshotSuffix = Regex("-\\d{4}-\\d{2}-\\d{2}$")
+
+    internal fun documentedEfforts(id: String): List<String>? =
+        documented[id] ?: documented[id.replace(snapshotSuffix, "")]
+
     fun levels(model: ModelEntry): List<ThinkingLevel> {
         if (model.reasoning == false) return emptyList()
-        val efforts = model.reasoningEfforts ?: documented.entries.firstOrNull { (id, _) ->
-            model.id == id || model.id.matches(Regex("${Regex.escape(id)}-\\d{4}-\\d{2}-\\d{2}"))
-        }?.value ?: emptyList()
+        val efforts = model.reasoningEfforts ?: documentedEfforts(model.id) ?: emptyList()
         return efforts.mapNotNull { value -> wireNames.entries.firstOrNull { it.value == value }?.key }.distinct().sortedBy { it.rank }
     }
 

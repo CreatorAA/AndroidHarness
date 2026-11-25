@@ -127,8 +127,8 @@ internal fun WorkspaceToolsSheet(
     fun open(path: String, atLine: Int? = null) { onDismiss(); onOpenFile(path, atLine) }
     fun changeMode(next: WorkspaceToolMode) { if (!busy && !applying) { mode = next; preview = null; receipt = null; error = null } }
     val allCommands = listOf(
-        WorkspaceCommand("Quick Open", "Find a file by name · Ctrl+P", Icons.Outlined.FindInPage) { changeMode(WorkspaceToolMode.FILES) },
-        WorkspaceCommand("Search and replace in project", "Find text across files · Ctrl+Shift+F", Icons.Outlined.ManageSearch) { changeMode(WorkspaceToolMode.SEARCH) },
+        WorkspaceCommand(uiContext.getString(R.string.ui_quick_open), "Ctrl+P", Icons.Outlined.FindInPage) { changeMode(WorkspaceToolMode.FILES) },
+        WorkspaceCommand(uiContext.getString(R.string.wp_editor_find_replace), "Ctrl+Shift+F", Icons.Outlined.ManageSearch) { changeMode(WorkspaceToolMode.SEARCH) },
     ) + commands
     val matchingCommands = allCommands.filter { query.isBlank() || (it.title + " " + it.detail).contains(query.trim(), true) }
     fun activateHighlighted() {
@@ -327,7 +327,7 @@ internal fun WorkspaceToolsSheet(
                         mode == WorkspaceToolMode.COMMANDS -> {
                             if(matchingCommands.isEmpty()) item { ExpressiveEmptyState(Icons.Outlined.Terminal, uiContext.getString(R.string.ui_no_matching_commands), seed = 2) }
                             itemsIndexed(matchingCommands, key = { _, it -> it.title }) { i, command ->
-                                ExpressiveListRow(i, matchingCommands.size, command.title, subtitle = command.detail, selected = i == highlighted,
+                                ExpressiveListRow(i, matchingCommands.size, command.title, subtitle = command.detail.ifBlank { null }, selected = i == highlighted,
                                     onClick = command.action,
                                     modifier = Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec()),
                                     leading = { ExpressiveIconBadge(command.icon, selected = i == highlighted) },

@@ -1,5 +1,6 @@
 package com.androidharness.app.data.audio
 
+import com.androidharness.app.data.AppSettings
 import kotlinx.serialization.Serializable
 
 /**
@@ -56,6 +57,11 @@ data class VoiceProviderConfig(
      */
     val requiresKey: Boolean = true,
 ) {
+    fun transcriptionModel(settings: AppSettings): String =
+        settings.voiceSelections[id]?.sttModel?.takeIf(String::isNotBlank)
+            ?: settings.groqWhisperModel.takeIf { id == AppSettings.VOICE_PROVIDER_GROQ && it.isNotBlank() }
+            ?: sttModel
+
     fun resolvedBaseUrl(): String = baseUrl.trim().trimEnd('/')
 }
 

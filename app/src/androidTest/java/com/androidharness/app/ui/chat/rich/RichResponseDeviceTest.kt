@@ -165,6 +165,44 @@ After the callout."""
         }
     }
 
+    @Test fun aShortStaticFigureUsesItsOwnHeightAndKeepsFollowUpInTheExpandedView() {
+        val text = """```harness-svg title="Phase durations"
+            |<svg viewBox="0 0 240 24" width="240" height="24" aria-label="Three phases">
+            |<rect x="0" y="4" width="138" height="16"/><rect x="142" y="4" width="98" height="16"/></svg>
+            |```""".trimMargin()
+        var followUp: RichResponse.FollowUp? = null
+        ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
+            scenario.onActivity { host -> host.setContent { HarnessTheme(themeMode = ThemeMode.LIGHT, dynamicColor = false) {
+                Column(Modifier.fillMaxWidth().padding(12.dp)) {
+                    AssistantText(text, onFollowUp = { followUp = it })
+                }
+            } } }
+            await("Expand response preview")
+            val deadline = SystemClock.uptimeMillis() + 6000
+            var measuredDp = 0f
+            fun webAt(view: android.view.View): com.androidharness.app.artifacts.ArtifactWebView? {
+                if (view is com.androidharness.app.artifacts.ArtifactWebView) return view
+                if (view is android.view.ViewGroup) for (i in 0 until view.childCount) webAt(view.getChildAt(i))?.let { return it }
+                return null
+            }
+            do {
+                scenario.onActivity { host ->
+                    val web = webAt(host.window.decorView)
+                    if (web != null) measuredDp = web.height / web.resources.displayMetrics.density
+                }
+                if (measuredDp in 22f..26f) break
+                SystemClock.sleep(80)
+            } while (SystemClock.uptimeMillis() < deadline)
+            assertTrue("Expected the 24dp figure without a document-height floor, got $measuredDp", measuredDp in 22f..26f)
+            assertNull(find(instrumentation.uiAutomation.rootInActiveWindow, "Ask about this"))
+            tap("Expand response preview")
+            await("Phase durations")
+            tap("Ask about this")
+            assertEquals("Phase durations", followUp?.title)
+            await("Expand response preview")
+        }
+    }
+
     @Test fun streamingKeepsIncompleteMarkupHiddenAndInvalidContentHasARecoveryAction() {
         val text = mutableStateOf("Before the visual.\n\n```harness-ui\n{\"type\":\"preview\",\"html\":\"<script>")
         val streaming = mutableStateOf(true)

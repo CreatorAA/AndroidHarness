@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Set a one-time alarm</string>
+    <string name="phone_public_timer">Start a timer</string>
+    <string name="phone_public_map">Search for a place</string>
+    <string name="phone_public_calendar">Open a calendar draft</string>
+    <string name="phone_public_note">Open a new note</string>
+</resources>

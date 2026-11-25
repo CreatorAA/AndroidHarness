@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Mga update, setup, at impormasyon ng app",
-      "summary": "Hanapin ang iyong bersyon, muling ikonekta ang setup, at unawain ang mga opsyon sa suporta.",
-      "location": "Mga Setting → Mga Update, Gabay sa pag-setup, o Tungkol sa.",
+      "title": "Bersyon at pag-setup",
+      "summary": "Tingnan ang naka-install na bersyon o mag-install ng mas bagong custom na build.",
+      "location": "Settings → Tungkol sa o Gabay sa pag-setup.",
       "before": [
-        "Isang koneksyon sa network para sa mga pagsusuri sa pag-update at mga panlabas na pahina ng suporta."
+        "Hindi kailangan ng internet para makita ang bersyon."
       ],
       "steps": [
         {
           "title": "Suriin ang naka-install na bersyon",
-          "body": "Buksan ang About or Updates para makita ang aktwal na naka-install na bersyon/build. Isama ang bersyong iyon kapag naglalarawan ng problemang maaaring kopyahin."
+          "body": "Buksan ang Tungkol sa. Makikita ang bersyon sa ilalim ng pangalan ng app. Nasa pahina ring ito ang source code, lisensya at mga proyektong open source na ginamit."
         },
         {
-          "title": "Gamitin ang inaalok na landas sa pag-update",
-          "body": "Tingnan ang mga update at basahin ang mga detalye ng release. Gamitin ang aksyon sa pag-download/pag-install na inaalok para sa pamamahagi na ito at sundin ang anumang hakbang ng installer ng Android."
+          "title": "Mag-install ng mas bagong build",
+          "body": "Buksan ang APK na ibinigay ng tagapamahala ng custom na build na ito at sundin ang Android installer."
         },
         {
           "title": "Muling bisitahin ang setup kapag kinakailangan",
           "body": "Gamitin ang Setup upang suriin ang mga pagpipilian sa onboarding at kinakailangang mga pahintulot/koneksyon. Suriin ang bawat pagpipilian sa halip na ipagpalagay na kailangan ang muling pag-install."
-        },
-        {
-          "title": "Maghanap ng mga kredito at suporta",
-          "body": "Tungkol sa mga listahan ng pinagmulan/lisensya/mga kredito at magagamit na suporta o mga link ng donasyon. Sinusuportahan ng isang donasyon ang app; hindi ito bumibili ng mga kredito ng API o isang subscription sa provider."
         }
       ],
-      "outcome": "Alam mo ang naka-install na bersyon, available na update/setup path, at kung saan nakatira ang sariling impormasyon ng app.",
+      "outcome": "Isama ang naka-install na bersyon kapag nag-uulat ng problema.",
       "limits": [
-        "Ang pag-update ng pag-uugali sa paghahatid at pag-install ay nag-iiba ayon sa pamamahagi at mga available na pahintulot sa device.",
+        "Hindi naghahanap o nag-i-install ang build na ito ng mga release mula sa orihinal na proyekto.",
         "Hindi magagarantiyahan ng pag-update ng app ang bagong access sa isang external na modelo, ayusin ang pagkawala ng provider, o i-restore ang mga na-delete na file."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Buksan ang Mga Update"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Review Setup"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Gawing assistant ng telepono mo ang AndroidHarness at magtanong tungkol sa app na ginagamit mo.",
       "location": "Mga setting → Assistant sa ibabaw ng ibang apps; pagkatapos pindutin nang matagal ang power o home button, o mag-swipe pataas mula sa ibabang sulok.",
       "before": [
-        "Pumili muna ng Chat model at idagdag ang key nito. Ginagamit ng assistant ang parehong model at settings ng Chat.",
+        "Bilang default, ginagamit ng assistant ang modelo ng Chat. Puwede kang pumili ng iba sa mga setting ng assistant.",
         "Kailangang payagan ng Android ang AndroidHarness bilang digital assistant app. Sa ilang telepono, nasa Default apps ito."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Magtanong tungkol sa screen",
-          "body": "Mag-type ng tanong o i-tap ang alok gaya ng I-summarize. Tinitingnan lang nito ang screen kapag tungkol dito ang tanong mo, at walang mula sa screen ang ipinapakita sa panel. Gumagana ito gaya ng Chat, kaya makakapaghanap sa web, makakabasa ng page at makakapagpakita ng source."
+          "body": "Magtanong tungkol sa nakikita mo o sabihin kung ano ang gusto mong ipagawa sa app. Bilang default, titingnan at aaprubahan mo ang gawain bago ito simulan sa telepono."
         },
         {
           "title": "Magsalita sa halip na mag-type",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Magpatuloy sa app",
-          "body": "Lumalaki ang panel kasama ng sagot at maaari mong hilahin sa kahit anong taas. Binubuksan ng Magpatuloy sa app ang parehong usapan sa Chat, kung saan nananatili ito kasama ng iba mong chat."
+          "body": "Binubuksan ng “Magpatuloy sa app” ang parehong usapan sa app. Kapag tinawag mo ulit ang assistant sa proyektong ito, magpapatuloy ang huli ninyong usapan."
         }
       ],
-      "outcome": "Makapagtanong ka tungkol sa app sa screen nang hindi lumalabas dito, at nase-save ang bawat usapan bilang normal na Chat.",
+      "outcome": "Sa lahat ng proyekto, ang 10 pinakahuling ginamit na usapan sa assistant ng telepono ang pinapanatili. Binubura ang mas lumang usapan kasama ang mga mensahe nito kapag hindi na ito aktibo. Hindi naaapektuhan ang history ng Chat at Code.",
       "limits": [
         "Ang mga app na humaharang sa screenshot, gaya ng banking apps, at mga screen na pinoprotektahan ng Android ay walang ipinapadalang larawan o text. Pwede ka pa ring magtanong.",
-        "Ipinapadala lang ang larawan ng screen kapag nababasa ng Chat model ang mga larawan. Kung hindi, text lang ng screen ang ipinapadala, at kakaunting text lang ang ibinabahagi ng ilang app."
+        "Ipinapadala lang ang larawan ng screen kapag nababasa ng Chat model ang mga larawan. Kung hindi, text lang ng screen ang ipinapadala, at kakaunting text lang ang ibinabahagi ng ilang app.",
+        "Kapag pinayagan mong kumilos nang mag-isa ang assistant, saklaw nito ang kasalukuyang gawain, pati ang pagpapadala at pagbura. Kung io-on mo ang awtomatikong pagsisimula, hindi na hihingi ng kumpirmasyon sa simula ng mga susunod na gawain. Kailangan pa rin ng pahintulot para sa mga command at script."
       ],
       "fixes": [
         {

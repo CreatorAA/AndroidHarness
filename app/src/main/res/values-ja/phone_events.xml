@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">「%1$s」でアラートをオフにしていても、リマインダーはここで確認できます。</string>
+    <string name="phone_events_title">スマートフォンのイベント通知</string>
+    <string name="phone_events_intro">選んだアプリを開いたときや、そのアプリから通知が届いたときに知らせます。関連付けたタスクは、内容を確認してから実行できます。</string>
+    <string name="phone_event_ready">スマートフォンのイベント通知</string>
+    <string name="phone_event_open_reminder">%1$s に設定したリマインダーです。タップして確認してください。</string>
+    <string name="phone_events_grant_notifications">通知へのアクセスを許可</string>
+    <string name="phone_events_grant_window">ユーザー補助で「Harness のスマートフォン操作」を有効にする</string>
+    <string name="phone_events_show_alerts">リマインダーの通知を許可</string>
+    <string name="phone_event_opened">%1$s を開いたとき</string>
+    <string name="phone_event_notified">%1$s から通知が届いたとき</string>
+    <string name="phone_event_review_task">確認：%1$s</string>
+    <string name="phone_event_dismiss">閉じる</string>
+    <string name="phone_event_remind_only">通知のみ</string>
+    <string name="phone_event_task_missing">関連付けたタスクは利用できなくなりました</string>
+    <string name="phone_event_edit">ルールを編集</string>
+    <string name="phone_event_remove">ルールを削除</string>
+    <string name="phone_event_add">アプリのルールを追加</string>
+    <string name="phone_event_view_notices">有効な通知（%1$d）</string>
+    <string name="phone_event_active_notices">現在の通知</string>
+    <string name="phone_event_metadata_only">表示するのはアプリ名と時刻だけです。内容を読むには、通知を元のアプリで開いてください。</string>
+    <string name="phone_event_no_notices">選んだアプリからの通知は現在ありません。</string>
+    <string name="phone_event_no_listener">通知リスナーが接続されていません。</string>
+    <string name="phone_event_open_source">アプリで開く</string>
+    <string name="phone_event_mark_read">既読にする</string>
+    <string name="phone_event_read_confirm">この通知を既読にするよう %1$s に依頼しますか？</string>
+    <string name="phone_event_task_busy">このタスクは一時停止中、実行中、または手動実行の対象外です。</string>
+    <string name="phone_event_run_task">タスクを実行</string>
+    <string name="phone_event_unavailable">この項目は利用できなくなりました。</string>
+    <string name="phone_event_choose_app">アプリを選択</string>
+    <string name="phone_event_search">アプリ名またはパッケージ名</string>
+    <string name="phone_event_when">条件</string>
+    <string name="phone_event_when_open">このアプリを開いたとき</string>
+    <string name="phone_event_when_notified">このアプリから通知が届いたとき</string>
+    <string name="phone_event_then">確認するよう通知する</string>
+    <string name="phone_event_save">ルールを保存</string>
+    <string name="phone_event_all_rules">両方のイベントが既に設定されています。下のルールを編集してください。</string>
+</resources>

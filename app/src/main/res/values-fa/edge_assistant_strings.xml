@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">دستگیرهٔ کناری</string>
+    <string name="assistant_edge_desc">برای باز کردن دستیار، دستگیرهٔ لبهٔ راست را به داخل بکشید.</string>
+    <string name="assistant_edge_permission_hint">در تنظیمات Android اجازه دهید AndroidHarness روی برنامه‌های دیگر نمایش داده شود.</string>
+    <string name="assistant_edge_permission_unavailable">تنظیمات مجوز نمایش روی برنامه‌های دیگر باز نشد.</string>
+    <string name="assistant_edge_handle_description">باز کردن دستیار روی برنامه‌های دیگر</string>
+    <string name="assistant_edge_start_failed">دستگیرهٔ کناری فعال نشد. دوباره تلاش کنید.</string>
+    <string name="assistant_edge_disconnected">سیستم اتصال دستیار را قطع کرد.</string>
+    <string name="assistant_edge_reconnect">اتصال دوباره</string>
+    <string name="assistant_edge_reconnect_steps">در تنظیمات دستیار Android، ابتدا «هیچ‌کدام» و سپس دوباره AndroidHarness را انتخاب کنید.</string>
+    <string name="assistant_edge_grant_overlay">اجازه نمایش روی برنامه‌ها</string>
+</resources>

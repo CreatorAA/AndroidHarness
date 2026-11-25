@@ -19,7 +19,9 @@ import com.androidharness.app.data.*
 import com.androidharness.app.agent.*
 import com.androidharness.app.llm.*
 import com.androidharness.app.tools.*
+import com.androidharness.app.ui.chat.components.ComposerAttachmentTray
 import com.androidharness.app.workspace.FileFs
+import com.androidharness.app.ui.bringTestTargetToForeground
 import com.androidharness.app.ui.theme.HarnessTheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -867,6 +869,60 @@ class ChatExperienceDeviceTest {
         }
     }
 
+    @Test fun codeSlashMenuKeepsPhoneAndOpensGoalSetupWithoutStartingARun(): Unit = runBlocking {
+        val sid = c.sessions.createSession("Slash menu", conversation = ConversationConfig(ConversationKind.CODE))
+        val store = ViewModelStore()
+        lateinit var vm: ChatViewModel
+        fun waitNode(label: String, predicate: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo {
+            val deadline = SystemClock.uptimeMillis() + 10_000
+            do {
+                nodes().firstOrNull { it.isVisibleToUser && it.packageName == c.appContext.packageName && predicate(it) }?.let { return it }
+                SystemClock.sleep(80)
+            } while (SystemClock.uptimeMillis() < deadline)
+            screenshot("goal-failure")
+            throw AssertionError("Missing $label; on screen: " + nodes().mapNotNull { it.text }.take(45))
+        }
+        fun type(text: String) {
+            val input = waitNode("composer") { it.isEditable }
+            assertTrue(input.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, android.os.Bundle().apply {
+                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
+            }))
+        }
+        fun pick(command: String) {
+            var row = waitNode(command) { !it.isEditable && it.text?.lineSequence()?.any { line -> line.trim() == command } == true }
+            while (!row.isClickable) row = requireNotNull(row.parent) { "No clickable row for $command" }
+            assertTrue(row.performAction(AccessibilityNodeInfo.ACTION_CLICK))
+        }
+        try {
+            bringTestTargetToForeground()
+            ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
+                scenario.onActivity { activity ->
+                    vm = ChatViewModel(c, sid); store.put("slash-goal", vm)
+                    activity.setContent { HarnessTheme { ChatScreen(vm, {}, { _, _ -> }, {}, {}, onOpenSubagent = {}) } }
+                }
+                kotlinx.coroutines.withTimeout(10_000) { vm.state.first { it.conversationReady && !it.isLoadingMessages } }
+                type("/ph"); pick("/phone")
+                waitNode("phone draft") { it.isEditable && it.text?.toString()?.trim() == "/phone" }
+                val goal = "整理工作区并运行测试"
+                type("$goal /go"); pick("/goal")
+                waitNode("goal field prefilled with the composer text") { it.isEditable && it.text?.contains(goal) == true }
+                assertEquals(goal, vm.state.value.goalSheetDraft)
+                val budget = c.appContext.getString(com.androidharness.app.R.string.goal_budget_label)
+                if (find(budget) == null) {
+                    waitNode("goal setup scroll area") { it.isScrollable }.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
+                }
+                await(budget)
+                screenshot("code-goal-setup")
+                assertNull(vm.state.value.taskControl.goal)
+                assertFalse(c.runManager.isRunning(sid))
+                assertTrue(c.sessions.messages(sid).isEmpty())
+            }
+        } finally {
+            instrumentation.runOnMainSync { store.clear() }
+            c.sessions.session(sid)?.let { c.sessions.deleteSession(it) }
+        }
+    }
+
     @Test fun attachmentFailuresStayVisibleAndBlockSendingUntilRemoved(): Unit = runBlocking {
         val sid = c.sessions.createSession("Attachment fixture", conversation = ConversationConfig(ConversationKind.CHAT))
         val store = ViewModelStore()
@@ -889,16 +945,11 @@ class ChatExperienceDeviceTest {
                         val state by vm.state.collectAsState()
                         androidx.compose.material3.Surface(Modifier.fillMaxSize()) {
                             Column(Modifier.fillMaxSize().statusBarsPadding().padding(16.dp)) {
-                                com.androidharness.app.ui.chat.components.ComposerAttachmentTray(
-                                    images = state.attachments,
-                                    files = state.fileAttachments,
-                                    imports = state.attachmentImports,
-                                    imageDir = c.images.imagesDir,
-                                    imageSupport = true,
-                                    onRemoveImage = vm::removeAttachment,
-                                    onRemoveFile = vm::removeFileAttachment,
-                                    onRemoveImport = vm::removeAttachmentImport,
-                                    onOpenImage = { _, _ -> },
+                                ComposerAttachmentTray(
+                                    images = state.attachments, files = state.fileAttachments, imports = state.attachmentImports,
+                                    imageDir = c.images.imagesDir, imageSupport = state.imageInputSupport(), imagesAsText = state.readImageText,
+                                    onRemoveImage = vm::removeAttachment, onRemoveFile = vm::removeFileAttachment,
+                                    onRemoveImport = vm::removeAttachmentImport, onOpenImage = { _, _ -> },
                                 )
                             }
                         }

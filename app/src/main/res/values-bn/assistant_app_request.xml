@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s খুলবেন?</string>
+    <string name="app_request_search">%1$s-এ “%2$s” খুঁজবেন?</string>
+    <string name="app_request_choose_open">কোন অ্যাপ খুলবে?</string>
+    <string name="app_request_choose_map">কোন ম্যাপে “%1$s” খুঁজবেন?</string>
+    <string name="app_request_missing">এই ফোনে খোলা যায় এমন “%1$s” নামের কোনো অ্যাপ পাওয়া যায়নি।</string>
+    <string name="app_request_alternative">নিচের কোনো একটি ম্যাপ দিয়ে “%1$s” খুঁজতে পারেন।</string>
+    <string name="app_request_open_only">%1$s খোলা যায়, কিন্তু এতে সর্বজনীন স্থান খোঁজার সুবিধা নেই। না খুঁজেই অ্যাপটি খুলবেন?</string>
+    <string name="app_request_no_map">ইনস্টল করা কোনো অ্যাপে “%1$s” ম্যাপে খোঁজার সুবিধা নেই।</string>
+    <string name="app_request_no_entry">এই অনুরোধের জন্য %1$s-এ প্রবেশের কোনো উপায় নেই।</string>
+    <string name="app_request_opened">%1$s খোলার অনুরোধ পাঠানো হয়েছে।</string>
+    <string name="app_request_sent">“%2$s” খোঁজার অনুরোধ %1$s-এ পাঠানো হয়েছে।</string>
+    <string name="app_request_failed">%1$s-এ এই অনুরোধ পাঠানো যায়নি। কোন অ্যাপগুলি উপলব্ধ আছে দেখতে আবার অনুরোধ করুন।</string>
+    <string name="app_request_cancelled">বাতিল হয়েছে। কোনো অ্যাপ খোলা হয়নি।</string>
+</resources>

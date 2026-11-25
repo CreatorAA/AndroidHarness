@@ -6,6 +6,7 @@ import com.androidharness.app.core.ToolCallData
 import com.androidharness.app.llm.ProviderConfig
 import com.androidharness.app.llm.RequestOptions
 import com.androidharness.app.llm.ToolSchema
+import com.androidharness.app.tools.AndroidUseScope
 import com.androidharness.app.tools.Tool
 import com.androidharness.app.tools.ToolRegistry
 import com.androidharness.app.workspace.WorkspaceFs
@@ -84,6 +85,7 @@ object SideQuestion {
     )
 
     fun allows(tool: Tool): Boolean = tool.isReadOnly && tool.name !in excluded &&
+        tool.name !in AndroidUseScope.names &&
         !tool.name.startsWith("browser_") && !tool.name.startsWith("mcp__")
 
     fun refusal(name: String): String =

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">在「%1$s」中關閉提示後，仍可在這裡查看提醒。</string>
+    <string name="phone_events_title">手機事件提醒</string>
+    <string name="phone_events_intro">當您開啟指定的應用程式，或該應用程式發出通知時，系統會提醒您。如有連結的任務，請在執行前先檢視內容。</string>
+    <string name="phone_event_ready">手機事件提醒</string>
+    <string name="phone_event_open_reminder">%1$s 已觸發提醒。請輕觸查看。</string>
+    <string name="phone_events_grant_notifications">允許存取通知</string>
+    <string name="phone_events_grant_window">在無障礙設定中啟用「Harness 手機控制」</string>
+    <string name="phone_events_show_alerts">允許顯示提醒通知</string>
+    <string name="phone_event_opened">開啟 %1$s 時</string>
+    <string name="phone_event_notified">%1$s 發出通知時</string>
+    <string name="phone_event_review_task">檢視：%1$s</string>
+    <string name="phone_event_dismiss">略過</string>
+    <string name="phone_event_remind_only">僅提醒我</string>
+    <string name="phone_event_task_missing">連結的任務已無法使用</string>
+    <string name="phone_event_edit">編輯規則</string>
+    <string name="phone_event_remove">移除規則</string>
+    <string name="phone_event_add">新增應用程式規則</string>
+    <string name="phone_event_view_notices">有效通知（%1$d 則）</string>
+    <string name="phone_event_active_notices">目前的通知</string>
+    <string name="phone_event_metadata_only">這裡只會顯示應用程式名稱和時間。若要閱讀通知內容，請在原應用程式中開啟。</string>
+    <string name="phone_event_no_notices">所選的應用程式目前沒有通知。</string>
+    <string name="phone_event_no_listener">通知監聽服務尚未連線。</string>
+    <string name="phone_event_open_source">在應用程式中開啟</string>
+    <string name="phone_event_mark_read">標示為已讀</string>
+    <string name="phone_event_read_confirm">要請 %1$s 將這則通知標示為已讀嗎？</string>
+    <string name="phone_event_task_busy">這項任務已暫停、正在執行，或已不再是手動任務。</string>
+    <string name="phone_event_run_task">執行任務</string>
+    <string name="phone_event_unavailable">這個項目已無法使用。</string>
+    <string name="phone_event_choose_app">選取應用程式</string>
+    <string name="phone_event_search">應用程式名稱或套件名稱</string>
+    <string name="phone_event_when">觸發條件</string>
+    <string name="phone_event_when_open">我開啟這個應用程式時</string>
+    <string name="phone_event_when_notified">這個應用程式發出通知時</string>
+    <string name="phone_event_then">提醒我查看</string>
+    <string name="phone_event_save">儲存規則</string>
+    <string name="phone_event_all_rules">兩種事件都已設定。您可以在下方編輯現有規則。</string>
+</resources>

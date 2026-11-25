@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Predeterminado del proveedor"</string>
     <string name="ui_add_custom_command">"Agregar comando personalizado"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Mantén la CPU activa mientras un run o terminal está activo para que la terminal no se cierre al minimizar la app."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Excluido: Android no limitará los runs en segundo plano."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"On: Samsung y otros OEM pueden matar el trabajo en segundo plano. Excluye la app para runs largos confiables."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"La optimización de batería de Android está desactivada para AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"La optimización de batería de Android está activada. Si las tareas largas se detienen con la pantalla apagada, permite que AndroidHarness use la batería sin restricciones."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Versión actual %1$s. Busca en GitHub Releases versiones más nuevas."</string>
     <string name="ui_available_see_the_dialog">"%1$s disponible, ver el diálogo"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Un agente de codificación que vive en tu teléfono."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"Velocidad de lectura"</string>
     <string name="lms_field_prompt_threads_help">"Núcleos de CPU al leer tu mensaje."</string>
     <string name="lms_unit_cores">"núcleos"</string>
+    <string name="voice_no_result">No se recibió una transcripción completa. Prueba a hablar de nuevo o escribe tu mensaje.</string>
+    <string name="voice_service_interrupted">El servicio de voz del sistema se detuvo antes de terminar. Prueba a dictar de nuevo o escribe el resto.</string>
+    <string name="voice_try_again">Dictar de nuevo</string>
+    <string name="voice_continue">Seguir dictando</string>
+    <string name="voice_finish_to_send">Escuchando. Toca Enviar cuando termines.</string>
 </resources>

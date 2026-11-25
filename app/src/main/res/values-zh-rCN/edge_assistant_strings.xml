@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">侧边悬浮条</string>
+    <string name="assistant_edge_desc">从右侧悬浮条向内滑动打开助手，上下拖动可调整位置。</string>
+    <string name="assistant_edge_permission_hint">请在 Android 设置中允许 AndroidHarness 在其他应用上层显示。</string>
+    <string name="assistant_edge_permission_unavailable">无法打开悬浮窗权限设置。</string>
+    <string name="assistant_edge_handle_description">打开跨应用助手</string>
+    <string name="assistant_edge_start_failed">无法开启侧边悬浮条，请重试。</string>
+    <string name="assistant_edge_disconnected">系统已断开助手连接</string>
+    <string name="assistant_edge_reconnect">重新连接</string>
+    <string name="assistant_edge_reconnect_steps">在系统的数字助理设置中先选“无”，再选回 AndroidHarness。</string>
+    <string name="assistant_edge_grant_overlay">开启悬浮窗权限</string>
+</resources>

@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Conversas em outros projetos usam este espaço de trabalho: %1$s. Remova o espaço dessas conversas antes de excluí-lo. As conversas com alterações salvas precisam manter o acesso ao espaço de trabalho.</string>
+    <string name="wp_delete_running_blocked">Pare as tarefas em execução neste projeto antes de excluí-lo.</string>
+    <string name="wp_reset_shared_blocked">Outras conversas também usam o espaço de trabalho do app: %1$s. Remova o espaço dessas conversas antes de redefini-lo.</string>
+    <string name="wp_reset_running_blocked">Pare as tarefas em execução neste espaço de trabalho antes de redefini-lo.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d automação</item>
+        <item quantity="other">%1$d automações</item>
+    </plurals>
+    <string name="wp_picked_folder">Pasta selecionada</string>
+    <string name="wp_review_changed">Os detalhes mudaram. Feche esta caixa de diálogo e revise a ação novamente.</string>
+    <string name="wp_editor_toggle_wrap">Alternar quebra de linha</string>
+    <string name="wp_editor_undo_available">Pode ser desfeito</string>
+    <string name="wp_reset_app_only">Só é possível redefinir o espaço de trabalho do app.</string>
+    <string name="wp_editor_find_replace">Localizar e substituir no projeto</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d arquivo alterado</item>
+        <item quantity="other">%1$d arquivos alterados</item>
+    </plurals>
     <string name="wp_add_shared">"Pasta compartilhada"</string>
     <string name="wp_add_shared_sub">"Sobrevive à desinstalação. As versões estável e nightly veem a mesma pasta"</string>
     <string name="wp_add_shared_failed">"Não foi possível criar %1$s. Verifique se o acesso a todos os arquivos está ativo e tente de novo."</string>

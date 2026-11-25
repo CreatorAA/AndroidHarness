@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">لا شيء للتراجع عنه في هذه الجولة.</string>
+    <string name="chat_compaction_preparing">جارٍ إعداد ملخص المحادثة…</string>
+    <string name="chat_compaction_too_few_messages">لا توجد رسائل كافية لضغط المحادثة بعد.</string>
+    <string name="chat_compaction_retrying">إعادة محاولة التلخيص · المحاولة %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">توقف الضغط. تم الاحتفاظ بالسجل. أعد تشغيل /compact عندما تكون مستعدًا.</string>
+    <string name="chat_compaction_refresh_failed">ضُغطت المحادثة، لكن تعذّر تحديث إعدادات المهمة أو تقدير السياق: %1$s</string>
+    <string name="chat_compaction_failed_notice">فشل الضغط: %1$s. تم الاحتفاظ بالسجل. جرّب /compact مرة أخرى أو اختر نموذجًا آخر.</string>
+    <string name="reasoning_from_catalog">الاستدلال مذكور في دليل النماذج</string>
+    <string name="reasoning_from_provider">الاستدلال مُبلّغ عنه من المزوّد</string>
+    <string name="reasoning_from_user">حددتَ الاستدلال بنفسك</string>
+    <string name="reasoning_from_name">استُنتج دعم الاستدلال من اسم النموذج</string>
+    <string name="automation_every_day">كل يوم</string>
+    <string name="automation_daily_at">يوميًا الساعة %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">أنشئ ملف APK للتصحيح وأصلح أخطاء الإنشاء.</string>
+    <string name="app_update_checking">جارٍ التحقق من التحديثات…</string>
+    <string name="app_update_up_to_date">لديك أحدث إصدار</string>
+    <string name="files_directory">مجلد</string>
+    <string name="cache_status_unavailable">بيانات ذاكرة التخزين المؤقت غير متاحة</string>
+    <string name="cache_status_hit">إصابة ذاكرة التخزين المؤقت · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · بيانات جزئية</string>
+    <string name="cache_estimated_price">نحو %1$s</string>
+    <string name="chat_live_sites_suffix">" مواقع"</string>
+    <string name="chat_research_sources_suffix">/%1$d مصادر</string>
+    <string name="chat_research_read_suffix">" مقروءة"</string>
+    <string name="package_status_failed">فشل التثبيت</string>
+    <string name="package_hide_details">إخفاء تفاصيل التثبيت</string>
+    <string name="package_show_details">عرض تفاصيل التثبيت</string>
+    <string name="package_recently_unpacked">فُكّ مؤخرًا · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="zero">%1$d عنصر</item>
+        <item quantity="one">%1$d عنصر</item>
+        <item quantity="two">%1$d عنصران</item>
+        <item quantity="few">%1$d عناصر</item>
+        <item quantity="many">%1$d عنصرًا</item>
+        <item quantity="other">%1$d عنصر</item>
+    </plurals>
+</resources>

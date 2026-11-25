@@ -1,0 +1,4 @@
+<resources>
+    <string name="phone_driver_service_name">Harness 手机操作</string>
+    <string name="phone_driver_service_description">让助手在你发起的手机任务中读取当前页面、点按钮、输入文字。停止任务后，助手不会再操作手机。</string>
+</resources>

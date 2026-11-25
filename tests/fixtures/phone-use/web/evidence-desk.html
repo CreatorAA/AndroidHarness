@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"><title>河谷周报</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f2e9;color:#233b35;font:17px/1.65 system-ui,sans-serif}main{max-width:620px;margin:auto;padding:30px 20px 40px}small{color:#516a60}h1{font-size:29px;line-height:1.3;margin:.4em 0 .8em}h2{font-size:19px;margin:1em 0 .3em}p{margin:.55em 0}button{display:block;width:100%;text-align:left;border:1px solid #bccac1;border-radius:10px;padding:14px 16px;margin:10px 0;background:#fffdf6;color:#253d35;font:inherit}button b,button small{display:block}button:active{background:#d8e8dd}article{background:#fffdf6;border-left:4px solid #a35c38;padding:12px 16px;margin:16px 0}footer{margin-top:25px;font-size:13px;color:#586e63}button.back{width:auto;padding:7px 18px}
+</style>
+<main id="main"></main>
+<script>
+'use strict';
+(() => {
+  const page=document.querySelector('main'), q=new URLSearchParams(location.search);
+  const shift=q.get('case')==='shift'; // default dispatch, optional independent non-conversation case
+  const random=n=>crypto.getRandomValues(new Uint32Array(1))[0]%n;
+  const ticket=String(1000+random(9000)), rack=1+random(48), gate=['北门','东门','西门'][random(3)];
+  const platform=['南站台','西站台','东站台'][random(3)], time='15:'+String(10+random(46));
+  const round=crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
+  const counts={correct:0,other:0};let viewing=false;
+  function add(tag,text,parent=page){const e=document.createElement(tag);e.textContent=text;parent.append(e);return e}
+  function title(kicker,name){page.replaceChildren();add('small',kicker);add('h1',name)}
+  function item(name,summary,f){const b=add('button','');add('b',name,b);add('small',summary,b);b.onclick=f}
+  function trace(correct){
+    if(location.protocol!=='http:' && location.protocol!=='https:')return;
+    // Same-origin local acceptance receipt only; no production requests or personal data.
+    const args=new URLSearchParams({round,case:shift?'shift':'dispatch',event:correct?'opened_source':'opened_other'});
+    if(correct)args.set('shown',shift?gate+' '+rack+' '+ticket:platform+' '+time);
+    fetch('route-probe.html?'+args,{cache:'no-store'}).catch(()=>{});
+  }
+  function details(correct,idx){
+    viewing=true;counts[correct?'correct':'other']++;trace(correct);
+    if(shift){
+      title('河岸公园  /  班前手册','志愿者集合安排');
+      add('h2',correct?'周日 · 下午班':idx===0?'周六 · 下午班':'周日 · 上午班');
+      add('p',correct?'河湾沿线｜水质采样组':idx===0?'苗圃｜种植组':'内场｜路线引导组');
+      add('article',correct?'物料请到'+gate+'的 '+rack+' 号架领取，向仓务员出示取件牌 '+ticket+'。':'本场物品统一发至座位，没有仓库取件牌。');
+    }else{
+      title('河谷周报  /  联络笺',correct?'客运站值班记录':'社区信息转摘');
+      add('h2',correct?'临时加班车':'步道养护例会');
+      add('article',correct?'原定下午没有返程班次。调度刚确认补开一班，'+time+' 从'+platform+'发车，小谷能在值夜班前回来。':'养护组明天上午会检查长椅，其他安排不变。');
+    }
+    const btn=add('button','返回');btn.className='back';btn.onclick=home;
+  }
+  function home(){
+    viewing=false;
+    if(shift){
+      title('河岸公园  /  FIELD NOTES','周末志愿者班表');
+      add('p','集合前请以所属班次的安排为准。');
+      item('周六 · 下午班','苗圃  /  种植组',()=>details(false,0));
+      item('周日 · 上午班','内场  /  路线引导组',()=>details(false,1));
+      item('周日 · 下午班','河湾沿线  /  水质采样组',()=>details(true,2));
+    }else{
+      title('河谷周报  /  现场消息','站务联络簿');
+      add('small','前一条 · 养护组');item('社区信息转摘','养护组：明天的安排发过来了。',()=>details(false,0));
+      add('small','最新 · 小谷');item('引用 · 客运站值班记录','调度：刚和总站确认过。',()=>details(true,1));
+      add('article','小谷：太好了，这下赶得上了！');
+    }
+    add('footer','河谷周报 · 本机演示数据');
+  }
+  home();addEventListener('keydown',e=>{if(e.key==='Escape'&&viewing)home()});
+})();
+</script></html>

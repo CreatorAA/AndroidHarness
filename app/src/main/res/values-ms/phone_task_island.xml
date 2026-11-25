@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Sembunyikan pembantu</string>
+    <string name="phone_background_off_hint">Pengendalian di latar belakang dimatikan. Meninggalkan aplikasi akan menjeda tugas ini.</string>
+    <string name="phone_background_paused">Dijeda kerana pengendalian di latar belakang dimatikan. Buka sembang ini dalam aplikasi untuk menyambung semula.</string>
+    <string name="phone_island_title">Pembantu telefon</string>
+    <string name="phone_island_planning">Merancang langkah seterusnya</string>
+    <string name="phone_island_looking">Menyemak halaman</string>
+    <string name="phone_island_finding">Mencari aplikasi di skrin utama</string>
+    <string name="phone_island_tap">Memilih kawalan</string>
+    <string name="phone_island_type">Memasukkan teks</string>
+    <string name="phone_island_swipe">Menavigasi halaman</string>
+    <string name="phone_island_gesture">Menyeret item</string>
+    <string name="phone_island_action">Melaksanakan langkah</string>
+    <string name="phone_island_batch">Langkah %1$d daripada %2$d</string>
+    <string name="phone_island_check">Menyemak hasil</string>
+    <string name="phone_island_done">Selesai</string>
+    <string name="phone_island_ended">Tamat · semak hasil</string>
+    <string name="phone_island_stopped">Dihentikan</string>
+    <string name="phone_island_failed">Tidak selesai</string>
+    <string name="phone_island_review">Memerlukan perhatian anda</string>
+    <string name="phone_island_paused">Kawalan telefon dijeda</string>
+    <string name="phone_island_chat">Lihat sembang</string>
+    <string name="phone_island_resume">Teruskan tugas</string>
+    <string name="phone_island_stop">Hentikan tugas</string>
+    <string name="phone_island_details">Kemajuan tugas: %1$s</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">تنظیم زنگ یک‌باره</string>
+    <string name="phone_public_timer">شروع تایمر</string>
+    <string name="phone_public_map">جست‌وجوی مکان</string>
+    <string name="phone_public_calendar">باز کردن پیش‌نویس در تقویم</string>
+    <string name="phone_public_note">باز کردن یادداشت جدید</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">スマートフォン</string>
+    <string name="conversation_new_phone">スマートフォンの新しい会話</string>
+    <string name="phone_conversation_intro">ここで質問できます。アシスタントにアプリを操作させるには、そのアプリに切り替えてアシスタントを呼び出してください。</string>
+    <string name="phone_conversation_settings">アシスタントの設定</string>
+    <string name="settings_start_phone_desc">スマートフォンのアシスタントとの会話を開きます。</string>
+</resources>

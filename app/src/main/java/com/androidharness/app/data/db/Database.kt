@@ -14,6 +14,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.sync.Mutex
 
 @Entity(tableName = "sessions")
 data class SessionEntity(
@@ -38,6 +39,12 @@ data class SessionEntity(
     /** The user-made project this chat belongs to. Null for an ordinary chat with one workspace. */
     val workProjectId: String? = null,
 )
+
+data class SessionKindRow(val id: String, val conversationJson: String?)
+
+// Normal saves use literal enum names. Imported JSON can escape a letter in the name.
+private const val POSSIBLY_PHONE = "(instr(conversationJson, '\"PHONE\"') > 0 OR instr(conversationJson, '\\u') > 0)"
+private const val RECENT_SESSIONS = " ORDER BY updatedAt DESC, createdAt DESC, rowid DESC"
 
 @kotlinx.serialization.Serializable
 @Entity(tableName = "messages", indices = [Index("sessionId")])
@@ -321,8 +328,19 @@ interface HarnessDao {
     suspend fun setConversation(id: String, config: String)
 
     // sessions
-    @Query("SELECT * FROM sessions ORDER BY updatedAt DESC")
+    @Query("SELECT * FROM sessions" + RECENT_SESSIONS)
     fun sessionsFlow(): Flow<List<SessionEntity>>
+
+    // A rowid lookup wakes retention on startup, creation, fork and restore without sorting
+    // or decoding history for every message/usage update to the sessions table.
+    @Query("SELECT id FROM sessions ORDER BY rowid DESC LIMIT 1")
+    fun lastInsertedSessionId(): Flow<String?>
+
+    @Query("SELECT id, conversationJson FROM sessions WHERE " + POSSIBLY_PHONE + RECENT_SESSIONS)
+    suspend fun sessionKindsByRecency(): List<SessionKindRow>
+
+    @Query("SELECT * FROM sessions WHERE instr(conversationJson, :originField) > 0 ORDER BY createdAt DESC")
+    suspend fun phoneTasksFrom(originField: String): List<SessionEntity>
 
     @Query("SELECT * FROM sessions WHERE id = :id")
     suspend fun session(id: String): SessionEntity?
@@ -453,6 +471,18 @@ interface HarnessDao {
 
     @Delete
     suspend fun deleteSession(session: SessionEntity)
+
+    @Query("DELETE FROM sessions WHERE id = :id")
+    suspend fun deleteSessionById(id: String)
+
+    @Query("SELECT imagesJson FROM messages WHERE sessionId = :id AND imagesJson != '[]'")
+    suspend fun messageImageRefs(id: String): List<String>
+
+    @Query("SELECT imagesJson FROM messages WHERE imagesJson != '[]'")
+    suspend fun allMessageImageRefs(): List<String>
+
+    @Query("SELECT DISTINCT sessionId FROM chat_answer_versions")
+    suspend fun sessionsWithAnswerVersions(): List<String>
 
     @Query("DELETE FROM messages WHERE sessionId = :sessionId")
     suspend fun deleteMessages(sessionId: String)
@@ -906,6 +936,8 @@ interface HarnessDao {
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dao(): HarnessDao
+    // A SAF archive streams chat rows and attachments separately, outside a single SQL transaction.
+    internal val chatArchiveLock = Mutex()
 
     companion object {
         val MIGRATION_28_29 = object : androidx.room.migration.Migration(28, 29) {

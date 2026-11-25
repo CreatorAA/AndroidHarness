@@ -10,6 +10,14 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class SettingsBackupPolicyTest {
+    @Test fun assistantEdgeHandleOptInDoesNotTravelWithBackups() {
+        val json = Json { encodeDefaults = true }
+        val local = AppSettings(assistantEdgeHandleEnabled = true)
+        val exported = json.encodeToString(AppSettings.serializer(), local)
+        assertFalse(exported.contains("assistantEdgeHandleEnabled"))
+        assertFalse(json.decodeFromString(AppSettings.serializer(), exported).assistantEdgeHandleEnabled)
+    }
+
     @Test fun experimentalModelConsentCannotBeEnabledByImportingSettings() {
         assertFalse(Json.decodeFromString(AppSettings.serializer(), "{}").localModelExperimental)
         val optedIn = AppSettings(localModelExperimental = true)

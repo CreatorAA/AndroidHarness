@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Kemas kini, persediaan dan maklumat apl",
-      "summary": "Cari versi anda, sambung semula persediaan dan fahami pilihan sokongan.",
-      "location": "Tetapan → Kemas kini, Panduan persediaan, atau Perihal.",
+      "title": "Versi dan persediaan",
+      "summary": "Semak versi yang dipasang atau pasang binaan tersuai yang lebih baharu.",
+      "location": "Tetapan → Perihal atau Panduan persediaan.",
       "before": [
-        "Sambungan rangkaian untuk semakan kemas kini dan halaman sokongan luaran."
+        "Nombor versi boleh dilihat tanpa sambungan internet."
       ],
       "steps": [
         {
           "title": "Semak versi yang dipasang",
-          "body": "Buka Perihal atau Kemas Kini untuk melihat versi/binaan yang dipasang sebenar. Sertakan versi itu apabila menerangkan masalah yang boleh diterbitkan semula."
+          "body": "Buka Perihal. Nombor versi tertera di bawah nama aplikasi. Halaman ini juga menyenaraikan kod sumber, lesen dan projek sumber terbuka yang digunakan."
         },
         {
-          "title": "Gunakan laluan kemas kini yang ditawarkan",
-          "body": "Semak kemas kini dan baca butiran keluaran. Gunakan tindakan muat turun/pasang yang ditawarkan untuk pengedaran ini dan ikut mana-mana langkah pemasang Android."
+          "title": "Pasang binaan tersuai yang lebih baharu",
+          "body": "Buka APK yang dibekalkan oleh penyelenggara binaan tersuai ini dan ikut arahan pemasang Android."
         },
         {
           "title": "Lawati semula persediaan apabila diperlukan",
           "body": "Gunakan Persediaan untuk menyemak pilihan onboarding dan kebenaran/sambungan yang diperlukan. Semak setiap pilihan dan bukannya menganggap pemasangan semula diperlukan."
-        },
-        {
-          "title": "Cari kredit dan sokongan",
-          "body": "Perihal senarai sumber/lesen/kredit dan sokongan atau pautan derma yang tersedia. Derma menyokong aplikasi; ia tidak membeli kredit API atau langganan pembekal."
         }
       ],
-      "outcome": "Anda tahu versi yang dipasang, laluan kemas kini/persediaan yang tersedia dan tempat maklumat apl itu sendiri berada.",
+      "outcome": "Sertakan nombor versi yang dipasang semasa melaporkan masalah.",
       "limits": [
-        "Kemas kini gelagat penghantaran dan pemasangan berbeza mengikut pengedaran dan kebenaran peranti yang tersedia.",
+        "Binaan ini tidak menyemak atau memasang keluaran projek asal.",
         "Kemas kini apl tidak dapat menjamin akses baharu kepada model luaran, membetulkan gangguan pembekal atau memulihkan fail yang dipadamkan."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Buka Kemas Kini"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Semak Persediaan"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Jadikan AndroidHarness pembantu telefon anda dan tanya tentang aplikasi yang anda gunakan.",
       "location": "Tetapan → Pembantu di atas aplikasi lain; kemudian tekan dan tahan butang kuasa atau butang utama, atau leret ke atas dari sudut bawah.",
       "before": [
-        "Pilih model Sembang dan tambah kuncinya dahulu. Pembantu menggunakan model dan tetapan yang sama seperti Sembang.",
+        "Secara lalai, pembantu menggunakan model Sembang. Anda boleh memilih model lain dalam tetapan pembantu.",
         "Android perlu membenarkan AndroidHarness menjadi aplikasi pembantu digital. Pada sesetengah telefon ini ada dalam Aplikasi lalai."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Tanya tentang skrin",
-          "body": "Taip soalan atau ketik cadangan seperti Ringkaskan. Ia hanya melihat skrin apabila soalan anda tentangnya, dan tiada apa-apa daripada skrin dipaparkan dalam panel. Ia berfungsi seperti Sembang, jadi ia boleh mencari di web, membaca halaman dan menunjukkan sumbernya."
+          "body": "Tanya tentang perkara yang dipaparkan pada skrin atau nyatakan perkara yang anda mahu lakukan dalam aplikasi. Secara lalai, anda menyemak tugas telefon sebelum tugas itu bermula."
         },
         {
           "title": "Bercakap daripada menaip",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Teruskan dalam aplikasi",
-          "body": "Panel membesar bersama jawapan dan boleh diseret ke mana-mana ketinggian. Teruskan dalam aplikasi membuka perbualan yang sama dalam Sembang, tempat ia kekal bersama sembang lain anda."
+          "body": "“Teruskan dalam aplikasi” membuka perbualan yang sama dalam aplikasi penuh. Apabila anda memanggil pembantu sekali lagi dalam projek ini, perbualan terakhir akan disambung."
         }
       ],
-      "outcome": "Anda boleh bertanya tentang aplikasi pada skrin tanpa meninggalkannya, dan setiap perbualan disimpan sebagai Sembang biasa.",
+      "outcome": "Aplikasi menyimpan 10 perbualan pembantu telefon yang terakhir digunakan merentas semua projek. Perbualan lama dan mesejnya dipadam apabila tidak lagi aktif. Sejarah Sembang dan Kod tidak terjejas.",
       "limits": [
         "Aplikasi yang menyekat tangkapan skrin, seperti aplikasi bank, dan skrin yang dilindungi Android tidak menghantar gambar atau teks. Anda masih boleh bertanya.",
-        "Gambar skrin hanya dihantar apabila model Sembang boleh membaca gambar. Jika tidak, hanya teks skrin dihantar, dan sesetengah aplikasi berkongsi sangat sedikit teks."
+        "Gambar skrin hanya dihantar apabila model Sembang boleh membaca gambar. Jika tidak, hanya teks skrin dihantar, dan sesetengah aplikasi berkongsi sangat sedikit teks.",
+        "Kelulusan untuk menjalankan tugas tanpa campur tangan meliputi tugas semasa, termasuk penghantaran atau pemadaman. Jika anda menghidupkan tugas telefon automatik, tugas seterusnya bermula tanpa pengesahan awal. Arahan dan skrip masih memerlukan kelulusan."
       ],
       "fixes": [
         {

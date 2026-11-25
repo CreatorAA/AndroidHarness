@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Démarrer une nouvelle conversation</string>
+    <string name="slash_menu_compact">Compacter</string>
+    <string name="slash_menu_compact_hint">Résumer le contexte précédent</string>
+    <string name="slash_menu_cost">Coût</string>
+    <string name="slash_menu_cost_hint">Afficher le total des jetons et des coûts</string>
+    <string name="slash_menu_btw_hint">Poser une question sur le contexte actuel sans l’ajouter à la discussion</string>
+    <string name="slash_menu_doctor">Diagnostic de Harness</string>
+    <string name="slash_menu_doctor_hint">Lancer les autotests des outils Harness</string>
+    <string name="slash_menu_init">Initialiser le projet</string>
+    <string name="slash_menu_init_hint">Créer ou actualiser AGENTS.md</string>
+    <string name="slash_menu_review_hint">Examiner les modifications en attente sans les modifier. Précisez un point après la commande.</string>
+    <string name="slash_menu_plan_hint">Charger la compétence de planification et passer en mode Plan</string>
+    <string name="slash_menu_skills">Parcourir les compétences</string>
+    <string name="slash_menu_skills_hint">Ouvrir le sélecteur complet de compétences</string>
+    <string name="slash_menu_env_hint">Vérifier, mettre à jour, installer ou réparer l’environnement Linux</string>
+    <string name="slash_menu_snippet">Extrait</string>
+    <string name="slash_menu_snippet_hint">Extrait d’invite enregistré</string>
+</resources>

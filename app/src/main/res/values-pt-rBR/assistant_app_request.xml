@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Abrir %1$s?</string>
+    <string name="app_request_search">Pesquisar por “%2$s” em %1$s?</string>
+    <string name="app_request_choose_open">Qual app você quer abrir?</string>
+    <string name="app_request_choose_map">Em qual app de mapas você quer pesquisar por “%1$s”?</string>
+    <string name="app_request_missing">Não foi possível encontrar um app chamado “%1$s” que este celular possa abrir.</string>
+    <string name="app_request_alternative">Você pode pesquisar por “%1$s” em um dos apps de mapas abaixo.</string>
+    <string name="app_request_open_only">%1$s pode ser aberto, mas não oferece pesquisa pública de lugares. Abrir sem pesquisar?</string>
+    <string name="app_request_no_map">Nenhum app instalado oferece pesquisa em mapas por “%1$s”.</string>
+    <string name="app_request_no_entry">%1$s não tem uma opção disponível para atender a esta solicitação.</string>
+    <string name="app_request_opened">Solicitação de abertura de %1$s enviada.</string>
+    <string name="app_request_sent">Pesquisa por “%2$s” enviada para %1$s.</string>
+    <string name="app_request_failed">Não foi possível enviar esta solicitação para %1$s. Faça a solicitação novamente para verificar quais apps estão disponíveis.</string>
+    <string name="app_request_cancelled">Cancelado. Nenhum app foi aberto.</string>
+</resources>

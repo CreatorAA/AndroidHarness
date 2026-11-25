@@ -4,6 +4,7 @@ import com.androidharness.app.ui.theme.motionBlur
 import com.androidharness.app.R
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -764,7 +765,8 @@ private fun formatAutomationTime(timestamp: Long): String =
     DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(timestamp))
 
 @Composable
-private fun StatusPill(status: AutomationStatus, label: String = status.label()) {
+private fun StatusPill(status: AutomationStatus, label: String? = null) {
+    val context = LocalContext.current
     val isPositive = status == AutomationStatus.COMPLETED || status == AutomationStatus.PASSED
     val isProblem = status == AutomationStatus.FAILED || status == AutomationStatus.BLOCKED || status == AutomationStatus.CANCELLED
     val container = when {
@@ -780,7 +782,7 @@ private fun StatusPill(status: AutomationStatus, label: String = status.label())
 
     Surface(color = container, shape = CircleShape) {
         Text(
-            label,
+            label ?: context.getString(status.labelRes()),
             style = MaterialTheme.typography.labelSmall,
             color = content,
             modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
@@ -1451,7 +1453,7 @@ private fun AutomationAiDraftCard(draft: AutomationAiDraft, onEditManually: () -
             Text(draft.prompt, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 5, overflow = TextOverflow.Ellipsis)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                InfoPill(Icons.Outlined.Schedule, draftScheduleLabel(draft))
+                InfoPill(Icons.Outlined.Schedule, draftScheduleLabel(draft, uiContext))
                 if (draft.checkCommand.isNotBlank()) InfoPill(Icons.Outlined.CheckCircle, uiContext.getString(R.string.ui_success_check))
             }
             if (draft.checkCommand.isNotBlank()) {
@@ -1505,7 +1507,7 @@ private fun ManualAutomationEditor(
             value = prompt,
             onValueChange = onPromptChange,
             label = { Text(uiContext.getString(R.string.ui_instructions)) },
-            placeholder = { Text("Build the debug APK and fix any build errors.") },
+            placeholder = { Text(uiContext.getString(R.string.automation_instructions_example)) },
             minLines = 4,
             maxLines = 7,
             shape = RoundedCornerShape(14.dp),
@@ -1693,11 +1695,20 @@ private fun ScheduleChoiceChip(
 private fun defaultOneTimeRun(): Long =
     ZonedDateTime.now().plusHours(1).withSecond(0).withNano(0).toInstant().toEpochMilli()
 
-private fun draftScheduleLabel(draft: AutomationAiDraft): String = when (draft.schedule) {
-    AutomationSchedule.MANUAL -> "Manual"
-    AutomationSchedule.ONCE -> draft.scheduledAt?.let(::formatAutomationTime) ?: "One time"
-    AutomationSchedule.HOURLY -> "Every hour"
-    AutomationSchedule.DAILY -> "%02d:%02d daily".format(draft.hour, draft.minute)
+private fun draftScheduleLabel(draft: AutomationAiDraft, context: Context): String = when (draft.schedule) {
+    AutomationSchedule.ONCE -> draft.scheduledAt?.let(::formatAutomationTime) ?: context.getString(R.string.ui_one_time)
+    AutomationSchedule.DAILY -> context.getString(R.string.automation_daily_at, draft.hour, draft.minute)
+    else -> context.getString(draft.schedule.labelRes())
 }
 
-private fun AutomationStatus.label() = name.lowercase().replaceFirstChar { it.uppercase() }
+internal fun AutomationStatus.labelRes(): Int = when (this) {
+    AutomationStatus.IDLE -> R.string.ui_idle
+    AutomationStatus.QUEUED -> R.string.ui_queued
+    AutomationStatus.RUNNING -> R.string.ui_running_1587
+    AutomationStatus.COMPLETED -> R.string.ui_completed
+    AutomationStatus.PASSED -> R.string.ui_passed
+    AutomationStatus.FAILED -> R.string.ui_failed_64
+    AutomationStatus.BLOCKED -> R.string.ui_blocked
+    AutomationStatus.CANCELLED -> R.string.ui_cancelled
+    AutomationStatus.PAUSED -> R.string.ui_paused
+}

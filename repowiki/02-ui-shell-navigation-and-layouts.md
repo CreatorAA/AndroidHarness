@@ -43,7 +43,7 @@ flowchart TD
 
 ## Invocation Chain
 
-1. `MainActivity.onCreate` reads `container` from `HarnessApp`, starts a foreground update check 2000 ms after resume, and asks for `POST_NOTIFICATIONS` on API 33 and later when notifications are enabled.
+1. `MainActivity.onCreate` reads `container` from `HarnessApp` and asks for `POST_NOTIFICATIONS` on API 33 and later when notifications are enabled.
 2. It routes the launch Intent: `handleSessionIntent` for `AgentService.EXTRA_SESSION_ID`, `handleMcpOAuth` for `androidharness://mcp`, and `handleShareIntent` for a share target.
 3. `setContent` applies `HarnessTheme`, checks biometric unlock, sets `FLAG_SECURE` from `ScreenshotPolicy.blocked`, binds the `WebView` read-capture host, and calls `AppNav(container)`.
 4. `AppNav` collects sessions, settings, providers, projects, the current back stack entry, and running session ids with `collectAsStateWithLifecycle`.

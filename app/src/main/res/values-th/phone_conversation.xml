@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">โทรศัพท์</string>
+    <string name="conversation_new_phone">การสนทนาทางโทรศัพท์ใหม่</string>
+    <string name="phone_conversation_intro">ถามคำถามได้ที่นี่ หากต้องการให้ผู้ช่วยใช้แอป ให้สลับไปที่แอปนั้นแล้วเรียกผู้ช่วย</string>
+    <string name="phone_conversation_settings">การตั้งค่าผู้ช่วย</string>
+    <string name="settings_start_phone_desc">เปิดการสนทนากับผู้ช่วยบนโทรศัพท์</string>
+</resources>

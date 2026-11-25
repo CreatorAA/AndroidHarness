@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">新しい会話を始める</string>
+    <string name="slash_menu_compact">圧縮</string>
+    <string name="slash_menu_compact_hint">以前のコンテキストを要約</string>
+    <string name="slash_menu_cost">コスト</string>
+    <string name="slash_menu_cost_hint">トークン数とコストの合計を表示</string>
+    <string name="slash_menu_btw_hint">チャットに追加せず、現在のコンテキストについて質問</string>
+    <string name="slash_menu_doctor">Harness 診断</string>
+    <string name="slash_menu_doctor_hint">Harness ツールのセルフテストを実行</string>
+    <string name="slash_menu_init">プロジェクトを初期化</string>
+    <string name="slash_menu_init_hint">AGENTS.md を作成または更新</string>
+    <string name="slash_menu_review_hint">未確定の変更を読み取り専用でレビュー。コマンドの後に確認したい点を指定できます。</string>
+    <string name="slash_menu_plan_hint">計画スキルを読み込み、計画モードに切り替え</string>
+    <string name="slash_menu_skills">スキルを参照</string>
+    <string name="slash_menu_skills_hint">すべてのスキルを表示</string>
+    <string name="slash_menu_env_hint">Linux 環境の確認、更新、インストール、修復</string>
+    <string name="slash_menu_snippet">スニペット</string>
+    <string name="slash_menu_snippet_hint">保存済みのプロンプトスニペット</string>
+</resources>

@@ -18,17 +18,18 @@ class NotificationActionReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val sessionId = intent.getStringExtra(AgentService.EXTRA_SESSION_ID) ?: return
+        val runManager = (context.applicationContext as? HarnessApp)?.container?.runManager ?: return
+        if (intent.action in setOf(ACTION_APPROVE, ACTION_APPROVE_ALWAYS, ACTION_DENY) &&
+            runManager.live(sessionId).value.pendingApproval?.requiresPhoneReview == true) return
         // Drop the alert up front so a resolved prompt can't linger; if this
         // broadcast lost a race with an in-app answer, cancelling is still right.
         context.getSystemService(NotificationManager::class.java)
             ?.cancel(sessionId, AgentService.ALERT_NOTIFICATION_ID)
 
-        val runManager = (context.applicationContext as? HarnessApp)?.container?.runManager ?: return
-
         when (intent.action) {
-            ACTION_APPROVE -> runManager.approve(sessionId, rememberForSession = false)
-            ACTION_APPROVE_ALWAYS -> runManager.approve(sessionId, rememberForSession = true)
-            ACTION_DENY -> runManager.deny(sessionId)
+            ACTION_APPROVE -> runManager.approve(sessionId, rememberForSession = false, fromNotification = true)
+            ACTION_APPROVE_ALWAYS -> runManager.approve(sessionId, rememberForSession = true, fromNotification = true)
+            ACTION_DENY -> runManager.deny(sessionId, fromNotification = true)
             ACTION_ENV_INSTALL -> runManager.approveEnvironmentInstall(sessionId)
             ACTION_ENV_SKIP -> runManager.denyEnvironmentInstall(sessionId)
             ACTION_ANSWER -> {

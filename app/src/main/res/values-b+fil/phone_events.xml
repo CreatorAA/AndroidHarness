@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Mananatili rito ang mga paalala habang naka-off ang mga alerto sa %1$s.</string>
+    <string name="phone_events_title">Mga paalala sa aktibidad ng telepono</string>
+    <string name="phone_events_intro">Makatanggap ng paalala kapag nagbukas o nagpadala ng notification ang isang napiling app. Suriin ang anumang naka-link na gawain bago ito patakbuhin.</string>
+    <string name="phone_event_ready">Paalala sa aktibidad ng telepono</string>
+    <string name="phone_event_open_reminder">Nag-trigger ng paalala ang %1$s. I-tap para suriin.</string>
+    <string name="phone_events_grant_notifications">Payagan ang access sa mga notification</string>
+    <string name="phone_events_grant_window">I-enable ang Mga kontrol ng telepono ng Harness sa Accessibility</string>
+    <string name="phone_events_show_alerts">Payagan ang mga notification ng paalala</string>
+    <string name="phone_event_opened">Nagbubukas ang %1$s</string>
+    <string name="phone_event_notified">Nagpapadala ng notification ang %1$s</string>
+    <string name="phone_event_review_task">Suriin: %1$s</string>
+    <string name="phone_event_dismiss">Isara</string>
+    <string name="phone_event_remind_only">Paalalahanan lang ako</string>
+    <string name="phone_event_task_missing">Hindi na available ang naka-link na gawain</string>
+    <string name="phone_event_edit">I-edit ang panuntunan</string>
+    <string name="phone_event_remove">Alisin ang panuntunan</string>
+    <string name="phone_event_add">Magdagdag ng panuntunan para sa app</string>
+    <string name="phone_event_view_notices">Mga aktibong notification (%1$d)</string>
+    <string name="phone_event_active_notices">Mga kasalukuyang notification</string>
+    <string name="phone_event_metadata_only">App at oras lang ang ipinapakita. Buksan ang notification sa orihinal nitong app para basahin ito.</string>
+    <string name="phone_event_no_notices">Walang kasalukuyang notification mula sa mga napili mong app.</string>
+    <string name="phone_event_no_listener">Hindi nakakonekta ang listener ng notification.</string>
+    <string name="phone_event_open_source">Buksan sa app</string>
+    <string name="phone_event_mark_read">Markahan bilang nabasa</string>
+    <string name="phone_event_read_confirm">Hilingin sa %1$s na markahan ang notification na ito bilang nabasa?</string>
+    <string name="phone_event_task_busy">Naka-pause ang gawaing ito, kasalukuyan nang tumatakbo, o hindi na manu-manong pinapatakbo.</string>
+    <string name="phone_event_run_task">Patakbuhin ang gawain</string>
+    <string name="phone_event_unavailable">Hindi na available ang item na ito.</string>
+    <string name="phone_event_choose_app">Pumili ng app</string>
+    <string name="phone_event_search">Pangalan ng app o package</string>
+    <string name="phone_event_when">Kapag</string>
+    <string name="phone_event_when_open">Binuksan ko ang app na ito</string>
+    <string name="phone_event_when_notified">Nagpadala ng notification ang app na ito</string>
+    <string name="phone_event_then">Paalalahanan akong suriin</string>
+    <string name="phone_event_save">I-save ang panuntunan</string>
+    <string name="phone_event_all_rules">Naka-set up na ang parehong aktibidad. I-edit ang mga kasalukuyang panuntunan sa ibaba.</string>
+</resources>

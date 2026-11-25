@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Telefon</string>
+    <string name="conversation_new_phone">Yeni telefon sohbeti</string>
+    <string name="phone_conversation_intro">Burada bir soru sorun. Asistanın bir uygulamayı kullanması için o uygulamaya geçin ve asistanı çağırın.</string>
+    <string name="phone_conversation_settings">Asistan ayarları</string>
+    <string name="settings_start_phone_desc">Telefon asistanı sohbetlerinizi açın.</string>
+</resources>

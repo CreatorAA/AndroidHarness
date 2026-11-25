@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Tippen</string>
+    <string name="phone_review_long_press">Gedrückt halten</string>
+    <string name="phone_review_type">Text eingeben</string>
+    <string name="phone_review_volume">Medienlautstärke einstellen</string>
+    <string name="phone_review_scroll_forward">Vorwärts scrollen</string>
+    <string name="phone_review_scroll_backward">Rückwärts scrollen</string>
+    <string name="phone_review_swipe">Wischen</string>
+    <string name="phone_review_drag">Ziehen</string>
+    <string name="phone_review_home">Zum Startbildschirm zurückkehren</string>
+    <string name="android_use_launcher_trip">Suche von %1$s aus auf dem Startbildschirm nach %2$s und tippe darauf. Setze die Aufgabe dann in %3$s fort.</string>
+    <string name="android_use_action_approval">Diese Aktion einmalig erlauben?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Handy für diesen Chat steuern lassen? Der Agent kann den Bildschirm der Ziel-App an das ausgewählte Modell senden, auf Elemente tippen und Text eingeben. Genehmigte Handy-Befehle in diesem Chat dürfen außerdem Dateien und Einstellungen lesen und ändern. Beim Absenden einer Änderung in der Ziel-App wird erneut nachgefragt.</string>
+    <string name="android_use_submit_approval">Das Absenden einmalig erlauben?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Für diese Aufgabe zu einer anderen App wechseln? Der Agent kann dann den Bildschirm dieser App auslesen und sie bedienen.\n\n%1$s</string>
+    <string name="android_use_code_entry">Aufgabe an den Handy-Assistenten senden</string>
+    <string name="android_use_code_hint">Gib eine Anweisung ein oder sende nur /phone, um die Einstellungen zu öffnen.</string>
+    <string name="android_use_draft_ready">Öffne die Ziel-App und wähle innerhalb von 10 Minuten im Assistenten „Handy bedienen“. Mit /phone --result öffnest du hier die Unterhaltung zur Aufgabe.</string>
+    <string name="android_use_draft_expired">Der Entwurf ist abgelaufen, wurde verworfen oder ersetzt. Schließe diesen Dialog und wähle erneut „Handy bedienen“.</string>
+    <string name="android_use_draft_cancelled">Entwurf für die Handy-Aufgabe verworfen.</string>
+    <string name="android_use_no_draft">In diesem Chat gibt es keinen ausstehenden Entwurf für eine Handy-Aufgabe.</string>
+    <string name="android_use_no_result">Aus diesem Chat wurde noch keine Handy-Aufgabe gestartet.</string>
+    <string name="android_use_local_only">Starte die Handy-Aufgabe aus einem lokalen Code-Arbeitsbereich.</string>
+    <string name="android_use_from_code">Entwurf aus Code</string>
+</resources>

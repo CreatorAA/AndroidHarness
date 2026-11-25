@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"வழங்குநர் இயல்புநிலை"</string>
     <string name="ui_add_custom_command">"தனிப்பயன் கட்டளையைச் சேர்க்கவும்"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"ரன் அல்லது டெர்மினல் செயலில் இருக்கும்போது CPU ஐப் பிடித்துக் கொள்ளுங்கள், அதனால் ஆப்ஸைக் குறைக்கும் போது டெர்மினல் இறக்காது."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"விலக்கப்பட்டவை: Android பின்னணி ரன்களைத் தடுக்காது."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"ஆன்: Samsung மற்றும் பிற OEMகள் பின்னணி வேலைகளை அழிக்கக்கூடும். நம்பகமான நீண்ட ஓட்டங்களுக்கு பயன்பாட்டை விலக்கவும்."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness பயன்பாட்டிற்கு Android பேட்டரி மேம்படுத்தல் முடக்கப்பட்டுள்ளது."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android பேட்டரி மேம்படுத்தல் இயக்கப்பட்டுள்ளது. திரை அணைந்ததும் நீண்ட நேரப் பணிகள் நின்றுவிட்டால், AndroidHarness தடையின்றி பேட்டரியைப் பயன்படுத்த அனுமதிக்கவும்."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"தற்போதைய பதிப்பு %1$s. புதிய உருவாக்கங்களுக்கான GitHub வெளியீடுகளைச் சரிபார்க்கிறது."</string>
     <string name="ui_available_see_the_dialog">"%1$s கிடைக்கிறது, உரையாடலைப் பார்க்கவும்"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"உங்கள் மொபைலில் இருக்கும் குறியீட்டு முகவர்."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"படிக்கும் வேகம்"</string>
     <string name="lms_field_prompt_threads_help">"உங்கள் செய்தியைப் படிக்கும்போது பயன்படும் CPU கோர்கள்."</string>
     <string name="lms_unit_cores">"கோர்கள்"</string>
+    <string name="voice_no_result">முழுமையான உரை கிடைக்கவில்லை. மீண்டும் பேசவும் அல்லது உங்கள் செய்தியைத் தட்டச்சு செய்யவும்.</string>
+    <string name="voice_service_interrupted">முடிவடைவதற்கு முன்பே சிஸ்டத்தின் பேச்சுச் சேவை நின்றுவிட்டது. மீண்டும் பேசவும் அல்லது மீதமுள்ளதைத் தட்டச்சு செய்யவும்.</string>
+    <string name="voice_try_again">மீண்டும் பேசவும்</string>
+    <string name="voice_continue">தொடர்ந்து பேசவும்</string>
+    <string name="voice_finish_to_send">கேட்டுக்கொண்டிருக்கிறது. முடிந்ததும் அனுப்பு என்பதைத் தட்டவும்.</string>
 </resources>

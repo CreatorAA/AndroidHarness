@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">إخفاء المساعد</string>
+    <string name="phone_background_off_hint">التشغيل في الخلفية متوقف. ستتوقف هذه المهمة مؤقتًا عند مغادرة التطبيق.</string>
+    <string name="phone_background_paused">توقفت المهمة مؤقتًا لأن التشغيل في الخلفية متوقف. افتح هذه المحادثة في التطبيق للمتابعة.</string>
+    <string name="phone_island_title">مساعد الهاتف</string>
+    <string name="phone_island_planning">جارٍ التخطيط للخطوات التالية</string>
+    <string name="phone_island_looking">جارٍ التحقق من الصفحة</string>
+    <string name="phone_island_finding">جارٍ البحث عن التطبيق على الشاشة الرئيسية</string>
+    <string name="phone_island_tap">جارٍ تحديد عنصر تحكم</string>
+    <string name="phone_island_type">جارٍ إدخال النص</string>
+    <string name="phone_island_swipe">جارٍ التنقل في الصفحة</string>
+    <string name="phone_island_gesture">جارٍ سحب عنصر</string>
+    <string name="phone_island_action">جارٍ تنفيذ خطوة</string>
+    <string name="phone_island_batch">الخطوة %1$d من %2$d</string>
+    <string name="phone_island_check">جارٍ التحقق من النتيجة</string>
+    <string name="phone_island_done">اكتملت</string>
+    <string name="phone_island_ended">انتهت · تحقّق من النتيجة</string>
+    <string name="phone_island_stopped">توقفت</string>
+    <string name="phone_island_failed">لم تكتمل</string>
+    <string name="phone_island_review">تحتاج إلى انتباهك</string>
+    <string name="phone_island_paused">عناصر التحكم في الهاتف متوقفة مؤقتًا</string>
+    <string name="phone_island_chat">عرض المحادثة</string>
+    <string name="phone_island_resume">متابعة المهمة</string>
+    <string name="phone_island_stop">إيقاف المهمة</string>
+    <string name="phone_island_details">تقدّم المهمة: %1$s</string>
+</resources>

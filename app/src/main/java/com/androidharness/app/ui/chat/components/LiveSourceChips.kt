@@ -49,10 +49,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.androidharness.app.R
 import com.androidharness.app.core.ChatActivityPresentation
 import kotlinx.coroutines.delay
 
@@ -161,7 +163,8 @@ private fun SiteCounter(count: Int) {
     val scheme = MaterialTheme.colorScheme
     AnimatedVisibility(count > 1,
         enter = fadeIn(settle(400)) + expandHorizontally(settle(420), expandFrom = Alignment.Start)) {
-        Row(Modifier.semantics(mergeDescendants = false) { contentDescription = "$count sites" },
+        val description = stringResource(R.string.chat_sources_library_count, count)
+        Row(Modifier.semantics(mergeDescendants = false) { contentDescription = description },
             verticalAlignment = Alignment.CenterVertically) {
             val digits = count.toString()
             digits.forEachIndexed { index, digit ->
@@ -179,7 +182,7 @@ private fun SiteCounter(count: Int) {
                     }
                 }
             }
-            Text(" sites", style = MaterialTheme.typography.labelLarge, color = scheme.onSurfaceVariant)
+            Text(stringResource(R.string.chat_live_sites_suffix), style = MaterialTheme.typography.labelLarge, color = scheme.onSurfaceVariant)
         }
     }
 }

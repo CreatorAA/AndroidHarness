@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness ஃபோன் கட்டுப்பாடுகள்</string>
+    <string name="phone_driver_service_description">திரையைப் படிக்கவும், கட்டுப்பாடுகளைத் தட்டவும், உரையை உள்ளிடவும் உதவியாளரிடம் கேட்கலாம். நீங்கள் தொடங்கும் பணி நடக்கும்போது மட்டுமே ஃபோன் கட்டுப்பாடுகள் செயல்படும். நீங்களே கட்டுப்பாட்டை ஏற்க பணியை நிறுத்துங்கள்.</string>
+</resources>

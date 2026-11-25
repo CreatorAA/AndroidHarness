@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">アシスタントを隠す</string>
+    <string name="phone_background_off_hint">バックグラウンド実行がオフです。アプリを離れると、このタスクは一時停止します。</string>
+    <string name="phone_background_paused">バックグラウンド実行がオフのため一時停止しました。再開するには、アプリでこのチャットを開いてください。</string>
+    <string name="phone_island_title">スマートフォンのアシスタント</string>
+    <string name="phone_island_planning">次の手順を検討中</string>
+    <string name="phone_island_looking">画面を確認中</string>
+    <string name="phone_island_finding">ホーム画面でアプリを検索中</string>
+    <string name="phone_island_tap">操作対象を選択中</string>
+    <string name="phone_island_type">文字を入力中</string>
+    <string name="phone_island_swipe">画面内を移動中</string>
+    <string name="phone_island_gesture">項目をドラッグ中</string>
+    <string name="phone_island_action">手順を実行中</string>
+    <string name="phone_island_batch">全 %2$d 件中 %1$d 件目</string>
+    <string name="phone_island_check">結果を確認中</string>
+    <string name="phone_island_done">完了</string>
+    <string name="phone_island_ended">終了 · 結果を確認してください</string>
+    <string name="phone_island_stopped">停止</string>
+    <string name="phone_island_failed">未完了</string>
+    <string name="phone_island_review">確認が必要です</string>
+    <string name="phone_island_paused">スマートフォンの操作を一時停止中</string>
+    <string name="phone_island_chat">チャットを表示</string>
+    <string name="phone_island_resume">タスクを再開</string>
+    <string name="phone_island_stop">タスクを停止</string>
+    <string name="phone_island_details">タスクの進捗：%1$s</string>
+</resources>

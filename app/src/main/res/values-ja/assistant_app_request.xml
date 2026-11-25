@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s を開きますか？</string>
+    <string name="app_request_search">%1$s で「%2$s」を検索しますか？</string>
+    <string name="app_request_choose_open">どのアプリを開きますか？</string>
+    <string name="app_request_choose_map">どの地図アプリで「%1$s」を検索しますか？</string>
+    <string name="app_request_missing">このスマートフォンで開ける「%1$s」というアプリが見つかりません。</string>
+    <string name="app_request_alternative">下の地図アプリで「%1$s」を検索できます。</string>
+    <string name="app_request_open_only">%1$s は開けますが、他のアプリからの場所検索には対応していません。検索せずに開きますか？</string>
+    <string name="app_request_no_map">「%1$s」を地図で検索できるアプリがインストールされていません。</string>
+    <string name="app_request_no_entry">%1$s にはこのリクエストを受け付ける機能がありません。</string>
+    <string name="app_request_opened">%1$s を開くリクエストを送りました。</string>
+    <string name="app_request_sent">%1$s に「%2$s」の検索を依頼しました。</string>
+    <string name="app_request_failed">%1$s にリクエストを送れませんでした。利用できるアプリを確認するには、もう一度依頼してください。</string>
+    <string name="app_request_cancelled">取り消しました。アプリは開いていません。</string>
+</resources>

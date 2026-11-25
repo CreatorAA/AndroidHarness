@@ -4,17 +4,22 @@ import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.room.withTransaction
+import com.androidharness.app.core.ChatSeries
 import com.androidharness.app.data.db.AppDatabase
 import com.androidharness.app.data.db.ChatAnswerVersionEntity
 import com.androidharness.app.data.db.MessageEntity
 import com.androidharness.app.data.db.SavedAnswerEntity
 import com.androidharness.app.data.db.SessionEntity
 import com.androidharness.app.data.db.UsageEventEntity
+import com.androidharness.app.data.db.WorkProjectEntity
+import com.androidharness.app.workspace.ChatWorkspaceSelection
+import com.androidharness.app.workspace.WorkspaceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.InputStream
@@ -30,7 +35,7 @@ import kotlin.coroutines.coroutineContext
 class ChatBackupManager(
     private val db: AppDatabase,
     private val appContext: Context,
-    private val workspace: com.androidharness.app.workspace.WorkspaceManager = com.androidharness.app.workspace.WorkspaceManager(appContext, db.dao()),
+    private val workspace: WorkspaceManager = WorkspaceManager(appContext, db.dao()),
 ) {
     data class ExportOptions(
         val chatIds: Set<String>? = null,
@@ -65,7 +70,7 @@ class ChatBackupManager(
         onProgress: (BackupProgress) -> Unit = {},
     ): ExportResult = withContext(Dispatchers.IO) {
         try {
-            write(uri, options, onProgress)
+            db.chatArchiveLock.withLock { write(uri, options, onProgress) }
         } catch (e: Throwable) {
             // A half-written backup looks restorable but is not, so never leave one behind.
             withContext(NonCancellable) {
@@ -81,9 +86,11 @@ class ChatBackupManager(
     private suspend fun write(uri: Uri, options: ExportOptions, onProgress: (BackupProgress) -> Unit): ExportResult {
         val counts = dao.messageCounts().associate { it.sessionId to it.count }
         val sessions = dao.allSessions().filter { options.chatIds == null || it.id in options.chatIds }
-        val memories = if (options.memories) dao.allMemories().toBackupMemories(dao.memoryFolders()) else emptyList()
+        val snapshot = if (options.memories) db.withTransaction { dao.memorySnapshot() } else MemoryBackupSnapshot()
+        val memories = snapshot.memories
         val snippets = if (options.snippets) dao.allSnippets().map { it.toBackupSnippet() } else emptyList()
         val manifest = BackupManifest(
+            memoryFolders = snapshot.folders,
             exportedAt = System.currentTimeMillis(),
             chats = sessions.map { it.info(counts[it.id] ?: 0) },
             workspaces = dao.projectsFlow().first().map { BackupWorkspace(it.id, it.name) },
@@ -107,24 +114,26 @@ class ChatBackupManager(
                 onProgress(BackupProgress(index, sessions.size, session.title))
                 val rows = dao.messages(session.id)
                 messages += rows.size
-                if (options.images) rows.forEach { wanted += ChatBackupArchive.imageNames(it.imagesJson) }
-                archive.chat(session.toBackup(
+                val backup = session.toBackup(
                     rows,
                     usage = if (options.usage) dao.usageEvents(session.id) else emptyList(),
                     versions = dao.answerVersionsFor(session.id),
                     saved = dao.savedAnswersFor(session.id),
-                ))
+                )
+                if (options.images) wanted += backup.referencedImages()
+                archive.chat(backup)
             }
             onProgress(BackupProgress(sessions.size, sessions.size))
             if (memories.isNotEmpty()) archive.memories(memories)
             if (snippets.isNotEmpty()) archive.snippets(snippets)
             for (name in wanted) {
                 coroutineContext.ensureActive()
-                val file = File(imagesDir, name).takeIf { it.isFile } ?: continue
-                file.inputStream().use { archive.image(name, original = false, it) }
+                val preview = File(imagesDir, name)
+                val original = File(File(imagesDir, "originals"), name)
+                if (!preview.isFile && !original.isFile) continue
+                if (preview.isFile) preview.inputStream().use { archive.image(name, original = false, it) }
+                if (original.isFile) original.inputStream().use { archive.image(name, original = true, it) }
                 images++
-                File(File(imagesDir, "originals"), name).takeIf { it.isFile }
-                    ?.inputStream()?.use { archive.image(name, original = true, it) }
             }
         }
         return ExportResult(sessions.size, messages, memories.size, snippets.size, images)
@@ -135,7 +144,8 @@ class ChatBackupManager(
         if (isArchive(uri)) {
             val manifest = open(uri).use { ChatBackupArchive.readManifest(it) }
             ChatImportPreview(uri, manifest.chats.map { ImportChat(it, it.id in existing) }, manifest.workspaces,
-                manifest.exportedAt, manifest.memories, manifest.snippets, manifest.memoryProjects, workProjects = manifest.workProjects)
+                manifest.exportedAt, manifest.memories, manifest.snippets, manifest.memoryProjects, workProjects = manifest.workProjects,
+                memoryFolderCount = manifest.memoryFolders.size)
         } else {
             val file = open(uri).use { ChatBackupCodec.decode(it) }
             ChatImportPreview(
@@ -178,7 +188,7 @@ class ChatBackupManager(
         policy: DuplicatePolicy = DuplicatePolicy.SKIP,
         extras: Boolean = true,
         onProgress: (BackupProgress) -> Unit = {},
-    ): ImportResult = withContext(Dispatchers.IO) {
+    ): ImportResult = withContext(Dispatchers.IO) { db.chatArchiveLock.withLock {
         require(missingWorkspaces(preview, selected, policy, extras).all { !workspaceMapping[it.id].isNullOrBlank() }) {
             "Choose a workspace for each restored project before importing."
         }
@@ -189,8 +199,9 @@ class ChatBackupManager(
         var messages = 0
         var skipped = 0
         var copies = 0
-        var images = 0
+        val images = mutableSetOf<String>()
         var memories = emptyList<BackupMemory>()
+        var folders = emptyList<BackupMemoryFolder>()
         var snippets = emptyList<BackupSnippet>()
         val wanted = HashSet<String>()
         val available = dao.projectsFlow().first().map { it.id }.toSet()
@@ -202,9 +213,9 @@ class ChatBackupManager(
             val saved = backupProjects[id] ?: return null
             return runCatching {
                 val selection = ChatRestoreMapping.remapSelection(saved.selectionJson, workspaceMapping)
-                workspace.validateSelection(com.androidharness.app.workspace.ChatWorkspaceSelection.decode(selection))
-                dao.insertWorkProject(com.androidharness.app.data.db.WorkProjectEntity(saved.id, saved.name.take(100), selection,
-                    saved.createdAt, com.androidharness.app.core.ChatSeries.normalize(saved.chatNamePattern)))
+                workspace.validateSelection(ChatWorkspaceSelection.decode(selection))
+                dao.insertWorkProject(WorkProjectEntity(saved.id, saved.name.take(100), selection,
+                    saved.createdAt, ChatSeries.normalize(saved.chatNamePattern)))
                 id
             }.getOrNull()
         }
@@ -214,14 +225,25 @@ class ChatBackupManager(
             if (incoming.id !in selected) return
             onProgress(BackupProgress(done, total, incoming.title))
             val exists = dao.session(incoming.id) != null
-            if (exists && policy == DuplicatePolicy.SKIP) { skipped++; done++; return }
+            if (exists && policy == DuplicatePolicy.SKIP) {
+                // Rows may have landed before a previous restore reached the image entries.
+                // Keep local edits: only fill files both this backup and the local chat reference.
+                if (!preview.legacy) {
+                    val local = ChatBackupArchive.referencedImages(dao.messageImageRefs(incoming.id),
+                        dao.answerVersionsFor(incoming.id).map { it.messagesJson })
+                    wanted += incoming.referencedImages().intersect(local)
+                }
+                skipped++
+                done++
+                return
+            }
             val remapped = ChatRestoreMapping.remap(if (exists) incoming.asCopy() else incoming, workspaceMapping)
             val session = remapped.copy(workProjectId = remapped.workProjectId?.let { workProject(it) })
             require(ChatRestoreMapping.referenced(session).all { it in available }) {
                 "A chosen workspace is no longer available. Review the restored projects again."
             }
             session.workspaceSelectionJson?.let {
-                workspace.validateSelection(com.androidharness.app.workspace.ChatWorkspaceSelection.decode(it))
+                workspace.validateSelection(ChatWorkspaceSelection.decode(it))
             }
             db.withTransaction {
                 dao.insertSession(session.toEntity())
@@ -233,7 +255,7 @@ class ChatBackupManager(
                 session.savedAnswers.map { SavedAnswerEntity(it.messageId, session.id, it.text, it.answeredAt, it.savedAt) }
                     .takeIf { it.isNotEmpty() }?.let { dao.insertImportedSavedAnswers(it) }
             }
-            session.messages.forEach { wanted += ChatBackupArchive.imageNames(it.imagesJson) }
+            if (!preview.legacy) wanted += session.referencedImages()
             sessions++
             messages += session.messages.size
             if (exists) copies++
@@ -248,6 +270,10 @@ class ChatBackupManager(
             snippets = file.snippets
         } else open(uri).use { input ->
             ChatBackupArchive.read(input, object : ChatBackupArchive.Visitor {
+                override suspend fun manifest(manifest: BackupManifest): Boolean {
+                    folders = manifest.memoryFolders
+                    return true
+                }
                 override suspend fun chat(session: BackupSession) = restoreChat(session)
                 override suspend fun memories(found: List<BackupMemory>) { memories = found }
                 override suspend fun snippets(found: List<BackupSnippet>) { snippets = found }
@@ -261,7 +287,7 @@ class ChatBackupManager(
                     try {
                         temp.outputStream().use { input.copyTo(it, 64 * 1024) }
                         if (!temp.renameTo(target)) error("Could not save a restored image")
-                        if (!original) images++
+                        images += name
                     } finally { temp.delete() }
                 }
             })
@@ -270,19 +296,14 @@ class ChatBackupManager(
 
         var restoredMemories = 0
         var restoredSnippets = 0
-        if (extras && (memories.isNotEmpty() || snippets.isNotEmpty())) db.withTransaction {
-            val memoryPlan = MemoryBackupMerge.plan(dao.allMemories(), memories) { id -> id?.let { workspaceMapping[it] ?: it } }
-            val now = System.currentTimeMillis()
-            val known = dao.memoryFolders().map { it.name } + dao.allMemories().mapNotNull { it.folder }
-            MemoryBackupMerge.newFolders(memoryPlan, known, now).forEach { dao.insertMemoryFolder(it) }
-            memoryPlan.forEach { dao.upsertMemory(MemoryBackupMerge.entity(it, now)) }
-            restoredMemories = memoryPlan.size
+        if (extras && (memories.isNotEmpty() || folders.isNotEmpty() || snippets.isNotEmpty())) db.withTransaction {
+            restoredMemories = MemoryBackupMerge.restore(dao, memories, folders) { id -> id?.let { workspaceMapping[it] ?: it } }
             val snippetPlan = SnippetBackupMerge.plan(dao.allSnippets(), snippets)
             snippetPlan.forEach { dao.insertSnippet(SnippetBackupMerge.entity(it)) }
             restoredSnippets = snippetPlan.size
         }
-        ImportResult(sessions, messages, skipped, restoredMemories, restoredSnippets, images, copies)
-    }
+        ImportResult(sessions, messages, skipped, restoredMemories, restoredSnippets, images.size, copies)
+    } }
 
     private fun open(uri: Uri): InputStream =
         appContext.contentResolver.openInputStream(uri) ?: throw ChatBackupException("Could not open the file")
@@ -298,6 +319,10 @@ class ChatBackupManager(
 internal fun SessionEntity.info(messages: Int) = BackupChatInfo(id, title, createdAt, updatedAt, messages, projectId, workspaceSelectionJson)
 
 internal fun BackupSession.info() = BackupChatInfo(id, title, createdAt, updatedAt, messages.size, projectId, workspaceSelectionJson)
+
+private fun BackupSession.referencedImages() = ChatBackupArchive.referencedImages(
+    messages.map { it.imagesJson }, answerVersions.map { it.messagesJson },
+)
 
 /** A second copy beside a chat already on this phone: fresh ids, so nothing collides or overwrites. */
 internal fun BackupSession.asCopy(): BackupSession {

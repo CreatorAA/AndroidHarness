@@ -3,6 +3,7 @@ package com.androidharness.app.agent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.androidharness.app.HarnessApp
+import com.androidharness.app.androiduse.fixtureTaskScope
 import com.androidharness.app.core.*
 import com.androidharness.app.data.*
 import com.androidharness.app.data.env.*
@@ -108,6 +109,83 @@ class HarnessEnvironmentDeviceTest {
             assertFalse(request.prompt.contains(c.linuxEnv.prefix.path))
             assertFalse(request.prompt.substringAfter("## Tools available for this request").contains("web_search"))
         } finally { root.deleteRecursively() }
+    }
+
+    @Test fun onlyExplicitAskUserWaitsAndResumesTheSamePhoneRun() = runBlocking {
+        val question = "计算器已打开。是指 9 × 19 吗？请确认一下算式。"
+        for (nativeQuestion in listOf(false, true)) {
+            val input = "打开计算器并在里面计算九成已久"
+            val policy = ConversationConfig(ConversationKind.PHONE)
+            val sid = c.sessions.createSession("Phone question fixture", conversation = policy)
+            val dir = File(c.appContext.cacheDir, "phone-clarify-${System.nanoTime()}").apply { mkdirs() }
+            var round = 0
+            val model = object : LlmProvider {
+                override fun streamChat(config: ProviderConfig, apiKey: String, systemPrompt: String,
+                    messages: List<ChatMessage>, tools: List<ToolSchema>, options: RequestOptions) = flow {
+                    assertTrue("Phone tools must survive the clarification", tools.any { it.name == "android_action" })
+                    assertTrue(tools.any { it.name == "ask_user" })
+                    when (++round) {
+                        1 -> if (nativeQuestion) {
+                            emit(StreamEvent.ToolCallReady(ToolCallData("clar", "ask_user", buildJsonObject { put("question",question) }.toString())))
+                            emit(StreamEvent.Done("tool_calls"))
+                        } else { emit(StreamEvent.TextDelta(question)); emit(StreamEvent.Done("stop")) }
+                        2 -> {
+                            check(nativeQuestion) { "The wording of a completed reply started another request" }
+                            assertTrue(messages.any { it.role == Role.TOOL && it.toolCallId=="clar" && "对" in it.text })
+                            val scope = buildJsonObject { put("taskScope",fixtureTaskScope("operate","edit", apps=listOf("计算器"))) }
+                            emit(StreamEvent.ToolCallReady(ToolCallData("caps", "android_capabilities", scope.toString())))
+                            emit(StreamEvent.Done("tool_calls"))
+                        }
+                        else -> { emit(StreamEvent.TextDelta("任务参数已确认。")); emit(StreamEvent.Done("stop")) }
+                    }
+                }
+            }
+            try {
+                assertTrue(c.androidUse.begin(sid, "com.androidharness.fixture.phoneuse", managed = true, userInstruction = input))
+                val agent = AgentEngine({ model }, ToolRegistry(emptyList()), c.checkpoints, c.images, c.linuxEnv, c.shizuku,
+                    c.skills, deviceAccess = c.deviceAccess, phone = c.androidUse)
+                val events = agent.run(sid, "task-fixture", config, "", listOf(ChatMessage(Role.USER, input)), { PermissionMode.CONFIRM_RISKY },
+                    mutableSetOf(), FileFs(dir), RequestOptions(), 100_000, AgentMode.ACT, maxIterations = 5, repoMapEnabled = false,
+                    conversation = policy, searchDepth = SearchDepth.OFF, androidUse = true).onEach { e ->
+                    when (e) {
+                        is AgentEvent.QuestionNeeded -> {
+                            assertTrue("Natural-language reply opened a question", nativeQuestion)
+                            assertTrue(e.request.phoneClarification)
+                            e.request.response.complete("对")
+                        }
+                        is AgentEvent.ApprovalNeeded -> error("Unexpected second permission request: ${e.request.toolDescription}")
+                        is AgentEvent.Error -> error(e.toString())
+                        else -> Unit
+                    }
+                }.toList()
+                assertEquals(if(nativeQuestion) 3 else 1, round)
+                assertEquals(if(nativeQuestion) 1 else 0, events.count { it is AgentEvent.QuestionNeeded })
+                assertEquals(nativeQuestion,events.filterIsInstance<AgentEvent.ToolFinished>().any { it.callId == "caps" && it.result.ok })
+                assertTrue(c.androidUse.isManaged(sid))
+            } finally { c.androidUse.end(sid); c.sessions.session(sid)?.let { c.sessions.deleteSession(it) }; dir.deleteRecursively() }
+        }
+        Unit
+    }
+
+    @Test fun phoneModelOnlyReceivesAutoJsGuidanceWhenOptedIn() = runBlocking {
+        val root = File(c.appContext.cacheDir, "phone-environment-${System.nanoTime()}").apply { mkdirs() }
+        val requests = mutableListOf<Request>()
+        val extension = c.androidUse.settings
+        val wasEnabled = extension.autoJsEnabled
+        val agent = AgentEngine({ provider(requests) }, ToolRegistry(emptyList()), c.checkpoints, c.images,
+            c.linuxEnv, c.shizuku, c.skills, deviceAccess = c.deviceAccess, phone = c.androidUse)
+        try {
+            for (enabled in listOf(false, true, false)) {
+                extension.autoJsEnabled = enabled
+                run(agent, FileFs(root), ConversationConfig(ConversationKind.PHONE))
+                val request = requests.last()
+                assertTrue(request.prompt.contains("Section: Phone assistant"))
+                assertFalse(request.prompt.contains("Section: Chat"))
+                assertEquals(enabled, request.names.contains("autojs_scripts"))
+                assertEquals(enabled, request.prompt.contains("AutoJs6 is an optional local extension"))
+                assertFalse(request.names.contains("autojs_run")) // No live phone task.
+            }
+        } finally { extension.autoJsEnabled = wasEnabled; root.deleteRecursively() }
     }
 
     @Test fun planModeAndDisabledSkillKeepTheirRestrictions() = runBlocking {

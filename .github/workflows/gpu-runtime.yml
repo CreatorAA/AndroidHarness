@@ -1,10 +1,10 @@
-name: Publish GPU runtime packages
+name: Build APK and GPU runtime packages
 on:
   workflow_dispatch: {}
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: gpu-runtime-publication
+  group: gpu-runtime-build
   cancel-in-progress: false
 jobs:
   packages:
@@ -27,17 +27,7 @@ jobs:
         with:
           name: github-apk-and-gpu-runtime
           path: |
-            app/build/outputs/apk/release/*.apk
-            app/build/outputs/gpuRuntime/release/*.gz
-      - name: Publish content-addressed GPU assets
-        env:
-          GH_TOKEN: ${{ secrets.GPU_RUNTIME_PUBLISH_TOKEN }}
-        run: |
-          if [ -z "${GH_TOKEN:-}" ]; then
-            echo 'Matching packages are attached to this build. Publish them from AH-GPU-Runtime, or configure GPU_RUNTIME_PUBLISH_TOKEN for automatic cross-repository uploads.'
-            exit 0
-          fi
-          if ! gh release view 1 --repo Sanuu7/AH-GPU-Runtime >/dev/null 2>&1; then
-            gh release create 1 --repo Sanuu7/AH-GPU-Runtime --title 'Optional local GPU runtime' --notes 'Verified, device-specific GPU packages for AndroidHarness. The app contains the expected content hash.' --latest=false
-          fi
-          gh release upload 1 --repo Sanuu7/AH-GPU-Runtime app/build/outputs/gpuRuntime/release/*.gz --clobber
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/gpuRuntime/release/gpu-arm64-v8a-*.so.gz
+            app/build/outputs/gpuRuntime/release/gpu-x86_64-*.so.gz
+          if-no-files-found: error

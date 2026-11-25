@@ -374,7 +374,7 @@ private fun RestoreFlow(
                             }
                     }
                 }
-                if (source.memories + source.snippets > 0) {
+                if (source.hasExtras) {
                     Row(
                         Modifier.fillMaxWidth().clickable { extras = !extras }.padding(vertical = 2.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -383,7 +383,7 @@ private fun RestoreFlow(
                         Text(stringResource(R.string.restore_extras), style = MaterialTheme.typography.bodyMedium)
                     }
                 }
-                if (source.chats.isEmpty() && source.memories + source.snippets == 0) {
+                if (source.chats.isEmpty() && !source.hasExtras) {
                     EmptyNote(stringResource(R.string.restore_empty))
                 } else if (source.chats.isNotEmpty()) {
                     SelectionBar(selected.size, source.chats.size,
@@ -402,7 +402,8 @@ private fun RestoreFlow(
                 }
                 notice?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
                 val count = source.chats.count { it.info.id in selected && (!it.exists || policy == DuplicatePolicy.KEEP_BOTH) }
-                val extrasOnly = count == 0 && extras && source.memories + source.snippets > 0
+                val checkAttachments = !source.legacy && count == 0 && selected.isNotEmpty()
+                val extrasOnly = count == 0 && !checkAttachments && extras && source.hasExtras
                 Button(
                     onClick = {
                         scope.launch {
@@ -415,11 +416,14 @@ private fun RestoreFlow(
                             }
                         }
                     },
-                    enabled = count > 0 || extrasOnly,
+                    enabled = count > 0 || checkAttachments || extrasOnly,
                     modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
                 ) {
-                    Text(if (extrasOnly) stringResource(R.string.restore_extras_only)
-                        else pluralStringResource(R.plurals.restore_start, count, count))
+                    Text(when {
+                        checkAttachments -> stringResource(R.string.backup_action_restore)
+                        extrasOnly -> stringResource(R.string.restore_extras_only)
+                        else -> pluralStringResource(R.plurals.restore_start, count, count)
+                    })
                 }
             }
             Phase.WORKING -> WorkingPanel(

@@ -1,5 +1,7 @@
 package com.androidharness.app.ui
 
+import com.androidharness.app.data.ConversationConfig
+import com.androidharness.app.data.ConversationKind
 import com.androidharness.app.ui.theme.*
 import com.androidharness.app.R
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +21,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.focusable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -92,6 +95,7 @@ import com.androidharness.app.ui.settings.SettingsScreen
 import com.androidharness.app.ui.settings.SkillsScreen
 import com.androidharness.app.ui.setup.SetupScreen
 import com.androidharness.app.ui.terminal.TerminalScreen
+import com.androidharness.app.workspace.displayWorkspaceName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.first
@@ -227,6 +231,7 @@ fun AppNav(container: AppContainer) {
     }
     var codeRoute by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf<String?>(null) }
     var plainRoute by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf<String?>(null) }
+    var phoneRoute by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf<String?>(null) }
     val workspaceSessionId = currentSessionId
         ?: currentEntry?.arguments?.getString("sessionId")
         ?: currentEntry?.arguments?.getString("session")?.takeIf { it.isNotBlank() }
@@ -237,11 +242,14 @@ fun AppNav(container: AppContainer) {
     val chatWorkspaceSelection by remember(workspaceSessionId) { container.workspace.selectionForChat(workspaceSessionId) }
         .collectAsStateWithLifecycle(initialValue = null)
     val chatWorkspaceContext = workspaceSessionId != null || workspaceChatViewModel != null
+    val workspaceName = currentWorkspace?.displayWorkspaceName(uiContext)
     val workspaceSummary = if (chatWorkspaceContext) {
         val count = chatWorkspaceSelection?.grants?.size ?: 1
-        "$count workspace${if (count == 1) "" else "s"}" +
-            currentWorkspace?.name?.let { " · Primary: $it" }.orEmpty()
-    } else currentWorkspace?.name ?: uiContext.getString(R.string.ui_choose_workspace)
+        val workspaceCount = if (count == 1) uiContext.getString(R.string.wp_workspace_count_one)
+            else uiContext.getString(R.string.wp_workspace_count, count)
+        val primary = uiContext.getString(R.string.wp_editor_primary)
+        workspaceCount + workspaceName?.let { " · $primary: $it" }.orEmpty()
+    } else workspaceName ?: uiContext.getString(R.string.ui_choose_workspace)
     val activeFs by remember(workspaceSessionId, workspaceProjectId) { container.workspace.forTools(workspaceSessionId, workspaceProjectId) }
         .collectAsStateWithLifecycle(initialValue = null)
     var workspaceError by remember { mutableStateOf<String?>(null) }
@@ -336,8 +344,13 @@ fun AppNav(container: AppContainer) {
             }
         }
     }
-    androidx.compose.runtime.LaunchedEffect(Unit) {
-        container.pendingSessionId.collect { sid -> nav.navigateToConversation("chat/$sid") }
+    LaunchedEffect(needsSetup) {
+        if (!needsSetup) container.pendingSessionId.collect { sid ->
+            if (sid != null) {
+                nav.navigateToConversation("chat/${encode(sid)}")
+                container.pendingSessionId.compareAndSet(sid, null)
+            }
+        }
     }
     androidx.compose.runtime.LaunchedEffect(container) {
         container.pendingImportedWorkspace.collect { projectId ->
@@ -436,9 +449,17 @@ fun AppNav(container: AppContainer) {
         if (origin != null) {
             if (kind == origin.conversation.kind) return
             val here = origin.sessionId?.let { "chat/$it" } ?: "chat?kind=${origin.conversation.kind.name}"
-            if (origin.conversation.kind == com.androidharness.app.data.ConversationKind.CODE) codeRoute = here else plainRoute = here
+            when (origin.conversation.kind) {
+                ConversationKind.CODE -> codeRoute = here
+                ConversationKind.CHAT -> plainRoute = here
+                ConversationKind.PHONE -> phoneRoute = here
+            }
         }
-        val previous = if (kind == com.androidharness.app.data.ConversationKind.CODE) codeRoute else plainRoute
+        val previous = when (kind) {
+            ConversationKind.CODE -> codeRoute
+            ConversationKind.CHAT -> plainRoute
+            ConversationKind.PHONE -> phoneRoute
+        }
         // Chat and Code each start fresh on their first entry in this app session
         // unless the user asked to continue that section's latest conversation.
         // Returning to a section already open here still uses its route, so drafts survive.
@@ -447,6 +468,7 @@ fun AppNav(container: AppContainer) {
                 settings.chatStart == com.androidharness.app.data.ChatStartMode.LAST_CHAT
             com.androidharness.app.data.ConversationKind.CODE ->
                 settings.codeStart == com.androidharness.app.data.CodeStartMode.LAST_CODE
+            ConversationKind.PHONE -> true
         }
         val last = sessions.firstOrNull { sessionKinds[it.id] == kind && it.id !in settings.archivedSessions }
             ?.takeIf { resume }
@@ -464,7 +486,7 @@ fun AppNav(container: AppContainer) {
         }
         val origin = kind(from) ?: return 0
         val destination = kind(to) ?: return 0
-        val direction = if (origin == destination) 0 else if (destination == com.androidharness.app.data.ConversationKind.CHAT) 1 else -1
+        val direction = destination.ordinal.compareTo(origin.ordinal)
         return direction * if (sectionRtl) -1 else 1
     }
     @Composable fun Sidebar(opened: Boolean, onCollapse: () -> Unit) {
@@ -506,7 +528,9 @@ fun AppNav(container: AppContainer) {
             onChatActions = { actionsSession = it }, onAction = ::sidebarAction,
             selectedChats = selectedChatIds.toSet(), onSelectedChatsChange = { selectedChatIds = it.toList() },
             onSelectedChatsAction = ::selectedChatAction, selectionBusy = batchBusy,
-            savedAnswers = if (activeConversation.isChat) savedAnswerRows.filter { row -> sessions.any { it.id == row.sessionId } } else emptyList(),
+            savedAnswers = if (activeConversation.isChat) savedAnswerRows.filter { row ->
+                sessionKinds[row.sessionId]?.let { (it == ConversationKind.PHONE) == activeConversation.isPhone } == true
+            } else emptyList(),
             onOpenSavedAnswer = { viewingSavedAnswer = it },
             onBuild = { navigateFromSidebar { nav.navigate("build-test?session=${encode(workspaceSessionId.orEmpty())}&project=${encode(workspaceProjectId.orEmpty())}") } },
             onTerminal = { navigateFromSidebar { nav.navigate("terminal?session=${encode(workspaceSessionId.orEmpty())}&project=${encode(workspaceProjectId.orEmpty())}") } },
@@ -521,7 +545,7 @@ fun AppNav(container: AppContainer) {
             changesSummary = changes.takeIf { it.isNotEmpty() }?.let { uiContext.getString(R.string.ui_files_changed_758, (it.size).toString()) },
             onChanges = { currentSessionId?.let { sid -> navigateFromSidebar { nav.navigate("changes/${encode(sid)}") } } },
             snackbar = sidebarSnackbar,
-            chatOnly = activeConversation.isChat,
+            section = activeKind,
             sectionSwitchEnabled = workspaceChatViewModel?.state?.value?.let { it.conversationReady && !it.conversationSaving } ?: true,
             onSelectSection = { kind ->
                 searchQuery = ""
@@ -565,7 +589,7 @@ fun AppNav(container: AppContainer) {
         com.androidharness.app.ui.chat.components.ShareToChatSheet(
             share = share,
             chats = sessions.filter {
-                com.androidharness.app.data.ConversationConfig.decode(it.conversationJson).isChat && it.id !in settings.archivedSessions
+                ConversationConfig.decode(it.conversationJson).kind == ConversationKind.CHAT && it.id !in settings.archivedSessions
             },
             opening = openingShare,
             error = shareError,
@@ -583,7 +607,7 @@ fun AppNav(container: AppContainer) {
                                         .also { created = it; container.chatModels.initialize(it) }
                                 } else {
                                     val destination = container.sessions.session(chosenId)
-                                    check(destination != null && com.androidharness.app.data.ConversationConfig.decode(destination.conversationJson).isChat)
+                                    check(destination != null && ConversationConfig.decode(destination.conversationJson).kind == ConversationKind.CHAT)
                                     chosenId
                                 }
                                 val text = listOfNotNull(share.text, question).joinToString("\n\n").takeIf(String::isNotBlank)
@@ -1170,6 +1194,7 @@ fun AppNav(container: AppContainer) {
                     selectedChatIds = emptyList()
                     if (codeRoute?.takeIf { it.startsWith("chat/") }?.substringAfter("chat/")?.substringBefore('?') in ids) codeRoute = null
                     if (plainRoute?.takeIf { it.startsWith("chat/") }?.substringAfter("chat/")?.substringBefore('?') in ids) plainRoute = null
+                    if (phoneRoute?.takeIf { it.startsWith("chat/") }?.substringAfter("chat/")?.substringBefore('?') in ids) phoneRoute = null
                     if (currentSessionId in ids) openChat(null)
                 } catch (e: Exception) {
                     if (e is kotlinx.coroutines.CancellationException) throw e
@@ -1202,7 +1227,7 @@ fun AppNav(container: AppContainer) {
         AlertDialog(onDismissRequest = { detailsSession = null }, title = { Text(uiContext.getString(R.string.ui_chat_details)) },
             text = { Column(Modifier.heightIn(max = 340.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(session.title, style = MaterialTheme.typography.titleSmall)
-                Text(uiContext.getString(R.string.ui_workspace_1707, (allWorkspaces.firstOrNull { it.id == session.projectId }?.name ?: "Other chats").toString()))
+                Text(uiContext.getString(R.string.ui_workspace_1707, (allWorkspaces.firstOrNull { it.id == session.projectId }?.name ?: uiContext.getString(R.string.sidebar_other_chats))))
                 Text(uiContext.getString(R.string.ui_model_1708, (choice?.model ?: "Unavailable").toString()))
                 Text(uiContext.getString(R.string.ui_tokens_used, (formatTokens(session.totalInputTokens + session.totalOutputTokens)).toString()))
                 Text(uiContext.getString(R.string.ui_updated_1710, (formatRelativeTime(session.updatedAt)).toString()))

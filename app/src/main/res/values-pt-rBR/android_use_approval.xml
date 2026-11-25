@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Tocar</string>
+    <string name="phone_review_long_press">Tocar e manter pressionado</string>
+    <string name="phone_review_type">Inserir texto</string>
+    <string name="phone_review_volume">Ajustar o volume da mídia</string>
+    <string name="phone_review_scroll_forward">Rolar para a frente</string>
+    <string name="phone_review_scroll_backward">Rolar para trás</string>
+    <string name="phone_review_swipe">Deslizar</string>
+    <string name="phone_review_drag">Arrastar</string>
+    <string name="phone_review_home">Voltar à tela inicial</string>
+    <string name="android_use_launcher_trip">Em %1$s, encontre e toque em %2$s na tela inicial. Depois, continue esta tarefa em %3$s.</string>
+    <string name="android_use_action_approval">Permitir esta ação uma vez?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Permitir o controle do celular nesta conversa? O agente poderá enviar a tela do app escolhido ao modelo selecionado, tocar e digitar. Isso também permite que comandos autorizados do celular nesta conversa leiam e alterem arquivos e configurações. Uma nova autorização será solicitada antes de enviar uma alteração no app escolhido.</string>
+    <string name="android_use_submit_approval">Permitir este envio uma vez?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Mudar esta tarefa para outro app? O agente poderá ler a tela desse app e interagir com ele.\n\n%1$s</string>
+    <string name="android_use_code_entry">Enviar uma tarefa ao assistente do celular</string>
+    <string name="android_use_code_hint">Adicione uma instrução ou envie apenas /phone para abrir as configurações.</string>
+    <string name="android_use_draft_ready">Abra o app desejado e selecione Controlar celular no assistente em até 10 minutos. Use /phone --result aqui para ver a conversa.</string>
+    <string name="android_use_draft_expired">Este rascunho expirou, foi cancelado ou substituído. Feche esta janela e selecione Controlar celular novamente.</string>
+    <string name="android_use_draft_cancelled">Rascunho da tarefa no celular cancelado.</string>
+    <string name="android_use_no_draft">Esta conversa não tem rascunhos pendentes para o celular.</string>
+    <string name="android_use_no_result">Nenhuma tarefa no celular foi iniciada nesta conversa.</string>
+    <string name="android_use_local_only">Inicie uma tarefa no celular a partir de um espaço de trabalho local do Code.</string>
+    <string name="android_use_from_code">Rascunho do Code</string>
+</resources>

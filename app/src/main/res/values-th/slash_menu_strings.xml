@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">เริ่มการสนทนาใหม่</string>
+    <string name="slash_menu_compact">ย่อบริบท</string>
+    <string name="slash_menu_compact_hint">สรุปบริบทก่อนหน้า</string>
+    <string name="slash_menu_cost">ค่าใช้จ่าย</string>
+    <string name="slash_menu_cost_hint">แสดงจำนวนโทเค็นและค่าใช้จ่ายทั้งหมด</string>
+    <string name="slash_menu_btw_hint">ถามเกี่ยวกับบริบทปัจจุบันโดยไม่บันทึกลงในแชท</string>
+    <string name="slash_menu_doctor">ตรวจสอบ Harness</string>
+    <string name="slash_menu_doctor_hint">ทดสอบเครื่องมือของ Harness</string>
+    <string name="slash_menu_init">เริ่มต้นโปรเจกต์</string>
+    <string name="slash_menu_init_hint">สร้างหรืออัปเดต AGENTS.md</string>
+    <string name="slash_menu_review_hint">ตรวจทานการเปลี่ยนแปลงที่ค้างอยู่โดยไม่แก้ไข ระบุจุดที่ต้องการเน้นหลังคำสั่ง</string>
+    <string name="slash_menu_plan_hint">โหลดทักษะการวางแผนแล้วเปลี่ยนเป็นโหมดวางแผน</string>
+    <string name="slash_menu_skills">เรียกดูทักษะ</string>
+    <string name="slash_menu_skills_hint">เปิดรายการทักษะทั้งหมด</string>
+    <string name="slash_menu_env_hint">ตรวจสอบ อัปเดต ติดตั้ง หรือซ่อมแซมสภาพแวดล้อม Linux</string>
+    <string name="slash_menu_snippet">ข้อความสั้น</string>
+    <string name="slash_menu_snippet_hint">ข้อความพรอมต์ที่บันทึกไว้</string>
+</resources>

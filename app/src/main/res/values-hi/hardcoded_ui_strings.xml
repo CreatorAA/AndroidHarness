@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">इस बारी में वापस लेने के लिए कुछ नहीं है।</string>
+    <string name="chat_compaction_preparing">चैट का सारांश तैयार हो रहा है…</string>
+    <string name="chat_compaction_too_few_messages">संक्षिप्त करने के लिए अभी पर्याप्त संदेश नहीं हैं।</string>
+    <string name="chat_compaction_retrying">सारांश बनाने की फिर कोशिश हो रही है · कोशिश %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">संक्षिप्तीकरण रोक दिया गया। इतिहास सुरक्षित है। तैयार होने पर /compact फिर चलाएँ।</string>
+    <string name="chat_compaction_refresh_failed">चैट संक्षिप्त हो गई, लेकिन कार्य की सेटिंग या संदर्भ का अनुमान अपडेट नहीं हो सका: %1$s</string>
+    <string name="chat_compaction_failed_notice">संक्षिप्तीकरण विफल: %1$s। इतिहास सुरक्षित है। /compact फिर चलाएँ या दूसरा मॉडल चुनें।</string>
+    <string name="reasoning_from_catalog">मॉडल सूची में तर्क क्षमता दर्ज है</string>
+    <string name="reasoning_from_provider">प्रदाता के अनुसार तर्क क्षमता उपलब्ध है</string>
+    <string name="reasoning_from_user">तर्क क्षमता आपने तय की है</string>
+    <string name="reasoning_from_name">मॉडल के नाम से तर्क क्षमता का अनुमान लगाया गया है</string>
+    <string name="automation_every_day">हर दिन</string>
+    <string name="automation_daily_at">हर दिन %1$02d:%2$02d बजे</string>
+    <string name="automation_instructions_example">डीबग APK बनाएँ और बिल्ड की त्रुटियाँ ठीक करें।</string>
+    <string name="app_update_checking">अपडेट जाँचे जा रहे हैं…</string>
+    <string name="app_update_up_to_date">आप नवीनतम संस्करण पर हैं</string>
+    <string name="files_directory">फ़ोल्डर</string>
+    <string name="cache_status_unavailable">कैश डेटा उपलब्ध नहीं है</string>
+    <string name="cache_status_hit">कैश हिट · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · आंशिक</string>
+    <string name="cache_estimated_price">लगभग %1$s</string>
+    <string name="chat_live_sites_suffix">" साइटें"</string>
+    <string name="chat_research_sources_suffix">/%1$d स्रोत</string>
+    <string name="chat_research_read_suffix">" पढ़े गए"</string>
+    <string name="package_status_failed">इंस्टॉल नहीं हो सका</string>
+    <string name="package_hide_details">इंस्टॉलेशन का विवरण छिपाएँ</string>
+    <string name="package_show_details">इंस्टॉलेशन का विवरण दिखाएँ</string>
+    <string name="package_recently_unpacked">हाल में खोले गए पैकेज · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d आइटम</item>
+        <item quantity="other">%1$d आइटम</item>
+    </plurals>
+</resources>

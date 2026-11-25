@@ -1140,8 +1140,8 @@
     <string name="ui_provider_default">"提供商預設值"</string>
     <string name="ui_add_custom_command">"新增自定義命令"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"執行任務或終端時保持 CPU 活動，避免應用最小化後終端被終止。"</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"已豁免：Android 不會限制後臺執行。"</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"已開啟：Samsung 等廠商可能終止後臺工作。請豁免此應用以保證長時間執行。"</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Android 已對 AndroidHarness 關閉電池最佳化。"</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android 電池最佳化已開啟。如果長時間執行的工作在螢幕關閉後停滯，請允許 AndroidHarness 不受限制地使用電池。"</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"當前版本 %1$s。透過 GitHub Releases 檢查新版本。"</string>
     <string name="ui_available_see_the_dialog">"%1$s 可用，請檢視對話方塊"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"手機上的程式設計智慧體。"</string>
@@ -1845,4 +1845,9 @@
     <string name="lms_field_prompt_threads">"讀取速度"</string>
     <string name="lms_field_prompt_threads_help">"讀取你的訊息時使用的 CPU 核心數。"</string>
     <string name="lms_unit_cores">"核心"</string>
+    <string name="voice_no_result">未取得完整的聽寫結果。請再說一次，或直接輸入訊息。</string>
+    <string name="voice_service_interrupted">系統語音服務在辨識完成前停止了。請重新聽寫，或輸入剩下的內容。</string>
+    <string name="voice_try_again">重新聽寫</string>
+    <string name="voice_continue">繼續聽寫</string>
+    <string name="voice_finish_to_send">正在聆聽。說完後請輕觸傳送。</string>
 </resources>

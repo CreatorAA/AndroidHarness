@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Tocar</string>
+    <string name="phone_review_long_press">Mantener pulsado</string>
+    <string name="phone_review_type">Introducir texto</string>
+    <string name="phone_review_volume">Ajustar el volumen multimedia</string>
+    <string name="phone_review_scroll_forward">Desplazarse hacia delante</string>
+    <string name="phone_review_scroll_backward">Desplazarse hacia atrás</string>
+    <string name="phone_review_swipe">Deslizar</string>
+    <string name="phone_review_drag">Arrastrar</string>
+    <string name="phone_review_home">Volver a la pantalla de inicio</string>
+    <string name="android_use_launcher_trip">Desde %1$s, busca y toca %2$s en la pantalla de inicio y continúa esta tarea en %3$s.</string>
+    <string name="android_use_action_approval">¿Permitir esta acción una vez?\n\n%1$s</string>
+    <string name="android_use_chat_approval">¿Permitir el control del teléfono para este chat? El agente podrá enviar la pantalla de la aplicación de destino al modelo seleccionado, tocar y escribir. Esto también permite que los comandos del teléfono autorizados en este chat lean y modifiquen archivos y ajustes. Se volverá a pedir autorización antes de confirmar un cambio en la aplicación de destino.</string>
+    <string name="android_use_submit_approval">¿Permitir este envío una vez?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">¿Cambiar esta tarea a otra aplicación? El agente podrá leer su pantalla e interactuar con ella.\n\n%1$s</string>
+    <string name="android_use_code_entry">Enviar una tarea al asistente del teléfono</string>
+    <string name="android_use_code_hint">Añade una instrucción o envía /phone sin más para abrir los ajustes.</string>
+    <string name="android_use_draft_ready">Abre la aplicación de destino y selecciona Controlar teléfono en el asistente en los próximos 10 minutos. Usa /phone --result aquí para ver la conversación.</string>
+    <string name="android_use_draft_expired">Este borrador ha caducado, se ha cancelado o se ha sustituido. Cierra este cuadro de diálogo y selecciona Controlar teléfono de nuevo.</string>
+    <string name="android_use_draft_cancelled">Borrador de tarea del teléfono cancelado.</string>
+    <string name="android_use_no_draft">Esta conversación no tiene ningún borrador de tarea del teléfono pendiente.</string>
+    <string name="android_use_no_result">No se ha iniciado ninguna tarea del teléfono desde esta conversación.</string>
+    <string name="android_use_local_only">Inicia una tarea del teléfono desde un espacio de trabajo local de Code.</string>
+    <string name="android_use_from_code">Borrador desde Code</string>
+</resources>

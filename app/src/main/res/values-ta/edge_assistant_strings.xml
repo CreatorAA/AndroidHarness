@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">விளிம்புப் பிடி</string>
+    <string name="assistant_edge_desc">உதவியாளரைத் திறக்க வலப்புற விளிம்பிலுள்ள பிடியை உள்நோக்கி இழுக்கவும்.</string>
+    <string name="assistant_edge_permission_hint">Android அமைப்புகளில் AndroidHarness பிற ஆப்களுக்கு மேல் தோன்ற அனுமதிக்கவும்.</string>
+    <string name="assistant_edge_permission_unavailable">பிற ஆப்களுக்கு மேல் தோன்றுவதற்கான அனுமதி அமைப்புகளைத் திறக்க முடியவில்லை.</string>
+    <string name="assistant_edge_handle_description">பிற ஆப்களுக்கு மேல் உதவியாளரைத் திற</string>
+    <string name="assistant_edge_start_failed">விளிம்புப் பிடியை இயக்க முடியவில்லை. மீண்டும் முயலவும்.</string>
+    <string name="assistant_edge_disconnected">சிஸ்டம் உதவியாளரின் இணைப்பைத் துண்டித்துவிட்டது.</string>
+    <string name="assistant_edge_reconnect">மீண்டும் இணை</string>
+    <string name="assistant_edge_reconnect_steps">Android உதவியாளர் அமைப்புகளில், ஏதுமில்லை என்பதைத் தேர்வுசெய்து, பிறகு AndroidHarness ஐ மீண்டும் தேர்வுசெய்யவும்.</string>
+    <string name="assistant_edge_grant_overlay">பிற ஆப்களின் மேல் காட்ட அனுமதி</string>
+</resources>

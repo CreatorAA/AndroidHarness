@@ -1,0 +1,52 @@
+{
+  "model": "gpt-6.2-sol",
+  "encoding": "o200k_base",
+  "tiktoken_model_mapped": false,
+  "components": {
+    "instructions_plain_text": 6316,
+    "tools_compact_json": 5346,
+    "input_compact_json": 78
+  },
+  "local_component_sum": 11740,
+  "tool_count": 27,
+  "tool_tokens_individual": {
+    "alarm_set": 212,
+    "app_plugins": 417,
+    "app_settings_change": 476,
+    "app_settings_find": 155,
+    "browser_read": 276,
+    "github_api": 236,
+    "github_file": 139,
+    "github_search": 155,
+    "offer_code_handoff": 128,
+    "read_chat_snippet": 166,
+    "read_chat_text": 115,
+    "read_screen": 107,
+    "read_tool_output": 118,
+    "recall": 181,
+    "recent_chats": 96,
+    "remember": 311,
+    "reminder_cancel": 61,
+    "reminder_list": 61,
+    "reminder_set": 298,
+    "search_chats": 178,
+    "suggest_app_action": 146,
+    "timer_set": 105,
+    "view_chat_image": 145,
+    "visual_guide": 187,
+    "web_fetch": 202,
+    "web_search": 469,
+    "zoom_chat_image": 231
+  },
+  "inside_instructions": {
+    "rich_response_rules_and_component_catalog": 3137,
+    "presentation_selection_subset": 373,
+    "native_component_catalog_and_usage_subset": 1968
+  },
+  "on_demand_tool_result_text": {
+    "basics+chart": 1240,
+    "basics+interactive": 1084,
+    "basics+chart+interactive": 1483,
+    "basics": 841
+  }
+}

@@ -4,6 +4,8 @@ import com.androidharness.app.core.ImageRef
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The screen the user called the assistant over. The assistant keeps it here for its chat, and
@@ -64,30 +66,34 @@ object SharedScreens {
 
 class ReadScreenTool : Tool {
     override val name = NAME
-    override val description = "See the screen the user opened the assistant over: the app, its visible text and, when " +
-        "available, a screenshot. Call it whenever the user's message is about what is on their screen, such as " +
-        "\"what's this\", \"summarize this\", \"help me reply\", \"what does this say\" or a question about something " +
-        "shown there. Do not tell the user you cannot see their screen without calling it first."
-    override val parametersSchema = Schema.obj(emptyMap())
+    override val description = "Read the static screen Android shared when the user invoked the assistant. " +
+        "It does not navigate or capture the live app. Use only the evidence channels the user allows."
+    override val parametersSchema = Schema.obj(mapOf(
+        "image" to Schema.boolean("Read the shared screenshot; false excludes both pixels and OCR. Default true."),
+        "text" to Schema.boolean("Read the app's shared structured text; false for screenshot-only requests. Default true."),
+    ))
     override val isReadOnly = true
 
     override fun isAvailable(ctx: ToolContext): Boolean = SharedScreens.get(ctx.sessionId) != null
 
     override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult {
-        val content = SharedScreens.get(ctx.sessionId)?.content()
-            ?: return ToolResult(false, "Android did not share this screen with the assistant. The app may block it, " +
-                "or Use text from screen and Use screenshot may be off in Android's digital assistant settings.")
+        val wantImage = args["image"]?.jsonPrimitive?.booleanOrNull != false
+        val wantText = args["text"]?.jsonPrimitive?.booleanOrNull != false
+        if (!wantImage && !wantText) return ToolResult(false, "Choose the shared text, the screenshot, or both.")
         val shared = SharedScreens.get(ctx.sessionId)
-        val image = if (ctx.imageInputAllowed && content.saveShot != null) shared?.screenshot() else null
-        val read = if (image == null && content.saveShot != null) shared?.screenshotText() else null
+        val content = shared?.content() ?: return ToolResult(false, "Android did not share this screen with the assistant.")
+        val text = content.text.takeIf { wantText && it.isNotBlank() }
+        val image = if (wantImage && ctx.imageInputAllowed) shared.screenshot() else null
+        val read = if (wantImage && image == null) shared.screenshotText() else null
         val note = when {
-            image != null -> "The screenshot is attached."
-            read != null -> "This model cannot see images, so the screenshot's text was read on the device instead.\n\n" +
-                screenshotTextBlock(read)
-            content.saveShot != null -> "This model cannot see images, so only the text is included."
-            else -> "No screenshot is available (the app blocks it or Use screenshot is off), so only the text is included."
+            !wantImage || image != null -> null
+            read != null -> screenshotTextBlock(read)
+            else -> "No screenshot or text read from its pixels is available."
         }
-        return ToolResult(true, content.text + "\n\n" + note, image = image)
+        return ToolResult(text != null || image != null || read != null,
+            listOfNotNull(text, note).joinToString("\n\n").ifEmpty {
+                if (image != null) "Invocation screenshot." else "No structured text was shared."
+            }, image = image)
     }
 
     companion object {

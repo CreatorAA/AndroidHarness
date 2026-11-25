@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Wenn die Hinweise unter „%1$s“ ausgeschaltet sind, bleiben die Erinnerungen hier abrufbar.</string>
+    <string name="phone_events_title">Erinnerungen an Handy-Ereignisse</string>
+    <string name="phone_events_intro">Lass dich erinnern, wenn eine ausgewählte App geöffnet wird oder eine Benachrichtigung sendet. Prüfe die verknüpfte Aufgabe, bevor du sie startest.</string>
+    <string name="phone_event_ready">Erinnerung an ein Handy-Ereignis</string>
+    <string name="phone_event_open_reminder">%1$s hat deine Erinnerung ausgelöst. Tippe zum Prüfen darauf.</string>
+    <string name="phone_events_grant_notifications">Benachrichtigungszugriff erlauben</string>
+    <string name="phone_events_grant_window">Harness-Handy-Steuerung in den Bedienungshilfen aktivieren</string>
+    <string name="phone_events_show_alerts">Erinnerungsbenachrichtigungen erlauben</string>
+    <string name="phone_event_opened">%1$s wird geöffnet</string>
+    <string name="phone_event_notified">%1$s sendet eine Benachrichtigung</string>
+    <string name="phone_event_review_task">Prüfen: %1$s</string>
+    <string name="phone_event_dismiss">Schließen</string>
+    <string name="phone_event_remind_only">Nur erinnern</string>
+    <string name="phone_event_task_missing">Verknüpfte Aufgabe ist nicht mehr verfügbar</string>
+    <string name="phone_event_edit">Regel bearbeiten</string>
+    <string name="phone_event_remove">Regel entfernen</string>
+    <string name="phone_event_add">App-Regel hinzufügen</string>
+    <string name="phone_event_view_notices">Aktive Benachrichtigungen (%1$d)</string>
+    <string name="phone_event_active_notices">Aktuelle Benachrichtigungen</string>
+    <string name="phone_event_metadata_only">Hier siehst du nur die App und die Uhrzeit. Öffne die Benachrichtigung in der ursprünglichen App, um sie zu lesen.</string>
+    <string name="phone_event_no_notices">Keine aktuellen Benachrichtigungen von deinen ausgewählten Apps.</string>
+    <string name="phone_event_no_listener">Der Benachrichtigungsdienst ist nicht verbunden.</string>
+    <string name="phone_event_open_source">In App öffnen</string>
+    <string name="phone_event_mark_read">Als gelesen markieren</string>
+    <string name="phone_event_read_confirm">%1$s bitten, diese Benachrichtigung als gelesen zu markieren?</string>
+    <string name="phone_event_task_busy">Diese Aufgabe ist pausiert, wird bereits ausgeführt oder kann nicht mehr manuell gestartet werden.</string>
+    <string name="phone_event_run_task">Aufgabe ausführen</string>
+    <string name="phone_event_unavailable">Dieses Element ist nicht mehr verfügbar.</string>
+    <string name="phone_event_choose_app">App auswählen</string>
+    <string name="phone_event_search">App-Name oder Paketname</string>
+    <string name="phone_event_when">Wenn</string>
+    <string name="phone_event_when_open">Ich diese App öffne</string>
+    <string name="phone_event_when_notified">Diese App eine Benachrichtigung sendet</string>
+    <string name="phone_event_then">An die Prüfung erinnern</string>
+    <string name="phone_event_save">Regel speichern</string>
+    <string name="phone_event_all_rules">Beide Ereignisse sind bereits eingerichtet. Unten kannst du die vorhandenen Regeln bearbeiten.</string>
+</resources>

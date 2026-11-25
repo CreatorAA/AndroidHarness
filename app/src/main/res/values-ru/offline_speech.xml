@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Только китайский (путунхуа) офлайн</string>
+    <string name="voice_local_only_on">Используется встроенная модель китайского языка (путунхуа). Аудио остаётся на телефоне.</string>
+    <string name="voice_system_first">Предпочтительно используется распознавание речи Android. Если оно недоступно, диктовка на китайском (путунхуа) продолжится на телефоне.</string>
+    <string name="voice_live_handoff">Продолжаем на этом телефоне. Уже распознанные слова сохранены; продолжайте говорить.</string>
+    <string name="voice_local_stopped">Диктовка на устройстве остановлена. Вы можете сохранить уже распознанные слова и продолжить или ввести остальное вручную.</string>
+    <string name="voice_clip_unavailable">Не удалось восстановить полную расшифровку этой записи.</string>
+    <string name="voice_continue_offline">Продолжить на устройстве</string>
+    <string name="voice_clip_handoff">Служба распознавания речи недоступна. Запись расшифровывается на телефоне.</string>
+</resources>

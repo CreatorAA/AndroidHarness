@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">මෙම වාරයේ ආපසු හැරවීමට කිසිවක් නැත.</string>
+    <string name="chat_compaction_preparing">කතාබහේ සාරාංශය සූදානම් කරමින්…</string>
+    <string name="chat_compaction_too_few_messages">සංක්ෂිප්ත කිරීමට තවම ප්‍රමාණවත් පණිවිඩ නැත.</string>
+    <string name="chat_compaction_retrying">සාරාංශ කිරීමට නැවත උත්සාහ කරමින් · %1$d වැනි උත්සාහය · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">සංක්ෂිප්ත කිරීම නතර විය. ඉතිහාසය සුරැකී ඇත. සූදානම් වූ විට /compact නැවත ධාවනය කරන්න.</string>
+    <string name="chat_compaction_refresh_failed">කතාබහ සංක්ෂිප්ත කළ නමුත් කාර්ය සැකසුම් හෝ සන්දර්භ ඇස්තමේන්තුව අලුත් කළ නොහැකි විය: %1$s</string>
+    <string name="chat_compaction_failed_notice">සංක්ෂිප්ත කිරීම අසාර්ථකයි: %1$s. ඉතිහාසය සුරැකී ඇත. /compact නැවත ධාවනය කරන්න හෝ වෙනත් ආකෘතියක් තෝරන්න.</string>
+    <string name="reasoning_from_catalog">ආකෘති නාමාවලියේ තර්කන සහාය දක්වා ඇත</string>
+    <string name="reasoning_from_provider">සැපයුම්කරු තර්කන සහාය වාර්තා කර ඇත</string>
+    <string name="reasoning_from_user">ඔබ තර්කන සහාය සකසා ඇත</string>
+    <string name="reasoning_from_name">ආකෘතියේ නම අනුව තර්කන සහාය අනුමාන කර ඇත</string>
+    <string name="automation_every_day">දිනපතා</string>
+    <string name="automation_daily_at">දිනපතා %1$02d:%2$02d ට</string>
+    <string name="automation_instructions_example">නිදොස්කරණ APK එක සාදා ගොඩනැගීමේ දෝෂ නිවැරදි කරන්න.</string>
+    <string name="app_update_checking">යාවත්කාලීන පරීක්ෂා කරමින්…</string>
+    <string name="app_update_up_to_date">ඔබ නවතම අනුවාදය භාවිත කරයි</string>
+    <string name="files_directory">ෆෝල්ඩරය</string>
+    <string name="cache_status_unavailable">හැඹිලි දත්ත නොමැත</string>
+    <string name="cache_status_hit">හැඹිලියෙන් හමු විය · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · අර්ධ දත්ත</string>
+    <string name="cache_estimated_price">ආසන්න වශයෙන් %1$s</string>
+    <string name="chat_live_sites_suffix">" අඩවි"</string>
+    <string name="chat_research_sources_suffix">/%1$d මූලාශ්‍ර</string>
+    <string name="chat_research_read_suffix">" කියවා ඇත"</string>
+    <string name="package_status_failed">ස්ථාපනය අසාර්ථකයි</string>
+    <string name="package_hide_details">ස්ථාපන විස්තර සඟවන්න</string>
+    <string name="package_show_details">ස්ථාපන විස්තර පෙන්වන්න</string>
+    <string name="package_recently_unpacked">මෑතදී විසුරුවන ලදි · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">අයිතම %1$d</item>
+        <item quantity="other">අයිතම %1$d</item>
+    </plurals>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">گفت‌وگوی تازه‌ای آغاز کنید</string>
+    <string name="slash_menu_compact">فشرده‌سازی زمینه</string>
+    <string name="slash_menu_compact_hint">زمینهٔ قبلی را خلاصه کنید</string>
+    <string name="slash_menu_cost">هزینه</string>
+    <string name="slash_menu_cost_hint">مجموع توکن‌ها و هزینه را نشان دهید</string>
+    <string name="slash_menu_btw_hint">دربارهٔ زمینهٔ فعلی بپرسید، بدون اینکه به گفت‌وگو افزوده شود</string>
+    <string name="slash_menu_doctor">عیب‌یابی Harness</string>
+    <string name="slash_menu_doctor_hint">آزمون خودکار ابزارهای Harness را اجرا کنید</string>
+    <string name="slash_menu_init">راه‌اندازی پروژه</string>
+    <string name="slash_menu_init_hint">فایل AGENTS.md را بسازید یا به‌روز کنید</string>
+    <string name="slash_menu_review_hint">تغییرات در انتظار را بدون ویرایش بررسی کنید. موضوع بررسی را پس از دستور بنویسید.</string>
+    <string name="slash_menu_plan_hint">مهارت برنامه‌ریزی را بارگذاری کنید و به حالت برنامه‌ریزی بروید</string>
+    <string name="slash_menu_skills">مرور مهارت‌ها</string>
+    <string name="slash_menu_skills_hint">فهرست کامل انتخاب مهارت را باز کنید</string>
+    <string name="slash_menu_env_hint">محیط لینوکس را بررسی، به‌روز، نصب یا تعمیر کنید</string>
+    <string name="slash_menu_snippet">قطعه</string>
+    <string name="slash_menu_snippet_hint">قطعهٔ ذخیره‌شده از متن درخواست</string>
+</resources>

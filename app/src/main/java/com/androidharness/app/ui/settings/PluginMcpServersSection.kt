@@ -16,6 +16,8 @@ import com.androidharness.app.R
 import com.androidharness.app.config.HarnessConfig
 import com.androidharness.app.config.HarnessConfigRepository
 import com.androidharness.app.plugins.PluginManager
+import com.androidharness.app.tools.mcp.TrustItemState
+import com.androidharness.app.tools.mcp.WorkspaceTrust
 import com.androidharness.app.ui.common.TextButton
 import com.androidharness.app.workspace.WorkspaceFs
 import kotlinx.coroutines.CancellationException
@@ -33,15 +35,19 @@ internal fun PluginMcpServersSection(container: AppContainer, onOpenPlugins: () 
     val workspace = workspaceOverride ?: current
     val pluginRevision by plugins.revision.collectAsStateWithLifecycle()
     val configRevision by configuration.revision.collectAsStateWithLifecycle()
+    val trustRevision by container.mcp.trustRevision.collectAsStateWithLifecycle()
     val statuses by container.mcp.statuses.collectAsStateWithLifecycle()
     var snapshot by remember(workspace) { mutableStateOf<HarnessConfig?>(null) }
-    var approved by remember(workspace) { mutableStateOf(false) }
+    var itemStates by remember(workspace) { mutableStateOf(emptyMap<String, TrustItemState>()) }
     var error by remember(workspace) { mutableStateOf<String?>(null) }
-    LaunchedEffect(workspace, pluginRevision, configRevision) {
+    LaunchedEffect(workspace, pluginRevision, configRevision, trustRevision) {
         snapshot = null; error = null
         if (workspace != null) try {
             val resolved = withContext(Dispatchers.IO) { configuration.load(workspace) }
-            approved = withContext(Dispatchers.IO) { container.mcp.isWorkspaceApproved(workspace, resolved) }
+            itemStates = withContext(Dispatchers.IO) {
+                val record = container.mcp.trustRecord(workspace, resolved)
+                container.mcp.trustItems(workspace, resolved).associate { it.key to WorkspaceTrust.state(it, record) }
+            }
             snapshot = resolved
         } catch (e: CancellationException) { throw e }
         catch (e: Exception) { error = e.message }
@@ -60,6 +66,7 @@ internal fun PluginMcpServersSection(container: AppContainer, onOpenPlugins: () 
                 val scopeName = if (global) stringResource(R.string.config_global) else if (workspaceOverride == null)
                     project?.name ?: stringResource(R.string.ui_app_workspace) else stringResource(R.string.config_project)
                 val status = workspace?.let { statuses[container.mcp.workspaceConnectionName(it, server)] } ?: statuses[server.name]
+                val trust = itemStates["server:${server.name}"]
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     Icon(Icons.Rounded.Hub, null, Modifier.size(24.dp))
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -67,7 +74,9 @@ internal fun PluginMcpServersSection(container: AppContainer, onOpenPlugins: () 
                         Text("${origin.plugin} · $scopeName", style = MaterialTheme.typography.bodySmall)
                         Text(when {
                             !server.enabled -> stringResource(R.string.ui_off_enable_to_use_its_tools)
-                            !approved -> stringResource(R.string.pm_mcp_approval_pending)
+                            trust == TrustItemState.BLOCKED -> stringResource(R.string.trust_state_blocked)
+                            trust == TrustItemState.DECLINED -> stringResource(R.string.trust_state_declined)
+                            trust != TrustItemState.APPROVED -> stringResource(R.string.pm_mcp_approval_pending)
                             status?.state == "connected" -> stringResource(R.string.ui_connected_tools, status.toolCount.toString())
                             status?.state == "connecting" -> stringResource(R.string.ui_connecting)
                             status?.state == "auth" -> stringResource(R.string.ui_sign_in_to_use_this_server)

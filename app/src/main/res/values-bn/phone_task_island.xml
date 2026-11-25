@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">অ্যাসিস্ট্যান্ট লুকান</string>
+    <string name="phone_background_off_hint">ব্যাকগ্রাউন্ডে চালানো বন্ধ আছে। অ্যাপ থেকে বের হলে এই টাস্ক বিরতিতে যাবে।</string>
+    <string name="phone_background_paused">ব্যাকগ্রাউন্ডে চালানো বন্ধ থাকায় টাস্ক বিরতিতে আছে। আবার চালু করতে অ্যাপে এই চ্যাট খুলুন।</string>
+    <string name="phone_island_title">ফোন অ্যাসিস্ট্যান্ট</string>
+    <string name="phone_island_planning">পরবর্তী ধাপ পরিকল্পনা করা হচ্ছে</string>
+    <string name="phone_island_looking">পেজ যাচাই করা হচ্ছে</string>
+    <string name="phone_island_finding">হোম স্ক্রিনে অ্যাপ খোঁজা হচ্ছে</string>
+    <string name="phone_island_tap">একটি কন্ট্রোল বেছে নেওয়া হচ্ছে</string>
+    <string name="phone_island_type">টেক্সট লেখা হচ্ছে</string>
+    <string name="phone_island_swipe">পেজে এগোনো হচ্ছে</string>
+    <string name="phone_island_gesture">একটি আইটেম টেনে সরানো হচ্ছে</string>
+    <string name="phone_island_action">একটি ধাপ সম্পন্ন করা হচ্ছে</string>
+    <string name="phone_island_batch">%2$dটির মধ্যে %1$d নম্বর ধাপ</string>
+    <string name="phone_island_check">ফলাফল যাচাই করা হচ্ছে</string>
+    <string name="phone_island_done">সম্পন্ন</string>
+    <string name="phone_island_ended">শেষ হয়েছে · ফলাফল দেখুন</string>
+    <string name="phone_island_stopped">বন্ধ করা হয়েছে</string>
+    <string name="phone_island_failed">সম্পন্ন হয়নি</string>
+    <string name="phone_island_review">আপনার মনোযোগ প্রয়োজন</string>
+    <string name="phone_island_paused">ফোন নিয়ন্ত্রণ বিরতিতে আছে</string>
+    <string name="phone_island_chat">চ্যাট দেখুন</string>
+    <string name="phone_island_resume">টাস্ক চালিয়ে যান</string>
+    <string name="phone_island_stop">টাস্ক বন্ধ করুন</string>
+    <string name="phone_island_details">টাস্কের অগ্রগতি: %1$s</string>
+</resources>

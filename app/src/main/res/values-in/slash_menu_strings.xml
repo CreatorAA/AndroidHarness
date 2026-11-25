@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Mulai percakapan baru</string>
+    <string name="slash_menu_compact">Ringkas konteks</string>
+    <string name="slash_menu_compact_hint">Ringkas konteks terdahulu</string>
+    <string name="slash_menu_cost">Biaya</string>
+    <string name="slash_menu_cost_hint">Tampilkan total token dan biaya</string>
+    <string name="slash_menu_btw_hint">Tanya tentang konteks saat ini tanpa menambahkannya ke obrolan</string>
+    <string name="slash_menu_doctor">Diagnostik Harness</string>
+    <string name="slash_menu_doctor_hint">Jalankan uji mandiri alat Harness</string>
+    <string name="slash_menu_init">Inisialisasi proyek</string>
+    <string name="slash_menu_init_hint">Buat atau perbarui AGENTS.md</string>
+    <string name="slash_menu_review_hint">Tinjau perubahan tertunda tanpa mengedit. Tulis fokus setelah perintah.</string>
+    <string name="slash_menu_plan_hint">Muat keterampilan perencanaan dan beralih ke mode Rencana</string>
+    <string name="slash_menu_skills">Telusuri keterampilan</string>
+    <string name="slash_menu_skills_hint">Buka daftar lengkap keterampilan</string>
+    <string name="slash_menu_env_hint">Periksa, perbarui, instal, atau perbaiki lingkungan Linux</string>
+    <string name="slash_menu_snippet">Cuplikan</string>
+    <string name="slash_menu_snippet_hint">Cuplikan prompt tersimpan</string>
+</resources>

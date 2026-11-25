@@ -1,0 +1,26 @@
+<resources>
+    <string name="phone_hide_panel">Hide assistant</string>
+    <string name="phone_background_off_hint">Background running is off. Leaving the app pauses this task.</string>
+    <string name="phone_background_paused">Paused because background running is off. Open this chat in the app to resume.</string>
+    <string name="phone_island_title">Phone assistant</string>
+    <string name="phone_island_planning">Planning next steps</string>
+    <string name="phone_island_looking">Checking the page</string>
+    <string name="phone_island_finding">Finding the app on Home</string>
+    <string name="phone_island_tap">Selecting a control</string>
+    <string name="phone_island_type">Entering text</string>
+    <string name="phone_island_swipe">Moving through the page</string>
+    <string name="phone_island_gesture">Dragging an item</string>
+    <string name="phone_island_action">Performing a step</string>
+    <string name="phone_island_batch">Step %1$d of %2$d</string>
+    <string name="phone_island_check">Checking the result</string>
+    <string name="phone_island_done">Completed</string>
+    <string name="phone_island_ended">Ended · check result</string>
+    <string name="phone_island_stopped">Stopped</string>
+    <string name="phone_island_failed">Not completed</string>
+    <string name="phone_island_review">Needs your attention</string>
+    <string name="phone_island_paused">Phone controls paused</string>
+    <string name="phone_island_chat">View chat</string>
+    <string name="phone_island_resume">Continue task</string>
+    <string name="phone_island_stop">Stop task</string>
+    <string name="phone_island_details">Task progress: %1$s</string>
+</resources>

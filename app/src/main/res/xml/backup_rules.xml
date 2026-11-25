@@ -13,6 +13,7 @@
     <exclude domain="sharedpref" path="api_keys.xml" />
     <exclude domain="sharedpref" path="model-shortcuts.xml" />
     <exclude domain="sharedpref" path="wireless_adb.xml" />
+    <exclude domain="sharedpref" path="phone_control_grants.xml" />
     <exclude domain="file" path="mcp-servers.json" />
     <exclude domain="file" path="mcp-servers.json.hmac" />
     <exclude domain="file" path="linux" />

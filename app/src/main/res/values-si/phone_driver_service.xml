@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness දුරකථන පාලන</string>
+    <string name="phone_driver_service_description">තිරය කියවීමට, පාලන බොත්තම් තට්ටු කිරීමට සහ පෙළ ඇතුළත් කිරීමට ඔබට සහායකයාගෙන් ඉල්ලා සිටිය හැකිය. දුරකථන පාලන ක්‍රියා කරන්නේ ඔබ ආරම්භ කරන කාර්යයක් අතරතුර පමණි. පාලනය ඔබ අතට ගැනීමට කාර්යය නවත්වන්න.</string>
+</resources>

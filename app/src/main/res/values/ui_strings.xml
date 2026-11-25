@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Provider default"</string>
     <string name="ui_add_custom_command">"Add custom command"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Hold the CPU while a run or terminal is active so the terminal will not die when the app is minimized."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Excluded: Android will not throttle background runs."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"On: Samsung and other OEMs may kill background work. Exclude the app for reliable long runs."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Android battery optimization is off for AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android battery optimization is on. If long tasks stall with the screen off, allow unrestricted battery use for AndroidHarness."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Current version %1$s. Checks GitHub Releases for newer builds."</string>
     <string name="ui_available_see_the_dialog">"%1$s available, see the dialog"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"A coding agent that lives on your phone."</string>
@@ -1627,6 +1627,11 @@
     <plurals name="answer_table_columns"><item quantity="one">%1$d column</item><item quantity="other">%1$d columns</item></plurals>
     <plurals name="answer_table_rows"><item quantity="one">%1$d row</item><item quantity="other">%1$d rows</item></plurals>
     <string name="voice_transcribing">Transcribing…</string>
+    <string name="voice_no_result">No complete transcript came back. Try speaking again or type your message.</string>
+    <string name="voice_service_interrupted">The system speech service stopped before it finished. Try dictating again or type the rest.</string>
+    <string name="voice_try_again">Dictate again</string>
+    <string name="voice_continue">Continue dictating</string>
+    <string name="voice_finish_to_send">Listening. Tap send when done.</string>
     <string name="donate_funding_message">We’re short on funds to keep AndroidHarness development going. Your support helps us keep building.</string>
     <string name="donate_dismiss_message">Dismiss donation message</string>
     <string name="discord_join_title">Join our Discord community</string>

@@ -85,7 +85,7 @@
     <string name="storage_role_file_history_note">已编辑工作区文件的早期版本</string>
     <string name="storage_role_editor">编辑器草稿和标签页</string>
     <string name="storage_role_editor_note">未保存的编辑器文本和打开的标签页</string>
-    <string name="storage_role_canvas">Canvas</string>
+    <string name="storage_role_canvas">Canvas 画板</string>
     <string name="storage_role_canvas_note">Canvas 画板及其图片</string>
     <string name="storage_role_settings">设置和配置</string>
     <string name="storage_role_settings_note">偏好设置和 harness 配置</string>

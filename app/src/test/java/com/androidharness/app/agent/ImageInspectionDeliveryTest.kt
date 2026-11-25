@@ -2,6 +2,7 @@ package com.androidharness.app.agent
 
 import com.androidharness.app.core.*
 import com.androidharness.app.tools.ImageInspectionDelivery
+import com.androidharness.app.tools.AndroidUseScope
 import kotlinx.serialization.json.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -63,6 +64,21 @@ class ImageInspectionDeliveryTest {
         val reader = original.copy(toolName = "read_tool_output")
         assertEquals(user, ImageInspectionDelivery.update(user, bytes))
         assertEquals(reader, ImageInspectionDelivery.update(reader, bytes))
+    }
+
+    @Test fun aPhoneFrameCountsOnlyWhenItsOwnPixelsAreInTheRequest() {
+        val observation = original.copy(toolName = AndroidUseScope.OBSERVE,
+            text = """{"ok":true,"observationId":"f1","image_attached":false,"nodes":["Next"]}""")
+        val withPixels = ImageInspectionDelivery.update(observation, bytes)
+        assertEquals(setOf("saved.png"), AndroidUseScope.deliveredFrames(listOf(withPixels)))
+        val stripped = ContextHygiene.stripImages(listOf(withPixels)).single()
+        val body = ImageInspectionDelivery.envelope(stripped.text)!!.body
+        assertTrue(body.getValue("ok").jsonPrimitive.boolean)
+        assertEquals("f1", body.getValue("observationId").jsonPrimitive.content)
+        assertEquals("Next", body.getValue("nodes").jsonArray.single().jsonPrimitive.content)
+        assertFalse(body.getValue("image_attached").jsonPrimitive.boolean)
+        assertFalse(stripped.isError)
+        assertTrue(AndroidUseScope.deliveredFrames(listOf(stripped, original, observation.copy(isError = true))).isEmpty())
     }
 
     @Test fun screenshotOmissionPreservesTheSuccessfulPageRead() {

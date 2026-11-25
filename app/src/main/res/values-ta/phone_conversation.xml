@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">மொபைல்</string>
+    <string name="conversation_new_phone">புதிய மொபைல் உரையாடல்</string>
+    <string name="phone_conversation_intro">இங்கே ஒரு கேள்வியைக் கேளுங்கள். உதவியாளர் ஓர் ஆப்பைப் பயன்படுத்த, அந்த ஆப்புக்குச் சென்று உதவியாளரை அழைக்கவும்.</string>
+    <string name="phone_conversation_settings">உதவியாளர் அமைப்புகள்</string>
+    <string name="settings_start_phone_desc">உங்கள் மொபைல் உதவியாளர் உரையாடல்களைத் திறக்கவும்.</string>
+</resources>

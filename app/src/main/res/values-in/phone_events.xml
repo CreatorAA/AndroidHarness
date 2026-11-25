@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Saat peringatan dinonaktifkan di «%1$s», pengingat tetap tersedia di sini.</string>
+    <string name="phone_events_title">Pengingat peristiwa ponsel</string>
+    <string name="phone_events_intro">Dapatkan pengingat saat aplikasi yang dipilih dibuka atau mengirim notifikasi. Tinjau tugas yang ditautkan sebelum menjalankannya.</string>
+    <string name="phone_event_ready">Pengingat peristiwa ponsel</string>
+    <string name="phone_event_open_reminder">%1$s memicu pengingat Anda. Ketuk untuk meninjau.</string>
+    <string name="phone_events_grant_notifications">Izinkan akses notifikasi</string>
+    <string name="phone_events_grant_window">Aktifkan kontrol ponsel Harness di Aksesibilitas</string>
+    <string name="phone_events_show_alerts">Izinkan notifikasi pengingat</string>
+    <string name="phone_event_opened">%1$s dibuka</string>
+    <string name="phone_event_notified">%1$s mengirim notifikasi</string>
+    <string name="phone_event_review_task">Tinjau: %1$s</string>
+    <string name="phone_event_dismiss">Tutup</string>
+    <string name="phone_event_remind_only">Hanya ingatkan saya</string>
+    <string name="phone_event_task_missing">Tugas yang ditautkan tidak lagi tersedia</string>
+    <string name="phone_event_edit">Edit aturan</string>
+    <string name="phone_event_remove">Hapus aturan</string>
+    <string name="phone_event_add">Tambah aturan aplikasi</string>
+    <string name="phone_event_view_notices">Notifikasi aktif (%1$d)</string>
+    <string name="phone_event_active_notices">Notifikasi saat ini</string>
+    <string name="phone_event_metadata_only">Hanya aplikasi dan waktu yang ditampilkan. Buka notifikasi di aplikasi asalnya untuk membacanya.</string>
+    <string name="phone_event_no_notices">Tidak ada notifikasi saat ini dari aplikasi yang Anda pilih.</string>
+    <string name="phone_event_no_listener">Pemantau notifikasi tidak terhubung.</string>
+    <string name="phone_event_open_source">Buka di aplikasi</string>
+    <string name="phone_event_mark_read">Tandai sebagai dibaca</string>
+    <string name="phone_event_read_confirm">Minta %1$s menandai notifikasi ini sebagai dibaca?</string>
+    <string name="phone_event_task_busy">Tugas ini dijeda, sedang berjalan, atau tidak lagi dijalankan secara manual.</string>
+    <string name="phone_event_run_task">Jalankan tugas</string>
+    <string name="phone_event_unavailable">Item ini tidak lagi tersedia.</string>
+    <string name="phone_event_choose_app">Pilih aplikasi</string>
+    <string name="phone_event_search">Nama aplikasi atau nama paket</string>
+    <string name="phone_event_when">Saat</string>
+    <string name="phone_event_when_open">Saya membuka aplikasi ini</string>
+    <string name="phone_event_when_notified">Aplikasi ini mengirim notifikasi</string>
+    <string name="phone_event_then">Ingatkan saya untuk meninjau</string>
+    <string name="phone_event_save">Simpan aturan</string>
+    <string name="phone_event_all_rules">Kedua peristiwa sudah disiapkan. Edit aturan yang ada di bawah.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Handy</string>
+    <string name="conversation_new_phone">Neuer Handy-Chat</string>
+    <string name="phone_conversation_intro">Stell hier eine Frage. Soll der Assistent eine App bedienen, öffne sie und rufe dort den Assistenten auf.</string>
+    <string name="phone_conversation_settings">Assistenteneinstellungen</string>
+    <string name="settings_start_phone_desc">Öffne deine Unterhaltungen mit dem Handy-Assistenten.</string>
+</resources>

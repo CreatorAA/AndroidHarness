@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Даже если оповещения выключены в разделе «%1$s», напоминания остаются здесь.</string>
+    <string name="phone_events_title">Напоминания о событиях на телефоне</string>
+    <string name="phone_events_intro">Получайте напоминание, когда выбранное приложение открывается или отправляет уведомление. Перед запуском связанной задачи ознакомьтесь с ней.</string>
+    <string name="phone_event_ready">Напоминание о событии на телефоне</string>
+    <string name="phone_event_open_reminder">%1$s: сработало напоминание. Нажмите, чтобы просмотреть.</string>
+    <string name="phone_events_grant_notifications">Разрешить доступ к уведомлениям</string>
+    <string name="phone_events_grant_window">Включить управление телефоном Harness в специальных возможностях</string>
+    <string name="phone_events_show_alerts">Разрешить уведомления о напоминаниях</string>
+    <string name="phone_event_opened">%1$s открывается</string>
+    <string name="phone_event_notified">%1$s отправляет уведомление</string>
+    <string name="phone_event_review_task">Просмотр: %1$s</string>
+    <string name="phone_event_dismiss">Закрыть</string>
+    <string name="phone_event_remind_only">Только напомнить</string>
+    <string name="phone_event_task_missing">Связанная задача больше недоступна</string>
+    <string name="phone_event_edit">Изменить правило</string>
+    <string name="phone_event_remove">Удалить правило</string>
+    <string name="phone_event_add">Добавить правило для приложения</string>
+    <string name="phone_event_view_notices">Активные уведомления (%1$d)</string>
+    <string name="phone_event_active_notices">Текущие уведомления</string>
+    <string name="phone_event_metadata_only">Показываются только приложение и время. Чтобы прочитать уведомление, откройте его в исходном приложении.</string>
+    <string name="phone_event_no_notices">Нет текущих уведомлений от выбранных приложений.</string>
+    <string name="phone_event_no_listener">Служба доступа к уведомлениям не подключена.</string>
+    <string name="phone_event_open_source">Открыть в приложении</string>
+    <string name="phone_event_mark_read">Отметить как прочитанное</string>
+    <string name="phone_event_read_confirm">Попросить %1$s отметить это уведомление как прочитанное?</string>
+    <string name="phone_event_task_busy">Эта задача приостановлена, уже выполняется или больше не запускается вручную.</string>
+    <string name="phone_event_run_task">Запустить задачу</string>
+    <string name="phone_event_unavailable">Этот элемент больше недоступен.</string>
+    <string name="phone_event_choose_app">Выберите приложение</string>
+    <string name="phone_event_search">Название приложения или имя пакета</string>
+    <string name="phone_event_when">Когда</string>
+    <string name="phone_event_when_open">Я открываю это приложение</string>
+    <string name="phone_event_when_notified">Это приложение отправляет уведомление</string>
+    <string name="phone_event_then">Напомнить о просмотре</string>
+    <string name="phone_event_save">Сохранить правило</string>
+    <string name="phone_event_all_rules">Оба события уже настроены. Измените существующие правила ниже.</string>
+</resources>

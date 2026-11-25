@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness ফোন নিয়ন্ত্রণ</string>
+    <string name="phone_driver_service_description">অ্যাসিস্ট্যান্টকে স্ক্রিন পড়তে, কন্ট্রোলে ট্যাপ করতে এবং টেক্সট লিখতে বলতে পারবেন। আপনি কোনো টাস্ক শুরু করলেই শুধু ফোন নিয়ন্ত্রণ কাজ করে। নিজে নিয়ন্ত্রণ নিতে টাস্কটি বন্ধ করুন।</string>
+</resources>

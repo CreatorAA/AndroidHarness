@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">ไม่มีสิ่งที่ต้องย้อนกลับในรอบนี้</string>
+    <string name="chat_compaction_preparing">กำลังเตรียมสรุปแชต…</string>
+    <string name="chat_compaction_too_few_messages">ข้อความยังน้อยเกินไปที่จะย่อ</string>
+    <string name="chat_compaction_retrying">กำลังลองสรุปอีกครั้ง · ครั้งที่ %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">หยุดการย่อแล้ว ประวัติยังอยู่ เรียก /compact อีกครั้งเมื่อพร้อม</string>
+    <string name="chat_compaction_refresh_failed">ย่อแชตแล้ว แต่รีเฟรชการตั้งค่างานหรือค่าประมาณบริบทไม่ได้: %1$s</string>
+    <string name="chat_compaction_failed_notice">ย่อแชตไม่สำเร็จ: %1$s ประวัติยังอยู่ ลอง /compact อีกครั้งหรือเลือกโมเดลอื่น</string>
+    <string name="reasoning_from_catalog">แค็ตตาล็อกโมเดลระบุว่ารองรับการให้เหตุผล</string>
+    <string name="reasoning_from_provider">ผู้ให้บริการระบุว่ารองรับการให้เหตุผล</string>
+    <string name="reasoning_from_user">คุณกำหนดการรองรับการให้เหตุผลเอง</string>
+    <string name="reasoning_from_name">อนุมานการรองรับการให้เหตุผลจากชื่อโมเดล</string>
+    <string name="automation_every_day">ทุกวัน</string>
+    <string name="automation_daily_at">ทุกวัน เวลา %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">สร้าง APK สำหรับดีบักและแก้ไขข้อผิดพลาดในการสร้าง</string>
+    <string name="app_update_checking">กำลังตรวจหาการอัปเดต…</string>
+    <string name="app_update_up_to_date">คุณใช้เวอร์ชันล่าสุดแล้ว</string>
+    <string name="files_directory">โฟลเดอร์</string>
+    <string name="cache_status_unavailable">ไม่มีข้อมูลแคช</string>
+    <string name="cache_status_hit">พบในแคช · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · ข้อมูลบางส่วน</string>
+    <string name="cache_estimated_price">ประมาณ %1$s</string>
+    <string name="chat_live_sites_suffix">" เว็บไซต์"</string>
+    <string name="chat_research_sources_suffix">/%1$d แหล่ง</string>
+    <string name="chat_research_read_suffix">" หน้าที่อ่านแล้ว"</string>
+    <string name="package_status_failed">ติดตั้งไม่สำเร็จ</string>
+    <string name="package_hide_details">ซ่อนรายละเอียดการติดตั้ง</string>
+    <string name="package_show_details">แสดงรายละเอียดการติดตั้ง</string>
+    <string name="package_recently_unpacked">เพิ่งแตกแพ็กเกจ · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">%1$d รายการ</item>
+    </plurals>
+</resources>

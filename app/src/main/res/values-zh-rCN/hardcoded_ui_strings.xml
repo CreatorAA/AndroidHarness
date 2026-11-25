@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">这轮对话没有可撤销的更改。</string>
+    <string name="chat_compaction_preparing">正在准备对话摘要…</string>
+    <string name="chat_compaction_too_few_messages">消息太少，暂时无法压缩。</string>
+    <string name="chat_compaction_retrying">正在重试生成摘要 · 第 %1$d 次 · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">已停止压缩，对话历史已保留。准备好后可重新运行 /compact。</string>
+    <string name="chat_compaction_refresh_failed">对话已压缩，但无法刷新任务设置或上下文估算：%1$s</string>
+    <string name="chat_compaction_failed_notice">压缩失败：%1$s。对话历史已保留。请重试 /compact 或选择其他模型。</string>
+    <string name="reasoning_from_catalog">模型目录标注支持推理</string>
+    <string name="reasoning_from_provider">服务商声明支持推理</string>
+    <string name="reasoning_from_user">推理能力由你设置</string>
+    <string name="reasoning_from_name">根据模型名称推断支持推理</string>
+    <string name="automation_every_day">每天</string>
+    <string name="automation_daily_at">每天 %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">构建调试版 APK，并修复构建错误。</string>
+    <string name="app_update_checking">正在检查更新…</string>
+    <string name="app_update_up_to_date">当前已是最新版本</string>
+    <string name="files_directory">文件夹</string>
+    <string name="cache_status_unavailable">缓存数据不可用</string>
+    <string name="cache_status_hit">缓存命中 · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · 数据不完整</string>
+    <string name="cache_estimated_price">约 %1$s</string>
+    <string name="chat_live_sites_suffix">" 个网站"</string>
+    <string name="chat_research_sources_suffix">/%1$d 个来源</string>
+    <string name="chat_research_read_suffix">" 页已读"</string>
+    <string name="package_status_failed">安装失败</string>
+    <string name="package_hide_details">隐藏安装详情</string>
+    <string name="package_show_details">显示安装详情</string>
+    <string name="package_recently_unpacked">最近解包 · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">%1$d 项</item>
+    </plurals>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">اسکریپت‌های AutoJs6</string>
+    <string name="autojs_allow">اجازه استفاده دستیار از AutoJs6</string>
+    <string name="autojs_allow_hint">درایور جفت‌شده و اسکریپت‌های رابط کاربری را اضافه می‌کند. سرویس داخلی در صورت فعال بودن همچنان در دسترس است.</string>
+    <string name="autojs_need_pair">اکنون اسکریپت‌ها را بنویسید و بررسی کنید. پیش از اجرای آن‌ها در گوشی، افزونه محلی AutoJs6 را پیکربندی کنید.</string>
+    <string name="autojs_new">اسکریپت جدید</string>
+    <string name="autojs_back">بازگشت</string>
+    <string name="autojs_source">اسکریپت رابط کاربری</string>
+    <string name="autojs_sample_source">text(\"ادامه\").waitFor();</string>
+    <string name="autojs_name">نام (برای آزمایش اختیاری است)</string>
+    <string name="autojs_name_exists">اسکریپتی با این نام وجود دارد. برای ویرایش آن را باز کنید یا نام دیگری انتخاب کنید.</string>
+    <string name="autojs_format">برای یافتن یک کنترل از text، desc یا id استفاده کنید، سپس منتظر آن بمانید، روی آن بزنید یا متن وارد کنید. در هر خط یک دستور بنویسید.</string>
+    <string name="autojs_check">بررسی مراحل</string>
+    <string name="autojs_prepare">آزمایش در برنامه مقصد</string>
+    <string name="autojs_preview">مراحل معتبر: %1$d · چیزی اجرا نشده است</string>
+    <string name="autojs_empty">برای ایجاد یک عمل قابل استفاده مجدد، روی «اسکریپت جدید» بزنید. برای آزمایش بدون ذخیره، نام را خالی بگذارید.</string>
+    <string name="autojs_enabled_hint">دستیار می‌تواند از اسکریپت‌های فعال این کتابخانه استفاده کند.</string>
+    <string name="autojs_disabled_hint">پیش از آزمایش این اسکریپت، آن را در کتابخانه فعال کنید.</string>
+    <string name="autojs_delete">«%1$s» حذف شود؟</string>
+    <string name="autojs_delete_action">حذف</string>
+    <string name="autojs_changed">این اسکریپت در کتابخانه تغییر کرده است. پیش از ذخیره یا اجرا، دوباره آن را باز کنید.</string>
+    <string name="autojs_write_failed">اسکریپت ذخیره نشد.</string>
+    <string name="autojs_anonymous">اسکریپت ذخیره‌نشده</string>
+    <string name="autojs_prepared">آزمایش آماده است: %1$s. برنامه مقصد را باز کنید و ظرف ۱۰ دقیقه دستیار گوشی را فراخوانی کنید.</string>
+    <string name="autojs_trial_title">اجرای اسکریپت · %1$s</string>
+    <string name="autojs_trial_here">فقط در %1$s</string>
+    <string name="autojs_trial_other">برنامه‌ای را که می‌خواهید آزمایش کنید باز کنید، سپس دستیار را در آن فراخوانی کنید.</string>
+    <string name="autojs_trial_steps">%1$d مرحله · برای بررسی بزنید</string>
+    <string name="autojs_trial_less">پنهان کردن مراحل</string>
+    <string name="autojs_trial_allow">اجازه و اجرا در اینجا</string>
+    <string name="autojs_trial_stale">مهلت این آزمایش تمام شده یا برنامه تغییر کرده است. دوباره آن را در کتابخانه اسکریپت‌ها آماده کنید.</string>
+    <string name="autojs_trial_request">«%1$s» را در %2$s اجرا کن.</string>
+    <string name="autojs_trial_done">%1$d مرحله از %2$d مرحله اسکریپت در %3$s انجام شد.</string>
+    <string name="autojs_trial_stopped">اسکریپت در %3$s پس از انجام %1$d مرحله از %2$d مرحله متوقف شد.</string>
+    <string name="autojs_trial_error">این اسکریپت در برنامه فعلی شروع نشد.</string>
+    <string name="autojs_trial_interrupted">اجرای اسکریپت قطع شد. پیش از تلاش دوباره، برنامه را بررسی کنید.</string>
+    <string name="autojs_not_selected">پیش از آماده کردن اسکریپت، AutoJs6 را فعال کنید.</string>
+    <string name="autojs_activity_running">در حال اجرای اسکریپت AutoJs6</string>
+    <string name="autojs_activity_ran">اسکریپت AutoJs6 اجرا شد</string>
+    <string name="autojs_activity_run_failed">اجرای اسکریپت AutoJs6 کامل نشد</string>
+    <string name="autojs_activity_library_working">در حال استفاده از کتابخانه اسکریپت‌های AutoJs6</string>
+    <string name="autojs_activity_library_done">از کتابخانه اسکریپت‌های AutoJs6 استفاده شد</string>
+    <string name="autojs_activity_library_failed">عملیات کتابخانه اسکریپت‌های AutoJs6 انجام نشد</string>
+</resources>

@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Keep the CPU alive while an agent run / terminal is active so
          minimizing the app doesn't freeze the terminal mid-run. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -20,8 +21,6 @@
     <!-- Let the user exclude the app from battery optimization (Samsung etc.). -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
-    <!-- In-app updates: request the install session for downloaded release APKs. -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- Wireless ADB pairing talks to the device's own adbd over loopback. -->
     <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
 
@@ -38,10 +37,37 @@
 
     <!-- Allow discovering speech recognition service engines and installed
          root managers on Android 11+. Root identification is display-only. -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
         <!-- Lets Chat check that a Clock app accepts alarms and timers before handing one over. -->
         <intent><action android:name="android.intent.action.SET_ALARM" /></intent>
         <intent><action android:name="android.intent.action.SET_TIMER" /></intent>
+        <!-- Public phone-task actions: resolve only against the app the user authorized. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
+        </intent>
+        <!-- Narrow package visibility for the two documented vendor POI contracts; no general app inventory permission. -->
+        <package android:name="com.baidu.BaiduMap" />
+        <package android:name="com.autonavi.minimap" />
+        <intent>
+            <action android:name="android.intent.action.INSERT" />
+            <data android:mimeType="vnd.android.cursor.dir/event" />
+        </intent>
+        <intent>
+            <action android:name="com.google.android.gms.actions.CREATE_NOTE" />
+            <data android:mimeType="text/plain" />
+        </intent>
+        <intent><action android:name="android.intent.action.CREATE_NOTE" /></intent>
+        <package android:name="com.miui.notes" />
         <package android:name="moe.shizuku.privileged.api" />
         <package android:name="com.hamondev.shevery" />
         <package android:name="com.rosan.dhizuku" />
@@ -177,7 +203,7 @@
             </intent-filter>
         </provider>
 
-        <!-- Shares staged update APKs with the system package installer. -->
+        <!-- Keep the existing authority for files shared from the app cache. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.update"
@@ -203,6 +229,7 @@
             android:name=".agent.NotificationActionReceiver"
             android:exported="false" />
         <receiver android:name=".automation.AutomationActionReceiver" android:exported="false" />
+        <receiver android:name=".assistant.PhoneTaskStatusReceiver" android:exported="false" />
         <receiver android:name=".reminders.ReminderReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -247,6 +274,17 @@
             <intent-filter>
                 <action android:name="android.speech.RecognitionService" />
             </intent-filter>
+        </service>
+        <receiver android:name=".phoneevents.PhoneEventDismissReceiver" android:exported="false" />
+        <service android:name=".phoneevents.PhoneNotificationListener" android:exported="false"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" android:label="@string/phone_events_title">
+            <intent-filter><action android:name="android.service.notification.NotificationListenerService" /></intent-filter>
+        </service>
+        <service android:name=".androiduse.PhoneAccessibilityService" android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:label="@string/phone_driver_service_name">
+            <intent-filter><action android:name="android.accessibilityservice.AccessibilityService" /></intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/phone_accessibility_service" />
         </service>
     </application>
 

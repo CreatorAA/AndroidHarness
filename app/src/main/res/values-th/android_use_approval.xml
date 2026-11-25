@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">แตะ</string>
+    <string name="phone_review_long_press">แตะค้างไว้</string>
+    <string name="phone_review_type">ป้อนข้อความ</string>
+    <string name="phone_review_volume">ตั้งระดับเสียงสื่อ</string>
+    <string name="phone_review_scroll_forward">เลื่อนไปข้างหน้า</string>
+    <string name="phone_review_scroll_backward">เลื่อนย้อนกลับ</string>
+    <string name="phone_review_swipe">ปัด</string>
+    <string name="phone_review_drag">ลาก</string>
+    <string name="phone_review_home">กลับไปที่หน้าจอหลัก</string>
+    <string name="android_use_launcher_trip">จาก %1$s ให้ค้นหาและแตะ %2$s บนหน้าจอหลัก แล้วทำงานนี้ต่อใน %3$s</string>
+    <string name="android_use_action_approval">อนุญาตการดำเนินการนี้ครั้งเดียวไหม?\n\n%1$s</string>
+    <string name="android_use_chat_approval">อนุญาตให้ควบคุมโทรศัพท์สำหรับแชทนี้ไหม? ผู้ช่วยสามารถส่งหน้าจอของแอปเป้าหมายไปยังโมเดลที่เลือก รวมถึงแตะและพิมพ์ได้ นอกจากนี้ยังอนุญาตให้คำสั่งโทรศัพท์ที่ได้รับอนุญาตในแชทนี้อ่านและเปลี่ยนแปลงไฟล์และการตั้งค่าได้ ระบบจะถามอีกครั้งก่อนส่งการเปลี่ยนแปลงในแอปเป้าหมาย</string>
+    <string name="android_use_submit_approval">อนุญาตให้ส่งครั้งนี้เพียงครั้งเดียวไหม?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">เปลี่ยนงานนี้ไปยังแอปอื่นไหม? ผู้ช่วยจะอ่านหน้าจอและโต้ตอบกับแอปนั้นได้\n\n%1$s</string>
+    <string name="android_use_code_entry">ส่งงานให้ผู้ช่วยโทรศัพท์</string>
+    <string name="android_use_code_hint">เพิ่มคำสั่ง หรือส่ง /phone เพียงอย่างเดียวเพื่อเปิดการตั้งค่า</string>
+    <string name="android_use_draft_ready">เปิดแอปเป้าหมายและเลือก ควบคุมโทรศัพท์ ในผู้ช่วยภายใน 10 นาที ใช้ /phone --result ที่นี่เพื่อดูบทสนทนา</string>
+    <string name="android_use_draft_expired">ฉบับร่างนี้หมดอายุ ถูกยกเลิก หรือถูกแทนที่แล้ว ปิดกล่องโต้ตอบนี้แล้วเลือก ควบคุมโทรศัพท์ อีกครั้ง</string>
+    <string name="android_use_draft_cancelled">ยกเลิกฉบับร่างงานโทรศัพท์แล้ว</string>
+    <string name="android_use_no_draft">บทสนทนานี้ไม่มีฉบับร่างงานโทรศัพท์ที่รอดำเนินการ</string>
+    <string name="android_use_no_result">ยังไม่ได้เริ่มงานโทรศัพท์จากบทสนทนานี้</string>
+    <string name="android_use_local_only">เริ่มงานโทรศัพท์จากพื้นที่ทำงาน Code ในเครื่อง</string>
+    <string name="android_use_from_code">ฉบับร่างจาก Code</string>
+</resources>

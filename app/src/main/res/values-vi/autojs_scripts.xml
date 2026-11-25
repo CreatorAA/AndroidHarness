@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Tập lệnh AutoJs6</string>
+    <string name="autojs_allow">Cho phép trợ lý sử dụng AutoJs6</string>
+    <string name="autojs_allow_hint">Thêm trình điều khiển được ghép nối và các tập lệnh giao diện. Dịch vụ tích hợp vẫn khả dụng khi được bật.</string>
+    <string name="autojs_need_pair">Viết và kiểm tra tập lệnh ngay. Hãy cấu hình plugin AutoJs6 cục bộ trước khi chạy trên điện thoại.</string>
+    <string name="autojs_new">Tập lệnh mới</string>
+    <string name="autojs_back">Quay lại</string>
+    <string name="autojs_source">Tập lệnh giao diện</string>
+    <string name="autojs_sample_source">text(\"Tiếp tục\").waitFor();</string>
+    <string name="autojs_name">Tên (không bắt buộc khi chạy thử)</string>
+    <string name="autojs_name_exists">Đã có tập lệnh dùng tên này. Hãy mở tập lệnh đó để chỉnh sửa hoặc chọn tên khác.</string>
+    <string name="autojs_format">Dùng text, desc hoặc id để tìm phần tử điều khiển, sau đó chờ, nhấn hoặc nhập văn bản vào phần tử đó. Mỗi dòng chỉ dùng một lệnh.</string>
+    <string name="autojs_check">Kiểm tra các bước</string>
+    <string name="autojs_prepare">Thử trong ứng dụng đích</string>
+    <string name="autojs_preview">Số bước hợp lệ: %1$d · chưa thực thi bước nào</string>
+    <string name="autojs_empty">Nhấn Tập lệnh mới để tạo một thao tác có thể dùng lại. Để trống tên để chạy thử mà không lưu.</string>
+    <string name="autojs_enabled_hint">Trợ lý có thể sử dụng các tập lệnh đã bật trong thư viện này.</string>
+    <string name="autojs_disabled_hint">Hãy bật tập lệnh này trong thư viện trước khi chạy thử.</string>
+    <string name="autojs_delete">Xóa “%1$s”?</string>
+    <string name="autojs_delete_action">Xóa</string>
+    <string name="autojs_changed">Tập lệnh này đã thay đổi trong thư viện. Hãy mở lại trước khi lưu hoặc chạy.</string>
+    <string name="autojs_write_failed">Không thể lưu tập lệnh.</string>
+    <string name="autojs_anonymous">Tập lệnh chưa lưu</string>
+    <string name="autojs_prepared">Đã sẵn sàng chạy thử: %1$s. Hãy mở ứng dụng đích và gọi trợ lý trên điện thoại trong vòng 10 phút.</string>
+    <string name="autojs_trial_title">Chạy tập lệnh · %1$s</string>
+    <string name="autojs_trial_here">Chỉ trong %1$s</string>
+    <string name="autojs_trial_other">Hãy mở ứng dụng bạn muốn kiểm thử, rồi gọi trợ lý tại đó.</string>
+    <string name="autojs_trial_steps">%1$d bước · nhấn để xem lại</string>
+    <string name="autojs_trial_less">Ẩn các bước</string>
+    <string name="autojs_trial_allow">Cho phép và chạy tại đây</string>
+    <string name="autojs_trial_stale">Lượt chạy thử này đã hết hạn hoặc ứng dụng đã thay đổi. Hãy chuẩn bị lại trong thư viện tập lệnh.</string>
+    <string name="autojs_trial_request">Chạy “%1$s” trong %2$s.</string>
+    <string name="autojs_trial_done">Đã hoàn thành %1$d trong số %2$d bước của tập lệnh trong %3$s.</string>
+    <string name="autojs_trial_stopped">Tập lệnh đã dừng trong %3$s sau %1$d trong số %2$d bước.</string>
+    <string name="autojs_trial_error">Không thể bắt đầu tập lệnh này trong ứng dụng hiện tại.</string>
+    <string name="autojs_trial_interrupted">Tập lệnh bị gián đoạn. Hãy kiểm tra ứng dụng trước khi thử lại.</string>
+    <string name="autojs_not_selected">Hãy bật AutoJs6 trước khi chuẩn bị tập lệnh.</string>
+    <string name="autojs_activity_running">Đang chạy tập lệnh AutoJs6</string>
+    <string name="autojs_activity_ran">Đã chạy tập lệnh AutoJs6</string>
+    <string name="autojs_activity_run_failed">Tập lệnh AutoJs6 chưa chạy xong</string>
+    <string name="autojs_activity_library_working">Đang sử dụng thư viện tập lệnh AutoJs6</string>
+    <string name="autojs_activity_library_done">Đã sử dụng thư viện tập lệnh AutoJs6</string>
+    <string name="autojs_activity_library_failed">Thao tác với thư viện tập lệnh AutoJs6 không thành công</string>
+</resources>

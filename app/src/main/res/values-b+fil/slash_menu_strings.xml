@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Magsimula ng bagong usapan</string>
+    <string name="slash_menu_compact">Paikliin ang konteksto</string>
+    <string name="slash_menu_compact_hint">Ibuod ang naunang konteksto</string>
+    <string name="slash_menu_cost">Gastos</string>
+    <string name="slash_menu_cost_hint">Ipakita ang kabuuang token at gastos</string>
+    <string name="slash_menu_btw_hint">Magtanong tungkol sa kasalukuyang konteksto nang hindi idinaragdag sa chat</string>
+    <string name="slash_menu_doctor">Diagnostiko ng Harness</string>
+    <string name="slash_menu_doctor_hint">Patakbuhin ang sariling pagsusuri ng mga tool ng Harness</string>
+    <string name="slash_menu_init">Simulan ang proyekto</string>
+    <string name="slash_menu_init_hint">Gumawa o mag-update ng AGENTS.md</string>
+    <string name="slash_menu_review_hint">Suriin ang mga nakabinbing pagbabago nang walang pag-edit. Idagdag ang pokus pagkatapos ng utos.</string>
+    <string name="slash_menu_plan_hint">I-load ang kasanayan sa pagpaplano at lumipat sa Plan mode</string>
+    <string name="slash_menu_skills">Tingnan ang mga kasanayan</string>
+    <string name="slash_menu_skills_hint">Buksan ang buong listahan ng mga kasanayan</string>
+    <string name="slash_menu_env_hint">Suriin, i-update, i-install o ayusin ang kapaligiran ng Linux</string>
+    <string name="slash_menu_snippet">Snippet</string>
+    <string name="slash_menu_snippet_hint">Naka-save na snippet ng prompt</string>
+</resources>

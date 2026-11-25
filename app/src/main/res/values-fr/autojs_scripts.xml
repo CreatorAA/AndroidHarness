@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Scripts AutoJs6</string>
+    <string name="autojs_allow">Autoriser l’assistant à utiliser AutoJs6</string>
+    <string name="autojs_allow_hint">Ajoute le pilote associé et les scripts d’interface. Le service intégré reste disponible lorsqu’il est activé.</string>
+    <string name="autojs_need_pair">Écrivez et vérifiez les scripts dès maintenant. Configurez le plug-in AutoJs6 local avant de les exécuter sur le téléphone.</string>
+    <string name="autojs_new">Nouveau script</string>
+    <string name="autojs_back">Retour</string>
+    <string name="autojs_source">Script d’interface</string>
+    <string name="autojs_sample_source">text(\"Continuer\").waitFor();</string>
+    <string name="autojs_name">Nom (facultatif pour un essai)</string>
+    <string name="autojs_name_exists">Un script porte déjà ce nom. Ouvrez-le pour le modifier ou choisissez un autre nom.</string>
+    <string name="autojs_format">Utilisez text, desc ou id pour trouver un élément, puis attendez son apparition, appuyez dessus ou saisissez du texte. Utilisez une instruction par ligne.</string>
+    <string name="autojs_check">Vérifier les étapes</string>
+    <string name="autojs_prepare">Essayer dans l’application cible</string>
+    <string name="autojs_preview">Étapes valides : %1$d · aucune exécution</string>
+    <string name="autojs_empty">Appuyez sur Nouveau script pour créer une action réutilisable. Laissez le nom vide pour l’essayer sans l’enregistrer.</string>
+    <string name="autojs_enabled_hint">L’assistant peut utiliser les scripts activés dans cette bibliothèque.</string>
+    <string name="autojs_disabled_hint">Activez ce script dans la bibliothèque avant de l’essayer.</string>
+    <string name="autojs_delete">Supprimer « %1$s » ?</string>
+    <string name="autojs_delete_action">Supprimer</string>
+    <string name="autojs_changed">Ce script a été modifié dans la bibliothèque. Rouvrez-le avant de l’enregistrer ou de l’exécuter.</string>
+    <string name="autojs_write_failed">Impossible d’enregistrer le script.</string>
+    <string name="autojs_anonymous">Script non enregistré</string>
+    <string name="autojs_prepared">Essai prêt : %1$s. Ouvrez l’application cible et appelez l’assistant du téléphone dans les 10 minutes.</string>
+    <string name="autojs_trial_title">Exécuter le script · %1$s</string>
+    <string name="autojs_trial_here">Dans %1$s uniquement</string>
+    <string name="autojs_trial_other">Ouvrez l’application à tester, puis appelez-y l’assistant.</string>
+    <string name="autojs_trial_steps">%1$d étapes · appuyez pour les consulter</string>
+    <string name="autojs_trial_less">Masquer les étapes</string>
+    <string name="autojs_trial_allow">Autoriser et exécuter ici</string>
+    <string name="autojs_trial_stale">Cet essai a expiré ou l’application a changé. Préparez-le à nouveau dans la bibliothèque de scripts.</string>
+    <string name="autojs_trial_request">Exécuter « %1$s » dans %2$s.</string>
+    <string name="autojs_trial_done">%1$d étapes de script sur %2$d terminées dans %3$s.</string>
+    <string name="autojs_trial_stopped">Script arrêté dans %3$s après %1$d étapes sur %2$d.</string>
+    <string name="autojs_trial_error">Impossible de démarrer ce script dans l’application actuelle.</string>
+    <string name="autojs_trial_interrupted">Script interrompu. Vérifiez l’application avant de réessayer.</string>
+    <string name="autojs_not_selected">Activez AutoJs6 avant de préparer un script.</string>
+    <string name="autojs_activity_running">Exécution du script AutoJs6</string>
+    <string name="autojs_activity_ran">Script AutoJs6 exécuté</string>
+    <string name="autojs_activity_run_failed">Le script AutoJs6 ne s’est pas terminé</string>
+    <string name="autojs_activity_library_working">Utilisation de la bibliothèque de scripts AutoJs6</string>
+    <string name="autojs_activity_library_done">Bibliothèque de scripts AutoJs6 utilisée</string>
+    <string name="autojs_activity_library_failed">Échec de l’action dans la bibliothèque de scripts AutoJs6</string>
+</resources>

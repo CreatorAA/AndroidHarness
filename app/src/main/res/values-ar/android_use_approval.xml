@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">النقر</string>
+    <string name="phone_review_long_press">اللمس مع الاستمرار</string>
+    <string name="phone_review_type">إدخال نص</string>
+    <string name="phone_review_volume">ضبط مستوى صوت الوسائط</string>
+    <string name="phone_review_scroll_forward">التمرير للأمام</string>
+    <string name="phone_review_scroll_backward">التمرير للخلف</string>
+    <string name="phone_review_swipe">السحب السريع</string>
+    <string name="phone_review_drag">السحب والإفلات</string>
+    <string name="phone_review_home">العودة إلى الشاشة الرئيسية</string>
+    <string name="android_use_launcher_trip">من %1$s، ابحث عن %2$s واضغط عليه في الشاشة الرئيسية، ثم تابع هذه المهمة في %3$s.</string>
+    <string name="android_use_action_approval">هل تريد السماح بهذا الإجراء لمرة واحدة؟\n\n%1$s</string>
+    <string name="android_use_chat_approval">هل تريد السماح بالتحكم في الهاتف لهذه المحادثة؟ يمكن للوكيل إرسال شاشة التطبيق المستهدف إلى النموذج المحدد، والضغط والكتابة. يسمح هذا أيضًا لأوامر الهاتف المصرح بها في هذه المحادثة بقراءة الملفات والإعدادات وتغييرها. سيُطلب منك التأكيد مجددًا عند إرسال تغيير في التطبيق المستهدف.</string>
+    <string name="android_use_submit_approval">هل تريد السماح بهذا الإرسال لمرة واحدة؟\n\n%1$s</string>
+    <string name="android_use_retarget_approval">هل تريد نقل هذه المهمة إلى تطبيق آخر؟ سيتمكن الوكيل من قراءة شاشته والتفاعل معه.\n\n%1$s</string>
+    <string name="android_use_code_entry">إرسال مهمة إلى مساعد الهاتف</string>
+    <string name="android_use_code_hint">أضف تعليمات، أو أرسل /phone وحده لفتح الإعدادات.</string>
+    <string name="android_use_draft_ready">افتح التطبيق المستهدف واختر «التحكم في الهاتف» في المساعد خلال 10 دقائق. استخدم /phone --result هنا لعرض المحادثة.</string>
+    <string name="android_use_draft_expired">انتهت صلاحية هذه المسودة أو أُلغيت أو استُبدلت. أغلق مربع الحوار هذا واختر «التحكم في الهاتف» مجددًا.</string>
+    <string name="android_use_draft_cancelled">تم إلغاء مسودة مهمة الهاتف.</string>
+    <string name="android_use_no_draft">لا توجد مسودة مهمة هاتف معلقة في هذه المحادثة.</string>
+    <string name="android_use_no_result">لم تبدأ أي مهمة هاتف من هذه المحادثة.</string>
+    <string name="android_use_local_only">ابدأ مهمة هاتف من مساحة عمل Code محلية.</string>
+    <string name="android_use_from_code">مسودة من Code</string>
+</resources>

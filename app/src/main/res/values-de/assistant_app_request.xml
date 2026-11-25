@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s öffnen?</string>
+    <string name="app_request_search">In %1$s nach „%2$s“ suchen?</string>
+    <string name="app_request_choose_open">Welche App soll geöffnet werden?</string>
+    <string name="app_request_choose_map">In welcher Karten-App soll nach „%1$s“ gesucht werden?</string>
+    <string name="app_request_missing">Es wurde keine App namens „%1$s“ gefunden, die sich auf diesem Handy öffnen lässt.</string>
+    <string name="app_request_alternative">Du kannst in einer dieser Karten-Apps nach „%1$s“ suchen.</string>
+    <string name="app_request_open_only">%1$s lässt sich öffnen, bietet aber keine öffentlich zugängliche Ortssuche. App ohne Suche öffnen?</string>
+    <string name="app_request_no_map">Keine installierte Karten-App kann nach „%1$s“ suchen.</string>
+    <string name="app_request_no_entry">%1$s bietet keine passende Funktion für diese Anfrage.</string>
+    <string name="app_request_opened">Die Anfrage zum Öffnen von %1$s wurde gesendet.</string>
+    <string name="app_request_sent">Die Suche nach „%2$s“ wurde an %1$s gesendet.</string>
+    <string name="app_request_failed">Die Anfrage konnte nicht an %1$s gesendet werden. Versuche es erneut, um die verfügbaren Apps zu prüfen.</string>
+    <string name="app_request_cancelled">Abgebrochen. Es wurde keine App geöffnet.</string>
+</resources>

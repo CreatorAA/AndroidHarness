@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">サイドハンドル</string>
+    <string name="assistant_edge_desc">右端のハンドルを内側にスワイプしてアシスタントを開きます。</string>
+    <string name="assistant_edge_permission_hint">Android の設定で、AndroidHarness が他のアプリの上に表示できるようにしてください。</string>
+    <string name="assistant_edge_permission_unavailable">他のアプリの上に表示する権限の設定を開けませんでした。</string>
+    <string name="assistant_edge_handle_description">他のアプリの上にアシスタントを開く</string>
+    <string name="assistant_edge_start_failed">サイドハンドルを有効にできませんでした。もう一度お試しください。</string>
+    <string name="assistant_edge_disconnected">システムによってアシスタントの接続が解除されました。</string>
+    <string name="assistant_edge_reconnect">再接続</string>
+    <string name="assistant_edge_reconnect_steps">Android のアシスタント設定で一度「なし」を選んでから、AndroidHarness を選び直してください。</string>
+    <string name="assistant_edge_grant_overlay">他のアプリの上に表示することを許可</string>
+</resources>

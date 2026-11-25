@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Définir une alarme ponctuelle</string>
+    <string name="phone_public_timer">Démarrer un minuteur</string>
+    <string name="phone_public_map">Rechercher un lieu</string>
+    <string name="phone_public_calendar">Ouvrir un brouillon d’événement</string>
+    <string name="phone_public_note">Ouvrir une nouvelle note</string>
+</resources>

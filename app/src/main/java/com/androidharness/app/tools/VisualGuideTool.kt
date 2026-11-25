@@ -30,93 +30,131 @@ internal object VisualGuide {
     }
 
     private const val BASICS = """
-FENCES. Write the markup directly; never wrap it in JSON.
-```harness-html title="Short title" loading="Drawing the orbits"
+FENCES. Write raw markup directly—never wrap it in JSON.
+```harness-html title="Short title" loading="Building interactive view"
 <div class="hx-stack">…</div>
 <script>…</script>
 ```
 ```harness-svg title="Short title"
-<svg viewBox="0 0 640 360" role="img" aria-label="What the diagram shows">…</svg>
+<svg viewBox="0 0 360 220" role="img" aria-label="What the diagram shows">…</svg>
 ```
-- title: 2-5 words shown above the visual. loading: optional 2-6 word status shown while it streams; keep it plain for serious topics.
-- harness-svg must contain exactly one <svg> element. Use harness-html when you need script, controls or several elements.
-- Put prose before or after the fence; never explain the code inside the reply unless asked. Never show the source as a code block unless the user asks for source.
-- Limits: under 24 KB when possible, 64 KB maximum. Self-contained and offline: no CDN, remote fonts, images, fetch or forms. Data and images must be inline (SVG, canvas, data: URLs).
+- `title`: 2–5 words in the user's language. `loading`: optional 2–6 word status shown while streaming.
+- **Framing**: `harness-html` already renders a title bar and `16px` body padding—don't repeat the title inside unless adding subtitle context. `harness-svg` renders borderless with `padding: 0` and no title bar: MUST start with `<svg` and end with `</svg>` (one root `<svg>`, no XML header or comments), keep a `14–20px` safe inset inside the `viewBox`, and add an internal heading only if the drawing needs one.
+- Put prose before/after the fence; never narrate the code or expose source unless asked.
+- **Sandbox & size**: target ≤ 24 KB (hard limit: 64,000 UTF-16 code units). Strictly offline CSP: no CDN, remote fonts/images, `fetch`, forms, links/navigation, storage, cookies, workers, or `alert`/`confirm`/`prompt`. Inline every asset (SVG, `<canvas>`, `data:` URLs).
+- **Height**: inline height auto-measures and clamps to `100–900dp` for HTML (`1–900dp` for SVG). Aim for a crisp `200–520px` so the whole visual reads on one phone screen without inner scrolling.
 
-THEME TOKENS (CSS variables, already set; they follow the user's app theme, light or dark):
---background --foreground --muted --surface --surface-2 --border --accent --accent-fg (text on accent) --accent-soft
---success --warning --danger, chart series --c1 … --c6, --radius (14px) --radius-sm (10px) --mono.
-Never hard-code colors: use these tokens so the visual matches the app and works in dark mode. The body already has 16px padding, the app font and the background color.
+THEME TOKENS (`:root` CSS variables, live-synced to light, dark, and custom app themes):
+`--background`, `--foreground`, `--muted`, `--surface`, `--surface-2`, `--border`, `--accent`, `--accent-fg` (text on `--accent`), `--accent-soft`, `--success`, `--warning`, `--danger`, series `--c1`…`--c6`, `--radius` (`14px`), `--radius-sm` (`10px`), `--mono`.
+- Never hard-code `#000`, `#fff`, `#333`, `#eee`, `black`, `white`, or `rgba(0,0,0,...)`. For tints use `opacity` or `color-mix(in srgb, var(--accent) 18%, transparent)`.
+- Text placed on an `--accent` fill uses `--accent-fg`; plain SVG `<text>` without an `hx-*` class needs `fill="var(--foreground)"` (or `--muted`).
 
-DESIGN KIT (class names ready to use; prefer them over writing CSS):
-Layout: hx-stack (vertical, 12px gap), hx-row (wrapping row), hx-spread (space-between row), hx-grid (responsive cards, 140px minimum).
-Surfaces: hx-card, hx-card-accent. Text: hx-title, hx-subtitle, hx-muted, hx-label (small caps label), hx-stat (big number), hx-mono.
-Controls: hx-btn (filled), hx-btn-ghost, aria-pressed="true" marks a selected button, hx-segment (segmented control: a wrapper of buttons), hx-range (slider).
-Status: hx-chip with data-tone="accent|success|warning|danger". Progress: <div class="hx-bar"><span style="width:62%"></span></div>.
-Data: hx-table (add class num to numeric cells). Misc: hx-divider, hx-fade (gentle entrance).
-SVG classes: hx-text, hx-text-muted, hx-node, hx-node-accent, hx-edge, hx-edge-accent, hx-grid-line.
+DESIGN KIT (ready-made classes; prefer them over custom CSS):
+- Layout: `hx-stack` (vertical, 12px gap), `hx-row` (wrapping row, 8px gap), `hx-spread` (space-between), `hx-grid` (auto-fit cards, 140px min).
+- Surfaces: `hx-card`, `hx-card-accent`. Text: `hx-title` (17px), `hx-subtitle` (15px), `hx-muted` (13px), `hx-label` (12px uppercase), `hx-stat` (26px tabular KPI), `hx-mono` (13px mono).
+- Controls: `hx-btn` (accent pill), `hx-btn-ghost` (outlined pill), `aria-pressed="true"` (active state), `hx-segment` (pill group of `<button>`s), `hx-range` (accent slider).
+- Status & data: `hx-chip` (`data-tone="accent|success|warning|danger"`), `<div class="hx-bar"><span style="width:62%"></span></div>`, `hx-table` (`class="num"` on numeric cells), `hx-divider`, `hx-fade` (gentle entrance).
+- SVG classes: `hx-text` (13px), `hx-text-muted` (12px), `hx-node`, `hx-node-accent`, `hx-edge`, `hx-edge-accent`, `hx-grid-line`.
 
-JS HELPER: harness.palette() returns the series colors as hex strings; harness.color('accent') reads any token; harness.state('Plain summary of current values') passes the current selection to the user's next message (context only; it never sends or runs anything).
+JS HELPER (`window.harness`):
+`harness.palette()` returns `--c1`…`--c6` as hex strings; `harness.color('accent')` reads any token (omit `--`); `harness.state('Short summary')` updates the local preview summary for supported component follow-ups (≤ 1500 chars; never sends a message, runs tools, or attaches itself to ordinary messages). Call helpers defensively, e.g. `window.harness?.state(...)`.
 
-QUALITY BAR:
-- Phone first: design for 360px wide and let it scale. No horizontal scrolling; stack on narrow screens.
-- One clear idea per visual. Generous spacing, 2-3 text sizes, sentence-case labels, no decorative gradients or emoji clutter.
-- Touch targets at least 44px. Label every control. Text contrast must stay readable in both themes.
-- Respect prefers-reduced-motion (the base stylesheet already disables animation when it is set).
-- Only real or clearly labelled illustrative data. Never invent measurements to fill a chart.
-- Every script must run without errors; guard against missing elements.
+PHONE-FIRST QUALITY BAR:
+- **360px first**: design for `360px` width and scale up cleanly. Horizontal scrolling is disabled—stack on narrow screens, and never lock text containers to tight fixed heights (system font scaling enlarges HTML text).
+- **Phone-native SVG coordinates**: default to `viewBox="0 0 360 H"` (360–420 wide). A `640+` viewBox shrinks 13px text to an unreadable ~6.5px on a phone; if a diagram truly needs `480` width, raise fonts to `15–16px`.
+- **Clarity & restraint**: one clear idea per visual. Give the main reading or mechanism the most space, keep labels next to their marks, use 2–3 text sizes, and skip decorative gradients, heavy shadows, and emoji. Fit the canvas tightly around the content.
+- **Accessible & bug-free**: ≥ 44px touch targets, a label on every control, contrast that holds in light and dark themes, `prefers-reduced-motion` respected, real or clearly labeled illustrative data only, and guarded DOM queries so scripts throw zero console errors (errors surface a warning banner).
+
+PRE-FLIGHT CHECK:
+1. The takeaway is readable in the first frame, before any tap.
+2. Every label fits its box at ≥ 12px (budget CJK width—see Diagram), nothing overlaps, and nothing touches the viewBox edge.
+3. Only theme tokens and `hx-*` classes for color; it looks right in both light and dark.
+4. SVG: one root, no XML header. HTML: offline, guarded, every control works.
+5. Numbers are real, computed, or labeled illustrative; units and period are visible.
 """
 
     private const val DIAGRAM = """
-Use harness-svg for static diagrams: flows, architectures, timelines, hierarchies, cycles, comparisons of structure.
-- viewBox around 640 wide; height to fit (300-520). width="100%" is applied automatically. Keep 24px outer margin.
-- Boxes: <rect class="hx-node" rx="12"> (use hx-node-accent for the one element the diagram is about). Labels: <text class="hx-text" text-anchor="middle" dominant-baseline="middle">. Secondary text: hx-text-muted.
-- Connectors: <path class="hx-edge" marker-end="url(#arrow)">. Define the arrow once:
-  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
-- Size boxes to their text: about 7.5px per character at 13px plus 24px padding; wrap long labels into two <tspan> lines instead of shrinking fonts. Minimum font 12px.
-- Lay out on a grid, align centers, keep consistent gaps (≥ 28px between boxes). Route edges orthogonally or with gentle curves; avoid crossings.
-- 3-9 nodes is ideal. Split anything larger into two diagrams or group nodes into labelled regions (<rect fill="none" stroke="var(--border)" stroke-dasharray="4 4">).
-- Show the real mechanism (what flows where, and why), not a decorative box grid. Give the svg an aria-label that states the takeaway.
-- Mermaid also renders from a ```mermaid code block when a simple flowchart or sequence diagram is enough; prefer harness-svg when layout quality matters.
+Use `harness-svg` for flows, architectures, timelines, hierarchies, cycles, and mechanisms. Use a ```mermaid block only when a simple flowchart or sequence diagram suffices; prefer `harness-svg` whenever layout quality matters.
+- **Orientation**: default to **top-to-bottom** on phones; use left-to-right only for ≤ 3 short-labeled nodes.
+- **Layout recipe (360 wide)**:
+  - Single column: nodes `200–260` wide centered at `x=180`, `44` tall (one line) or `60` (two lines), `28–36` vertical gaps (row pitch ≈ 76).
+  - Two lanes: centers at `x≈96` and `x≈264`, nodes ≤ `150` wide (≈ 9 CJK characters).
+  - Three columns: nodes ≤ `100` wide, short labels only (≤ 5 CJK characters); otherwise switch to two lanes or stack.
+  - Set the viewBox height to the last element's bottom plus `16–20`.
+- **Nodes & CJK-safe sizing**: `<rect class="hx-node" rx="12">` (reserve `hx-node-accent` for 1–2 focal nodes); `<text class="hx-text" text-anchor="middle" dominant-baseline="middle">` (secondary: `hx-text-muted`). At 13px, budget **~7.5px per ASCII/Latin character** and **~13–14px per CJK character**, plus ≥ `24px` horizontal padding. Wrap long labels into two `<tspan x="..." dy="...">` lines rather than shrinking below `12px`.
+- **Arrows & edge labels**: define markers once in `<defs>`:
+  `<defs><marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" fill="var(--muted)"/></marker><marker id="arrow-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" fill="var(--accent)"/></marker></defs>`
+  Connect with `<path class="hx-edge" marker-end="url(#arrow)">` (or `hx-edge-accent` + `#arrow-accent` for the main path), ending cleanly at box borders. Align to a grid, route orthogonally or with gentle `Q` curves, avoid crossings, and put a small `<rect fill="var(--background)" rx="4">` behind edge labels so strokes never cut through text.
+- **Scope**: 3–9 nodes is ideal. Group larger systems into 2–3 labeled dashed zones (`<rect fill="none" stroke="var(--border)" stroke-dasharray="4 4" rx="14">`) or split into two diagrams. Show the real mechanism—what flows, triggers, or depends on what—not a decorative box grid. State the takeaway in `aria-label`.
 """
 
     private const val CHART = """
-First choose: for a simple bar or line chart of a few series, the native {"type":"chart"} harness-ui component is better (it is interactive and accessible). Use a custom chart only for forms it cannot draw: scatter, area, stacked, donut, histogram, ranges, annotated timelines, small multiples.
-- Draw with inline SVG (preferred, crisp) or <canvas> sized for devicePixelRatio. Colors from harness.palette() or var(--c1)…; never hard-code.
-- Structure: title in hx-subtitle, one-line takeaway in hx-muted, then the plot, then a legend as hx-row of hx-chip items with a color dot.
-- Axes: light grid lines (hx-grid-line), muted tick labels at 12px, units in the axis label, tabular numbers. Start bar axes at zero.
-- Direct-label lines and bars when possible instead of relying on the legend. At most 6 series; highlight the one that matters and mute the rest.
-- Tap support: on pointer events show the exact value in a small hx-card tooltip or a caption line; update harness.state with the selected point.
-- Donut/pie only for parts of one whole with ≤ 5 slices; otherwise use bars.
-- Include the data: either exact labels on marks or a small hx-table below for exact values.
+Pick the encoding that answers the reader's question fastest:
+- **Single value**: KPI + unit + a meaningful reference (gauge, progress bar, scale, or clock face).
+- **Category comparison**: **horizontal bars** (best on phones, especially with long/CJK labels); vertical bars only for short labels.
+- **Time trend**: line or area; use custom `harness-svg` for irregular dates so X distance reflects real elapsed time.
+- **Before/after or target gap**: dumbbell, slope, or bullet chart.
+- **Relationship / distribution**: scatterplot, histogram, or range plot.
+- **Parts of a whole**: stacked bar, or donut **only** for ≤ 5 mutually exclusive slices summing to 100%.
+- **Exact lookup**: native `table`.
+
+Native vs custom:
+- Prefer native `harness-ui` `chart` for simple vertical bars and evenly spaced lines (built-in tap inspect, zoom, series toggles, data view). It hides middle X labels past ~8 points or with wide labels—keep labels ultra-short, or draw horizontal bars in `harness-svg`.
+- Use `harness-svg` for horizontal bars, true time axes, range/bullet/slope/scatter/histogram/donut plots, small multiples, or annotated comparisons. Use `harness-html` only when tap/filter controls add value.
+- **Horizontal-bar recipe (360 wide)**: row pitch `32–36`, bar height `18–20` with `rx="4"`; right-aligned labels ending at `x≈112` (`text-anchor="end"`), bars from `x=120` to ≤ `300`, value labels `6px` past each bar end; for labels longer than ~6 CJK characters, put the label above a full-width bar instead. Sort bars by value unless the categories have a natural order.
+- For `<canvas>`, scale for HiDPI: `const dpr = Math.min(window.devicePixelRatio || 1, 3)`; size backing pixels to `rect.width * dpr` × `rect.height * dpr` and call `ctx.setTransform(dpr, 0, 0, dpr, 0, 0)`.
+
+Comparability & craft:
+- Put unit, time period, and basis (count vs rate, snapshot vs full period) where readers look first. Label snapshot timestamps honestly—never animate fake live ticks. Put sources or estimate notes beside the takeaway.
+- Compare like units and periods on a shared scale. Start bars at zero; show clear line Y bounds; add reference lines only for real baselines or targets; leave missing data as gaps, never zero.
+- Spotlight the main contrast (`var(--accent)` or `--c1`), mute context (`var(--muted)`), keep grid lines subtle (`hx-grid-line`). Direct-label bars and line endpoints instead of relying on legends. Distinguish series by name AND dash/marker shape, not color alone; cap at 6 series or split into stacked small multiples.
+- Use 3–5 clean round ticks and ≥ `12px` labels; strip redundant titles, legends, and frames. In interactive charts, show the tapped value in a stable readout at the top and update `harness.state(...)`.
 """
 
     private const val INTERACTIVE = """
-Use harness-html for explorable explanations, calculators beyond the native calculator, simulations, quizzes, step-throughs and small tools.
-- Structure: header (hx-title + one-line hx-muted purpose), controls row, live result area, short note on assumptions.
-- Controls: hx-range sliders with a visible value, hx-segment for 2-4 modes, hx-btn for the primary action. Update results on input events immediately; no submit buttons.
-- Keep state in a single JS object and one render() function that redraws from it. Initialise with sensible defaults so the first frame is already meaningful.
-- After each change call harness.state('Rate 4.5%, 20 years: total 52,300') with the current values so the user's follow-up question can use them.
-- Animation: requestAnimationFrame, pause when off-screen or finished, and skip it under prefers-reduced-motion.
-- Quizzes and step-throughs: show one item at a time, give immediate feedback with hx-chip tones, and keep a visible progress bar (hx-bar).
-- No storage APIs, timers that never stop, alert/confirm/prompt dialogs, or navigation. Everything must work offline.
+Use `harness-html` for explorable explanations, simulations, step-throughs, quizzes, small tools, and calculators beyond the native `calculator`.
+- **Phone layout (top to bottom)**: optional one-line `hx-muted` subtitle -> **live visual + KPI readout** (`hx-card`/`hx-stat`/SVG/canvas) so results stay in view while tweaking -> controls (`hx-range` with its live value in an `hx-spread` label row, `hx-segment` for 2–4 modes or presets, `hx-btn`/`hx-btn-ghost` for actions; update live on `input`/`click`, no Submit button) -> short `hx-muted` assumptions note.
+- **Single-state architecture**: hold all state in one JS object and redraw everything from one idempotent `render()`. Start from realistic defaults so the first frame already delivers the takeaway. Skeleton:
+  ```
+  <div class="hx-stack">
+    <div class="hx-card hx-spread"><span class="hx-label">Total</span><span class="hx-stat" id="out"></span></div>
+    <label class="hx-spread" for="rate"><span>Rate</span><span id="rateV"></span></label>
+    <input class="hx-range" id="rate" type="range" min="1" max="8" step="0.1" value="4.5">
+    <p class="hx-muted">Assumptions…</p>
+  </div>
+  <script>
+  const ${'$'} = id => document.getElementById(id);
+  const S = { rate: 4.5 };
+  function render() {
+    const out = ${'$'}('out'), rv = ${'$'}('rateV'); if (!out || !rv) return;
+    const total = S.rate * 100; rv.textContent = S.rate + '%'; out.textContent = total.toFixed(0);
+    window.harness?.state(`Rate ${'$'}{S.rate}% -> total ${'$'}{total.toFixed(0)}`);
+  }
+  ${'$'}('rate')?.addEventListener('input', e => { S.rate = +e.target.value; render(); });
+  render();
+  </script>
+  ```
+- **Process & motion**: keep visuals and numbers driven by the same state. Give continuous or multi-step processes **Play / Pause / Replay** (or Step) controls. Animate with `requestAnimationFrame`, pausing when finished, when `document.hidden`, or when off-screen (`IntersectionObserver`). Under `prefers-reduced-motion`, skip continuous animation but keep full interactivity and readable final/stepped states. Live clocks/timers may read device time; external snapshots show their fixed timestamp and never fake live updates.
+- **Quizzes & step-throughs**: one item at a time, a progress `hx-bar`, instant `hx-chip` feedback (`success`/`warning`/`danger`) with a brief rationale.
+- **Context & touch**: call `harness.state(...)` after each change with concise values. Apply `touch-action: none` only to draggable canvases/SVGs so chat scrolling still works. No runaway timers or blocked APIs.
 """
 
     private const val MOCKUP = """
-Use harness-html for UI mockups and screen concepts.
-- Frame a phone screen as a centered column max-width 380px with hx-card sections; for wide layouts use hx-grid.
-- Use real-looking content (plausible names, numbers and copy), not lorem ipsum. Show one primary action per screen.
-- Represent icons with simple inline SVG strokes (currentColor, 1.75px) or short text labels; no icon fonts or remote images.
-- Show states when relevant (empty, loading, error) with an hx-segment that switches between them.
-- Annotate design decisions in hx-muted captions below the frame rather than over it.
+Use `harness-html` for mobile UI concepts, screen flows, and layout comparisons.
+- Frame a phone viewport as a centered column (`max-width: 360px; margin: 0 auto`) built from `hx-stack`, `hx-card`, `hx-card-accent`, `hx-spread`, `hx-chip`, and `hx-btn`; use `hx-grid` for wider multi-card layouts.
+- Fill it with plausible domain copy, names, numbers, and dates in the user's language (never lorem ipsum). Give each screen one primary `hx-btn` action and a clear hierarchy.
+- Icons: crisp `18–20px` inline SVG strokes (`fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"`) or short text labels—no icon fonts or remote images.
+- When helpful, put an `hx-segment` above the frame to toggle key states (Default / Loading / Empty / Error, or Before / After) and report the active state via `harness.state(...)`.
+- Put design rationale in concise `hx-muted` captions below the frame, not over the UI.
 """
 
     private const val ART = """
-Use harness-svg (or harness-html with canvas for generative or animated pieces) for illustrations, patterns, icons and visual explanations of physical things.
-- Compose on a clear focal point with a limited palette built from the theme tokens; layered shapes and soft opacity read better than detail.
-- Keep path counts moderate (< 400 elements) so it renders quickly on phones.
-- Generative canvas art: seed a small PRNG so a redraw button can produce variations; cap work per frame and respect reduced motion.
-- Always include an aria-label describing the image.
+Use `harness-svg` (or `harness-html` + `<canvas>` for generative or animated pieces) for illustrations, physical explanations (optics, orbits, geometry, waves, cross-sections), and visual anchors (analog clock faces, compasses, thermometers, moon phases, scale bars, proportion grids).
+- Anchor on one focal point with clean back-to-front layers: soft backdrop (`var(--surface)`/`--surface-2`), structural geometry (`var(--border)`/`--muted`), focal highlight (`var(--accent)`/`--c1`…`--c3`, gentle opacity layering), and concise direct labels (`hx-text`/`hx-text-muted`).
+- Explanatory art must be accurate: correct proportions, angles, and directions matter more than ornament; label the parts the user asked about.
+- Keep SVG element counts light (< 400) for smooth mobile rendering in both themes.
+- Generative `<canvas>` art: scale for `devicePixelRatio`, seed a tiny PRNG so a Redraw button (`hx-btn-ghost`) yields variations, cap work per frame, pause off-screen, and render a rich static frame immediately under `prefers-reduced-motion`.
+- Always include `role="img"` and a clear `aria-label` describing the image.
 """
 }
 
@@ -124,9 +162,9 @@ Use harness-svg (or harness-html with canvas for generative or animated pieces) 
 class VisualGuideTool : Tool {
     override val name = "visual_guide"
     override val description =
-        "Load detailed design rules before drawing a custom visual in a reply (harness-html or harness-svg fence). " +
-            "Call it once per conversation before your first custom visual of a kind; it is not needed for native harness-ui " +
-            "components or plain Markdown. Modules: diagram (flows, architecture, timelines), chart (custom data visualisation), " +
+        "Load design guidance for reply visuals. Draw simple native charts directly; consult chart when scale, density or comparison choices matter. " +
+            "For custom SVG/HTML, read the matching modules before your first visual of that kind in the conversation. " +
+            "Modules: diagram (flows, architecture, timelines), chart (data visualization design and chart selection), " +
             "interactive (explorable widgets, calculators, simulations, quizzes), mockup (UI screens), art (illustration, generative). " +
             "The basics (fences, theme tokens, hx-* design kit, harness JS helper) are always included."
     override val parametersSchema = Schema.obj(

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Tiada apa yang boleh dibuat asal pada giliran ini.</string>
+    <string name="chat_compaction_preparing">Menyediakan ringkasan sembang…</string>
+    <string name="chat_compaction_too_few_messages">Mesej masih terlalu sedikit untuk dipadatkan.</string>
+    <string name="chat_compaction_retrying">Mencuba semula ringkasan · cubaan %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Pemadatan dihentikan. Sejarah dikekalkan. Jalankan semula /compact apabila bersedia.</string>
+    <string name="chat_compaction_refresh_failed">Sembang dipadatkan, tetapi tetapan tugas atau anggaran konteks tidak dapat dimuat semula: %1$s</string>
+    <string name="chat_compaction_failed_notice">Pemadatan gagal: %1$s. Sejarah dikekalkan. Cuba lagi /compact atau pilih model lain.</string>
+    <string name="reasoning_from_catalog">Penaakulan disenaraikan dalam katalog model</string>
+    <string name="reasoning_from_provider">Penaakulan dilaporkan oleh penyedia</string>
+    <string name="reasoning_from_user">Penaakulan ditetapkan oleh anda</string>
+    <string name="reasoning_from_name">Penaakulan disimpulkan daripada nama model</string>
+    <string name="automation_every_day">Setiap hari</string>
+    <string name="automation_daily_at">setiap hari pada %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Bina APK nyahpepijat dan baiki ralat binaan.</string>
+    <string name="app_update_checking">Menyemak kemas kini…</string>
+    <string name="app_update_up_to_date">Anda menggunakan versi terkini</string>
+    <string name="files_directory">Folder</string>
+    <string name="cache_status_unavailable">Data cache tidak tersedia</string>
+    <string name="cache_status_hit">Padanan cache · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · sebahagian</string>
+    <string name="cache_estimated_price">anggaran %1$s</string>
+    <string name="chat_live_sites_suffix">" laman"</string>
+    <string name="chat_research_sources_suffix">/%1$d sumber</string>
+    <string name="chat_research_read_suffix">" dibaca"</string>
+    <string name="package_status_failed">Pemasangan gagal</string>
+    <string name="package_hide_details">Sembunyikan butiran pemasangan</string>
+    <string name="package_show_details">Tunjukkan butiran pemasangan</string>
+    <string name="package_recently_unpacked">Baru dinyahpek · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">%1$d item</item>
+    </plurals>
+</resources>

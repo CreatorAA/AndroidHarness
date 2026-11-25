@@ -1,18 +1,28 @@
 package com.androidharness.app.assistant
 
+import android.app.KeyguardManager
 import android.app.assist.AssistContent
 import android.app.assist.AssistStructure
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.PowerManager
+import android.service.voice.VoiceInteractionSession
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -29,10 +39,13 @@ import com.androidharness.app.AgentService
 import com.androidharness.app.HarnessApp
 import com.androidharness.app.MainActivity
 import com.androidharness.app.R
-import com.androidharness.app.ui.common.RefreshRate
+import com.androidharness.app.androiduse.*
 import com.androidharness.app.ui.common.DialogHost
 import com.androidharness.app.ui.common.LocalDialogHost
-import android.service.voice.VoiceInteractionSession
+import com.androidharness.app.ui.common.RefreshRate
+import java.util.concurrent.Executor
+import kotlinx.coroutines.*
+import kotlinx.serialization.json.JsonObject
 
 /**
  * The floating panel Android shows when the user calls the assistant. The session window
@@ -49,13 +62,75 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
     override val viewModelStore = ViewModelStore()
 
     private val container = (context.applicationContext as HarnessApp).container
-    private val controller = AssistantController(context.applicationContext, container)
-    /** Bumped on every show so the panel replays its entrance. */
-    private val showCount = androidx.compose.runtime.mutableIntStateOf(0)
+    private val conversation = container.panelConversation ?: PanelConversation(container).also { container.panelConversation = it }
+    private val controller get() = conversation.controller
+    private val phoneTask get() = conversation.task
+    private val main = Handler(Looper.getMainLooper())
+    private val pageScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val onMain = Executor { main.post(it) }
+    private val pages = if (Build.VERSION.SDK_INT >= 29)
+        SessionPageActions(this, onMain, ::pageUsable, ::revealForPage) else null
+    private var stopPageWatch: (() -> Unit)? = null
+    private var requestPageOnReturn = false
+    private var returningPanel = false
+    private var legacyPackage: String? = null
+    fun currentPageSource(pkg: String): Any? = if (Build.VERSION.SDK_INT >= 29) pages?.sourceFor(pkg)
+        else legacyPackage?.takeIf { it == pkg }
+    val pageSource: PageActionSource = pages ?: object : PageActionSource {
+        override suspend fun isCurrent(packageName: String, authorized: () -> Boolean) =
+            authorized() && visible.value && legacyPackage == packageName && pageUsable(packageName)
+        override suspend fun discover(packageName: String, authorized: () -> Boolean) = PageActionList("unavailable")
+        override suspend fun perform(packageName: String, ref: String, arguments: JsonObject, authorized: () -> Boolean): PageActionReply =
+            pageNotSent("Direct Actions require Android 10 or later.")
+    }
+
+    private fun pageUsable(pkg: String): Boolean =
+        context.getSystemService(PowerManager::class.java).isInteractive &&
+            !context.getSystemService(KeyguardManager::class.java).isKeyguardLocked &&
+            runCatching { PhoneScope.requireApp(pkg, context.packageName) }.isSuccess
+
+    private fun revealForPage() {
+        val task = phoneTask ?: return
+        if (task.backgrounded || !container.androidUse.isActive(task.sid)) return
+        if (!visible.value) {
+            requestPageOnReturn = true
+            task.requestReturn()
+        } else {
+            // A normal approval/result return requests no screen data. Refresh only when a tool
+            // actually needs to address the current ActivityId, never on every result delivery.
+            try { show(Bundle().apply { putString(PAGE_REFRESH, task.returnToken) }, SHOW_WITH_ASSIST) }
+            catch (_: IllegalStateException) { } catch (_: SecurityException) { }
+        }
+    }
+
+    @RequiresApi(32)
+    private fun watchForeground(): () -> Unit {
+        val callback = object : VisibleActivityCallback {
+            override fun onInvisible(activityId: ActivityId) { pages?.invisible(activityId) }
+        }
+        registerVisibleActivityCallback(onMain, callback)
+        return { unregisterVisibleActivityCallback(callback) }
+    }
+
+    fun releasePage(sid: String) {
+        PageActions.unbind(sid, pageSource)
+        if (Build.VERSION.SDK_INT >= 29) pages?.endTask()
+    }
+
+    fun showPhone(token: String): Boolean {
+        val flags = if (requestPageOnReturn) SHOW_WITH_ASSIST else 0
+        requestPageOnReturn = false
+        return try { show(returnArgs(token), flags); true }
+        catch (_: IllegalStateException) { false } catch (_: SecurityException) { false }
+    }
+
+    /** A new summons replays the entrance; a phone task returning to its panel keeps its draft and view. */
+    private val showCount = mutableIntStateOf(0)
     /** False while Android has the panel hidden, so the microphone is let go. */
-    private val visible = androidx.compose.runtime.mutableStateOf(false)
+    private val visible = mutableStateOf(false)
 
     override fun onCreate() {
+        conversation.attach(this)
         savedState.performRestore(null)
         registry.currentState = Lifecycle.State.CREATED
         super.onCreate()
@@ -106,7 +181,10 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
         w.attributes = w.attributes.apply { preferredDisplayModeId = mode }
     }
 
-    override fun onCreateContentView(): View = ComposeView(context).apply {
+    private var panelView: ComposeView? = null
+
+    override fun onCreateContentView(): View = ComposeView(ContextCompat.getContextForLanguage(context)).apply {
+        panelView = this
         attachOwners()
         addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewAttachedToWindow(v: View) { keepWindowStill(); preferFastestRefresh(v); v.post { keepWindowStill() } }
@@ -120,7 +198,10 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
         setContent {
             CompositionLocalProvider(LocalDialogHost provides dialogs) {
                 AssistantPanelRoot(container, controller, showCount.intValue, visible.value, onDismiss = ::hide,
-                    onContinue = ::continueInApp, onOpenUrl = ::openUrl)
+                    onContinue = ::continueInApp, onOpenUrl = ::openUrl,
+                    onPageActions = { pkg ->
+                        if (Build.VERSION.SDK_INT >= 29) pages!!.inspect(pkg) else PageActionList("unavailable")
+                    })
             }
         }
     }
@@ -131,32 +212,80 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
         setViewTreeViewModelStoreOwner(this@HarnessAssistantSession)
     }
 
+    override fun onPrepareShow(args: Bundle?, showFlags: Int) {
+        super.onPrepareShow(args, showFlags)
+        if (Build.VERSION.SDK_INT >= 29) pages?.reset(showing = true)
+        legacyPackage = null
+        returningPanel = conversation.inFlight || args?.getString(RETURN_TOKEN) != null
+        if (conversation.owns(this) && args?.getString(RETURN_TOKEN) == null && args?.getString(PAGE_REFRESH) == null)
+            conversation.inspect()
+    }
+
     override fun onShow(args: Bundle?, showFlags: Int) {
         super.onShow(args, showFlags)
+        // Android 12 and earlier keep the service alive when an Activity switches app language.
+        if (Build.VERSION.SDK_INT < 33) panelView?.let { view ->
+            if (view.resources.configuration.locales != ContextCompat.getContextForLanguage(context).resources.configuration.locales) {
+                view.disposeComposition()
+                setContentView(onCreateContentView())
+            }
+        }
         keepWindowStill()
-        controller.begin(
-            wantsText = showFlags and SHOW_WITH_ASSIST != 0,
-            wantsShot = showFlags and SHOW_WITH_SCREENSHOT != 0,
-        )
-        showCount.intValue++
+        val token = args?.getString(RETURN_TOKEN)
+        val refreshToken = args?.getString(PAGE_REFRESH)
+        val refresh = refreshToken != null && refreshToken == phoneTask?.returnToken
+        if (!conversation.owns(this)) return
+        if ((token != null && (token != phoneTask?.returnToken || phoneTask?.returning != true)) ||
+            (refreshToken != null && (!refresh || phoneTask?.backgrounded == true))) {
+            hide() // an obsolete platform callback must not reopen a dismissed or completed task
+            return
+        }
+        if (!conversation.show(token, refresh)) {
+            returningPanel = false
+            // SystemUI may request both context types even when the person turned both off.
+            // Android need not deliver an empty callback for a disabled source.
+            val shared = showFlags and userDisabledShowContext.inv()
+            controller.begin(
+                wantsText = shared and SHOW_WITH_ASSIST != 0,
+                wantsShot = shared and SHOW_WITH_SCREENSHOT != 0,
+            )
+            showCount.intValue++
+        }
         visible.value = true
+        if (Build.VERSION.SDK_INT >= 32 && stopPageWatch == null) stopPageWatch = watchForeground()
         container.runtimePolicy.setOverlayShown(true)
         registry.currentState = Lifecycle.State.RESUMED
     }
 
     override fun onHide() {
+        stopPageWatch?.invoke()
+        stopPageWatch = null
+        if (Build.VERSION.SDK_INT >= 29) pages?.reset(showing = false)
+        legacyPackage = null
         visible.value = false
-        controller.quiet()
+        if (conversation.owns(this)) {
+            conversation.hide(this)
+            container.runtimePolicy.setOverlayShown(false)
+        }
         registry.currentState = Lifecycle.State.CREATED
-        container.runtimePolicy.setOverlayShown(false)
         super.onHide()
     }
 
+    override fun onCloseSystemDialogs() {
+        // An assist key closes system dialogs before showing the assistant. Calling hide() on
+        // the already-hidden session cancels that next show when Android reuses the session.
+        if (visible.value) super.onCloseSystemDialogs()
+    }
+
     override fun onDestroy() {
-        container.runtimePolicy.setOverlayShown(false)
+        stopPageWatch?.invoke()
+        stopPageWatch = null
+        if (Build.VERSION.SDK_INT >= 29) pages?.reset(showing = false)
+        pageScope.cancel()
+        conversation.detach(this)
+        main.removeCallbacksAndMessages(null)
         registry.currentState = Lifecycle.State.DESTROYED
         viewModelStore.clear()
-        controller.close()
         super.onDestroy()
     }
 
@@ -164,12 +293,40 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
     @Suppress("DEPRECATION")
     override fun onHandleAssist(data: Bundle?, structure: AssistStructure?, content: AssistContent?) {
         // Null structure: the user turned off "Use text from screen" or the app is secure.
+        if (Build.VERSION.SDK_INT < 29) legacyPackage = data?.getString(Intent.EXTRA_ASSIST_PACKAGE)
+        if (returningPanel || !conversation.owns(this)) return
         controller.onAssist(structure, data?.getString(Intent.EXTRA_ASSIST_PACKAGE), content)
+    }
+
+    @RequiresApi(29)
+    override fun onHandleAssist(state: AssistState) {
+        if (state.isFocused) {
+            val bridge = pages!!
+            val pkg = state.assistData?.getString(Intent.EXTRA_ASSIST_PACKAGE)
+            if (pkg != null) bridge.focus(state.activityId, pkg)
+            else {
+                // The activity component can require lazy IPC; don't walk screen structure on the UI thread.
+                val epoch = bridge.generation
+                pageScope.launch {
+                    val component = withContext(Dispatchers.Default) {
+                        runCatching { state.assistStructure?.activityComponent?.packageName }.getOrNull()
+                    }
+                    if (bridge.generation == epoch) bridge.focus(state.activityId, component)
+                }
+            }
+        }
+        // Dispatches to the existing primary legacy hook once, preserving ordinary screen sharing.
+        super.onHandleAssist(state)
+    }
+
+    @RequiresApi(29)
+    override fun onDirectActionsInvalidated(activityId: ActivityId) {
+        pages?.invalidated(activityId)
     }
 
     override fun onHandleScreenshot(screenshot: Bitmap?) {
         // Null when the app is FLAG_SECURE or "Use screenshot" is off.
-        controller.onScreenshot(screenshot)
+        if (!returningPanel && conversation.owns(this)) controller.onScreenshot(screenshot)
     }
 
     /** Web links from an answer open in the browser, over which the panel steps aside. */
@@ -179,7 +336,7 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
         val intent = Intent(Intent.ACTION_VIEW, uri).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val opened = runCatching { context.startActivity(intent) }.isSuccess ||
             runCatching { startAssistantActivity(intent) }.isSuccess
-        if (opened) hide() else Toast.makeText(context, R.string.assistant_open_failed, Toast.LENGTH_SHORT).show()
+        if (opened) hide() else Toast.makeText(ContextCompat.getContextForLanguage(context), R.string.assistant_open_failed, Toast.LENGTH_SHORT).show()
     }
 
     private fun continueInApp() {
@@ -190,6 +347,12 @@ internal class HarnessAssistantSession(context: Context) : VoiceInteractionSessi
         // The visible panel lets this app start an activity; the assistant stack is only a fallback.
         val opened = runCatching { context.startActivity(intent) }.isSuccess ||
             runCatching { startAssistantActivity(intent) }.isSuccess
-        if (opened) hide() else Toast.makeText(context, R.string.assistant_open_failed, Toast.LENGTH_SHORT).show()
+        if (opened) hide() else Toast.makeText(ContextCompat.getContextForLanguage(context), R.string.assistant_open_failed, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        fun returnArgs(token: String) = Bundle().apply { putString(RETURN_TOKEN, token) }
+        private const val RETURN_TOKEN = "com.androidharness.assistant.RETURN_PHONE_TASK"
+        private const val PAGE_REFRESH = "com.androidharness.assistant.REFRESH_PHONE_PAGE"
     }
 }

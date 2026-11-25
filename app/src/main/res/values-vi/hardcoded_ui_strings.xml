@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Không có thay đổi nào để hoàn tác trong lượt này.</string>
+    <string name="chat_compaction_preparing">Đang chuẩn bị tóm tắt cuộc trò chuyện…</string>
+    <string name="chat_compaction_too_few_messages">Chưa có đủ tin nhắn để nén.</string>
+    <string name="chat_compaction_retrying">Đang thử tóm tắt lại · lần %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Đã dừng nén. Lịch sử vẫn được giữ lại. Hãy chạy lại /compact khi sẵn sàng.</string>
+    <string name="chat_compaction_refresh_failed">Đã nén cuộc trò chuyện, nhưng không thể cập nhật cài đặt tác vụ hoặc ước tính ngữ cảnh: %1$s</string>
+    <string name="chat_compaction_failed_notice">Không thể nén: %1$s. Lịch sử vẫn được giữ lại. Hãy thử lại /compact hoặc chọn mô hình khác.</string>
+    <string name="reasoning_from_catalog">Khả năng suy luận được ghi trong danh mục mô hình</string>
+    <string name="reasoning_from_provider">Khả năng suy luận do nhà cung cấp báo cáo</string>
+    <string name="reasoning_from_user">Khả năng suy luận do bạn thiết lập</string>
+    <string name="reasoning_from_name">Khả năng suy luận được suy ra từ tên mô hình</string>
+    <string name="automation_every_day">Hằng ngày</string>
+    <string name="automation_daily_at">hằng ngày lúc %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Tạo APK gỡ lỗi và sửa các lỗi dựng bản.</string>
+    <string name="app_update_checking">Đang kiểm tra bản cập nhật…</string>
+    <string name="app_update_up_to_date">Bạn đang dùng phiên bản mới nhất</string>
+    <string name="files_directory">Thư mục</string>
+    <string name="cache_status_unavailable">Không có dữ liệu bộ nhớ đệm</string>
+    <string name="cache_status_hit">Trúng bộ nhớ đệm · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · chưa đầy đủ</string>
+    <string name="cache_estimated_price">khoảng %1$s</string>
+    <string name="chat_live_sites_suffix">" trang web"</string>
+    <string name="chat_research_sources_suffix">/%1$d nguồn</string>
+    <string name="chat_research_read_suffix">" trang đã đọc"</string>
+    <string name="package_status_failed">Cài đặt thất bại</string>
+    <string name="package_hide_details">Ẩn chi tiết cài đặt</string>
+    <string name="package_show_details">Hiện chi tiết cài đặt</string>
+    <string name="package_recently_unpacked">Vừa giải nén · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">%1$d mục</item>
+    </plurals>
+</resources>

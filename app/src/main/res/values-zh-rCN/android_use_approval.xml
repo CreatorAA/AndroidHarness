@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android_use_launcher_trip">从 %1$s 经桌面查找并点击「%2$s」，然后在 %3$s 中继续本次任务。</string>
+    <string name="android_use_action_approval">允许执行这个动作一次吗？\n\n%1$s</string>
+    <string name="android_use_chat_approval">允许此聊天控制手机吗？助手可以把目标应用的画面发送给当前模型，并在应用中点击和输入。此授权也允许本聊天中具备系统权限的手机命令读取和更改文件、设置。在目标应用中提交更改时，仍会单独询问。</string>
+    <string name="android_use_submit_approval">允许这一次提交吗？\n\n%1$s</string>
+    <string name="android_use_retarget_approval">允许将本次任务切换到另一个应用吗？助手将可以读取并操作新应用的画面。\n\n%1$s</string>
+    <string name="android_use_code_entry">把任务交给手机助手</string>
+    <string name="android_use_code_hint">在命令后写任务；只发送 /phone 则打开设置。</string>
+    <string name="android_use_draft_ready">请在 10 分钟内打开目标应用，唤起助手并选「操作手机」。回到这里发送 /phone --result 可查看会话。</string>
+    <string name="android_use_draft_expired">这份草稿已过期、已取消或已被替换。请关闭弹窗，再次选择「操作手机」。</string>
+    <string name="android_use_draft_cancelled">已取消手机任务草稿。</string>
+    <string name="android_use_no_draft">本会话没有等待确认的手机任务。</string>
+    <string name="android_use_no_result">本会话还没有发起过手机任务。</string>
+    <string name="android_use_local_only">请在本地 Code 工作区发起手机任务。</string>
+    <string name="android_use_from_code">来自 Code 的任务草稿</string>
+    <string name="phone_review_tap">点按</string>
+    <string name="phone_review_long_press">长按</string>
+    <string name="phone_review_type">输入文字</string>
+    <string name="phone_review_volume">设置媒体音量</string>
+    <string name="phone_review_scroll_forward">向前滚动</string>
+    <string name="phone_review_scroll_backward">向后滚动</string>
+    <string name="phone_review_swipe">滑动</string>
+    <string name="phone_review_drag">拖动</string>
+    <string name="phone_review_home">返回主屏幕</string>
+</resources>

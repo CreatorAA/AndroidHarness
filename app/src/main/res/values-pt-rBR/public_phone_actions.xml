@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Definir um alarme sem repetição</string>
+    <string name="phone_public_timer">Iniciar um temporizador</string>
+    <string name="phone_public_map">Buscar um lugar</string>
+    <string name="phone_public_calendar">Abrir um rascunho de evento</string>
+    <string name="phone_public_note">Abrir uma nova nota</string>
+</resources>

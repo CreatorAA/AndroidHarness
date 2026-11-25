@@ -49,10 +49,11 @@ enum class LiveHearing {
 class LiveListener(
     private val context: Context,
     private val scope: CoroutineScope,
-    private val groqKey: () -> String?,
+    private val groqKey: () -> String? = { null },
     private val transcribe: suspend (File, String, String) -> Result<String> = { file, key, model ->
         GroqWhisperClient.transcribe(file, key, model)
     },
+    private val selectedCloud: (suspend (File) -> Result<String>)? = null,
 ) {
     var hearing by mutableStateOf(LiveHearing.OFF)
         private set
@@ -63,8 +64,13 @@ class LiveListener(
         private set
     var error by mutableStateOf<String?>(null)
         private set
+    var notice by mutableStateOf<String?>(null)
+        private set
+    var canContinueOffline by mutableStateOf(false)
+        private set
 
     private var groq = false
+    private var onlyOffline = false
     private var whisperModel = ""
     private var silenceMs = 1_200
     private var onUtterance: (String) -> Unit = {}
@@ -72,13 +78,18 @@ class LiveListener(
     /** Bumped whenever the microphone closes, so late callbacks from an old session are ignored. */
     private var generation = 0
     private var recognizer: SpeechRecognizer? = null
+    private var phone: PhoneSpeechSession? = null
     private var recorder: MediaRecorder? = null
     private var recordFile: File? = null
     private var loop: Job? = null
     private var networkFailures = 0
 
-    fun start(useGroq: Boolean, model: String, silence: Int, onUtterance: (String) -> Unit) {
+    fun start(useGroq: Boolean, model: String, silence: Int, onUtterance: (String) -> Unit) =
+        start(useGroq, model, silence, false, onUtterance)
+
+    internal fun start(useGroq: Boolean, model: String, silence: Int, offlineMandarinOnly: Boolean, onUtterance: (String) -> Unit) {
         groq = useGroq
+        onlyOffline = offlineMandarinOnly
         whisperModel = model
         silenceMs = silence
         this.onUtterance = onUtterance
@@ -89,7 +100,13 @@ class LiveListener(
         close()
         error = null
         networkFailures = 0
-        if (groq) openRecorder() else openRecognizer()
+        if (groq) openRecorder() else if (onlyOffline || useBundledMandarin(context)) openPhone(onlyOffline) else openRecognizer()
+    }
+
+    fun continueOffline() {
+        if (!canContinueOffline || hearing != LiveHearing.OFF) return
+        close(); error = null
+        openPhone(true)
     }
 
     fun pause() = close()
@@ -102,6 +119,10 @@ class LiveListener(
 
     private fun close() {
         generation++
+        canContinueOffline = false
+        notice = null
+        phone?.cancel()
+        phone = null
         loop?.cancel()
         loop = null
         runCatching { recognizer?.cancel() }
@@ -114,6 +135,30 @@ class LiveListener(
     private fun deliver(text: String) {
         close()
         onUtterance(text)
+    }
+
+    private fun openPhone(offline: Boolean) {
+        val session = generation
+        val turn = PhoneSpeechSession(context, scope, silenceMs.toLong(), onText = { text, final ->
+            if (session == generation) { if (final) deliver(text) else partial = text }
+        }, phase = { phase ->
+            if (session == generation) hearing = when (phase) {
+                NativeDictation.Phase.STARTING, NativeDictation.Phase.LISTENING -> LiveHearing.WAITING
+                NativeDictation.Phase.WAITING -> LiveHearing.TRANSCRIBING
+                NativeDictation.Phase.CLOSED -> LiveHearing.OFF
+            }
+        }, level = { value, spoken ->
+            if (session == generation) { level = value; if (spoken && hearing == LiveHearing.WAITING) hearing = LiveHearing.HEARING }
+        }, switched = { notice = context.getString(R.string.voice_live_handoff) }, closed = { failure ->
+            if (session == generation && failure != null) {
+                level = 0f; hearing = LiveHearing.OFF
+                if (failure == NativeDictation.Failure.NO_RESULT && partial.isBlank()) {
+                    loop = scope.launch { delay(200); if (session == generation) openPhone(offline) }
+                } else error = context.getString(failure.messageId())
+            }
+        })
+        phone = turn
+        turn.start(offline)
     }
 
     // ------------------------------------------------------------------
@@ -205,7 +250,7 @@ class LiveListener(
     // ------------------------------------------------------------------
 
     private fun openRecorder() {
-        if (groqKey().isNullOrBlank()) {
+        if (selectedCloud == null && groqKey().isNullOrBlank()) {
             error = context.getString(R.string.live_error_no_groq_key)
             return
         }
@@ -262,8 +307,8 @@ class LiveListener(
             if (session == generation) openRecorder()
             return
         }
-        val key = groqKey()
-        if (key.isNullOrBlank()) {
+        val key = if (selectedCloud == null) groqKey() else null
+        if (selectedCloud == null && key.isNullOrBlank()) {
             file.delete()
             error = context.getString(R.string.live_error_no_groq_key)
             close()
@@ -271,7 +316,10 @@ class LiveListener(
         }
         hearing = LiveHearing.TRANSCRIBING
         val result = try {
-            withContext(Dispatchers.IO) { transcribe(file, key, whisperModel) }
+            transcribeVoiceClip(file, useBundledMandarin(context),
+                provider = { clip -> selectedCloud?.invoke(clip) ?: withContext(Dispatchers.IO) { transcribe(clip, key.orEmpty(), whisperModel) } },
+                handoff = { notice = context.getString(R.string.voice_clip_handoff) },
+                offline = { transcribeRecordedMandarin(context, it) })
         } catch (e: CancellationException) {
             throw e
         } finally {
@@ -279,7 +327,13 @@ class LiveListener(
         }
         if (session != generation) return
         val text = result.getOrNull()?.trim().orEmpty()
-        result.exceptionOrNull()?.let { error = it.message ?: context.getString(R.string.live_error_transcription) }
+        result.exceptionOrNull()?.let { failure ->
+            close()
+            canContinueOffline = failure is UnrecoveredVoiceClip
+            error = if (canContinueOffline) context.getString(R.string.voice_clip_unavailable)
+                else failure.message ?: context.getString(R.string.live_error_transcription)
+            return
+        }
         if (text.isNotEmpty() && !isLikelyHallucination(text, voicedMs)) deliver(text) else openRecorder()
     }
 

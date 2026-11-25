@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 ஸ்கிரிப்ட்கள்</string>
+    <string name="autojs_allow">AutoJs6 ஐப் பயன்படுத்த உதவியாளரை அனுமதி</string>
+    <string name="autojs_allow_hint">இணைக்கப்பட்ட இயக்கி மற்றும் UI ஸ்கிரிப்ட்களைச் சேர்க்கிறது. உள்ளமைக்கப்பட்ட சேவையை இயக்கினால் அது தொடர்ந்து கிடைக்கும்.</string>
+    <string name="autojs_need_pair">ஸ்கிரிப்ட்களை இப்போது எழுதி சரிபார்க்கலாம். அவற்றை மொபைலில் இயக்கும் முன் உள்ளூர் AutoJs6 செருகுநிரலை அமைக்கவும்.</string>
+    <string name="autojs_new">புதிய ஸ்கிரிப்ட்</string>
+    <string name="autojs_back">பின்</string>
+    <string name="autojs_source">UI ஸ்கிரிப்ட்</string>
+    <string name="autojs_sample_source">text(\"தொடரவும்\").waitFor();</string>
+    <string name="autojs_name">பெயர் (சோதனைக்கு விருப்பமானது)</string>
+    <string name="autojs_name_exists">இந்தப் பெயரில் ஏற்கனவே ஒரு ஸ்கிரிப்ட் உள்ளது. அதைத் திருத்தத் திறக்கவும் அல்லது வேறு பெயரைத் தேர்வுசெய்யவும்.</string>
+    <string name="autojs_format">ஒரு கட்டுப்பாட்டைக் கண்டுபிடிக்க text, desc அல்லது id ஐப் பயன்படுத்தவும். பிறகு அதற்காகக் காத்திருக்கலாம், அதைத் தட்டலாம் அல்லது உரையை உள்ளிடலாம். ஒரு வரிக்கு ஒரு வழிமுறையைப் பயன்படுத்தவும்.</string>
+    <string name="autojs_check">படிகளைச் சரிபார்</string>
+    <string name="autojs_prepare">இலக்கு ஆப்பில் சோதனை செய்</string>
+    <string name="autojs_preview">சரியான படிகள்: %1$d · எதுவும் இயக்கப்படவில்லை</string>
+    <string name="autojs_empty">மீண்டும் பயன்படுத்தக்கூடிய செயலை உருவாக்க புதிய ஸ்கிரிப்ட் என்பதைத் தட்டவும். சேமிக்காமல் சோதிக்கப் பெயரை உள்ளிட வேண்டாம்.</string>
+    <string name="autojs_enabled_hint">இந்தத் தொகுப்பில் இயக்கப்பட்ட ஸ்கிரிப்ட்களை உதவியாளர் பயன்படுத்தலாம்.</string>
+    <string name="autojs_disabled_hint">சோதிக்கும் முன் இந்த ஸ்கிரிப்டைத் தொகுப்பில் இயக்கவும்.</string>
+    <string name="autojs_delete">“%1$s” ஐ நீக்கவா?</string>
+    <string name="autojs_delete_action">நீக்கு</string>
+    <string name="autojs_changed">இந்த ஸ்கிரிப்ட் தொகுப்பில் மாற்றப்பட்டுள்ளது. சேமிக்கும் அல்லது இயக்கும் முன் அதை மீண்டும் திறக்கவும்.</string>
+    <string name="autojs_write_failed">ஸ்கிரிப்டைச் சேமிக்க முடியவில்லை.</string>
+    <string name="autojs_anonymous">சேமிக்கப்படாத ஸ்கிரிப்ட்</string>
+    <string name="autojs_prepared">சோதனை தயார்: %1$s. இலக்கு ஆப்பைத் திறந்து 10 நிமிடங்களுக்குள் மொபைல் உதவியாளரை அழைக்கவும்.</string>
+    <string name="autojs_trial_title">ஸ்கிரிப்டை இயக்கு · %1$s</string>
+    <string name="autojs_trial_here">%1$s இல் மட்டும்</string>
+    <string name="autojs_trial_other">நீங்கள் சோதிக்க விரும்பும் ஆப்பைத் திறந்து, அங்கு உதவியாளரை அழைக்கவும்.</string>
+    <string name="autojs_trial_steps">%1$d படிகள் · மதிப்பாய்வு செய்யத் தட்டவும்</string>
+    <string name="autojs_trial_less">படிகளை மறை</string>
+    <string name="autojs_trial_allow">அனுமதித்து இங்கு இயக்கு</string>
+    <string name="autojs_trial_stale">இந்தச் சோதனை காலாவதியாகிவிட்டது அல்லது ஆப் மாறிவிட்டது. ஸ்கிரிப்ட் தொகுப்பில் மீண்டும் தயார் செய்யவும்.</string>
+    <string name="autojs_trial_request">“%1$s” ஐ %2$s இல் இயக்கு.</string>
+    <string name="autojs_trial_done">%3$s இல் %2$d ஸ்கிரிப்ட் படிகளில் %1$d முடிந்தன.</string>
+    <string name="autojs_trial_stopped">%3$s இல் %2$d படிகளில் %1$d முடிந்த பின் ஸ்கிரிப்ட் நிறுத்தப்பட்டது.</string>
+    <string name="autojs_trial_error">தற்போதைய ஆப்பில் இந்த ஸ்கிரிப்டைத் தொடங்க முடியவில்லை.</string>
+    <string name="autojs_trial_interrupted">ஸ்கிரிப்ட் இடைநிறுத்தப்பட்டது. மீண்டும் முயற்சிக்கும் முன் ஆப்பைச் சரிபார்க்கவும்.</string>
+    <string name="autojs_not_selected">ஸ்கிரிப்டைத் தயார் செய்யும் முன் AutoJs6 ஐ இயக்கவும்.</string>
+    <string name="autojs_activity_running">AutoJs6 ஸ்கிரிப்ட் இயங்குகிறது</string>
+    <string name="autojs_activity_ran">AutoJs6 ஸ்கிரிப்ட் இயக்கப்பட்டது</string>
+    <string name="autojs_activity_run_failed">AutoJs6 ஸ்கிரிப்ட் முடிவடையவில்லை</string>
+    <string name="autojs_activity_library_working">AutoJs6 ஸ்கிரிப்ட் தொகுப்பு பயன்படுத்தப்படுகிறது</string>
+    <string name="autojs_activity_library_done">AutoJs6 ஸ்கிரிப்ட் தொகுப்பு பயன்படுத்தப்பட்டது</string>
+    <string name="autojs_activity_library_failed">AutoJs6 ஸ்கிரிப்ட் தொகுப்பின் செயல் தோல்வியடைந்தது</string>
+</resources>

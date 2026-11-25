@@ -1140,8 +1140,8 @@
     <string name="ui_provider_default">"افتراضي المزوّد"</string>
     <string name="ui_add_custom_command">"إضافة أمر مخصص"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"إبقاء المعالج نشطاً أثناء التشغيل أو عمل الطرفية حتى لا تتوقف الطرفية عند تصغير التطبيق."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"مستثنى: لن يقيّد Android التشغيل في الخلفية."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"عند التفعيل: قد توقف Samsung وغيرها العمل في الخلفية. استثنِ التطبيق لتشغيل طويل وموثوق."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"تحسين البطارية في Android غير مفعّل لتطبيق AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"تحسين البطارية في Android مفعّل. إذا توقفت المهام الطويلة عند إطفاء الشاشة، فاسمح لتطبيق AndroidHarness باستخدام البطارية بلا قيود."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"الإصدار الحالي %1$s. يفحص GitHub Releases بحثاً عن إصدارات أحدث."</string>
     <string name="ui_available_see_the_dialog">"يتوفر %1$s، راجع مربع الحوار"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"وكيل برمجة يعيش على هاتفك."</string>
@@ -1855,4 +1855,9 @@
     <string name="lms_field_prompt_threads">"سرعة القراءة"</string>
     <string name="lms_field_prompt_threads_help">"أنوية CPU أثناء قراءة رسالتك."</string>
     <string name="lms_unit_cores">"أنوية"</string>
+    <string name="voice_no_result">لم يرد نص كامل للتسجيل. حاول التحدث مجددًا أو اكتب رسالتك.</string>
+    <string name="voice_service_interrupted">توقفت خدمة التعرف على الكلام في النظام قبل الانتهاء. حاول الإملاء مجددًا أو اكتب الباقي.</string>
+    <string name="voice_try_again">الإملاء مجددًا</string>
+    <string name="voice_continue">متابعة الإملاء</string>
+    <string name="voice_finish_to_send">جارٍ الاستماع. اضغط على إرسال عند الانتهاء.</string>
 </resources>

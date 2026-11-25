@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Buka %1$s?</string>
+    <string name="app_request_search">Cari “%2$s” di %1$s?</string>
+    <string name="app_request_choose_open">Aplikasi mana yang ingin Anda buka?</string>
+    <string name="app_request_choose_map">Di aplikasi peta mana Anda ingin mencari “%1$s”?</string>
+    <string name="app_request_missing">Tidak ditemukan aplikasi bernama “%1$s” yang bisa dibuka di ponsel ini.</string>
+    <string name="app_request_alternative">Anda bisa mencari “%1$s” di salah satu aplikasi peta di bawah ini.</string>
+    <string name="app_request_open_only">%1$s bisa dibuka, tetapi tidak menyediakan pencarian tempat umum. Buka tanpa mencari?</string>
+    <string name="app_request_no_map">Tidak ada aplikasi terinstal yang bisa mencari “%1$s” di peta.</string>
+    <string name="app_request_no_entry">%1$s tidak menyediakan cara untuk menjalankan permintaan ini.</string>
+    <string name="app_request_opened">Permintaan untuk membuka %1$s telah dikirim.</string>
+    <string name="app_request_sent">Permintaan pencarian “%2$s” telah dikirim ke %1$s.</string>
+    <string name="app_request_failed">Permintaan ini tidak dapat dikirim ke %1$s. Ajukan lagi untuk memeriksa aplikasi yang tersedia.</string>
+    <string name="app_request_cancelled">Dibatalkan. Tidak ada aplikasi yang dibuka.</string>
+</resources>

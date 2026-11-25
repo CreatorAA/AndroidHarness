@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">পাশের ভাসমান হ্যান্ডেল</string>
+    <string name="assistant_edge_desc">সহায়ক খুলতে ডান পাশের হ্যান্ডেলটি ভেতরের দিকে সোয়াইপ করুন।</string>
+    <string name="assistant_edge_permission_hint">Android সেটিংসে AndroidHarness-কে অন্য অ্যাপের ওপর দেখানোর অনুমতি দিন।</string>
+    <string name="assistant_edge_permission_unavailable">অন্য অ্যাপের ওপর দেখানোর অনুমতি সেটিংস খোলা যায়নি।</string>
+    <string name="assistant_edge_handle_description">অন্য অ্যাপের ওপর সহায়ক খুলুন</string>
+    <string name="assistant_edge_start_failed">পাশের হ্যান্ডেল চালু করা যায়নি। আবার চেষ্টা করুন।</string>
+    <string name="assistant_edge_disconnected">সিস্টেম অ্যাসিস্ট্যান্টের সংযোগ বিচ্ছিন্ন করেছে।</string>
+    <string name="assistant_edge_reconnect">আবার সংযোগ করুন</string>
+    <string name="assistant_edge_reconnect_steps">Android-এর অ্যাসিস্ট্যান্ট সেটিংসে কিছুই নয় বেছে নিন, তারপর আবার AndroidHarness বেছে নিন।</string>
+    <string name="assistant_edge_grant_overlay">ওভারলে অনুমতি দিন</string>
+</resources>

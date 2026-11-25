@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">किनारे का हैंडल</string>
+    <string name="assistant_edge_desc">सहायक खोलने के लिए दाएँ किनारे के हैंडल को अंदर की ओर स्वाइप करें।</string>
+    <string name="assistant_edge_permission_hint">Android सेटिंग में AndroidHarness को दूसरे ऐप्स के ऊपर दिखने की अनुमति दें।</string>
+    <string name="assistant_edge_permission_unavailable">दूसरे ऐप्स के ऊपर दिखने की अनुमति की सेटिंग नहीं खुल सकी।</string>
+    <string name="assistant_edge_handle_description">दूसरे ऐप्स के ऊपर सहायक खोलें</string>
+    <string name="assistant_edge_start_failed">किनारे का हैंडल चालू नहीं हो सका। फिर से कोशिश करें।</string>
+    <string name="assistant_edge_disconnected">सिस्टम ने असिस्टेंट का कनेक्शन तोड़ दिया।</string>
+    <string name="assistant_edge_reconnect">फिर से कनेक्ट करें</string>
+    <string name="assistant_edge_reconnect_steps">Android की असिस्टेंट सेटिंग में पहले कोई नहीं चुनें, फिर AndroidHarness को दोबारा चुनें।</string>
+    <string name="assistant_edge_grant_overlay">दूसरे ऐप के ऊपर दिखने दें</string>
+</resources>

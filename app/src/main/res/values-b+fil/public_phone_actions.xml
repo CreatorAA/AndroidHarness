@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">Magtakda ng isang beses na alarm</string>
+    <string name="phone_public_timer">Magsimula ng timer</string>
+    <string name="phone_public_map">Maghanap ng lugar</string>
+    <string name="phone_public_calendar">Magbukas ng draft sa kalendaryo</string>
+    <string name="phone_public_note">Magbukas ng bagong tala</string>
+</resources>

@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">این گفتگوها در پروژه‌های دیگر از این فضای کاری استفاده می‌کنند: %1$s. پیش از حذف، فضای کاری را از آن گفتگوها بردارید. گفتگوهایی که تغییرات ذخیره‌شده دارند باید دسترسی خود را به فضای کاری حفظ کنند.</string>
+    <string name="wp_delete_running_blocked">پیش از حذف پروژه، کارهای در حال اجرا در آن را متوقف کنید.</string>
+    <string name="wp_reset_shared_blocked">این گفتگوها نیز از فضای کاری برنامه استفاده می‌کنند: %1$s. پیش از بازنشانی، فضای کاری را از آن گفتگوها بردارید.</string>
+    <string name="wp_reset_running_blocked">پیش از بازنشانی فضای کاری، کارهای در حال اجرا در آن را متوقف کنید.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d خودکارسازی</item>
+        <item quantity="other">%1$d خودکارسازی</item>
+    </plurals>
+    <string name="wp_picked_folder">پوشه انتخاب‌شده</string>
+    <string name="wp_review_changed">جزئیات تغییر کرده‌اند. این پنجره را ببندید و اقدام را دوباره بررسی کنید.</string>
+    <string name="wp_editor_toggle_wrap">تغییر حالت شکستن خط</string>
+    <string name="wp_editor_undo_available">قابل واگردانی</string>
+    <string name="wp_reset_app_only">فقط فضای کاری برنامه را می‌توان بازنشانی کرد.</string>
+    <string name="wp_editor_find_replace">جستجو و جایگزینی در پروژه</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d فایل تغییر کرده</item>
+        <item quantity="other">%1$d فایل تغییر کرده</item>
+    </plurals>
     <string name="wp_add_shared">"پوشه مشترک"</string>
     <string name="wp_add_shared_sub">"پس از حذف برنامه باقی می‌ماند. نسخه stable و nightly هر دو آن را می‌بینند"</string>
     <string name="wp_add_shared_failed">"%1$s ساخته نشد. بررسی کنید دسترسی به همه فایل‌ها روشن باشد و دوباره تلاش کنید."</string>

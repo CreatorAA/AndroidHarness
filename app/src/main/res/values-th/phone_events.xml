@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">แม้จะปิดการแจ้งเตือนใน «%1$s» คุณยังดูรายการเตือนความจำได้ที่นี่</string>
+    <string name="phone_events_title">การแจ้งเตือนเหตุการณ์ในโทรศัพท์</string>
+    <string name="phone_events_intro">รับการแจ้งเตือนเมื่อแอปที่เลือกเปิดขึ้นหรือส่งการแจ้งเตือน ตรวจสอบงานที่ลิงก์ไว้ก่อนเรียกใช้</string>
+    <string name="phone_event_ready">การแจ้งเตือนเหตุการณ์ในโทรศัพท์</string>
+    <string name="phone_event_open_reminder">%1$s ทำให้เกิดการแจ้งเตือนที่คุณตั้งไว้ แตะเพื่อตรวจสอบ</string>
+    <string name="phone_events_grant_notifications">อนุญาตให้เข้าถึงการแจ้งเตือน</string>
+    <string name="phone_events_grant_window">เปิดการควบคุมโทรศัพท์ของ Harness ในการช่วยเหลือพิเศษ</string>
+    <string name="phone_events_show_alerts">อนุญาตการแจ้งเตือนสำหรับการเตือนความจำ</string>
+    <string name="phone_event_opened">%1$s เปิดขึ้น</string>
+    <string name="phone_event_notified">%1$s ส่งการแจ้งเตือน</string>
+    <string name="phone_event_review_task">ตรวจสอบ: %1$s</string>
+    <string name="phone_event_dismiss">ปิด</string>
+    <string name="phone_event_remind_only">เตือนฉันเท่านั้น</string>
+    <string name="phone_event_task_missing">งานที่ลิงก์ไว้ไม่พร้อมใช้งานแล้ว</string>
+    <string name="phone_event_edit">แก้ไขกฎ</string>
+    <string name="phone_event_remove">นำกฎออก</string>
+    <string name="phone_event_add">เพิ่มกฎสำหรับแอป</string>
+    <string name="phone_event_view_notices">การแจ้งเตือนที่ยังอยู่ (%1$d)</string>
+    <string name="phone_event_active_notices">การแจ้งเตือนปัจจุบัน</string>
+    <string name="phone_event_metadata_only">แสดงเฉพาะแอปและเวลา เปิดการแจ้งเตือนในแอปต้นทางเพื่ออ่าน</string>
+    <string name="phone_event_no_notices">ไม่มีการแจ้งเตือนปัจจุบันจากแอปที่คุณเลือก</string>
+    <string name="phone_event_no_listener">ตัวรับการแจ้งเตือนไม่ได้เชื่อมต่อ</string>
+    <string name="phone_event_open_source">เปิดในแอป</string>
+    <string name="phone_event_mark_read">ทำเครื่องหมายว่าอ่านแล้ว</string>
+    <string name="phone_event_read_confirm">ขอให้ %1$s ทำเครื่องหมายการแจ้งเตือนนี้ว่าอ่านแล้วไหม</string>
+    <string name="phone_event_task_busy">งานนี้หยุดชั่วคราว กำลังทำงานอยู่ หรือไม่ใช่งานที่สั่งให้ทำด้วยตนเองอีกต่อไป</string>
+    <string name="phone_event_run_task">เรียกใช้งาน</string>
+    <string name="phone_event_unavailable">รายการนี้ไม่พร้อมใช้งานแล้ว</string>
+    <string name="phone_event_choose_app">เลือกแอป</string>
+    <string name="phone_event_search">ชื่อแอปหรือชื่อแพ็กเกจ</string>
+    <string name="phone_event_when">เมื่อ</string>
+    <string name="phone_event_when_open">ฉันเปิดแอปนี้</string>
+    <string name="phone_event_when_notified">แอปนี้ส่งการแจ้งเตือน</string>
+    <string name="phone_event_then">เตือนฉันให้ตรวจสอบ</string>
+    <string name="phone_event_save">บันทึกกฎ</string>
+    <string name="phone_event_all_rules">ตั้งค่าทั้งสองเหตุการณ์แล้ว แก้ไขกฎที่มีอยู่ด้านล่าง</string>
+</resources>

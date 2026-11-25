@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Mga kontrol ng telepono ng Harness</string>
+    <string name="phone_driver_service_description">Hinahayaan kang hilingin sa assistant na basahin ang screen, mag-tap ng mga kontrol, at maglagay ng text. Gumagana lang ang mga kontrol ng telepono habang may gawaing sinimulan mo. Itigil ang gawain para ikaw ang muling kumontrol.</string>
+</resources>

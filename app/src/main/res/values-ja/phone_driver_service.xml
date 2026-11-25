@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Harness のスマートフォン操作</string>
+    <string name="phone_driver_service_description">アシスタントに画面の読み取り、タップ、文字入力を依頼できます。操作できるのは自分で開始したタスクの実行中だけです。自分で操作するには、タスクを停止してください。</string>
+</resources>

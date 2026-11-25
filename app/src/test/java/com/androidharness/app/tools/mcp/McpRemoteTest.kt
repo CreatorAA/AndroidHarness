@@ -114,20 +114,20 @@ class McpPasteTest {
 // A dependency-free threaded HTTP server for driving the remote transports
 // ---------------------------------------------------------------------------
 
-private class RecordedRequest(
+internal class RecordedRequest(
     val method: String,
     val path: String,
     val headers: Map<String, String>,
     val body: String,
 )
 
-private class StreamOut(private val out: OutputStream) {
+internal class StreamOut(private val out: OutputStream) {
     fun write(text: String) = out.write(text.toByteArray(Charsets.UTF_8))
     fun flush() = out.flush()
 }
 
 /** One HTTP request/response exchange over its socket. */
-private class Connection(
+internal class Connection(
     val request: RecordedRequest,
     private val out: OutputStream,
 ) {
@@ -166,11 +166,11 @@ private class Connection(
     }
 }
 
-private fun interface ConnectionHandler {
+internal fun interface ConnectionHandler {
     fun handle(conn: Connection)
 }
 
-private class TinyHttpServer {
+internal class TinyHttpServer {
 
     @Volatile
     var stopped = false

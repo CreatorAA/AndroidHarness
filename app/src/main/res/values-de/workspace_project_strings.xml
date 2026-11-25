@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Chats in anderen Projekten verwenden diesen Arbeitsbereich: %1$s. Entferne ihn aus diesen Chats, bevor du ihn löschst. Chats mit gespeicherten Änderungen müssen ihren Zugriff behalten.</string>
+    <string name="wp_delete_running_blocked">Beende laufende Aufgaben in diesem Projekt, bevor du es löschst.</string>
+    <string name="wp_reset_shared_blocked">Andere Chats verwenden ebenfalls den App-Arbeitsbereich: %1$s. Entferne ihn aus diesen Chats, bevor du ihn zurücksetzt.</string>
+    <string name="wp_reset_running_blocked">Beende laufende Aufgaben in diesem Arbeitsbereich, bevor du ihn zurücksetzt.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d Automatisierung</item>
+        <item quantity="other">%1$d Automatisierungen</item>
+    </plurals>
+    <string name="wp_picked_folder">Ausgewählter Ordner</string>
+    <string name="wp_review_changed">Die Angaben haben sich geändert. Schließe diesen Dialog und prüfe die Aktion erneut.</string>
+    <string name="wp_editor_toggle_wrap">Zeilenumbruch umschalten</string>
+    <string name="wp_editor_undo_available">Rückgängig möglich</string>
+    <string name="wp_reset_app_only">Nur der App-Arbeitsbereich kann zurückgesetzt werden.</string>
+    <string name="wp_editor_find_replace">Im Projekt suchen und ersetzen</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d geänderte Datei</item>
+        <item quantity="other">%1$d geänderte Dateien</item>
+    </plurals>
     <string name="wp_add_shared">"Gemeinsamer Ordner"</string>
     <string name="wp_add_shared_sub">"Bleibt nach der Deinstallation. Stable- und Nightly-Builds sehen ihn beide"</string>
     <string name="wp_add_shared_failed">"%1$s konnte nicht erstellt werden. Prüfe, ob der Zugriff auf alle Dateien aktiv ist, und versuche es erneut."</string>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">නොබැඳි මැන්ඩරින් පමණයි</string>
+    <string name="voice_local_only_on">ඇතුළත් කර ඇති මැන්ඩරින් ආකෘතිය භාවිත කරයි. ඔබේ ශ්‍රව්‍ය දුරකථනයේම පවතී.</string>
+    <string name="voice_system_first">Android කථන සේවාවට ප්‍රමුඛත්වය දේ. එය ලබා ගත නොහැකි නම්, මැන්ඩරින් හඬින් පෙළට හැරවීම දුරකථනයේ දිගටම සිදු වේ.</string>
+    <string name="voice_live_handoff">මෙම දුරකථනයේ දිගටම ක්‍රියා කරයි. දැනටමත් පෙන්වූ වචන තබා ඇත; දිගටම කතා කරන්න.</string>
+    <string name="voice_local_stopped">උපාංගයේ හඬින් පෙළට හැරවීම නැවතුණා. දැනටමත් පෙන්වූ වචන තබාගෙන දිගටම කතා කිරීමට හෝ ඉතිරිය ටයිප් කිරීමට හැකිය.</string>
+    <string name="voice_clip_unavailable">මෙම පටිගත කිරීමෙන් සම්පූර්ණ පිටපතක් ලබා ගැනීමට නොහැකි විය.</string>
+    <string name="voice_continue_offline">උපාංගයේ දිගටම කරගෙන යන්න</string>
+    <string name="voice_clip_handoff">කථන සේවාව ලබා ගත නොහැක. මෙම පටිගත කිරීම ඔබේ දුරකථනයේ පෙළට හරවමින් පවතී.</string>
+</resources>

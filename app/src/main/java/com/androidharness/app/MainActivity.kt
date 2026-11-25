@@ -5,13 +5,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import com.androidharness.app.ui.common.BiometricAuth
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,32 +29,41 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.androidharness.app.data.AppSettings
-import com.androidharness.app.data.ScreenshotPolicy
-import com.androidharness.app.data.update.UpdateIntents
-import com.androidharness.app.ui.AppNav
-import com.androidharness.app.ui.common.RefreshRate
-import com.androidharness.app.ui.theme.HarnessTheme
-import com.androidharness.app.ui.update.UpdateDialog
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
+import com.androidharness.app.data.AppSettings
+import com.androidharness.app.data.HarnessCanvasStore
+import com.androidharness.app.data.PendingShare
+import com.androidharness.app.data.ScreenshotPolicy
+import com.androidharness.app.data.env.adb.WirelessAdbService
+import com.androidharness.app.phoneevents.PhoneEvents
+import com.androidharness.app.telegram.TelegramService
+import com.androidharness.app.ui.AppNav
+import com.androidharness.app.ui.common.BiometricAuth
+import com.androidharness.app.ui.common.Button
+import com.androidharness.app.ui.common.RefreshRate
+import com.androidharness.app.ui.common.StorageAccessPrompt
+import com.androidharness.app.ui.settings.AssistantReconnectNotice
+import com.androidharness.app.ui.settings.SettingsPage
+import com.androidharness.app.ui.settings.canonicalAppLanguageTags
+import com.androidharness.app.ui.settings.settingsTarget
+import com.androidharness.app.ui.theme.HarnessTheme
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.io.File
-import com.androidharness.app.ui.common.Button
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,23 +75,16 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val languageTags = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags()
-        val canonicalTags = com.androidharness.app.ui.settings.canonicalAppLanguageTags(languageTags)
+        val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+        val canonicalTags = canonicalAppLanguageTags(languageTags)
         if (canonicalTags != languageTags) {
-            androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
-                androidx.core.os.LocaleListCompat.forLanguageTags(canonicalTags),
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(canonicalTags),
             )
         }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         container = (application as HarnessApp).container
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                kotlinx.coroutines.delay(2_000)
-                container.updates.checkOnForeground()
-            }
-        }
-
         lifecycleScope.launch {
             if (container.settings.settings.first().notificationsEnabled && Build.VERSION.SDK_INT >= 33 &&
                 ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
@@ -105,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                 colorPalette = currentSettings.colorPalette,
                 customPalette = currentSettings.customPalettes.firstOrNull { it.id == currentSettings.activeCustomPaletteId }
                     .takeUnless { currentSettings.dynamicColor || currentSettings.harnessCanvas.adaptColors },
-                canvasSeed = currentSettings.harnessCanvas.takeIf { it.adaptColors && com.androidharness.app.data.HarnessCanvasStore.image(this, it.imageId) != null }?.seed,
+                canvasSeed = currentSettings.harnessCanvas.takeIf { it.adaptColors && HarnessCanvasStore.image(this, it.imageId) != null }?.seed,
                 glassEnabled = currentSettings.harnessGlassEnabled,
                 liquidGlass = currentSettings.harnessLiquidGlass,
                 glassTransparency = currentSettings.harnessGlassTransparency,
@@ -149,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             Icon(
                                 Icons.Outlined.Lock,
-                                contentDescription = "App Locked",
+                                contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(64.dp),
                             )
@@ -175,47 +179,19 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    androidx.compose.runtime.DisposableEffect(Unit) {
-                        val host = window.decorView as android.view.ViewGroup
+                    DisposableEffect(Unit) {
+                        val host = window.decorView as ViewGroup
                         container.browser.bindReadCaptureHost(host)
                         onDispose { container.browser.unbindReadCaptureHost(host) }
                     }
-                    AppNav(container)
-                    com.androidharness.app.ui.common.StorageAccessPrompt()
+                    Box(Modifier.fillMaxSize()) {
+                        AppNav(container)
+                        if (currentSettings.assistantEdgeHandleEnabled) {
+                            AssistantReconnectNotice(Modifier.align(Alignment.BottomCenter))
+                        }
+                    }
+                    StorageAccessPrompt()
                 }
-
-                // The one global update dialog, above everything else.
-                val step by container.updates.step.collectAsStateWithLifecycle()
-                UpdateDialog(
-                    step = step,
-                    onDismiss = { container.updates.dismiss() },
-                    onUpdate = {
-                        val s = container.updates.step.value
-                        val release = when (s) {
-                            is com.androidharness.app.data.update.UpdateManager.Step.Available -> s.release
-                            is com.androidharness.app.data.update.UpdateManager.Step.Error -> s.release
-                            else -> null
-                        }
-                        if (release != null) {
-                            kotlinx.coroutines.MainScope().launch {
-                                container.updates.startUpdate(
-                                    release,
-                                    onOpenSystemInstaller = { apk ->
-                                        UpdateIntents.installApk(this@MainActivity, apk)
-                                    },
-                                    onOpenUnknownSourcesSettings = {
-                                        UpdateIntents.openUnknownSourcesSettings(this@MainActivity)
-                                    },
-                                )
-                            }
-                        } else {
-                            // Error without release context = check failure; retry the check.
-                            kotlinx.coroutines.MainScope().launch { container.updates.check(manual = true) }
-                        }
-                    },
-                    onOpenSystemInstaller = { apk: File -> UpdateIntents.installApk(this, apk) },
-                    onOpenUnknownSources = { UpdateIntents.openUnknownSourcesSettings(this) },
-                )
             }
         }
     }
@@ -238,7 +214,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        container.browser.unbindReadCaptureHost(window.decorView as android.view.ViewGroup)
+        container.browser.unbindReadCaptureHost(window.decorView as ViewGroup)
         super.onPause()
         lastPausedTimestamp = System.currentTimeMillis()
     }
@@ -246,13 +222,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         requestFastestRefreshRate()
-        com.androidharness.app.data.env.adb.WirelessAdbService.resume(this)
+        WirelessAdbService.resume(this)
         container.shizuku.refresh()
         container.dhizuku.refresh()
         promptShownThisResume = false
         if (isUnlocked && lastPausedTimestamp > 0L) {
             val settings = runCatching {
-                kotlinx.coroutines.runBlocking { container.settings.settings.first() }
+                runBlocking { container.settings.settings.first() }
             }.getOrNull()
             if (settings != null && settings.biometricLockEnabled) {
                 val timeoutMillis = settings.biometricLockTimeoutMinutes * 60 * 1000L
@@ -263,7 +239,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        if (isUnlocked) container.browser.bindReadCaptureHost(window.decorView as android.view.ViewGroup)
+        if (isUnlocked) container.browser.bindReadCaptureHost(window.decorView as ViewGroup)
     }
 
     private fun promptBiometricUnlock() {
@@ -290,7 +266,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleSessionIntent(intent: Intent?) {
-        if (intent?.getStringExtra(com.androidharness.app.telegram.TelegramService.EXTRA_SETTINGS) == "telegram") {
+        if (intent?.action == PhoneEvents.OPEN) {
+            container.pendingSettingsScroll.value = settingsTarget(
+                SettingsPage.ASSISTANT, R.string.phone_events_title)
+        }
+        if (intent?.getStringExtra(TelegramService.EXTRA_SETTINGS) == "telegram") {
             container.pendingSettingsScroll.value = "telegram"
         }
         val sessionId = intent?.getStringExtra(AgentService.EXTRA_SESSION_ID) ?: return
@@ -306,13 +286,13 @@ class MainActivity : AppCompatActivity() {
     private fun handleMcpOAuth(intent: Intent?) {
         val data = intent?.data ?: return
         if (data.scheme != "androidharness" || data.host != "mcp") return
-        kotlinx.coroutines.MainScope().launch {
+        MainScope().launch {
             container.mcp.completeAuthentication(
                 stateParam = data.getQueryParameter("state"),
                 code = data.getQueryParameter("code"),
             ).fold(
-                onSuccess = { name -> android.util.Log.i("McpOAuth", "authenticated '$name'") },
-                onFailure = { e -> android.util.Log.w("McpOAuth", "auth failed: ${e.message}") },
+                onSuccess = { name -> Log.i("McpOAuth", "authenticated '$name'") },
+                onFailure = { e -> Log.w("McpOAuth", "auth failed: ${e.message}") },
             )
         }
     }
@@ -321,9 +301,9 @@ class MainActivity : AppCompatActivity() {
     private fun handleShareIntent(intent: Intent?) {
         if (intent == null) return
         try {
-            com.androidharness.app.data.PendingShare.fromIntent(intent)?.let { container.pendingShare.value = it }
+            PendingShare.fromIntent(intent)?.let { container.pendingShare.value = it }
         } catch (_: Exception) {
-            android.widget.Toast.makeText(this, R.string.chat_share_failed, android.widget.Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.chat_share_failed, Toast.LENGTH_LONG).show()
         }
     }
 }

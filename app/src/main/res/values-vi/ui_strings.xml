@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Nhà cung cấp mặc định"</string>
     <string name="ui_add_custom_command">"Thêm lệnh tùy chỉnh"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Giữ CPU trong khi chạy hoặc thiết bị đầu cuối đang hoạt động để thiết bị đầu cuối sẽ không chết khi ứng dụng được thu nhỏ."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Bị loại trừ: Android sẽ không điều tiết hoạt động chạy trong nền."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Bật: Samsung và các OEM khác có thể ngừng hoạt động trong nền. Loại trừ ứng dụng để có thời gian chạy dài đáng tin cậy."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Tính năng tối ưu hóa pin của Android đã tắt cho AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Tính năng tối ưu hóa pin của Android đang bật. Nếu tác vụ dài bị dừng khi màn hình tắt, hãy cho phép AndroidHarness sử dụng pin không hạn chế."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Phiên bản hiện tại %1$s. Kiểm tra các bản phát hành GitHub để tìm các bản dựng mới hơn."</string>
     <string name="ui_available_see_the_dialog">"%1$s có sẵn, xem hộp thoại"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Trợ lý lập trình tồn tại trên điện thoại của bạn."</string>
@@ -1845,4 +1845,9 @@
     <string name="lms_field_prompt_threads">"Tốc độ đọc"</string>
     <string name="lms_field_prompt_threads_help">"Số lõi CPU khi đọc tin nhắn của bạn."</string>
     <string name="lms_unit_cores">"lõi"</string>
+    <string name="voice_no_result">Không nhận được bản chép lời đầy đủ. Hãy thử nói lại hoặc nhập tin nhắn.</string>
+    <string name="voice_service_interrupted">Dịch vụ nhận dạng giọng nói của hệ thống đã dừng trước khi hoàn tất. Hãy thử đọc lại hoặc nhập phần còn lại.</string>
+    <string name="voice_try_again">Đọc lại</string>
+    <string name="voice_continue">Tiếp tục đọc</string>
+    <string name="voice_finish_to_send">Đang nghe. Nhấn gửi khi hoàn tất.</string>
 </resources>

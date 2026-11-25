@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">නව සංවාදයක් අරඹන්න</string>
+    <string name="slash_menu_compact">සන්දර්භය සංක්ෂිප්ත කරන්න</string>
+    <string name="slash_menu_compact_hint">පෙර සන්දර්භය සාරාංශ කරන්න</string>
+    <string name="slash_menu_cost">පිරිවැය</string>
+    <string name="slash_menu_cost_hint">මුළු ටෝකන ගණන සහ පිරිවැය පෙන්වන්න</string>
+    <string name="slash_menu_btw_hint">සංවාදයට එකතු නොකර වත්මන් සන්දර්භය ගැන අසන්න</string>
+    <string name="slash_menu_doctor">Harness දෝෂ නිර්ණය</string>
+    <string name="slash_menu_doctor_hint">Harness මෙවලම්වල ස්වයං පරීක්ෂණ ධාවනය කරන්න</string>
+    <string name="slash_menu_init">ව්‍යාපෘතිය ආරම්භ කරන්න</string>
+    <string name="slash_menu_init_hint">AGENTS.md සාදන්න හෝ යාවත්කාලීන කරන්න</string>
+    <string name="slash_menu_review_hint">සංස්කරණය නොකර ඉතිරි වෙනස්කම් සමාලෝචනය කරන්න. විධානයෙන් පසු අවධානය යොමු කළ යුතු කරුණ සඳහන් කරන්න.</string>
+    <string name="slash_menu_plan_hint">සැලසුම් කුසලතාව පූරණය කර සැලසුම් ප්‍රකාරයට මාරු වන්න</string>
+    <string name="slash_menu_skills">කුසලතා පිරික්සන්න</string>
+    <string name="slash_menu_skills_hint">සම්පූර්ණ කුසලතා ලැයිස්තුව විවෘත කරන්න</string>
+    <string name="slash_menu_env_hint">Linux පරිසරය පරීක්ෂා කරන්න, යාවත්කාලීන කරන්න, ස්ථාපනය කරන්න හෝ අලුත්වැඩියා කරන්න</string>
+    <string name="slash_menu_snippet">පෙළ කොටස</string>
+    <string name="slash_menu_snippet_hint">සුරැකි විමසුම් පෙළ කොටස</string>
+</resources>

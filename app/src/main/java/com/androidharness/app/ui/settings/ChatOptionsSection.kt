@@ -136,6 +136,7 @@ internal fun ChatOptionsSection(
                 when (it) {
                     StartScreen.CODE -> R.string.conversation_code
                     StartScreen.CHAT -> R.string.conversation_chat
+                    StartScreen.PHONE -> R.string.conversation_phone
                     StartScreen.LAST_SELECTED -> R.string.settings_start_last_selected
                 }
             },
@@ -143,6 +144,7 @@ internal fun ChatOptionsSection(
                 when (it) {
                     StartScreen.CODE -> R.string.settings_start_code_desc
                     StartScreen.CHAT -> R.string.settings_start_chat_desc
+                    StartScreen.PHONE -> R.string.settings_start_phone_desc
                     StartScreen.LAST_SELECTED -> R.string.settings_start_last_desc
                 }
             },

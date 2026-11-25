@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Estos chats de otros proyectos usan este espacio de trabajo: %1$s. Quita el espacio de esos chats antes de eliminarlo. Los chats con cambios guardados deben conservar el acceso al espacio.</string>
+    <string name="wp_delete_running_blocked">Detén las tareas en curso de este proyecto antes de eliminarlo.</string>
+    <string name="wp_reset_shared_blocked">Estos chats también usan el espacio de trabajo de la aplicación: %1$s. Quita el espacio de esos chats antes de restablecerlo.</string>
+    <string name="wp_reset_running_blocked">Detén las tareas en curso de este espacio de trabajo antes de restablecerlo.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d automatización</item>
+        <item quantity="other">%1$d automatizaciones</item>
+    </plurals>
+    <string name="wp_picked_folder">Carpeta seleccionada</string>
+    <string name="wp_review_changed">Los detalles han cambiado. Cierra este cuadro y revisa la acción de nuevo.</string>
+    <string name="wp_editor_toggle_wrap">Alternar ajuste de línea</string>
+    <string name="wp_editor_undo_available">Se puede deshacer</string>
+    <string name="wp_reset_app_only">Solo se puede restablecer el espacio de trabajo de la aplicación.</string>
+    <string name="wp_editor_find_replace">Buscar y reemplazar en el proyecto</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d archivo modificado</item>
+        <item quantity="other">%1$d archivos modificados</item>
+    </plurals>
     <string name="wp_add_shared">"Carpeta compartida"</string>
     <string name="wp_add_shared_sub">"Sobrevive a la desinstalación. Las compilaciones estable y nightly la ven ambas"</string>
     <string name="wp_add_shared_failed">"No se pudo crear %1$s. Comprueba que el acceso a todos los archivos esté activo y vuelve a intentarlo."</string>

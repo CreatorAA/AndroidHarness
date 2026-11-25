@@ -1,6 +1,9 @@
 package com.androidharness.app.tools.mcp
 
+import com.androidharness.app.config.ConfigLanguageServer
+import com.androidharness.app.config.ConfigPlugin
 import com.androidharness.app.config.HarnessConfig
+import java.io.File
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -44,6 +47,15 @@ object WorkspaceTrust {
     // Defaults stay out of the hash, so a new optional server field never resets approvals.
     private val json = Json
 
+    private fun HarnessConfig.ownerOfBin(bin: String): ConfigPlugin? {
+        val path = File(bin).toPath()
+        return plugins.filter { it.root.isNotEmpty() && path.startsWith(File(it.root).toPath()) }
+            .maxByOrNull { it.root.length }
+    }
+
+    private fun languageServerPayload(server: ConfigLanguageServer): String = json.encodeToString(
+        ConfigLanguageServer.serializer(), server.copy(env = server.env.toSortedMap(), extensions = server.extensions.toSortedMap()))
+
     fun sha256(text: String): String =
         java.security.MessageDigest.getInstance("SHA-256").digest(text.toByteArray())
             .joinToString("") { "%02x".format(it) }
@@ -67,12 +79,11 @@ object WorkspaceTrust {
         val owned = config.plugins.map { it.name }.toSet()
         config.plugins.forEach { plugin ->
             val lsp = config.languageServers.filter { it.plugin == plugin.name }
-            val bins = config.pluginBins.filter { plugin.root.isNotEmpty() && it.startsWith(plugin.root) }
+            val bins = config.pluginBins.filter { config.ownerOfBin(it)?.name == plugin.name }
             val body = buildString {
-                append(plugin.name).append('\n').append(plugin.root).append('\n')
-                append(plugin.hooks.sorted().joinToString(",")).append('\n').append(plugin.script).append('\n')
-                plugin.commands.forEach { append("${it.event}\u0000${it.type}\u0000${it.matcher}\u0000${it.timeout}\u0000${it.command}\n") }
-                lsp.sortedBy { it.name }.forEach { append("lsp ${it.name}\u0000${it.command}\u0000${it.args}\u0000${it.env}\n") }
+                appendLine(json.encodeToString(ConfigPlugin.serializer(),
+                    plugin.copy(hooks = plugin.hooks.toSortedSet(), options = plugin.options.toSortedMap())))
+                lsp.sortedBy { it.name }.forEach { appendLine(languageServerPayload(it)) }
                 bins.sorted().forEach { append("bin $it\n") }
             }
             out += TrustItem("plugin:${plugin.name}", TrustItemKind.PLUGIN, plugin.name, sha256(body),
@@ -81,9 +92,9 @@ object WorkspaceTrust {
         }
         config.languageServers.filter { it.plugin !in owned }.forEach { lsp ->
             out += TrustItem("lsp:${lsp.name}", TrustItemKind.LANGUAGE_SERVER, lsp.name,
-                sha256("${lsp.command}\u0000${lsp.args}\u0000${lsp.env}"), (listOf(lsp.command) + lsp.args).joinToString(" "))
+                sha256(languageServerPayload(lsp)), config.redact((listOf(lsp.command) + lsp.args).joinToString(" ")))
         }
-        config.pluginBins.filter { bin -> config.plugins.none { it.root.isNotEmpty() && bin.startsWith(it.root) } }.forEach { bin ->
+        config.pluginBins.filter { config.ownerOfBin(it) == null }.forEach { bin ->
             out += TrustItem("bin:$bin", TrustItemKind.PLUGIN_BIN, bin.substringAfterLast('/'), sha256(bin), bin)
         }
         return out
@@ -146,7 +157,7 @@ object WorkspaceTrust {
                 if (it.plugin in allPluginNames) it.plugin in pluginNames else "lsp:${it.name}" in approvedKeys
             },
             pluginBins = config.pluginBins.filter { bin ->
-                val owner = config.plugins.firstOrNull { it.root.isNotEmpty() && bin.startsWith(it.root) }
+                val owner = config.ownerOfBin(bin)
                 if (owner != null) owner.name in pluginNames else "bin:$bin" in approvedKeys
             },
         )

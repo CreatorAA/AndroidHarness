@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Nhấn</string>
+    <string name="phone_review_long_press">Chạm và giữ</string>
+    <string name="phone_review_type">Nhập văn bản</string>
+    <string name="phone_review_volume">Đặt âm lượng nội dung nghe nhìn</string>
+    <string name="phone_review_scroll_forward">Cuộn tới</string>
+    <string name="phone_review_scroll_backward">Cuộn lui</string>
+    <string name="phone_review_swipe">Vuốt</string>
+    <string name="phone_review_drag">Kéo</string>
+    <string name="phone_review_home">Quay lại màn hình chính</string>
+    <string name="android_use_launcher_trip">Từ %1$s, tìm và nhấn vào %2$s trên màn hình chính, sau đó tiếp tục tác vụ này trong %3$s.</string>
+    <string name="android_use_action_approval">Cho phép hành động này một lần?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Cho phép điều khiển điện thoại trong cuộc trò chuyện này? Tác nhân có thể gửi màn hình của ứng dụng đích đến mô hình đã chọn, nhấn và nhập. Việc này cũng cho phép các lệnh điện thoại được cấp quyền trong cuộc trò chuyện này đọc và thay đổi tệp và cài đặt. Hệ thống sẽ hỏi lại trước khi gửi một thay đổi trong ứng dụng đích.</string>
+    <string name="android_use_submit_approval">Cho phép gửi lần này?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Chuyển tác vụ này sang ứng dụng khác? Tác nhân sẽ có thể đọc màn hình và tương tác với ứng dụng đó.\n\n%1$s</string>
+    <string name="android_use_code_entry">Gửi tác vụ cho trợ lý điện thoại</string>
+    <string name="android_use_code_hint">Thêm chỉ dẫn hoặc chỉ gửi /phone để mở phần cài đặt.</string>
+    <string name="android_use_draft_ready">Mở ứng dụng đích và chọn Điều khiển điện thoại trong trợ lý trong vòng 10 phút. Dùng /phone --result tại đây để xem cuộc trò chuyện.</string>
+    <string name="android_use_draft_expired">Bản nháp này đã hết hạn, bị hủy hoặc bị thay thế. Đóng hộp thoại này và chọn lại Điều khiển điện thoại.</string>
+    <string name="android_use_draft_cancelled">Đã hủy bản nháp tác vụ điện thoại.</string>
+    <string name="android_use_no_draft">Cuộc trò chuyện này không có bản nháp tác vụ điện thoại nào đang chờ.</string>
+    <string name="android_use_no_result">Chưa có tác vụ điện thoại nào được bắt đầu từ cuộc trò chuyện này.</string>
+    <string name="android_use_local_only">Bắt đầu tác vụ điện thoại từ một không gian làm việc Code cục bộ.</string>
+    <string name="android_use_from_code">Bản nháp từ Code</string>
+</resources>

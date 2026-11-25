@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">탭하기</string>
+    <string name="phone_review_long_press">길게 누르기</string>
+    <string name="phone_review_type">텍스트 입력</string>
+    <string name="phone_review_volume">미디어 음량 설정</string>
+    <string name="phone_review_scroll_forward">앞으로 스크롤</string>
+    <string name="phone_review_scroll_backward">뒤로 스크롤</string>
+    <string name="android_use_launcher_trip">%1$s에서 홈 화면으로 돌아가 %2$s을(를) 찾아 탭한 다음 %3$s에서 이 작업을 계속합니다.</string>
+    <string name="android_use_action_approval">이번 한 번만 이 동작을 허용할까요?\n\n%1$s</string>
+    <string name="android_use_chat_approval">이 채팅에서 휴대전화 제어를 허용할까요? 에이전트가 대상 앱의 화면을 선택한 모델에 보내고, 화면을 탭하거나 텍스트를 입력할 수 있습니다. 이 채팅에서 허용한 휴대전화 명령은 파일과 설정을 읽고 변경할 수도 있습니다. 대상 앱에서 변경 사항을 제출하기 전에는 다시 확인합니다.</string>
+    <string name="android_use_submit_approval">이번 한 번만 제출을 허용할까요?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">이 작업의 대상 앱을 바꿀까요? 에이전트가 새 앱의 화면을 읽고 조작할 수 있게 됩니다.\n\n%1$s</string>
+    <string name="android_use_code_entry">휴대전화 어시스턴트에 작업 보내기</string>
+    <string name="android_use_code_hint">지시를 입력하세요. 설정을 열려면 /phone만 보내세요.</string>
+    <string name="android_use_draft_ready">대상 앱을 열고 10분 안에 어시스턴트에서 ‘휴대전화 조작’을 선택하세요. 대화를 보려면 여기에서 /phone --result 명령을 사용하세요.</string>
+    <string name="android_use_draft_expired">초안이 만료되었거나 취소 또는 교체되었습니다. 이 창을 닫고 ‘휴대전화 조작’을 다시 선택하세요.</string>
+    <string name="android_use_draft_cancelled">휴대전화 작업 초안을 취소했습니다.</string>
+    <string name="android_use_no_draft">이 대화에 대기 중인 휴대전화 작업 초안이 없습니다.</string>
+    <string name="android_use_no_result">이 대화에서 시작한 휴대전화 작업이 없습니다.</string>
+    <string name="android_use_local_only">휴대전화 작업은 로컬 Code 작업공간에서 시작하세요.</string>
+    <string name="android_use_from_code">Code에서 보낸 초안</string>
+    <string name="phone_review_swipe">스와이프하기</string>
+    <string name="phone_review_drag">드래그하기</string>
+    <string name="phone_review_home">홈 화면으로 돌아가기</string>
+</resources>

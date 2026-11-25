@@ -12,7 +12,7 @@ AndroidHarness is a single `:app` module plus a conditional `:local_gpu` dynamic
 - **`gradle/libs.versions.toml`**: the version catalog for plugins, libraries, and test libraries.
 - **`gradle/wrapper/gradle-wrapper.properties`**: Gradle 9.7.0 binary distribution.
 - **`.github/workflows/nightly.yml`**: debug build and unit tests on push, schedule, and dispatch.
-- **`.github/workflows/gpu-runtime.yml`**: release APK plus GPU package publication on manual dispatch.
+- **`.github/workflows/gpu-runtime.yml`**: release-variant APK and matching GPU packages as Actions artifacts on manual dispatch.
 - **`scripts/`**: release APK probing, local model fixtures, editor tool builds, and two standalone database and storage test drivers.
 
 ## Build Configuration and Flow
@@ -104,6 +104,16 @@ The CMake source is `src/main/cpp/CMakeLists.txt`. When the NDK is present, ABI 
 
 External packages are bounded to 128 MiB during decompression and must match the hash in their filename. The GitHub channel registers the generated assets as a source directory; the Play channel keeps the base APK free of the download manifest.
 
+### Building with the published GPU runtime
+
+The GitHub variant downloads optional Vulkan binaries from the [upstream GPU runtime release](https://github.com/Sanuu7/AH-GPU-Runtime/releases/tag/1). Building the binaries locally produces matching packages for that APK, but does not put them at the download address. To use the published runtime, download `manifest.json` and the two `gpu-*.so.gz` assets it names from that release into one directory, then pass its absolute path when building:
+
+```bash
+./gradlew :app:assembleRelease -PgpuRuntimePackages=/absolute/path/to/gpu-runtime
+```
+
+Gradle checks the core revision and packaged binaries and embeds their identifiers in the APK. CPU inference does not require these assets.
+
 ## Dependencies and Resolution Constraints
 
 The app uses Room with KSP, DataStore, WorkManager, DocumentFile, Browser, WebKit, Security Crypto, Biometric, Fragment, and AppCompat. Networking and protocol layers use OkHttp, kotlinx.serialization, JSch, BouncyCastle, Conscrypt, JavaScriptEngine, and CEL 0.14.0. Privileged integrations use libsu 6.0.0, Dhizuku API 2.6.0, and Shizuku API and provider 13.1.5. The editor is Sora Editor 0.23.6.
@@ -127,18 +137,9 @@ Dependencies are `androidx.test:runner:1.6.2`, `androidx.test:core:1.6.1`, and `
 
 There are exactly two workflow files.
 
-**`nightly.yml`, display name "Debug build"** ([nightly.yml:1](../.github/workflows/nightly.yml)#L1-L90)):
+**[Debug build](../.github/workflows/nightly.yml)** runs on selected pushes to `main`, at 02:00 UTC each day, or by manual dispatch. It runs the debug unit tests, builds the debug APK, and stages just the dated APK and its two GPU packages in a fresh runner temp directory. The Actions artifact is retained for 30 days.
 
-- Triggers: cron `0 2 * * *` UTC, `workflow_dispatch`, and pushes to `main` touching `app/**` or the workflow file.
-- Permissions: `contents: write`; concurrency group `nightly-build` with cancel in progress.
-- Steps: checkout v7, Temurin JDK 21, `gradle/actions/setup-gradle@v6`, install NDK `27.2.12479018`, install `glslc`, run `:app:testDebugUnitTest`, upload the test report on failure, run `:app:assembleDebug`, stamp the APK as `AndroidHarness-<UTC yyyymmdd-HHMM>-<shortsha>-debug.apk`, copy GPU `.gz` outputs into `dist/`, optionally publish the GPU packages to release ID 1 of `Sanuu7/AH-GPU-Runtime` when `GPU_RUNTIME_PUBLISH_TOKEN` is set, and upload `dist/*` as an artifact kept 30 days.
-
-**`gpu-runtime.yml`, display name "Publish GPU runtime packages"** ([gpu-runtime.yml:1](../.github/workflows/gpu-runtime.yml)#L1-L43)):
-
-- Trigger: `workflow_dispatch` only, with `contents: write` and the `gpu-runtime-publication` concurrency group.
-- Steps: checkout, JDK 21, Gradle setup, NDK and `glslc` install, `:app:assembleRelease`, upload `app/build/outputs/apk/release/*.apk` and `app/build/outputs/gpuRuntime/release/*.gz` as one artifact, then optionally upload the `.gz` files to release 1 of `Sanuu7/AH-GPU-Runtime`.
-
-Neither workflow runs instrumented tests, publishes to Play, or creates a GitHub release for the app APK. The nightly artifact is the only app artifact produced by a scheduled or push build; the GPU workflow produces its release APK only on manual dispatch.
+**[Build APK and GPU runtime packages](../.github/workflows/gpu-runtime.yml)** runs only by manual dispatch. It builds the release variant and uploads the APK and matching arm64-v8a and x86_64 GPU packages as an Actions artifact. Both workflows have read-only repository access. Neither publishes to GitHub Releases or writes to the upstream GPU repository.
 
 ## Release and Test Scripts
 

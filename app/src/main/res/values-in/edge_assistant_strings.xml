@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Pegangan tepi</string>
+    <string name="assistant_edge_desc">Geser pegangan di tepi kanan ke dalam untuk membuka asisten.</string>
+    <string name="assistant_edge_permission_hint">Di setelan Android, izinkan AndroidHarness tampil di atas aplikasi lain.</string>
+    <string name="assistant_edge_permission_unavailable">Tidak dapat membuka setelan izin tampil di atas aplikasi lain.</string>
+    <string name="assistant_edge_handle_description">Buka asisten di atas aplikasi lain</string>
+    <string name="assistant_edge_start_failed">Pegangan tepi tidak dapat diaktifkan. Coba lagi.</string>
+    <string name="assistant_edge_disconnected">Sistem memutuskan sambungan asisten.</string>
+    <string name="assistant_edge_reconnect">Hubungkan kembali</string>
+    <string name="assistant_edge_reconnect_steps">Di setelan asisten Android, pilih Tidak ada, lalu pilih AndroidHarness lagi.</string>
+    <string name="assistant_edge_grant_overlay">Izinkan tampil di atas aplikasi lain</string>
+</resources>

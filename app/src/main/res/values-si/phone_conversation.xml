@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">දුරකථනය</string>
+    <string name="conversation_new_phone">නව දුරකථන සංවාදය</string>
+    <string name="phone_conversation_intro">මෙහි ප්‍රශ්නයක් අසන්න. සහායකට යෙදුමක් භාවිත කිරීමට සැලැස්වීමට, එම යෙදුමට ගොස් සහායක කැඳවන්න.</string>
+    <string name="phone_conversation_settings">සහායක සැකසීම්</string>
+    <string name="settings_start_phone_desc">ඔබේ දුරකථන සහායක සංවාද විවෘත කරන්න.</string>
+</resources>

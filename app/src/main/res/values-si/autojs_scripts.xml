@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 ස්ක්‍රිප්ට්</string>
+    <string name="autojs_allow">AutoJs6 භාවිත කිරීමට සහායකට ඉඩ දෙන්න</string>
+    <string name="autojs_allow_hint">යුගල කළ ධාවකය සහ UI ස්ක්‍රිප්ට් එක් කරයි. සක්‍රිය කර ඇති විට බිල්ට් සේවාව දිගටම ලබා ගත හැක.</string>
+    <string name="autojs_need_pair">දැන් ස්ක්‍රිප්ට් ලියා පරීක්ෂා කරන්න. ඒවා දුරකථනයේ ධාවනය කිරීමට පෙර දේශීය AutoJs6 ප්ලගිනය වින්‍යාස කරන්න.</string>
+    <string name="autojs_new">නව ස්ක්‍රිප්ට්</string>
+    <string name="autojs_back">ආපසු</string>
+    <string name="autojs_source">UI ස්ක්‍රිප්ට්</string>
+    <string name="autojs_sample_source">text(\"ඉදිරියට\").waitFor();</string>
+    <string name="autojs_name">නම (අත්හදා බැලීමකට අවශ්‍ය නොවේ)</string>
+    <string name="autojs_name_exists">මෙම නම දැනටමත් වෙනත් ස්ක්‍රිප්ට් එකක භාවිත වේ. එය සංස්කරණය කිරීමට විවෘත කරන්න, නැතහොත් වෙනත් නමක් තෝරන්න.</string>
+    <string name="autojs_format">පාලකයක් සොයා ගැනීමට text, desc හෝ id භාවිත කරන්න. ඉන්පසු එය දිස් වන තෙක් රැඳී සිටින්න, එය තට්ටු කරන්න හෝ පෙළ ඇතුළු කරන්න. පේළියකට එක් උපදෙසක් භාවිත කරන්න.</string>
+    <string name="autojs_check">පියවර පරීක්ෂා කරන්න</string>
+    <string name="autojs_prepare">අදාළ යෙදුමේ අත්හදා බලන්න</string>
+    <string name="autojs_preview">වලංගු පියවර: %1$d · කිසිවක් ක්‍රියාත්මක කර නැත</string>
+    <string name="autojs_empty">නැවත භාවිත කළ හැකි ක්‍රියාවක් සෑදීමට නව ස්ක්‍රිප්ට් තට්ටු කරන්න. සුරැකීමෙන් තොරව අත්හදා බැලීමට නම හිස්ව තබන්න.</string>
+    <string name="autojs_enabled_hint">මෙම එකතුවේ සක්‍රිය කර ඇති ස්ක්‍රිප්ට් සහායකට භාවිත කළ හැක.</string>
+    <string name="autojs_disabled_hint">අත්හදා බැලීමට පෙර මෙම ස්ක්‍රිප්ට් එක එකතුවේ සක්‍රිය කරන්න.</string>
+    <string name="autojs_delete">“%1$s” මකන්නද?</string>
+    <string name="autojs_delete_action">මකන්න</string>
+    <string name="autojs_changed">මෙම ස්ක්‍රිප්ට් එක එකතුවේ වෙනස් වී ඇත. සුරැකීමට හෝ ධාවනය කිරීමට පෙර එය නැවත විවෘත කරන්න.</string>
+    <string name="autojs_write_failed">ස්ක්‍රිප්ට් එක සුරැකීමට නොහැකි විය.</string>
+    <string name="autojs_anonymous">සුරැකී නැති ස්ක්‍රිප්ට්</string>
+    <string name="autojs_prepared">අත්හදා බැලීම සූදානම්: %1$s. අදාළ යෙදුම විවෘත කර මිනිත්තු 10ක් ඇතුළත දුරකථන සහායක කැඳවන්න.</string>
+    <string name="autojs_trial_title">ස්ක්‍රිප්ට් ධාවනය කරන්න · %1$s</string>
+    <string name="autojs_trial_here">%1$s තුළ පමණයි</string>
+    <string name="autojs_trial_other">ඔබට පරීක්ෂා කිරීමට අවශ්‍ය යෙදුම විවෘත කර, එහිදී සහායක කැඳවන්න.</string>
+    <string name="autojs_trial_steps">පියවර %1$dක් · බැලීමට තට්ටු කරන්න</string>
+    <string name="autojs_trial_less">පියවර සඟවන්න</string>
+    <string name="autojs_trial_allow">අවසර දී මෙහි ධාවනය කරන්න</string>
+    <string name="autojs_trial_stale">මෙම අත්හදා බැලීම කල් ඉකුත් වී ඇත, නැතහොත් යෙදුම වෙනස් වී ඇත. ස්ක්‍රිප්ට් එකතුවේදී එය නැවත සූදානම් කරන්න.</string>
+    <string name="autojs_trial_request">“%1$s” %2$s තුළ ධාවනය කරන්න.</string>
+    <string name="autojs_trial_done">%3$s තුළ ස්ක්‍රිප්ට් පියවර %2$dකින් %1$dක් සම්පූර්ණ කළා.</string>
+    <string name="autojs_trial_stopped">%3$s තුළ පියවර %2$dකින් %1$dකට පසු ස්ක්‍රිප්ට් එක නැවතුණා.</string>
+    <string name="autojs_trial_error">වත්මන් යෙදුමේ මෙම ස්ක්‍රිප්ට් එක ආරම්භ කිරීමට නොහැකි විය.</string>
+    <string name="autojs_trial_interrupted">ස්ක්‍රිප්ට් එකට බාධා විය. නැවත උත්සාහ කිරීමට පෙර යෙදුම පරීක්ෂා කරන්න.</string>
+    <string name="autojs_not_selected">ස්ක්‍රිප්ට් එකක් සූදානම් කිරීමට පෙර AutoJs6 සක්‍රිය කරන්න.</string>
+    <string name="autojs_activity_running">AutoJs6 ස්ක්‍රිප්ට් එක ධාවනය වෙමින් පවතී</string>
+    <string name="autojs_activity_ran">AutoJs6 ස්ක්‍රිප්ට් එක ධාවනය කළා</string>
+    <string name="autojs_activity_run_failed">AutoJs6 ස්ක්‍රිප්ට් එක අවසන් නොවීය</string>
+    <string name="autojs_activity_library_working">AutoJs6 ස්ක්‍රිප්ට් එකතුව භාවිත කරමින්</string>
+    <string name="autojs_activity_library_done">AutoJs6 ස්ක්‍රිප්ට් එකතුව භාවිත කළා</string>
+    <string name="autojs_activity_library_failed">AutoJs6 ස්ක්‍රිප්ට් එකතුවේ ක්‍රියාව අසාර්ථක විය</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Dokun</string>
+    <string name="phone_review_long_press">Dokunup basılı tut</string>
+    <string name="phone_review_type">Metin gir</string>
+    <string name="phone_review_volume">Medya ses düzeyini ayarla</string>
+    <string name="phone_review_scroll_forward">İleri kaydır</string>
+    <string name="phone_review_scroll_backward">Geri kaydır</string>
+    <string name="phone_review_swipe">Kaydır</string>
+    <string name="phone_review_drag">Sürükle</string>
+    <string name="phone_review_home">Ana ekrana dön</string>
+    <string name="android_use_launcher_trip">%1$s üzerinden Ana ekran\'da %2$s uygulamasını bulup dokunun, ardından bu göreve %3$s içinde devam edin.</string>
+    <string name="android_use_action_approval">Bu işleme bir kez izin verilsin mi?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Bu sohbet için telefon kontrolüne izin verilsin mi? Aracı, hedef uygulamanın ekranını seçilen modele gönderebilir, ekrana dokunabilir ve yazı yazabilir. Bu izin, bu sohbette yetkilendirilmiş telefon komutlarının dosyaları ve ayarları okumasına ve değiştirmesine de olanak tanır. Hedef uygulamada bir değişiklik gönderilirken yeniden izin istenir.</string>
+    <string name="android_use_submit_approval">Bu gönderime bir kez izin verilsin mi?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Bu görev başka bir uygulamaya geçirilsin mi? Aracı, uygulamanın ekranını okuyabilir ve uygulamayla etkileşim kurabilir.\n\n%1$s</string>
+    <string name="android_use_code_entry">Telefon asistanına görev gönder</string>
+    <string name="android_use_code_hint">Bir talimat ekleyin veya ayarları açmak için yalnızca /phone gönderin.</string>
+    <string name="android_use_draft_ready">10 dakika içinde hedef uygulamayı açın ve asistanda Telefonu kullan\'ı seçin. Konuşmayı burada görmek için /phone --result kullanın.</string>
+    <string name="android_use_draft_expired">Bu taslağın süresi doldu, taslak iptal edildi veya başka bir taslakla değiştirildi. Bu iletişim kutusunu kapatıp Telefonu kullan\'ı yeniden seçin.</string>
+    <string name="android_use_draft_cancelled">Telefon taslağı iptal edildi.</string>
+    <string name="android_use_no_draft">Bu konuşmada bekleyen bir telefon taslağı yok.</string>
+    <string name="android_use_no_result">Bu konuşmadan başlatılmış bir telefon görevi yok.</string>
+    <string name="android_use_local_only">Yerel bir Code çalışma alanından telefon görevi başlatın.</string>
+    <string name="android_use_from_code">Code\'dan taslak</string>
+</resources>

@@ -9,7 +9,7 @@ import com.androidharness.app.skills.buildSlashSkillMessage
 object SlashCommands {
 
     enum class Kind {
-        CLEAR, COMPACT, AUTO_COMPACT, COST, CONTEXT, DOCTOR, INIT, SKILLS, SKILL, SNIPPET, UNKNOWN, PLAIN, PLAN, ENV, BTW, REVIEW, GOAL,
+        CLEAR, COMPACT, AUTO_COMPACT, COST, CONTEXT, DOCTOR, INIT, SKILLS, SKILL, SNIPPET, UNKNOWN, PLAIN, PLAN, ENV, BTW, REVIEW, PHONE, GOAL,
     }
 
     enum class Dispatch { START, QUEUE }
@@ -20,6 +20,7 @@ object SlashCommands {
         val error: String? = null,
         /** /btw: the side question, blank when the sheet should open empty. */
         val sideQuestion: String? = null,
+        val phoneArgument: String? = null,
         val autoCompactArgument: String? = null,
         /** /goal: what follows the command; it fills the goal sheet, blank opens it as is. */
         val goalArgument: String? = null,
@@ -159,6 +160,9 @@ object SlashCommands {
         if (command == "/review" && "review" !in skillNames && snippetBodies.keys.none { it.equals("review", ignoreCase = true) }) {
             return Result(Kind.REVIEW, agentText = com.androidharness.app.core.ChangeReview.prompt(focus = argument))
         }
+        if (command == "/phone" && "phone" !in skillNames && snippetBodies.keys.none { it.equals("phone", ignoreCase = true) }) {
+            return Result(Kind.PHONE, phoneArgument = argument.trim())
+        }
         if (command == GOAL_COMMAND && "goal" !in skillNames && snippetBodies.keys.none { it.equals("goal", ignoreCase = true) }) {
             return Result(Kind.GOAL, goalArgument = argument.trim())
         }
@@ -246,7 +250,7 @@ object SlashCommands {
         return when (kind) {
             Kind.SKILL -> Pick.AttachSkill(entryCommand.removePrefix("/"), text)
             // These wait for their argument, so they stay in the composer to be finished and sent.
-            Kind.BTW, Kind.AUTO_COMPACT, Kind.PLAN -> Pick.Insert(withText)
+            Kind.BTW, Kind.AUTO_COMPACT, Kind.PLAN, Kind.PHONE -> Pick.Insert(withText)
             // /goal opens its sheet at once, carrying any goal text already typed.
             Kind.GOAL -> Pick.Send(withText.trim())
             Kind.REVIEW -> Pick.Send(withText.trim())
@@ -285,7 +289,7 @@ object SlashCommands {
         (text.substring(0, start).trimEnd() + " " + text.substring(end).trimStart()).trim()
 
     /** Built-in commands that also work typed at the end of a message, as in "make the site faster /goal". */
-    private val TRAILING = setOf("/goal", "/btw", "/plan", "/review")
+    private val TRAILING = setOf("/goal", "/btw", "/plan", "/review", "/phone")
 
     /** Moves a trailing command to the front, so "fix the build /goal" sends as "/goal fix the build". */
     fun moveTrailingCommand(input: String): String {

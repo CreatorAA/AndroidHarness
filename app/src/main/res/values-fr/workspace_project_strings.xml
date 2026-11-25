@@ -105,6 +105,26 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Ces discussions d’autres projets utilisent cet espace de travail : %1$s. Retirez-le de ces discussions avant de le supprimer. Les discussions contenant des modifications enregistrées doivent conserver leur accès.</string>
+    <string name="wp_delete_running_blocked">Arrêtez les tâches en cours dans ce projet avant de le supprimer.</string>
+    <string name="wp_reset_shared_blocked">Ces discussions utilisent aussi l’espace de travail de l’application : %1$s. Retirez-le de ces discussions avant de le réinitialiser.</string>
+    <string name="wp_reset_running_blocked">Arrêtez les tâches en cours dans cet espace de travail avant de le réinitialiser.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d automatisation</item>
+        <item quantity="many">%1$d automatisations</item>
+        <item quantity="other">%1$d automatisations</item>
+    </plurals>
+    <string name="wp_picked_folder">Dossier sélectionné</string>
+    <string name="wp_review_changed">Les détails ont changé. Fermez cette boîte de dialogue et vérifiez de nouveau l’action.</string>
+    <string name="wp_editor_toggle_wrap">Basculer le retour à la ligne</string>
+    <string name="wp_editor_undo_available">Annulation possible</string>
+    <string name="wp_reset_app_only">Seul l’espace de travail de l’application peut être réinitialisé.</string>
+    <string name="wp_editor_find_replace">Rechercher et remplacer dans le projet</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d fichier modifié</item>
+        <item quantity="many">%1$d fichiers modifiés</item>
+        <item quantity="other">%1$d fichiers modifiés</item>
+    </plurals>
     <string name="wp_add_shared">"Dossier partagé"</string>
     <string name="wp_add_shared_sub">"Survit à la désinstallation. Les versions stable et nightly le voient toutes les deux"</string>
     <string name="wp_add_shared_failed">"Impossible de créer %1$s. Vérifiez que l\'accès à tous les fichiers est activé, puis réessayez."</string>

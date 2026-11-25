@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Боковая ручка</string>
+    <string name="assistant_edge_desc">Смахните ручку с правого края к центру, чтобы открыть ассистента.</string>
+    <string name="assistant_edge_permission_hint">В настройках Android разрешите AndroidHarness отображаться поверх других приложений.</string>
+    <string name="assistant_edge_permission_unavailable">Не удалось открыть настройки разрешения на показ поверх других приложений.</string>
+    <string name="assistant_edge_handle_description">Открыть ассистента поверх других приложений</string>
+    <string name="assistant_edge_start_failed">Не удалось включить боковую ручку. Попробуйте ещё раз.</string>
+    <string name="assistant_edge_disconnected">Система отключила ассистента.</string>
+    <string name="assistant_edge_reconnect">Подключить снова</string>
+    <string name="assistant_edge_reconnect_steps">В настройках ассистента Android выберите «Нет», затем снова выберите AndroidHarness.</string>
+    <string name="assistant_edge_grant_overlay">Разрешить отображение поверх других приложений</string>
+</resources>

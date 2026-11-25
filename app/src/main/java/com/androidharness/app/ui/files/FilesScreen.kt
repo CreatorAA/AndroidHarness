@@ -1,5 +1,6 @@
 package com.androidharness.app.ui.files
 
+import android.content.Context
 import com.androidharness.app.ui.theme.motionBlur
 import com.androidharness.app.R
 import com.androidharness.app.ui.common.AppLinearProgressIndicator
@@ -111,6 +112,7 @@ import com.androidharness.app.ui.common.AppHeader
 import com.androidharness.app.ui.theme.HarnessMono
 import com.androidharness.app.ui.theme.LocalStatusColors
 import com.androidharness.app.workspace.FsNode
+import com.androidharness.app.workspace.SshFs
 import com.androidharness.app.workspace.normalizeRelPath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -537,7 +539,7 @@ fun FilesScreen(
                                 it.relPath.endsWith("/$nodeKey")
                         } else null
                         val picked = row.relPath in selectedPaths
-                        ExpressiveListRow(index, visible.size, row.name, subtitle = subtitleFor(row), dense = true,
+                        ExpressiveListRow(index, visible.size, row.name, subtitle = subtitleFor(row, uiContext), dense = true,
                             selected = picked, enabled = !batchBusy,
                             titleColor = if (row.isFile && change != null) statusSuccess else Color.Unspecified,
                             modifier = Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec()),
@@ -885,9 +887,10 @@ private fun iconFor(row: FileRow): ImageVector = when {
     }
 }
 
-private fun subtitleFor(row: FileRow): String = when {
-    row.node is com.androidharness.app.workspace.SshFs.RemoteNode && row.isDirectory -> "Remote folder"
-    row.isDirectory -> row.childCount?.let { "$it items" } ?: "Folder"
+private fun subtitleFor(row: FileRow, context: Context): String = when {
+    row.node is SshFs.RemoteNode && row.isDirectory -> context.getString(R.string.sync_remote_folder)
+    row.isDirectory -> row.childCount?.let { context.resources.getQuantityString(R.plurals.files_directory_items, it, it) }
+        ?: context.getString(R.string.files_directory)
     else -> formatFileSize(row.size)
 }
 

@@ -146,8 +146,11 @@ internal fun ChatHistoryCards(
 private fun ChatHistoryRow(hit: ChatHistoryMatch, index: Int, count: Int, onOpen: (ChatHistoryMatch) -> Unit, modifier: Modifier = Modifier) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val chat = hit.kind == ConversationKind.CHAT
-    val kind = stringResource(if (chat) R.string.chat_history_kind_chat else R.string.chat_history_kind_code)
+    val kind = stringResource(when (hit.kind) {
+        ConversationKind.CHAT -> R.string.chat_history_kind_chat
+        ConversationKind.CODE -> R.string.chat_history_kind_code
+        ConversationKind.PHONE -> R.string.conversation_phone
+    })
     val now = remember { System.currentTimeMillis() }
     val ago = remember(hit.updatedAt, now) {
         DateUtils.getRelativeTimeSpanString(hit.updatedAt, now, DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString()
@@ -161,10 +164,14 @@ private fun ChatHistoryRow(hit: ChatHistoryMatch, index: Int, count: Int, onOpen
             SettingsMorphBadge(
                 seed = hit.sessionId.hashCode(),
                 pressed = pressed,
-                tone = if (chat) SettingsTone.PRIMARY else SettingsTone.TERTIARY,
+                tone = when (hit.kind) {
+                    ConversationKind.CHAT -> SettingsTone.PRIMARY
+                    ConversationKind.CODE -> SettingsTone.TERTIARY
+                    ConversationKind.PHONE -> SettingsTone.SECONDARY
+                },
                 size = 42.dp,
             ) { tint ->
-                Icon(if (chat) Icons.Outlined.ChatBubbleOutline else Icons.Outlined.Code, null, Modifier.size(20.dp), tint = tint)
+                Icon(hit.kind.sectionIcon, null, Modifier.size(20.dp), tint = tint)
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                 Text(hit.title, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)

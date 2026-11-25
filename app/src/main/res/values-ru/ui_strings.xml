@@ -1140,8 +1140,8 @@
     <string name="ui_provider_default">"По умолчанию у провайдера"</string>
     <string name="ui_add_custom_command">"Добавить свою команду"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Не давать процессору засыпать во время работы агента или терминала, чтобы терминал не завершался при сворачивании приложения."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Исключено: Android не ограничивает фоновую работу."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Включено: Samsung и другие производители могут завершать фоновые задачи. Добавьте приложение в исключения для долгой работы."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Оптимизация расхода заряда в Android отключена для AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Оптимизация расхода заряда в Android включена. Если длительные задачи останавливаются при выключенном экране, разрешите AndroidHarness использовать батарею без ограничений."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Текущая версия %1$s. Проверяет новые сборки в GitHub Releases."</string>
     <string name="ui_available_see_the_dialog">"Доступна %1$s, см. диалог"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Агент для программирования, который живёт в вашем телефоне."</string>
@@ -1851,4 +1851,9 @@
     <string name="lms_field_prompt_threads">"Скорость чтения"</string>
     <string name="lms_field_prompt_threads_help">"Ядра CPU при чтении вашего сообщения."</string>
     <string name="lms_unit_cores">"ядер"</string>
+    <string name="voice_no_result">Не удалось получить полный текст. Попробуйте сказать ещё раз или введите сообщение.</string>
+    <string name="voice_service_interrupted">Системная служба распознавания речи остановилась до завершения. Попробуйте продиктовать ещё раз или введите оставшийся текст.</string>
+    <string name="voice_try_again">Продиктовать ещё раз</string>
+    <string name="voice_continue">Продолжить диктовку</string>
+    <string name="voice_finish_to_send">Слушаю. Когда закончите, нажмите кнопку отправки.</string>
 </resources>

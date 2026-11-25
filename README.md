@@ -4,32 +4,43 @@
 
 # AndroidHarness
 
-**An AI coding agent and chat assistant that runs on your Android phone.**
+**English** | [简体中文](README.zh-CN.md)
+
+**Chat, write code, and get things done across apps on your Android phone.**
 
 No PC needed. No root needed.
 
-<p>
-  <a href="https://github.com/Sanuu7/AndroidHarness/releases/latest"><img src=".github/assets/download-from-github.png" alt="Download from GitHub" height="54"></a>
-  <a href="https://play.google.com/store/apps/details?id=com.androidharness.app"><img src=".github/assets/google-play.png" alt="Get it on Google Play" height="54"></a>
-  <a href="https://buymeacoffee.com/sanuj7"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="54"></a>
-  <a href="https://discord.gg/NdC5K3XeWF"><img src=".github/assets/join-discord.png" alt="Join our Discord" height="54"></a>
-</p>
+CreatorAA’s fork of [AndroidHarness by Sanuu7](https://github.com/Sanuu7/AndroidHarness).
 
-[![Debug build](https://github.com/Sanuu7/AndroidHarness/actions/workflows/nightly.yml/badge.svg)](https://github.com/Sanuu7/AndroidHarness/actions/workflows/nightly.yml)
-[![Version](https://img.shields.io/badge/version-4.1-blue)](https://github.com/Sanuu7/AndroidHarness/releases/latest)
+This fork uses [GitHub Releases](https://github.com/CreatorAA/AndroidHarness/releases) as its only APK download and update channel. If no APK is listed, [build from source](#build-from-source).
+
+[![Debug build](https://github.com/CreatorAA/AndroidHarness/actions/workflows/nightly.yml/badge.svg)](https://github.com/CreatorAA/AndroidHarness/actions/workflows/nightly.yml)
 [![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3ddc84)](https://developer.android.com/about/versions/oreo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 </div>
 
+## Changes from upstream 4.1
+
+This branch identifies itself as **4.1.0-custom**. Its base is Sanuu7’s [4.1 release (`v4.1-release`)](https://github.com/Sanuu7/AndroidHarness/releases/tag/v4.1-release), commit [`ccf421f7`](https://github.com/Sanuu7/AndroidHarness/commit/ccf421f73518642acc8f2d454b7e8e53805c8a86).
+
+- **Phone conversations and actions.** Upstream already lets you ask about the screen from its assistant panel. Here, the panel resumes a separate Phone conversation for each project. It can operate other apps through public actions, the built-in accessibility service, or an optional AutoJs6 companion. Hands-free approval applies to one task, including sending or deleting; commands and scripts still need approval. The ten most recently used Phone conversations are kept across projects, separately from Chat and Code.
+- **Offline Mandarin dictation.** Upstream offers Android and cloud speech recognition. This fork bundles a Mandarin model: choose offline-only dictation from the first word, or let it take over when Android’s recognizer stops. Text already transcribed stays in your draft.
+- **Charts in rich replies.** Upstream already supports interactive charts. This fork adds labeled value axes that distinguish close readings and keeps chart selection aligned in right-to-left layouts.
+- **Chat backups.** When images are included, backups also keep images referenced only by an earlier answer version. Restoring saved memories preserves their folder structure.
+- **Manual app updates.** Instead of upstream’s foreground update check and installer, **Settings → About → GitHub Releases** opens this fork’s release page. You choose whether to download and install an APK.
+
+Phone assistant guide: [English](docs/phone-assistant.md) | [简体中文](docs/phone-assistant-zh.md)
+
 ## About
 
 AndroidHarness is a native Android app, written in Kotlin with Jetpack Compose, for working on real code projects from your phone. The agent reads and edits files, runs commands in a real Linux toolchain (bash, git, python, node), pushes to GitHub, drives a browser, and shows every step in a chat you can inspect.
 
-The app has two sections:
+Choose the mode that matches the job:
 
 - **Code** is the agent. It works inside a project folder with files, shell, git, tests and browser tools.
 - **Chat** is for everyday questions, research, writing and brainstorming. It uses read-only tools and can hand work over to Code when a conversation turns into a project.
+- **Phone** is the assistant you can summon over another app. It resumes your conversation, can open a named app directly, and can plan and carry out a multi-step task on the phone. Turn on hands-free for one task or keep individual approvals. [Phone assistant guide](docs/phone-assistant.md)
 
 You can start for free with the built-in provider, which needs no account, or run models fully offline on the device.
 
@@ -64,10 +75,10 @@ You can start for free with the built-in provider, which needs no account, or ru
 - **Research that reads.** Turn on any of eleven search providers; the agent picks one, falls through failures, reads the top pages and returns passages. Shaky statements can be flagged, and a question can be re-run deeper.
 - **Plugins, skills and MCP.** Install plugins from npm, GitHub, Claude marketplaces, archives or a folder on the phone, and the agent can manage them when you ask. Plugin commands, binaries and language servers run like Claude Code, and MCP servers connect over stdio or HTTP.
 - **Built for long runs.** A foreground service, resume cards, a saved message queue and optional auto-continue keep work safe when the screen turns off or the connection drops.
-- **Safe by default.** The agent stays inside the workspace, sensitive actions ask for approval, phone control is approved once per chat while destructive changes ask every time, and every change can be reviewed as a diff and undone.
-- **21 languages.** Switch the app language at any time without a restart.
+- **Phone approvals.** Review a proposed phone task before it starts. Hands-free approval lets the assistant carry out that task, including sending or deleting, without asking about each action. Commands and scripts still need approval.
+- **22 interface languages.** Switch the app language at any time without a restart.
 
-## What's new in 4.1
+## From upstream 4.1
 
 - **Your assistant over any app.** Set AndroidHarness as your digital assistant and ask about what is on screen, by voice or typing, without leaving the app you are in. Models that cannot see images can now read the text inside pictures on the phone.
 - **Goals that keep going.** `/goal` turns a task into a loop that keeps taking turns until a separate check agrees it is done, with a turn limit, an optional check command, a budget, named parts, a per-turn change summary and a Resume that keeps its progress. Keep improving can push past done.
@@ -76,11 +87,11 @@ You can start for free with the built-in provider, which needs no account, or ru
 - **Exa joins search.** Exa searches by meaning instead of keywords and can return full page text, alongside the ten existing providers.
 - **A calmer chat.** A floating task pill, a slash menu docked on the composer that follows the cursor, editing a sent message's photos and files, background browser screenshots, and per-item trust for workspace tools.
 
-See [CHANGELOG.md](CHANGELOG.md) for the full release notes.
+See [CHANGELOG.md](CHANGELOG.md) for the upstream release notes.
 
 ## Getting started
 
-1. Install the app from [Google Play](https://play.google.com/store/apps/details?id=com.androidharness.app) or [GitHub Releases](https://github.com/Sanuu7/AndroidHarness/releases/latest), or build it from source.
+1. [Build from source](#build-from-source), or install a fork APK when one is available on the [fork releases page](https://github.com/CreatorAA/AndroidHarness/releases). To update, install a newer APK signed with the same key.
 2. Grant file access if you want it. All files access lets the shell and file tools use real paths; without it the app works in its own folder and asks when a task needs your files.
 3. Pick a model. Use the built-in keyless provider, add an API key in Settings, or download a model in Settings → Local models.
 4. Recommended: install [Shizuku](https://github.com/RikkaApps/Shizuku), pair Wireless ADB in Settings → Terminal & device, or install the Linux environment from inside the app. This lets shell commands run with proper permissions. Rooted devices can also turn on direct root there.
@@ -96,7 +107,7 @@ A short tour of what the app can do. The complete list, with every detail, is in
 - A workspace is one folder, and a project groups workspaces for chats that need several, each editable or read only.
 - Plan mode, dual planning (plan on one model, execute on another), subagents and a persistent message queue that can hold send to choose when a queued message is read.
 - Goals that keep working across turns until a separate check agrees the task is done, with parts, a turn limit, a check command, a budget and Keep improving.
-- Approve phone control once per chat, set reminders, alarms and timers, and schedule a message from the chat itself.
+- Approve privileged device commands from the chat, set alarms and timers, or schedule a message.
 - Scheduled automations that run prompts daily, hourly or on demand.
 
 **Chat**
@@ -107,7 +118,7 @@ A short tour of what the app can do. The complete list, with every detail, is in
 - Shared memory with Code, saved answers and voice input and output.
 
 **Assistant**
-- Ask about any screen from the phone's assistant gesture, over other apps, by voice or typing, with screen text sent only when the question is about it.
+- Use the assistant gesture over an app, then ask about the screen or request an action. The model can use text and images Android shares for the task.
 - Read text in images on the phone for models that cannot see pictures.
 
 **Files, editor and Git**
@@ -129,7 +140,7 @@ A short tour of what the app can do. The complete list, with every detail, is in
 
 ## Shell access
 
-Commands always run in the strongest environment the device allows.
+The command target, workspace and access settings determine where a command runs.
 
 | Command target | Runs as | Environment |
 | --- | --- | --- |
@@ -159,17 +170,17 @@ Local models do, once downloaded. Web search, page reading and GitHub need a con
 English, Simplified Chinese, Traditional Chinese, Russian, Arabic, Persian, Brazilian Portuguese, German, Spanish, Japanese, Indonesian, Sinhala, Vietnamese, Turkish, Malay, Thai, French, Hindi, Korean, Tamil, Bengali and Filipino.
 
 **Where do my chats and keys go?**
-Chat traffic goes only to the provider you choose. Credentials are stored encrypted on the device, and secrets are redacted before they reach a model. Settings backups include API keys only if you ask, and ChatGPT sign-ins are never included.
+Your selected model receives the conversation. Tools such as web search can also send data to the services you enable. Provider credentials are stored encrypted on the device; avoid pasting them into chats or files you share. Settings backups include API keys only if you ask, and ChatGPT sign-ins are never included.
 
 **Can it damage my files?**
-The agent is limited to the workspace, every write shows up as a diff, and changes can be rewound or undone.
+Yes. You can review and undo edits recorded by the file tools. Shell commands, plugins and phone actions can change data outside that history. Review their permissions and keep a backup of work you need.
 
 **Which devices are supported?**
 Android 8.0 and newer. Local models need a compatible 64-bit device.
 
 ## Build from source
 
-You need JDK 17 and the Android SDK.
+The build workflows use Temurin JDK 21. For a full native build, install Android SDK Platform 37, NDK 27.2.12479018 and CMake 3.22.1.
 
 ```bash
 ./gradlew :app:assembleDebug
@@ -182,7 +193,9 @@ Run the unit tests:
 ./gradlew :app:testDebugUnitTest
 ```
 
-Debug APKs are also built on every push to `main` and nightly in the Actions tab. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full setup.
+Local models run on CPU without a separate runtime. For a build that can download the optional Vulkan backend, use the [matching GPU packages](repowiki/74-build-ci-and-testing.md#building-with-the-published-gpu-runtime).
+
+When enabled, the [debug workflow](https://github.com/CreatorAA/AndroidHarness/actions/workflows/nightly.yml) builds development APKs on changes to the app on `main`, nightly, or on demand. Its artifacts are not published releases. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full setup.
 
 ## GitHub setup
 
@@ -209,7 +222,7 @@ Register a [GitHub OAuth app](https://github.com/settings/developers), turn on *
 - [FEATURES.md](FEATURES.md): the complete feature reference
 - [Configuration guide](docs/configuration/README.md) and [JSON Schema](docs/harness.schema.json) for `harness.json`
 - [Plugin guide](docs/configuration/plugin-manager.md)
-- [Developer repo wiki](https://github.com/Sanuu7/AndroidHarness/tree/main/repowiki): architecture of the agent engine, tools, providers, MCP and workspaces
+- [Developer repo wiki](repowiki/README.md): architecture of the agent engine, tools, providers, MCP and workspaces
 - [CHANGELOG.md](CHANGELOG.md), [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md)
 
 ## Contributing
@@ -218,7 +231,11 @@ Bug reports, fixes, tests and documentation are all welcome. Start with [CONTRIB
 
 ## Acknowledgements
 
-AndroidHarness takes ideas and design inspiration from these open source projects:
+Sanuu7 created [the original AndroidHarness](https://github.com/Sanuu7/AndroidHarness). The [upstream Discord](https://discord.gg/NdC5K3XeWF) and [donation page](https://buymeacoffee.com/sanuj7) are run by the original project.
+
+Offline Mandarin dictation uses Alibaba's Paraformer model, quantized by crazyant and packaged for sherpa-onnx by csukuangfj. [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) runs it with [ONNX Runtime](https://github.com/microsoft/onnxruntime); [Silero VAD](https://github.com/snakers4/silero-vad) detects speech. The [bundled notices](app/src/main/assets/licenses/offline-speech.txt) link to the model and conversions. Phone control can optionally use [AutoJs6](https://github.com/SuperMonster003/AutoJs6) and its [MCP Server plugin](https://github.com/SuperMonster003/AutoJs6-Plugin-MCP-Server).
+
+AndroidHarness also draws on these projects:
 
 [Hermes Agent](https://github.com/NousResearch/hermes-agent),
 [Aider](https://github.com/Aider-AI/aider),

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Asistanı gizle</string>
+    <string name="phone_background_off_hint">Arka planda çalışma kapalı. Uygulamadan ayrılırsanız bu görev duraklatılır.</string>
+    <string name="phone_background_paused">Arka planda çalışma kapalı olduğu için duraklatıldı. Devam etmek için uygulamada bu sohbeti açın.</string>
+    <string name="phone_island_title">Telefon asistanı</string>
+    <string name="phone_island_planning">Sonraki adımlar planlanıyor</string>
+    <string name="phone_island_looking">Sayfa kontrol ediliyor</string>
+    <string name="phone_island_finding">Uygulama ana ekranda aranıyor</string>
+    <string name="phone_island_tap">Kontrol seçiliyor</string>
+    <string name="phone_island_type">Metin giriliyor</string>
+    <string name="phone_island_swipe">Sayfada geziniliyor</string>
+    <string name="phone_island_gesture">Öğe sürükleniyor</string>
+    <string name="phone_island_action">Adım gerçekleştiriliyor</string>
+    <string name="phone_island_batch">Adım %1$d / %2$d</string>
+    <string name="phone_island_check">Sonuç kontrol ediliyor</string>
+    <string name="phone_island_done">Tamamlandı</string>
+    <string name="phone_island_ended">Sona erdi · sonucu kontrol edin</string>
+    <string name="phone_island_stopped">Durduruldu</string>
+    <string name="phone_island_failed">Tamamlanmadı</string>
+    <string name="phone_island_review">İlginiz gerekiyor</string>
+    <string name="phone_island_paused">Telefon kontrolleri duraklatıldı</string>
+    <string name="phone_island_chat">Sohbeti görüntüle</string>
+    <string name="phone_island_resume">Göreve devam et</string>
+    <string name="phone_island_stop">Görevi durdur</string>
+    <string name="phone_island_details">Görev ilerlemesi: %1$s</string>
+</resources>

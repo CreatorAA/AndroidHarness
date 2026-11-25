@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 指令碼</string>
+    <string name="autojs_allow">允許助理使用 AutoJs6</string>
+    <string name="autojs_allow_hint">加入已配對的驅動程式和介面操作指令碼。已啟用的內建服務仍可使用。</string>
+    <string name="autojs_need_pair">您現在就可以撰寫及檢查指令碼。在手機上執行前，請先設定本機的 AutoJs6 外掛程式。</string>
+    <string name="autojs_new">新增指令碼</string>
+    <string name="autojs_back">返回</string>
+    <string name="autojs_source">介面操作指令碼</string>
+    <string name="autojs_sample_source">text(\"繼續\").waitFor();</string>
+    <string name="autojs_name">名稱（試用時可留白）</string>
+    <string name="autojs_name_exists">已有同名的指令碼。請開啟原有的指令碼進行編輯，或改用其他名稱。</string>
+    <string name="autojs_format">使用 text、desc 或 id 指定介面元件，再等待元件出現、輕觸元件或輸入文字。每行限寫一個指令。</string>
+    <string name="autojs_check">檢查步驟</string>
+    <string name="autojs_prepare">在目標應用程式中試用</string>
+    <string name="autojs_preview">有效步驟：%1$d 個 · 尚未執行</string>
+    <string name="autojs_empty">輕觸「新增指令碼」即可建立可重複使用的操作。若只想試用而不儲存，請將名稱留白。</string>
+    <string name="autojs_enabled_hint">助理可以使用這個資料庫中已啟用的指令碼。</string>
+    <string name="autojs_disabled_hint">試用前，請先在指令碼資料庫中啟用這個指令碼。</string>
+    <string name="autojs_delete">要刪除「%1$s」嗎？</string>
+    <string name="autojs_delete_action">刪除</string>
+    <string name="autojs_changed">資料庫中的指令碼已變更。請重新開啟，再儲存或執行。</string>
+    <string name="autojs_write_failed">無法儲存指令碼。</string>
+    <string name="autojs_anonymous">未儲存的指令碼</string>
+    <string name="autojs_prepared">「%1$s」已可試用。請開啟目標應用程式，並在 10 分鐘內叫出手機助理。</string>
+    <string name="autojs_trial_title">執行指令碼 · %1$s</string>
+    <string name="autojs_trial_here">僅限在 %1$s 中執行</string>
+    <string name="autojs_trial_other">請開啟要測試的應用程式，並在其中叫出助理。</string>
+    <string name="autojs_trial_steps">%1$d 個步驟 · 輕觸以檢視</string>
+    <string name="autojs_trial_less">隱藏步驟</string>
+    <string name="autojs_trial_allow">允許並在此執行</string>
+    <string name="autojs_trial_stale">試用已逾時，或目前的應用程式已變更。請回到指令碼資料庫，重新準備試用。</string>
+    <string name="autojs_trial_request">在 %2$s 中執行「%1$s」。</string>
+    <string name="autojs_trial_done">在 %3$s 中完成了 %1$d 個指令碼步驟，共 %2$d 個。</string>
+    <string name="autojs_trial_stopped">指令碼已在 %3$s 中停止，完成 %1$d 個步驟，共 %2$d 個。</string>
+    <string name="autojs_trial_error">無法在目前的應用程式中啟動指令碼。</string>
+    <string name="autojs_trial_interrupted">指令碼已中斷。請先確認應用程式的狀態再重試。</string>
+    <string name="autojs_not_selected">準備指令碼前，請先啟用 AutoJs6。</string>
+    <string name="autojs_activity_running">正在執行 AutoJs6 指令碼</string>
+    <string name="autojs_activity_ran">已執行 AutoJs6 指令碼</string>
+    <string name="autojs_activity_run_failed">AutoJs6 指令碼未執行完畢</string>
+    <string name="autojs_activity_library_working">正在使用 AutoJs6 指令碼資料庫</string>
+    <string name="autojs_activity_library_done">已使用 AutoJs6 指令碼資料庫</string>
+    <string name="autojs_activity_library_failed">AutoJs6 指令碼資料庫操作失敗</string>
+</resources>

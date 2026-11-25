@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Offline Mandarin only</string>
+    <string name="voice_local_only_on">Uses the bundled Mandarin model. Your audio stays on the phone.</string>
+    <string name="voice_system_first">Android speech is preferred. If it is unavailable, Mandarin dictation continues on the phone.</string>
+    <string name="voice_live_handoff">Continuing on this phone. Words already shown are kept; keep speaking.</string>
+    <string name="voice_local_stopped">On-device dictation stopped. You can keep any words already shown and continue or type the rest.</string>
+    <string name="voice_clip_unavailable">No complete transcript could be recovered from this recording.</string>
+    <string name="voice_continue_offline">Continue on device</string>
+    <string name="voice_clip_handoff">The speech provider is unavailable. Transcribing this recording on your phone.</string>
+</resources>

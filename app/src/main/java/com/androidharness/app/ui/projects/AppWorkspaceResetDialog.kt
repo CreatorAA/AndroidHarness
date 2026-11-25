@@ -27,6 +27,7 @@ import com.androidharness.app.data.db.ProjectEntity
 import com.androidharness.app.ui.common.TextButton
 import com.androidharness.app.ui.settings.storageSize
 import com.androidharness.app.workspace.AppWorkspaceResetPreview
+import com.androidharness.app.workspace.displayWorkspaceName
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
@@ -57,12 +58,12 @@ internal fun AppWorkspaceResetDialog(
         title = { Text(uiContext.getString(R.string.wp_app_workspace_reset_title)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(project.name, style = MaterialTheme.typography.titleSmall)
+                Text(project.displayWorkspaceName(uiContext), style = MaterialTheme.typography.titleSmall)
                 val review = preview
                 if (review == null && error == null) Text(uiContext.getString(R.string.wp_workspace_delete_checking))
                 if (review != null) {
-                    val chats = "${review.chatIds.size} saved ${if (review.chatIds.size == 1) "chat" else "chats"}"
-                    val automations = "${review.automationIds.size} ${if (review.automationIds.size == 1) "automation" else "automations"}"
+                    val chats = uiContext.resources.getQuantityString(R.plurals.backup_chip_chats, review.chatIds.size, review.chatIds.size)
+                    val automations = uiContext.resources.getQuantityString(R.plurals.wp_automation_count, review.automationIds.size, review.automationIds.size)
                     Text(uiContext.getString(R.string.wp_app_workspace_reset_body, chats, automations, storageSize(review.folderBytes)))
                     review.blocker?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 }

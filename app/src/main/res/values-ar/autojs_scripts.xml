@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">نصوص AutoJs6 البرمجية</string>
+    <string name="autojs_allow">السماح للمساعد باستخدام AutoJs6</string>
+    <string name="autojs_allow_hint">يضيف برنامج التشغيل المقترن ونصوص واجهة المستخدم البرمجية. تظل الخدمة المدمجة متاحة عند تفعيلها.</string>
+    <string name="autojs_need_pair">اكتب النصوص البرمجية وتحقق منها الآن. اضبط إضافة AutoJs6 المحلية قبل تشغيلها على الهاتف.</string>
+    <string name="autojs_new">نص برمجي جديد</string>
+    <string name="autojs_back">رجوع</string>
+    <string name="autojs_source">نص واجهة المستخدم البرمجي</string>
+    <string name="autojs_sample_source">text(\"متابعة\").waitFor();</string>
+    <string name="autojs_name">الاسم (اختياري للتجربة)</string>
+    <string name="autojs_name_exists">يوجد نص برمجي بهذا الاسم. افتحه لتعديله أو اختر اسمًا آخر.</string>
+    <string name="autojs_format">استخدم text أو desc أو id للعثور على عنصر تحكم، ثم انتظره أو انقر عليه أو أدخل نصًا. استخدم تعليمة واحدة في كل سطر.</string>
+    <string name="autojs_check">التحقق من الخطوات</string>
+    <string name="autojs_prepare">تجربة في التطبيق المستهدف</string>
+    <string name="autojs_preview">الخطوات الصالحة: %1$d · لم يُنفّذ أي شيء</string>
+    <string name="autojs_empty">انقر على «نص برمجي جديد» لإنشاء إجراء قابل لإعادة الاستخدام. اترك الاسم فارغًا لتجربته دون حفظ.</string>
+    <string name="autojs_enabled_hint">يمكن للمساعد استخدام النصوص البرمجية المفعّلة في هذه المكتبة.</string>
+    <string name="autojs_disabled_hint">فعّل هذا النص البرمجي في المكتبة قبل تجربته.</string>
+    <string name="autojs_delete">هل تريد حذف «%1$s»؟</string>
+    <string name="autojs_delete_action">حذف</string>
+    <string name="autojs_changed">تغيّر هذا النص البرمجي في المكتبة. أعد فتحه قبل حفظه أو تشغيله.</string>
+    <string name="autojs_write_failed">تعذّر حفظ النص البرمجي.</string>
+    <string name="autojs_anonymous">نص برمجي غير محفوظ</string>
+    <string name="autojs_prepared">التجربة جاهزة: %1$s. افتح التطبيق المستهدف واستدعِ مساعد الهاتف خلال 10 دقائق.</string>
+    <string name="autojs_trial_title">تشغيل النص البرمجي · %1$s</string>
+    <string name="autojs_trial_here">في %1$s فقط</string>
+    <string name="autojs_trial_other">افتح التطبيق الذي تريد اختباره، ثم استدعِ المساعد فيه.</string>
+    <string name="autojs_trial_steps">%1$d خطوات · انقر للمراجعة</string>
+    <string name="autojs_trial_less">إخفاء الخطوات</string>
+    <string name="autojs_trial_allow">السماح والتشغيل هنا</string>
+    <string name="autojs_trial_stale">انتهت صلاحية هذه التجربة أو تغيّر التطبيق. أعِد إعدادها في مكتبة النصوص البرمجية.</string>
+    <string name="autojs_trial_request">شغّل «%1$s» في %2$s.</string>
+    <string name="autojs_trial_done">اكتمل تنفيذ %1$d من أصل %2$d من خطوات النص البرمجي في %3$s.</string>
+    <string name="autojs_trial_stopped">توقف النص البرمجي في %3$s بعد تنفيذ %1$d من أصل %2$d من الخطوات.</string>
+    <string name="autojs_trial_error">تعذّر بدء هذا النص البرمجي في التطبيق الحالي.</string>
+    <string name="autojs_trial_interrupted">انقطع تنفيذ النص البرمجي. تحقّق من التطبيق قبل إعادة المحاولة.</string>
+    <string name="autojs_not_selected">فعّل AutoJs6 قبل إعداد نص برمجي.</string>
+    <string name="autojs_activity_running">جارٍ تشغيل نص AutoJs6 البرمجي</string>
+    <string name="autojs_activity_ran">تم تشغيل نص AutoJs6 البرمجي</string>
+    <string name="autojs_activity_run_failed">لم يكتمل تنفيذ نص AutoJs6 البرمجي</string>
+    <string name="autojs_activity_library_working">جارٍ استخدام مكتبة نصوص AutoJs6 البرمجية</string>
+    <string name="autojs_activity_library_done">تم استخدام مكتبة نصوص AutoJs6 البرمجية</string>
+    <string name="autojs_activity_library_failed">تعذّر تنفيذ الإجراء في مكتبة نصوص AutoJs6 البرمجية</string>
+</resources>

@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.androidharness.app.R
+import com.androidharness.app.androiduse.AutoJsUiScripts
 import com.androidharness.app.core.ChatActivityPresentation
 import com.androidharness.app.core.ChatMessage
 import com.androidharness.app.core.Role
@@ -93,8 +94,8 @@ internal fun ChatActivity(
     val completedPhase = showToolPhase && active == null && lastTool?.result != null
     val seconds = messages.sumOf { it.thinkingMs }.coerceAtLeast(0) / 1000
     val title = when {
-        live && showToolPhase && active != null -> activityLabel(active.name, true)
-        live && completedPhase -> if (lastTool!!.result?.isError == true) stringResource(R.string.chat_tool_failed) else activityLabel(lastTool.call.name, false)
+        live && showToolPhase && active != null -> stringResource(activityLabelRes(active.name, true, null))
+        live && completedPhase -> stringResource(activityLabelRes(lastTool!!.call.name, false, lastTool.result?.isError))
         live && writing -> stringResource(R.string.chat_writing_reply)
         live -> stringResource(R.string.chat_thinking)
         seconds > 0 && !showThinkingMetrics -> stringResource(R.string.chat_thought_duration,
@@ -178,18 +179,7 @@ internal fun ChatActivity(
 @Composable
 internal fun ChatToolActivity(call: ToolCallData, result: ChatMessage?, running: Boolean, onOpenUrl: (String) -> Unit) {
     if (call.name == "offer_code_handoff") return
-    val title = when {
-        running -> activityLabel(call.name, true)
-        result?.isError == true -> stringResource(when (call.name) {
-            "web_search" -> R.string.chat_search_failed
-            "web_fetch", "browser_read" -> R.string.chat_page_failed
-            "view_chat_image", "zoom_chat_image" -> R.string.chat_image_failed
-            "github_api", "github_search", "github_file" -> R.string.chat_github_failed
-            else -> R.string.chat_tool_failed
-        })
-        result != null -> activityLabel(call.name, false)
-        else -> stringResource(R.string.chat_activity_interrupted)
-    }
+    val title = stringResource(activityLabelRes(call.name, running, result?.isError))
     val sources = remember(call, result) { ChatActivityPresentation.sources(listOfNotNull(ChatMessage(Role.ASSISTANT, toolCalls = listOf(call)), result)) }
     val images = remember(call, result) {
         if (call.name != "web_fetch" && call.name != "browser_read") emptyList()
@@ -438,13 +428,13 @@ private fun ChatActivityRow(
                 AnimatedCount(counters.sourcesUsed, motion) { count ->
                     Text("$count", style = style, color = color)
                 }
-                Text("/${counters.sourcesMax} sources", style = style, color = color)
+                Text(stringResource(R.string.chat_research_sources_suffix, counters.sourcesMax), style = style, color = color)
                 if (counters.readsRequired > 0 || counters.pagesRead > 0) {
                     Text(" · ", style = style, color = color)
                     AnimatedCount(counters.pagesRead, motion) { count ->
                         Text("$count", style = style, color = color)
                     }
-                    Text(" read", style = style, color = color)
+                    Text(stringResource(R.string.chat_research_read_suffix), style = style, color = color)
                 }
             }
         }
@@ -644,31 +634,44 @@ private fun ChatActivityGlyph(name: String?, live: Boolean, motion: Boolean) {
     }
 }
 
-@Composable
-private fun activityLabel(name: String, running: Boolean): String = stringResource(when (name) {
-    "web_search" -> if (running) R.string.chat_searching else R.string.chat_searched
-    "search_chats" -> if (running) R.string.chat_searching_chats else R.string.chat_searched_chats
-    "recent_chats" -> if (running) R.string.chat_checking_recent_chats else R.string.chat_checked_recent_chats
-    "read_chat_snippet" -> if (running) R.string.chat_reading_past_chat else R.string.chat_read_past_chat
-    "web_fetch", "browser_read" -> if (running) R.string.chat_reading_page else R.string.chat_read_page
-    "github_api", "github_search", "github_file" -> if (running) R.string.chat_reading_github else R.string.chat_read_github
-    "create_artifact" -> if (running) R.string.chat_creating_artifact else R.string.chat_created_artifact
-    "read_artifact" -> if (running) R.string.chat_reading_artifact else R.string.chat_read_artifact
-    "search_agent_knowledge" -> if (running) R.string.chat_agents_knowledge_activity else R.string.chat_agents_knowledge_done
-    "read_chat_text" -> if (running) R.string.chat_reading_text else R.string.chat_read_text
-    "read_screen" -> if (running) R.string.assistant_reading_screen else R.string.assistant_read_screen
-    "view_chat_image" -> if (running) R.string.chat_viewing_image else R.string.chat_viewed_image
-    "zoom_chat_image" -> if (running) R.string.chat_zooming_image else R.string.chat_zoomed_image
-    "remember" -> if (running) R.string.chat_saving_memory else R.string.chat_memory_saved
-    "recall" -> if (running) R.string.chat_searching_memory else R.string.chat_searched_memory
-    "read_tool_output" -> if (running) R.string.chat_reading_results else R.string.chat_read_results
-    "visual_guide" -> if (running) R.string.chat_reading_design_guide else R.string.chat_read_design_guide
-    "offer_code_handoff" -> R.string.chat_preparing_code_option
-    "app_settings_find" -> if (running) R.string.as_activity_finding else R.string.as_activity_found
-    "app_settings_change" -> if (running) R.string.as_activity_changing else R.string.as_activity_changed
-    "app_plugins" -> if (running) R.string.as_activity_plugins else R.string.as_activity_plugins_done
-    else -> if (running) R.string.chat_working else R.string.chat_finished_activity
-})
+internal fun activityLabelRes(name: String, running: Boolean, resultError: Boolean?): Int {
+    if (resultError == true) return when (name) {
+        "web_search" -> R.string.chat_search_failed
+        "web_fetch", "browser_read" -> R.string.chat_page_failed
+        "view_chat_image", "zoom_chat_image" -> R.string.chat_image_failed
+        "github_api", "github_search", "github_file" -> R.string.chat_github_failed
+        AutoJsUiScripts.RUN -> R.string.autojs_activity_run_failed
+        AutoJsUiScripts.LIBRARY -> R.string.autojs_activity_library_failed
+        else -> R.string.chat_tool_failed
+    }
+    if (!running && resultError == null) return R.string.chat_activity_interrupted
+    return when (name) {
+        AutoJsUiScripts.RUN -> if (running) R.string.autojs_activity_running else R.string.autojs_activity_ran
+        AutoJsUiScripts.LIBRARY -> if (running) R.string.autojs_activity_library_working else R.string.autojs_activity_library_done
+        "web_search" -> if (running) R.string.chat_searching else R.string.chat_searched
+        "search_chats" -> if (running) R.string.chat_searching_chats else R.string.chat_searched_chats
+        "recent_chats" -> if (running) R.string.chat_checking_recent_chats else R.string.chat_checked_recent_chats
+        "read_chat_snippet" -> if (running) R.string.chat_reading_past_chat else R.string.chat_read_past_chat
+        "web_fetch", "browser_read" -> if (running) R.string.chat_reading_page else R.string.chat_read_page
+        "github_api", "github_search", "github_file" -> if (running) R.string.chat_reading_github else R.string.chat_read_github
+        "create_artifact" -> if (running) R.string.chat_creating_artifact else R.string.chat_created_artifact
+        "read_artifact" -> if (running) R.string.chat_reading_artifact else R.string.chat_read_artifact
+        "search_agent_knowledge" -> if (running) R.string.chat_agents_knowledge_activity else R.string.chat_agents_knowledge_done
+        "read_chat_text" -> if (running) R.string.chat_reading_text else R.string.chat_read_text
+        "read_screen" -> if (running) R.string.assistant_reading_screen else R.string.assistant_read_screen
+        "view_chat_image" -> if (running) R.string.chat_viewing_image else R.string.chat_viewed_image
+        "zoom_chat_image" -> if (running) R.string.chat_zooming_image else R.string.chat_zoomed_image
+        "remember" -> if (running) R.string.chat_saving_memory else R.string.chat_memory_saved
+        "recall" -> if (running) R.string.chat_searching_memory else R.string.chat_searched_memory
+        "read_tool_output" -> if (running) R.string.chat_reading_results else R.string.chat_read_results
+        "visual_guide" -> if (running) R.string.chat_reading_design_guide else R.string.chat_read_design_guide
+        "offer_code_handoff" -> R.string.chat_preparing_code_option
+        "app_settings_find" -> if (running) R.string.as_activity_finding else R.string.as_activity_found
+        "app_settings_change" -> if (running) R.string.as_activity_changing else R.string.as_activity_changed
+        "app_plugins" -> if (running) R.string.as_activity_plugins else R.string.as_activity_plugins_done
+        else -> if (running) R.string.chat_working else R.string.chat_finished_activity
+    }
+}
 
 @Composable
 internal fun ChatShimmerText(text: String, running: Boolean, style: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.labelLarge) {

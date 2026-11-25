@@ -125,7 +125,7 @@ internal class AndroidTelegramAgentBridge(private val c: AppContainer, private v
         val rows = if (!running || archived != null || request.active && !matches) c.sessions.messages(sid) else emptyList()
         val started = matches || rows.any { it.id == request.promptId(binding) }
         val decision = if (matches && running) when {
-            live.pendingApproval != null -> live.pendingApproval.let {
+            live.pendingApproval != null -> live.pendingApproval.takeUnless { it.requiresPhoneReview }?.let {
                 TelegramDecision("approval", it.call.id, it.toolDescription,
                     "${it.call.name}\n${it.call.argumentsJson}" + (it.diffPreview?.let { diff -> "\n\n$diff" } ?: ""), fingerprint = RemotePromptIdentity.approval(it)) }
             live.pendingQuestion != null -> live.pendingQuestion.let {

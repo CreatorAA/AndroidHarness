@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">การควบคุมโทรศัพท์ของ Harness</string>
+    <string name="phone_driver_service_description">ให้คุณขอให้ผู้ช่วยอ่านหน้าจอ แตะปุ่มควบคุม และป้อนข้อความได้ การควบคุมโทรศัพท์จะทำงานเฉพาะระหว่างงานที่คุณเริ่มเท่านั้น หยุดงานเพื่อกลับมาควบคุมเอง</string>
+</resources>

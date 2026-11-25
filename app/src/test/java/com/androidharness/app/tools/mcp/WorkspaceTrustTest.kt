@@ -52,6 +52,29 @@ class WorkspaceTrustTest {
     }
 
     @Test
+    fun `sibling and nested plugin directories keep independent approvals`() {
+        val sibling = lint.copy(name = "lint-extra", root = lint.root + "-extra")
+        val nested = lint.copy(name = "nested", root = lint.root + "/nested")
+        val extended = config.copy(plugins = listOf(lint, sibling, nested),
+            pluginBins = listOf(lint.root + "/bin", sibling.root + "/bin", nested.root + "/bin"))
+        assertEquals(listOf(lint.root + "/bin"), WorkspaceTrust.restrict(extended, setOf("plugin:lint")).pluginBins)
+        assertEquals(listOf(nested.root + "/bin"), WorkspaceTrust.restrict(extended, setOf("plugin:nested")).pluginBins)
+        val approved = WorkspaceTrust.approve(WorkspaceTrustRecord(), items(), 1)
+        assertEquals(setOf("plugin:lint-extra", "plugin:nested"), WorkspaceTrust.pending(items(extended), approved).map { it.key }.toSet())
+    }
+
+    @Test
+    fun `changed options and language server initialization require fresh approval`() {
+        val approved = WorkspaceTrust.approve(WorkspaceTrustRecord(), items(), 1)
+        val optionChange = config.copy(plugins = listOf(lint.copy(options = mapOf("format" to "compact"))))
+        val lspChange = config.copy(languageServers = listOf(lintLsp.copy(
+            initializationOptions = kotlinx.serialization.json.buildJsonObject { put("format", kotlinx.serialization.json.JsonPrimitive("compact")) })))
+        listOf(optionChange, lspChange).forEach { changed ->
+            assertEquals(listOf("plugin:lint"), WorkspaceTrust.pending(items(changed), approved).map { it.key })
+        }
+    }
+
+    @Test
     fun `ask new only keeps running approved items after they change`() {
         val record = WorkspaceTrust.approve(WorkspaceTrustRecord(mode = WorkspaceTrustMode.ASK_NEW), items(), 1)
         val changed = config.copy(servers = listOf(files.copy(args = listOf("other"))),

@@ -105,6 +105,32 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">تستخدم محادثات في مشاريع أخرى مساحة العمل هذه: %1$s. أزل مساحة العمل من تلك المحادثات قبل حذفها. يجب أن تظل المحادثات ذات التغييرات المحفوظة قادرة على الوصول إليها.</string>
+    <string name="wp_delete_running_blocked">أوقف المهام الجارية في هذا المشروع قبل حذفه.</string>
+    <string name="wp_reset_shared_blocked">تستخدم محادثات أخرى مساحة عمل التطبيق أيضًا: %1$s. أزل مساحة العمل من تلك المحادثات قبل إعادة ضبطها.</string>
+    <string name="wp_reset_running_blocked">أوقف المهام الجارية في مساحة العمل قبل إعادة ضبطها.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="zero">%1$d عملية أتمتة</item>
+        <item quantity="one">عملية أتمتة واحدة (%1$d)</item>
+        <item quantity="two">عمليتا أتمتة (%1$d)</item>
+        <item quantity="few">%1$d عمليات أتمتة</item>
+        <item quantity="many">%1$d عملية أتمتة</item>
+        <item quantity="other">%1$d عملية أتمتة</item>
+    </plurals>
+    <string name="wp_picked_folder">مجلد محدد</string>
+    <string name="wp_review_changed">تغيرت التفاصيل. أغلق مربع الحوار وراجع الإجراء مجددًا.</string>
+    <string name="wp_editor_toggle_wrap">تبديل التفاف الأسطر</string>
+    <string name="wp_editor_undo_available">يمكن التراجع</string>
+    <string name="wp_reset_app_only">لا يمكن إعادة ضبط إلا مساحة عمل التطبيق.</string>
+    <string name="wp_editor_find_replace">البحث والاستبدال في المشروع</string>
+    <plurals name="wp_changed_files">
+        <item quantity="zero">تم تغيير %1$d ملف</item>
+        <item quantity="one">تم تغيير ملف واحد (%1$d)</item>
+        <item quantity="two">تم تغيير ملفين (%1$d)</item>
+        <item quantity="few">تم تغيير %1$d ملفات</item>
+        <item quantity="many">تم تغيير %1$d ملفًا</item>
+        <item quantity="other">تم تغيير %1$d ملف</item>
+    </plurals>
     <string name="wp_add_shared">"مجلد مشترك"</string>
     <string name="wp_add_shared_sub">"يبقى بعد إلغاء التثبيت. تراه نسختا stable وnightly كلتاهما"</string>
     <string name="wp_add_shared_failed">"تعذر إنشاء %1$s. تأكد من تفعيل الوصول إلى كل الملفات ثم حاول مرة أخرى."</string>

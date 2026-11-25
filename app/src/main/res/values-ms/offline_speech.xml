@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Bahasa Mandarin luar talian sahaja</string>
+    <string name="voice_local_only_on">Menggunakan model bahasa Mandarin yang disertakan. Audio anda kekal pada telefon.</string>
+    <string name="voice_system_first">Pengecaman pertuturan Android diutamakan. Jika tidak tersedia, imlak bahasa Mandarin diteruskan pada telefon.</string>
+    <string name="voice_live_handoff">Meneruskan pada telefon ini. Perkataan yang telah dipaparkan dikekalkan; teruskan bercakap.</string>
+    <string name="voice_local_stopped">Imlak pada peranti telah dihentikan. Anda boleh mengekalkan perkataan yang telah dipaparkan dan meneruskan atau menaip selebihnya.</string>
+    <string name="voice_clip_unavailable">Tiada transkrip lengkap dapat dipulihkan daripada rakaman ini.</string>
+    <string name="voice_continue_offline">Teruskan pada peranti</string>
+    <string name="voice_clip_handoff">Penyedia perkhidmatan pertuturan tidak tersedia. Rakaman ini sedang ditranskripsikan pada telefon anda.</string>
+</resources>

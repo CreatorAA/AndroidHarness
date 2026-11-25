@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Padrão do provedor"</string>
     <string name="ui_add_custom_command">"Adicionar comando personalizado"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Mantenha a CPU ativa enquanto uma execução ou terminal estiver ativo para que o terminal não morra quando o app for minimizado."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Excluído: o Android não limitará execuções em segundo plano."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Ativado: Samsung e outras OEMs podem encerrar trabalho em segundo plano. Exclua o app para execuções longas confiáveis."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"A otimização de bateria do Android está desativada para o AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"A otimização de bateria do Android está ativada. Se tarefas longas pararem com a tela apagada, permita que o AndroidHarness use a bateria sem restrições."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Versão atual %1$s. Verifica GitHub Releases por builds mais novos."</string>
     <string name="ui_available_see_the_dialog">"%1$s disponível, veja o diálogo"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Um agente de código que vive no seu telefone."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"Velocidade de leitura"</string>
     <string name="lms_field_prompt_threads_help">"Núcleos de CPU ao ler sua mensagem."</string>
     <string name="lms_unit_cores">"núcleos"</string>
+    <string name="voice_no_result">Não foi possível obter a transcrição completa. Tente falar novamente ou digite sua mensagem.</string>
+    <string name="voice_service_interrupted">O serviço de reconhecimento de fala do sistema parou antes de terminar. Tente ditar novamente ou digite o restante.</string>
+    <string name="voice_try_again">Ditar novamente</string>
+    <string name="voice_continue">Continuar ditando</string>
+    <string name="voice_finish_to_send">Ouvindo. Toque em Enviar quando terminar.</string>
 </resources>

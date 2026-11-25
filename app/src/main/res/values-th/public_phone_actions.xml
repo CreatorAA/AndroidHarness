@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">ตั้งปลุกครั้งเดียว</string>
+    <string name="phone_public_timer">เริ่มจับเวลา</string>
+    <string name="phone_public_map">ค้นหาสถานที่</string>
+    <string name="phone_public_calendar">เปิดร่างกิจกรรมในปฏิทิน</string>
+    <string name="phone_public_note">เปิดโน้ตใหม่</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">الهاتف</string>
+    <string name="conversation_new_phone">محادثة هاتف جديدة</string>
+    <string name="phone_conversation_intro">اطرح سؤالًا هنا. لكي يستخدم المساعد تطبيقًا، انتقل إلى ذلك التطبيق واستدعِ المساعد.</string>
+    <string name="phone_conversation_settings">إعدادات المساعد</string>
+    <string name="settings_start_phone_desc">افتح محادثات مساعد الهاتف.</string>
+</resources>

@@ -83,7 +83,6 @@ import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.SdStorage
 import androidx.compose.material.icons.rounded.Shield
-import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.Inventory2
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material3.AlertDialog
@@ -156,6 +155,7 @@ import com.androidharness.app.ui.common.AppHeader
 import com.androidharness.app.ui.common.HarnessMark
 import com.androidharness.app.ui.common.openOAuthBrowser
 import com.androidharness.app.ui.common.AddWorkspaceDialog
+import com.androidharness.app.workspace.displayWorkspaceName
 import com.androidharness.app.ui.common.BiometricAuth
 import com.androidharness.app.ui.common.findFragmentActivity
 import com.androidharness.app.ui.common.SecureDialogEffect
@@ -463,12 +463,15 @@ private fun SettingsScreenContent(
                         ) }
                         SettingsPage.LANGUAGE -> LanguageSection()
                         SettingsPage.ASSISTANT -> AssistantSetupSection(
+                            container = container,
                             voiceFirst = settings.assistantVoiceFirst,
                             onVoiceFirst = { value -> scope.launch { container.settings.setAssistantVoiceFirst(value) } },
                             thinking = settings.assistantThinking,
                             onThinking = { value -> scope.launch { container.settings.setAssistantThinking(value) } },
                             speakReplies = settings.assistantSpeakReplies,
                             onSpeakReplies = { value -> scope.launch { container.settings.setAssistantSpeakReplies(value) } },
+                            edgeHandleEnabled = settings.assistantEdgeHandleEnabled,
+                            onEdgeHandleEnabled = { enabled -> scope.launch { container.settings.setAssistantEdgeHandleEnabled(enabled) } },
                             modelPicker = {
                                 ModelOverrideSection(
                                     container = container,
@@ -593,7 +596,6 @@ private fun SettingsScreenContent(
                             SettingsBackupSection(container)
                             ChatsBackupSection(container)
                         }
-                        SettingsPage.UPDATES -> UpdatesCard(container)
                         SettingsPage.SYNC -> com.androidharness.app.ui.transfer.SyncSettingsSection(container)
                         SettingsPage.FTP_SERVER -> com.androidharness.app.ui.transfer.FtpServerSection(container)
                         SettingsPage.ABOUT -> AboutSection(container)
@@ -697,7 +699,7 @@ private fun WorkspaceSection(
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.settings_workspace_active), style = MaterialTheme.typography.labelMedium, color = scheme.onSurfaceVariant)
-                    Text(current.name, style = MaterialTheme.typography.titleMedium)
+                    Text(current.displayWorkspaceName(uiContext), style = MaterialTheme.typography.titleMedium)
                     Text(
                         workspacePath ?: desc.kindLabel,
                         style = MaterialTheme.typography.bodySmall,
@@ -720,7 +722,7 @@ private fun WorkspaceSection(
                 val isActive = project.id == currentProject?.id
                 SettingRow(
                     icon = if (project.kind == "APP") Icons.Rounded.Folder else Icons.Rounded.FolderOpen,
-                    title = project.name,
+                    title = project.displayWorkspaceName(uiContext),
                     subtitle = desc.kindLabel + " · " + if (desc.shellCapable) uiContext.getString(R.string.ui_full_shell_1091) else uiContext.getString(R.string.ui_file_tools_only_1092),
                     onClick = { onSelectWorkspace(project.id) }.takeIf { !isActive },
                     divider = index != projects.lastIndex,
@@ -962,7 +964,7 @@ private fun CodeIntelligenceSection(
                 Icon(Icons.Rounded.Folder, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.width(10.dp))
                 Column(Modifier.weight(1f)) {
-                    Text(currentProject?.name ?: uiContext.getString(R.string.ui_no_workspace), style = MaterialTheme.typography.titleSmall)
+                    Text(currentProject?.displayWorkspaceName(uiContext) ?: uiContext.getString(R.string.ui_no_workspace), style = MaterialTheme.typography.titleSmall)
                     Text(
                         rootPath ?: uiContext.getString(R.string.ui_this_workspace_does_not_expose_a_real),
                         style = MaterialTheme.typography.bodySmall,
@@ -2566,12 +2568,11 @@ private fun SlashCommandsSection(container: AppContainer) {
 }
 
 @Composable
-internal fun BatteryCard(container: AppContainer) {
+internal fun BatteryCard(container: AppContainer, exempt: Boolean) {
     val uiContext = androidx.compose.ui.platform.LocalContext.current
     val context = androidx.compose.ui.platform.LocalContext.current
     val settings by container.settings.settings.collectAsStateWithLifecycle(initialValue = AppSettings())
     val scope = rememberCoroutineScope()
-    var exempt by remember { mutableStateOf(isIgnoringBatteryOptimizations(context)) }
 
     SettingsPanel(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -2604,16 +2605,12 @@ internal fun BatteryCard(container: AppContainer) {
                 if (!exempt) {
                     Button(onClick = {
                         requestBatteryExemption(context)
-                        exempt = isIgnoringBatteryOptimizations(context)
                     }) { Text(stringResource(R.string.settings_action_fix)) }
                 }
             }
         }
     }
 }
-
-private fun isIgnoringBatteryOptimizations(context: android.content.Context): Boolean =
-    com.androidharness.app.ui.common.SystemGrants.isIgnoringBatteryOptimizations(context)
 
 private fun requestBatteryExemption(context: android.content.Context) =
     com.androidharness.app.ui.common.SystemGrants.requestBatteryExemption(context)
@@ -2744,78 +2741,14 @@ private fun DropdownSetting(
     }
 }
 
-@Composable
-private fun UpdatesCard(container: AppContainer) {
-    val uiContext = androidx.compose.ui.platform.LocalContext.current
-    val step by container.updates.step.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
-    val version = remember(container) { appVersionLabel(container.appContext) }
-    SettingsPanel(Modifier.fillMaxWidth().settingsAnchor(R.string.settings_page_updates_title)) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    Icons.Rounded.SystemUpdate,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp),
-                )
-                Spacer(Modifier.width(10.dp))
-                Text(stringResource(R.string.settings_page_updates_title), style = MaterialTheme.typography.titleSmall)
-            }
-            Text(
-                uiContext.getString(R.string.ui_current_version_checks_github_releases_for_newer, (version).toString()),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            UpdateInstallationChoice(container)
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Button(
-                    onClick = { scope.launch { container.updates.check(manual = true) } },
-                    enabled = step !is com.androidharness.app.data.update.UpdateManager.Step.Checking &&
-                        step !is com.androidharness.app.data.update.UpdateManager.Step.Downloading,
-                ) {
-                    if (step is com.androidharness.app.data.update.UpdateManager.Step.Checking) {
-                        androidx.compose.material3.LoadingIndicator(Modifier.size(22.dp), color = androidx.compose.material3.LocalContentColor.current)
-                        Spacer(Modifier.width(8.dp))
-                    }
-                    Text(if (step is com.androidharness.app.data.update.UpdateManager.Step.Checking) uiContext.getString(R.string.ui_checking) else uiContext.getString(R.string.settings_search_updates_title))
-                }
-                when (val s = step) {
-                    is com.androidharness.app.data.update.UpdateManager.Step.UpToDate -> {
-                        Spacer(Modifier.width(12.dp))
-                        Icon(
-                            Icons.Rounded.CheckCircle,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(stringResource(R.string.settings_updates_uptodate), style = MaterialTheme.typography.labelMedium)
-                    }
-                    is com.androidharness.app.data.update.UpdateManager.Step.Available -> {
-                        Spacer(Modifier.width(12.dp))
-                        Text(
-                            uiContext.getString(R.string.ui_available_see_the_dialog, (s.release.tag).toString()),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-                    }
-                    else -> {}
-                }
-            }
-        }
-    }
-}
-
 // ---------------------------------------------------------------------------
 // About
 // ---------------------------------------------------------------------------
 
 private const val AUTHOR_URL = "https://github.com/Sanuu7"
-private const val REPO_URL = "https://github.com/Sanuu7/AndroidHarness"
-private const val LICENSE_URL = "https://github.com/Sanuu7/AndroidHarness/blob/main/LICENSE"
+private const val REPO_URL = "https://github.com/CreatorAA/AndroidHarness"
+private const val LICENSE_URL = "$REPO_URL/blob/main/LICENSE"
 
-/** Installed version, shared by the About page and the update card. */
 private fun appVersionLabel(context: Context): String = runCatching {
     context.packageManager.getPackageInfo(context.packageName, 0).versionName
 }.getOrNull().orEmpty().ifBlank { "?" }
@@ -2824,6 +2757,14 @@ private fun appVersionLabel(context: Context): String = runCatching {
 private data class Credit(val name: String, val role: String, val url: String)
 
 private val BUILT_WITH = listOf(
+    Credit("AndroidHarness", "Sanuu7", "https://github.com/Sanuu7/AndroidHarness"),
+    Credit("Paraformer", "Alibaba DAMO · iic", "https://modelscope.cn/models/iic/speech_paraformer_asr_nat-zh-cn-16k-common-vocab8358-tensorflow1"),
+    Credit("Paraformer ONNX", "crazyant", "https://modelscope.cn/models/crazyant/speech_paraformer_asr_nat-zh-cn-16k-common-vocab8358-onnx"),
+    Credit("Paraformer INT8", "csukuangfj", "https://huggingface.co/csukuangfj/sherpa-onnx-paraformer-zh-small-2024-03-09"),
+    Credit("sherpa-onnx", "k2-fsa · Apache-2.0", "https://github.com/k2-fsa/sherpa-onnx"),
+    Credit("ONNX Runtime", "Microsoft · MIT", "https://github.com/microsoft/onnxruntime"),
+    Credit("Silero VAD", "Silero Team · MIT", "https://github.com/snakers4/silero-vad"),
+    Credit("AutoJs6 · MCP Server", "SuperMonster003", "https://github.com/SuperMonster003/AutoJs6-Plugin-MCP-Server"),
     Credit("Termux", "Linux packages and shell tooling", "https://github.com/termux"),
     Credit("Shizuku", "Elevated shell access without root", "https://github.com/RikkaApps/Shizuku"),
     Credit("Shevery", "Compatible privileged shell provider", "https://github.com/HmnDev-Tech/shevery"),
@@ -2872,11 +2813,16 @@ private fun AboutSection(container: AppContainer) {
             )
             Surface(color = scheme.surfaceContainerHigh, shape = CircleShape) {
                 Text(
-                    uiContext.getString(R.string.ui_version, (version).toString()),
+                    stringResource(R.string.ui_version, version),
                     style = MaterialTheme.typography.labelMedium,
                     color = scheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 5.dp),
                 )
+            }
+            TextButton(onClick = { open("$REPO_URL/releases") }) {
+                Text(stringResource(R.string.ui_github_releases))
+                Spacer(Modifier.width(4.dp))
+                ExternalLinkIcon()
             }
         }
     }
@@ -2896,7 +2842,7 @@ private fun AboutSection(container: AppContainer) {
                 Icon(Icons.Rounded.Code, contentDescription = null, tint = scheme.onSurfaceVariant, modifier = Modifier.size(22.dp))
             },
             title = stringResource(R.string.settings_about_source),
-            subtitle = "github.com/Sanuu7/AndroidHarness",
+            subtitle = "CreatorAA/AndroidHarness",
             onClick = { open(REPO_URL) },
             trailing = { ExternalLinkIcon() },
         )

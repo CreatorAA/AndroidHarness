@@ -50,7 +50,10 @@ data class ChatImportPreview(
     val memoryProjects: List<String> = emptyList(),
     val legacy: Boolean = false,
     val workProjects: List<BackupWorkProject> = emptyList(),
-)
+    val memoryFolderCount: Int = 0,
+) {
+    val hasExtras: Boolean get() = memories > 0 || snippets > 0 || memoryFolderCount > 0
+}
 
 enum class DuplicatePolicy { SKIP, KEEP_BOTH }
 

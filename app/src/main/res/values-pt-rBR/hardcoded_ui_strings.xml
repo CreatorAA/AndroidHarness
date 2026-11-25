@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Não há nada para desfazer neste turno.</string>
+    <string name="chat_compaction_preparing">Preparando o resumo da conversa…</string>
+    <string name="chat_compaction_too_few_messages">Ainda há poucas mensagens para compactar.</string>
+    <string name="chat_compaction_retrying">Tentando resumir de novo · tentativa %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Compactação interrompida. O histórico foi mantido. Execute /compact novamente quando quiser.</string>
+    <string name="chat_compaction_refresh_failed">A conversa foi compactada, mas não foi possível atualizar as configurações da tarefa ou a estimativa de contexto: %1$s</string>
+    <string name="chat_compaction_failed_notice">Falha na compactação: %1$s. O histórico foi mantido. Tente /compact novamente ou escolha outro modelo.</string>
+    <string name="reasoning_from_catalog">Raciocínio indicado no catálogo de modelos</string>
+    <string name="reasoning_from_provider">Raciocínio informado pelo provedor</string>
+    <string name="reasoning_from_user">Raciocínio configurado por você</string>
+    <string name="reasoning_from_name">Raciocínio deduzido do nome do modelo</string>
+    <string name="automation_every_day">Todos os dias</string>
+    <string name="automation_daily_at">todos os dias às %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Compile o APK de depuração e corrija os erros de compilação.</string>
+    <string name="app_update_checking">Buscando atualizações…</string>
+    <string name="app_update_up_to_date">Você está na versão mais recente</string>
+    <string name="files_directory">Pasta</string>
+    <string name="cache_status_unavailable">Dados do cache indisponíveis</string>
+    <string name="cache_status_hit">Acerto no cache · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · parcial</string>
+    <string name="cache_estimated_price">aprox. %1$s</string>
+    <string name="chat_live_sites_suffix">" sites"</string>
+    <string name="chat_research_sources_suffix">/%1$d fontes</string>
+    <string name="chat_research_read_suffix">" lidas"</string>
+    <string name="package_status_failed">Falha na instalação</string>
+    <string name="package_hide_details">Ocultar detalhes da instalação</string>
+    <string name="package_show_details">Mostrar detalhes da instalação</string>
+    <string name="package_recently_unpacked">Extraído recentemente · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d itens</item>
+    </plurals>
+</resources>

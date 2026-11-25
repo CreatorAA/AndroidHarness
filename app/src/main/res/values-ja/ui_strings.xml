@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"プロバイダーのデフォルト"</string>
     <string name="ui_add_custom_command">"カスタムコマンドを追加"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"実行中またはターミナル使用中にCPUを保持し、アプリを最小化してもターミナルが終了しないようにします。"</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"除外済み: Androidはバックグラウンド実行を抑制しません。"</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"オン: SamsungなどのOEMがバックグラウンド処理を終了する場合があります。長時間実行を安定させるためアプリを除外してください。"</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness では Android のバッテリー最適化が無効になっています。"</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android のバッテリー最適化が有効です。画面を消すと長時間のタスクが止まる場合は、AndroidHarness のバッテリー使用を「制限なし」に設定してください。"</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"現在のバージョン %1$s。GitHub Releasesで新しいビルドを確認します。"</string>
     <string name="ui_available_see_the_dialog">"%1$sが利用可能です。ダイアログを確認してください"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"スマートフォンで動くコーディングエージェント。"</string>
@@ -1845,4 +1845,9 @@
     <string name="lms_field_prompt_threads">"読み取り速度"</string>
     <string name="lms_field_prompt_threads_help">"メッセージを読むときに使う CPU コア数。"</string>
     <string name="lms_unit_cores">"コア"</string>
+    <string name="voice_no_result">完全な認識結果を取得できませんでした。もう一度話すか、メッセージを入力してください。</string>
+    <string name="voice_service_interrupted">システムの音声サービスが途中で停止しました。もう一度話すか、残りを入力してください。</string>
+    <string name="voice_try_again">もう一度話す</string>
+    <string name="voice_continue">音声入力を続ける</string>
+    <string name="voice_finish_to_send">聞き取り中です。話し終えたら送信をタップしてください。</string>
 </resources>

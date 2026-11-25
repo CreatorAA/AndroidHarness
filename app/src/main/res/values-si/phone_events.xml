@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">«%1$s» යටතේ ඇඟවීම් ක්‍රියාවිරහිත කර තිබුණත් ඔබේ සිහිකැඳවීම් මෙහි තිබේ.</string>
+    <string name="phone_events_title">දුරකථන සිදුවීම් සිහිකැඳවීම්</string>
+    <string name="phone_events_intro">තෝරාගත් යෙදුමක් විවෘත වන විට හෝ දැනුම්දීමක් පළ කරන විට සිහිකැඳවීමක් ලබා ගන්න. සම්බන්ධ කළ කාර්යයක් ධාවනය කිරීමට පෙර එය සමාලෝචනය කරන්න.</string>
+    <string name="phone_event_ready">දුරකථන සිදුවීම් සිහිකැඳවීම</string>
+    <string name="phone_event_open_reminder">%1$s නිසා ඔබේ සිහිකැඳවීම ක්‍රියාත්මක විය. සමාලෝචනය කිරීමට තට්ටු කරන්න.</string>
+    <string name="phone_events_grant_notifications">දැනුම්දීම් ප්‍රවේශයට ඉඩ දෙන්න</string>
+    <string name="phone_events_grant_window">ප්‍රවේශ්‍යතාව තුළ Harness දුරකථන පාලන සබල කරන්න</string>
+    <string name="phone_events_show_alerts">සිහිකැඳවීම් දැනුම්දීම්වලට ඉඩ දෙන්න</string>
+    <string name="phone_event_opened">%1$s විවෘත වේ</string>
+    <string name="phone_event_notified">%1$s දැනුම්දීමක් පළ කරයි</string>
+    <string name="phone_event_review_task">සමාලෝචනය කරන්න: %1$s</string>
+    <string name="phone_event_dismiss">ඉවතලන්න</string>
+    <string name="phone_event_remind_only">සිහිකැඳවීම පමණක් කරන්න</string>
+    <string name="phone_event_task_missing">සම්බන්ධ කළ කාර්යය තවදුරටත් ලබා ගත නොහැක</string>
+    <string name="phone_event_edit">නියමය සංස්කරණය කරන්න</string>
+    <string name="phone_event_remove">නියමය ඉවත් කරන්න</string>
+    <string name="phone_event_add">යෙදුම් නියමයක් එක් කරන්න</string>
+    <string name="phone_event_view_notices">සක්‍රිය දැනුම්දීම් (%1$d)</string>
+    <string name="phone_event_active_notices">වත්මන් දැනුම්දීම්</string>
+    <string name="phone_event_metadata_only">පෙන්වන්නේ යෙදුම සහ වේලාව පමණි. දැනුම්දීම කියවීමට එය මුල් යෙදුම තුළ විවෘත කරන්න.</string>
+    <string name="phone_event_no_notices">ඔබ තෝරාගත් යෙදුම්වලින් වත්මන් දැනුම්දීම් නැත.</string>
+    <string name="phone_event_no_listener">දැනුම්දීම් සවන්දීමේ සේවාව සම්බන්ධ වී නැත.</string>
+    <string name="phone_event_open_source">යෙදුම තුළ විවෘත කරන්න</string>
+    <string name="phone_event_mark_read">කියවූ බවට ලකුණු කරන්න</string>
+    <string name="phone_event_read_confirm">මෙම දැනුම්දීම කියවූ බවට ලකුණු කරන ලෙස %1$s වෙතින් ඉල්ලන්නද?</string>
+    <string name="phone_event_task_busy">මෙම කාර්යය විරාම කර ඇත, දැනටමත් ක්‍රියාත්මක වේ, නැතහොත් තවදුරටත් අතින් ආරම්භ කළ නොහැක.</string>
+    <string name="phone_event_run_task">කාර්යය ධාවනය කරන්න</string>
+    <string name="phone_event_unavailable">මෙම අයිතමය තවදුරටත් ලබා ගත නොහැක.</string>
+    <string name="phone_event_choose_app">යෙදුමක් තෝරන්න</string>
+    <string name="phone_event_search">යෙදුමේ නම හෝ පැකේජ නම</string>
+    <string name="phone_event_when">සිදුවීම</string>
+    <string name="phone_event_when_open">මා මෙම යෙදුම විවෘත කරන විට</string>
+    <string name="phone_event_when_notified">මෙම යෙදුම දැනුම්දීමක් පළ කරන විට</string>
+    <string name="phone_event_then">සමාලෝචනය කිරීමට සිහිගන්වන්න</string>
+    <string name="phone_event_save">නියමය සුරකින්න</string>
+    <string name="phone_event_all_rules">සිදුවීම් දෙකම දැනටමත් සකසා ඇත. පහත ඇති නියමයන් සංස්කරණය කරන්න.</string>
+</resources>

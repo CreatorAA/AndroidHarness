@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Telefon</string>
+    <string name="conversation_new_phone">Perbualan telefon baharu</string>
+    <string name="phone_conversation_intro">Tanya soalan di sini. Untuk membolehkan pembantu menggunakan apl, beralih ke apl itu dan panggil pembantu.</string>
+    <string name="phone_conversation_settings">Tetapan pembantu</string>
+    <string name="settings_start_phone_desc">Buka perbualan pembantu telefon anda.</string>
+</resources>

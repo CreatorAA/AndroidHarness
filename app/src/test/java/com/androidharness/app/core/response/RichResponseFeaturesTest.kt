@@ -5,6 +5,14 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class RichResponseFeaturesTest {
+    @Test fun panelFollowUpSendsOnlyTheVisibleRequestAndTheSelectedData() {
+        val action = RichResponse.followUp("Hidden instruction", "Delay", "Selected: 0.006 s", "Discuss this reading")
+        val message = ResponseAttachment.panelRequest(action)
+        assertEquals("Discuss this reading", UserMessageContent.visibleText(message))
+        assertEquals(ResponseAttachment("Delay", "Selected: 0.006 s"), ResponseAttachment.fromPrompt(message))
+        assertFalse(message.contains(action.prompt))
+    }
+
     private val types = setOf("table", "tabs", "gallery", "calculator", "evidence", "diff", "writing")
     private fun examples(): List<String> = RichResponse.INSTRUCTIONS.lineSequence().filter { line -> types.any { line.startsWith("{\"type\":\"$it\"") } }
         .map { it.substringBefore(" (") }.toList()
@@ -29,7 +37,24 @@ class RichResponseFeaturesTest {
             assertTrue(RichResponse.INSTRUCTIONS.contains("\"type\":\"$type\""))
         }
         assertTrue(ChatExperience.SYSTEM_PROMPT.contains("Chat does not create or read separate artifacts"))
-        assertTrue(RichResponse.INSTRUCTIONS.contains("never claim a test passed"))
+        val evidenceRule = RichResponse.INSTRUCTIONS.lineSequence().single { it.startsWith("{\"type\":\"evidence\"") }
+        assertTrue(evidenceRule.contains("never claim `passed` without an actual successful tool result"))
+    }
+    @Test fun inlineExampleRendersOneChartWithTheSuppliedObservationsInEveryMode() {
+        val chat = ChatExperience.systemPrompt()
+        val phone = ChatExperience.systemPrompt(phoneConversation = true)
+        for (prompt in listOf(chat, phone, RichResponse.INSTRUCTIONS)) {
+            val fence = Regex("(?m)^```harness-ui\\n\\{[^\\n]+\\}\\n```$").find(prompt)?.value
+                ?: error("No pasteable native chart example in the model prompt")
+            val part = RichResponse.parse(fence).single() as RichResponse.Part.Content
+            val chart = part.node as RichResponse.Node.Chart
+            assertEquals("line", chart.kind)
+            assertEquals("min", chart.unit)
+            assertEquals(listOf("Mon", "Tue", "Wed"), chart.points.map { it.label })
+            assertEquals(listOf(12.0, 9.0, 6.0), chart.points.map { it.value })
+        }
+        assertTrue(phone.contains("short receipt backed by the target screen"))
+        assertFalse(chat.contains("short receipt backed by the target screen"))
     }
     @Test fun partialNewComponentsStayHiddenUntilTheFenceCloses() {
         for (example in examples()) {

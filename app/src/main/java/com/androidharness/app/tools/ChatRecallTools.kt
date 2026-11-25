@@ -117,7 +117,7 @@ class RecentChatsTool(
         if (list.isEmpty()) return ToolResult(true, "No other chats yet.")
         val out = StringBuilder("[recent_chats]\n")
         list.forEach { session ->
-            val kind = if (com.androidharness.app.data.ConversationConfig.decode(session.conversationJson).isChat) "Chat" else "Code"
+            val kind = ConversationConfig.decode(session.conversationJson).kind.name.lowercase().replaceFirstChar { it.titlecase() }
             out.append("- ").append(day(session.updatedAt)).append(" · ").append(kind)
                 .append(" · \"").append(session.title.take(100)).append("\"")
                 .append(" · session: ").append(session.id).append('\n')

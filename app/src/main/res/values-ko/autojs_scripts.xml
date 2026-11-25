@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 스크립트</string>
+    <string name="autojs_allow">어시스턴트에 AutoJs6 사용 허용</string>
+    <string name="autojs_allow_hint">페어링한 드라이버와 UI 스크립트를 추가합니다. 내장 서비스를 켜 두었다면 계속 사용할 수 있습니다.</string>
+    <string name="autojs_need_pair">지금 스크립트를 작성하고 검사할 수 있습니다. 휴대전화에서 실행하기 전에 로컬 AutoJs6 플러그인을 설정하세요.</string>
+    <string name="autojs_new">새 스크립트</string>
+    <string name="autojs_back">뒤로</string>
+    <string name="autojs_source">UI 스크립트</string>
+    <string name="autojs_sample_source">text(\"계속\").waitFor();</string>
+    <string name="autojs_name">이름(시험 실행 시 생략 가능)</string>
+    <string name="autojs_name_exists">같은 이름의 스크립트가 이미 있습니다. 해당 스크립트를 열어 편집하거나 다른 이름을 사용하세요.</string>
+    <string name="autojs_format">text, desc 또는 id로 화면 요소를 찾은 뒤 기다리기, 탭하기, 텍스트 입력 등의 동작을 지정하세요. 한 줄에 하나의 지시를 입력하세요.</string>
+    <string name="autojs_check">단계 확인</string>
+    <string name="autojs_prepare">대상 앱에서 시험 실행</string>
+    <string name="autojs_preview">유효한 단계: %1$d개 · 실행하지 않음</string>
+    <string name="autojs_empty">재사용할 동작을 만들려면 ‘새 스크립트’를 탭하세요. 저장하지 않고 시험하려면 이름을 비워 두세요.</string>
+    <string name="autojs_enabled_hint">어시스턴트는 이 라이브러리에서 활성화한 스크립트를 사용할 수 있습니다.</string>
+    <string name="autojs_disabled_hint">시험 실행 전에 라이브러리에서 이 스크립트를 활성화하세요.</string>
+    <string name="autojs_delete">‘%1$s’을(를) 삭제할까요?</string>
+    <string name="autojs_delete_action">삭제</string>
+    <string name="autojs_changed">라이브러리의 스크립트가 변경되었습니다. 저장하거나 실행하기 전에 다시 여세요.</string>
+    <string name="autojs_write_failed">스크립트를 저장하지 못했습니다.</string>
+    <string name="autojs_anonymous">저장하지 않은 스크립트</string>
+    <string name="autojs_prepared">‘%1$s’ 시험 준비가 끝났습니다. 대상 앱을 열고 10분 안에 휴대전화 어시스턴트를 호출하세요.</string>
+    <string name="autojs_trial_title">스크립트 실행 · %1$s</string>
+    <string name="autojs_trial_here">%1$s에서만</string>
+    <string name="autojs_trial_other">시험할 앱을 열고 그 안에서 어시스턴트를 호출하세요.</string>
+    <string name="autojs_trial_steps">%1$d단계 · 탭하여 검토</string>
+    <string name="autojs_trial_less">단계 숨기기</string>
+    <string name="autojs_trial_allow">허용하고 여기에서 실행</string>
+    <string name="autojs_trial_stale">시험 실행이 만료되었거나 앱이 바뀌었습니다. 스크립트 라이브러리에서 다시 준비하세요.</string>
+    <string name="autojs_trial_request">%2$s에서 ‘%1$s’ 실행</string>
+    <string name="autojs_trial_done">%3$s에서 스크립트의 전체 %2$d단계 중 %1$d단계를 완료했습니다.</string>
+    <string name="autojs_trial_stopped">%3$s에서 전체 %2$d단계 중 %1$d단계를 마친 뒤 스크립트가 중지되었습니다.</string>
+    <string name="autojs_trial_error">현재 앱에서 이 스크립트를 시작하지 못했습니다.</string>
+    <string name="autojs_trial_interrupted">스크립트가 중단되었습니다. 다시 시도하기 전에 앱 상태를 확인하세요.</string>
+    <string name="autojs_not_selected">스크립트를 준비하기 전에 AutoJs6를 활성화하세요.</string>
+    <string name="autojs_activity_running">AutoJs6 스크립트 실행 중</string>
+    <string name="autojs_activity_ran">AutoJs6 스크립트 실행함</string>
+    <string name="autojs_activity_run_failed">AutoJs6 스크립트를 완료하지 못함</string>
+    <string name="autojs_activity_library_working">AutoJs6 스크립트 라이브러리 사용 중</string>
+    <string name="autojs_activity_library_done">AutoJs6 스크립트 라이브러리 사용함</string>
+    <string name="autojs_activity_library_failed">AutoJs6 스크립트 라이브러리 작업 실패</string>
+</resources>

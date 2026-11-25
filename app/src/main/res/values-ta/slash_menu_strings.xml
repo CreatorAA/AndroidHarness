@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">புதிய உரையாடலைத் தொடங்கவும்</string>
+    <string name="slash_menu_compact">சூழலைச் சுருக்கவும்</string>
+    <string name="slash_menu_compact_hint">முந்தைய சூழலைச் சுருக்கிக் கூறவும்</string>
+    <string name="slash_menu_cost">செலவு</string>
+    <string name="slash_menu_cost_hint">மொத்த டோக்கன் எண்ணிக்கையையும் செலவையும் காட்டவும்</string>
+    <string name="slash_menu_btw_hint">அரட்டையில் சேர்க்காமல் தற்போதைய சூழல் பற்றிக் கேட்கவும்</string>
+    <string name="slash_menu_doctor">Harness கண்டறிதல்</string>
+    <string name="slash_menu_doctor_hint">Harness கருவிகளின் சுய சோதனைகளை இயக்கவும்</string>
+    <string name="slash_menu_init">திட்டப்பணியைத் தொடங்கவும்</string>
+    <string name="slash_menu_init_hint">AGENTS.md கோப்பை உருவாக்கவும் அல்லது புதுப்பிக்கவும்</string>
+    <string name="slash_menu_review_hint">நிலுவை மாற்றங்களைத் திருத்தாமல் மதிப்பாய்வு செய்யவும். கட்டளைக்குப் பின் கவனிக்க வேண்டியவற்றைக் குறிப்பிடவும்.</string>
+    <string name="slash_menu_plan_hint">திட்டமிடும் திறனை ஏற்றித் திட்டமிடல் முறைக்கு மாறவும்</string>
+    <string name="slash_menu_skills">திறன்களைப் பார்க்கவும்</string>
+    <string name="slash_menu_skills_hint">முழுத் திறன் தேர்வுப் பட்டியலைத் திறக்கவும்</string>
+    <string name="slash_menu_env_hint">Linux சூழலைச் சரிபார்க்கவும், புதுப்பிக்கவும், நிறுவவும் அல்லது சரிசெய்யவும்</string>
+    <string name="slash_menu_snippet">துணுக்கு</string>
+    <string name="slash_menu_snippet_hint">சேமிக்கப்பட்ட அறிவுறுத்தல் துணுக்கு</string>
+</resources>

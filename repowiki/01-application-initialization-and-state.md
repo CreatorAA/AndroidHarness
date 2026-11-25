@@ -107,7 +107,7 @@ The pending channels are deliberately in memory: they carry an intent from one s
 
 ## Known gaps
 
-- There is no global `Thread.setDefaultUncaughtExceptionHandler` and no crash log file. Failures are reported with `android.util.Log` at the call site, for example in `KeyStoreManager`, `TtsController`, `UpdateManager`, and `LinuxEnvironment`.
+- There is no global `Thread.setDefaultUncaughtExceptionHandler` and no crash log file. Failures are reported with `android.util.Log` at the call site, for example in `KeyStoreManager`, `TtsController`, and `LinuxEnvironment`.
 - Startup has no explicit ordered phase list. Ordering is whatever Kotlin property initializers and the five `init` blocks produce, plus independent coroutine launches that can finish in any order.
 - The only boot restore receivers are `TelegramBootReceiver` for `BOOT_COMPLETED` and `MY_PACKAGE_REPLACED`, and `WirelessAdbReconnectReceiver` for `MY_PACKAGE_REPLACED`. Agent runs are not restored at boot.
 

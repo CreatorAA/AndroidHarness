@@ -59,7 +59,8 @@ class ChatSelectionDeviceTest {
                                     activity = { null }, onNewChat = {}, onChat = {}, onMessage = {}, onProjectChat = {}, onProjects = {},
                                     onChatActions = {}, onAction = { _, _ -> }, onBuild = {}, onTerminal = {}, onAutomation = {}, onProviders = {}, onSettings = {},
                                     workspaceLabel = "Workspaces", workspaceSummary = "", onWorkspaces = {}, onCollapse = {}, currentRoute = null,
-                                    chatOnly = chatOnly, selectedChats = selection, onSelectedChatsChange = { selection = it },
+                                    section = if (chatOnly) com.androidharness.app.data.ConversationKind.CHAT else com.androidharness.app.data.ConversationKind.CODE,
+                                    selectedChats = selection, onSelectedChatsChange = { selection = it },
                                     onSelectedChatsAction = { ids, action -> if (action == SidebarChatAction.DETAILS) details.set(ids) })
                             }
                             }

@@ -250,12 +250,6 @@ internal enum class SettingsPage(
         R.string.settings_group_data_sync,
         "stats statistics cache tokens",
     ),
-    UPDATES(
-        R.string.settings_page_updates_title,
-        R.string.settings_page_updates_desc,
-        R.string.settings_group_help_about,
-        "version release download install root shizuku github update",
-    ),
     SETUP(
         R.string.settings_page_setup_title,
         R.string.settings_page_setup_desc,
@@ -266,7 +260,7 @@ internal enum class SettingsPage(
         R.string.settings_page_about_title,
         R.string.settings_page_about_desc,
         R.string.settings_group_help_about,
-        "about license mit copyright credits author sanuu github repository open source thanks",
+        "about version license mit copyright credits author sanuu github repository open source thanks",
     ),
 }
 
@@ -310,7 +304,7 @@ internal val settingsHomePages = listOf(
     SettingsPage.APPEARANCE, SettingsPage.LANGUAGE, SettingsPage.RUMBLE,
     SettingsPage.PRIVACY, SettingsPage.BACKGROUND, SettingsPage.STORAGE,
     SettingsPage.BACKUP, SettingsPage.SYNC, SettingsPage.FTP_SERVER, SettingsPage.USAGE,
-    SettingsPage.TROUBLESHOOTING, SettingsPage.PROVIDER_DEBUG, SettingsPage.SETUP, SettingsPage.UPDATES, SettingsPage.ABOUT,
+    SettingsPage.TROUBLESHOOTING, SettingsPage.PROVIDER_DEBUG, SettingsPage.SETUP, SettingsPage.ABOUT,
 )
 
 /** Results grouped under their page's group, in the order the groups first appear. */
@@ -432,7 +426,6 @@ internal fun settingsDeepLink(target: String): SettingsPage? = when (target) {
     "chat-agents" -> SettingsPage.CHAT_OPTIONS
     "sync" -> SettingsPage.SYNC
     "ftp-server" -> SettingsPage.FTP_SERVER
-    "updates" -> SettingsPage.UPDATES
     "language" -> SettingsPage.LANGUAGE
     "troubleshooting" -> SettingsPage.TROUBLESHOOTING
     "provider-debug", "provider-log" -> SettingsPage.PROVIDER_DEBUG

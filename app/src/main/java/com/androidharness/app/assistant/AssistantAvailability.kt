@@ -21,10 +21,13 @@ data class AssistantFacts(
     val model: String,
     val release: String,
     val sdk: Int,
+    /** Android may keep the role selected even after losing its active voice service. */
+    val roleHeld: Boolean? = null,
 )
 
 enum class AssistantAvailability {
     ACTIVE,
+    RECONNECT,
     /** The phone does not let other apps be the assistant. */
     UNSUPPORTED,
     /** Installed outside the main profile, where no app can be the assistant. */
@@ -41,6 +44,9 @@ object AssistantCheck {
     /** PackageManager.FEATURE_VOICE_RECOGNIZERS, which is hidden from apps. */
     private const val VOICE_RECOGNIZERS_FEATURE = "android.software.voice_recognizers"
 
+    internal fun roleHeld(context: Context): Boolean? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        context.getSystemService(RoleManager::class.java)?.isRoleHeld(RoleManager.ROLE_ASSISTANT) else null
+
     fun facts(context: Context, active: Boolean): AssistantFacts {
         val pm = context.packageManager
         return AssistantFacts(
@@ -49,6 +55,7 @@ object AssistantCheck {
             roleAvailable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) runCatching {
                 context.getSystemService(RoleManager::class.java)?.isRoleAvailable(RoleManager.ROLE_ASSISTANT)
             }.getOrNull() else null,
+            roleHeld = roleHeld(context),
             mainProfile = Process.myUid() / PER_USER_RANGE == 0,
             lowRam = context.getSystemService(ActivityManager::class.java)?.isLowRamDevice == true,
             manufacturer = Build.MANUFACTURER.orEmpty(),
@@ -61,6 +68,7 @@ object AssistantCheck {
 
     fun availability(facts: AssistantFacts): AssistantAvailability = when {
         facts.active -> AssistantAvailability.ACTIVE
+        facts.roleHeld == true -> AssistantAvailability.RECONNECT
         // A profile cannot hold the role either, so this explains more than "unsupported" would.
         !facts.mainProfile -> AssistantAvailability.OTHER_PROFILE
         !facts.voiceFeature || facts.roleAvailable == false -> AssistantAvailability.UNSUPPORTED
@@ -76,7 +84,8 @@ object AssistantCheck {
         appendLine("Phone: ${facts.manufacturer} ${facts.model} (brand ${facts.brand})")
         appendLine("Android: ${facts.release} (API ${facts.sdk})")
         appendLine("Result: ${availability(facts).name.lowercase()}")
-        appendLine("Set as assistant: ${yesNo(facts.active)}")
+        appendLine("Voice service active: ${yesNo(facts.active)}")
+        appendLine("Assistant role held: ${facts.roleHeld?.let(::yesNo) ?: "unavailable"}")
         appendLine("Voice assistant feature: ${yesNo(facts.voiceFeature)}")
         appendLine("Assistant role available: ${facts.roleAvailable?.let(::yesNo) ?: "not on this Android version"}")
         appendLine("Main profile: ${yesNo(facts.mainProfile)}")

@@ -4,11 +4,15 @@ import kotlinx.coroutines.*
 import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
+import okio.buffer
+import okio.source
 import org.junit.Assert.*
 import org.junit.Test
 import java.io.File
+import java.net.Proxy
 import java.net.ServerSocket
 import java.net.Socket
+import java.net.SocketException
 import java.nio.file.Files
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
@@ -80,32 +84,54 @@ class GroqWhisperClientTest {
     }
     @Test fun cancellingWhileTheResponseBodyIsStalledAlsoClosesTheCall() = clip { file ->
         val server = ServerSocket(0)
-        val sentHeaders = CompletableFuture<Socket>()
+        val accepted = CompletableFuture<Socket>()
+        val readingBody = CompletableFuture<Unit>()
         val closedByClient = CompletableFuture<Unit>()
         val worker = kotlin.concurrent.thread(isDaemon = true) {
             try {
                 server.accept().use { socket ->
+                    accepted.complete(socket)
+                    val input = socket.source().buffer()
+                    var length = -1L
+                    while (true) {
+                        val header = input.readUtf8LineStrict()
+                        if (header.isEmpty()) break
+                        if (header.startsWith("Content-Length:", ignoreCase = true))
+                            length = header.substringAfter(':').trim().toLong()
+                    }
+                    check(length > 0) { "Expected the multipart upload" }
+                    input.skip(length)
                     socket.getOutputStream().apply {
                         write("HTTP/1.1 200 OK\r\nContent-Length: 1000\r\nContent-Type: application/json\r\n\r\n{\"text\":\"".toByteArray())
                         flush()
                     }
-                    sentHeaders.complete(socket)
-                    socket.getInputStream().readBytes()
+                    // After the complete request, either EOF or a peer reset is a wire-level close.
+                    try { check(input.exhausted()) { "Unexpected data after the upload" } }
+                    catch (e: SocketException) { if (socket.isClosed) throw e }
                     closedByClient.complete(Unit)
                 }
-            } catch (_: Exception) { }
+            } catch (e: Exception) {
+                readingBody.completeExceptionally(e)
+                closedByClient.completeExceptionally(e)
+            }
         }
-        val client = OkHttpClient.Builder().addInterceptor { chain ->
-            chain.proceed(chain.request().newBuilder().url("http://127.0.0.1:${server.localPort}/transcribe").build())
-        }.build()
+        val client = OkHttpClient.Builder()
+            .proxy(Proxy.NO_PROXY)
+            .readTimeout(0, TimeUnit.SECONDS) // Only cancellation can release the stalled read.
+            .eventListener(object : EventListener() {
+                override fun responseBodyStart(call: Call) { readingBody.complete(Unit) }
+            })
+            .addInterceptor { chain ->
+                chain.proceed(chain.request().newBuilder().url("http://127.0.0.1:${server.localPort}/transcribe").build())
+            }.build()
         coroutineScope {
             val job = launch(Dispatchers.IO) { GroqWhisperClient.transcribe(file, "fixture-key", client = client) }
             try {
-                withContext(Dispatchers.IO) { sentHeaders.get(socketTimeout, TimeUnit.SECONDS) }
+                withContext(Dispatchers.IO) { readingBody.get(socketTimeout, TimeUnit.SECONDS) }
                 withTimeout(5_000) { job.cancelAndJoin() }
                 withContext(Dispatchers.IO) { closedByClient.get(socketTimeout, TimeUnit.SECONDS) }
             } finally {
-                sentHeaders.getNow(null)?.close(); server.close(); client.dispatcher.cancelAll(); job.cancelAndJoin(); worker.join(1000)
+                accepted.getNow(null)?.close(); server.close(); client.dispatcher.cancelAll(); job.cancelAndJoin(); worker.join(1000)
             }
         }
     }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">ابدأ محادثة جديدة</string>
+    <string name="slash_menu_compact">اختصار السياق</string>
+    <string name="slash_menu_compact_hint">لخّص السياق السابق</string>
+    <string name="slash_menu_cost">التكلفة</string>
+    <string name="slash_menu_cost_hint">اعرض إجمالي الرموز والتكلفة</string>
+    <string name="slash_menu_btw_hint">اسأل عن السياق الحالي دون إضافة السؤال إلى المحادثة</string>
+    <string name="slash_menu_doctor">تشخيص Harness</string>
+    <string name="slash_menu_doctor_hint">شغّل الاختبارات الذاتية لأدوات Harness</string>
+    <string name="slash_menu_init">تهيئة المشروع</string>
+    <string name="slash_menu_init_hint">أنشئ ملف AGENTS.md أو حدّثه</string>
+    <string name="slash_menu_review_hint">راجع التغييرات المعلّقة دون تحريرها. حدّد ما تريد التركيز عليه بعد الأمر.</string>
+    <string name="slash_menu_plan_hint">حمّل مهارة التخطيط وانتقل إلى وضع التخطيط</string>
+    <string name="slash_menu_skills">تصفّح المهارات</string>
+    <string name="slash_menu_skills_hint">افتح قائمة اختيار المهارات الكاملة</string>
+    <string name="slash_menu_env_hint">افحص بيئة Linux أو حدّثها أو ثبّتها أو أصلحها</string>
+    <string name="slash_menu_snippet">مقتطف</string>
+    <string name="slash_menu_snippet_hint">مقتطف محفوظ من نص الطلب</string>
+</resources>

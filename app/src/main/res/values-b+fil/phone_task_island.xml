@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Itago ang assistant</string>
+    <string name="phone_background_off_hint">Naka-off ang pagpapatakbo sa background. Mapa-pause ang gawaing ito kapag umalis ka sa app.</string>
+    <string name="phone_background_paused">Na-pause dahil naka-off ang pagpapatakbo sa background. Buksan ang chat na ito sa app para magpatuloy.</string>
+    <string name="phone_island_title">Assistant sa telepono</string>
+    <string name="phone_island_planning">Pinaplano ang mga susunod na hakbang</string>
+    <string name="phone_island_looking">Sinusuri ang page</string>
+    <string name="phone_island_finding">Hinahanap ang app sa Home</string>
+    <string name="phone_island_tap">Pumipili ng kontrol</string>
+    <string name="phone_island_type">Naglalagay ng text</string>
+    <string name="phone_island_swipe">Nag-i-scroll sa page</string>
+    <string name="phone_island_gesture">Nagda-drag ng item</string>
+    <string name="phone_island_action">Isinasagawa ang isang hakbang</string>
+    <string name="phone_island_batch">Hakbang %1$d sa %2$d</string>
+    <string name="phone_island_check">Sinusuri ang resulta</string>
+    <string name="phone_island_done">Nakumpleto</string>
+    <string name="phone_island_ended">Natapos · suriin ang resulta</string>
+    <string name="phone_island_stopped">Itinigil</string>
+    <string name="phone_island_failed">Hindi nakumpleto</string>
+    <string name="phone_island_review">Kailangan ang iyong atensyon</string>
+    <string name="phone_island_paused">Naka-pause ang mga kontrol ng telepono</string>
+    <string name="phone_island_chat">Tingnan ang chat</string>
+    <string name="phone_island_resume">Ipagpatuloy ang gawain</string>
+    <string name="phone_island_stop">Itigil ang gawain</string>
+    <string name="phone_island_details">Progreso ng gawain: %1$s</string>
+</resources>

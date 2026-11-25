@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">В этом ходе нечего отменять.</string>
+    <string name="chat_compaction_preparing">Подготовка сводки чата…</string>
+    <string name="chat_compaction_too_few_messages">Для сжатия пока слишком мало сообщений.</string>
+    <string name="chat_compaction_retrying">Повторное создание сводки · попытка %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Сжатие остановлено. История сохранена. Когда будете готовы, повторите /compact.</string>
+    <string name="chat_compaction_refresh_failed">Чат сжат, но не удалось обновить настройки задачи или оценку контекста: %1$s</string>
+    <string name="chat_compaction_failed_notice">Ошибка сжатия: %1$s. История сохранена. Повторите /compact или выберите другую модель.</string>
+    <string name="reasoning_from_catalog">Режим рассуждений указан в каталоге моделей</string>
+    <string name="reasoning_from_provider">Режим рассуждений заявлен поставщиком</string>
+    <string name="reasoning_from_user">Режим рассуждений задан вами</string>
+    <string name="reasoning_from_name">Режим рассуждений определён по имени модели</string>
+    <string name="automation_every_day">Ежедневно</string>
+    <string name="automation_daily_at">ежедневно в %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Соберите отладочный APK и исправьте ошибки сборки.</string>
+    <string name="app_update_checking">Проверка обновлений…</string>
+    <string name="app_update_up_to_date">У вас последняя версия</string>
+    <string name="files_directory">Папка</string>
+    <string name="cache_status_unavailable">Данные кеша недоступны</string>
+    <string name="cache_status_hit">Попадание в кеш · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · неполные данные</string>
+    <string name="cache_estimated_price">около %1$s</string>
+    <string name="chat_live_sites_suffix">" сайтов"</string>
+    <string name="chat_research_sources_suffix">/%1$d источников</string>
+    <string name="chat_research_read_suffix">" прочитано"</string>
+    <string name="package_status_failed">Не удалось установить</string>
+    <string name="package_hide_details">Скрыть сведения об установке</string>
+    <string name="package_show_details">Показать сведения об установке</string>
+    <string name="package_recently_unpacked">Недавно распаковано · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d элемент</item>
+        <item quantity="few">%1$d элемента</item>
+        <item quantity="many">%1$d элементов</item>
+        <item quantity="other">%1$d элемента</item>
+    </plurals>
+</resources>

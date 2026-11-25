@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">手機</string>
+    <string name="conversation_new_phone">新增手機對話</string>
+    <string name="phone_conversation_intro">您可以在這裡提問。如果想讓助理操作某個應用程式，請切換到該應用程式，再叫出助理。</string>
+    <string name="phone_conversation_settings">助理設定</string>
+    <string name="settings_start_phone_desc">開啟與手機助理的對話。</string>
+</resources>

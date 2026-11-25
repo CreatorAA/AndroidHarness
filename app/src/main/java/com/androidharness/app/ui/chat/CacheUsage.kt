@@ -192,7 +192,7 @@ internal fun CacheUsageFooter(rows: List<UsageEventEntity>, running: Boolean = f
                     })
                 Text(
                     when {
-                        indicator.rate == null -> indicator.label
+                        indicator.rate == null -> uiContext.getString(R.string.cache_status_unavailable)
                         missed -> uiContext.getString(R.string.ui_cache_missed)
                         else -> uiContext.getString(R.string.ui_cache_hit) + " · " +
                             (if (ring.value >= rate - 0.0005f) cachePercentage(indicator.cached, indicator.input)
@@ -243,13 +243,22 @@ internal fun CacheUsageFooter(rows: List<UsageEventEntity>, running: Boolean = f
                     LaunchedEffect(target) { meter.animateTo(target, spring(dampingRatio = 0.75f, stiffness = 90f)) }
                     com.androidharness.app.ui.common.AppLinearProgressIndicator(progress = { meter.value }, modifier = Modifier.fillMaxWidth(),
                         color = if (summary.cached > 0) successColor else scheme.error, trackColor = scheme.surfaceContainerHighest)
-                    if (running) Text(uiContext.getString(R.string.ui_last_completed_request, (indicator.label).toString()),
-                        style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
+                    if (running) {
+                        val label = when {
+                            indicator.rate == null -> uiContext.getString(R.string.cache_status_unavailable)
+                            indicator.cached == 0L -> uiContext.getString(R.string.ui_cache_missed)
+                            else -> uiContext.getString(R.string.cache_status_hit, cachePercentage(indicator.cached, indicator.input))
+                        }
+                        val status = if (indicator.unknown > 0 && indicator.rate != null)
+                            uiContext.getString(R.string.cache_status_partial, label) else label
+                        Text(uiContext.getString(R.string.ui_last_completed_request, status),
+                            style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
+                    }
                     val costLabel = if (summary.cached > 0) uiContext.getString(R.string.ui_cache_hit_cost_this_turn) else uiContext.getString(R.string.ui_input_cost_this_turn)
                     Row(Modifier.fillMaxWidth().background(scheme.surfaceContainer, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 10.dp),
                         verticalAlignment = Alignment.CenterVertically) {
                         Text(costLabel, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant, modifier = Modifier.weight(1f))
-                        Text(total?.let { "est. ${cacheMoney(it)}" } ?: uiContext.getString(R.string.ui_unavailable),
+                        Text(total?.let { uiContext.getString(R.string.cache_estimated_price, cacheMoney(it)) } ?: uiContext.getString(R.string.ui_unavailable),
                             style = MaterialTheme.typography.titleSmall, color = scheme.onSurface)
                     }
                     if (approximate && total != null) Text(uiContext.getString(R.string.code_cache_catalog_price),

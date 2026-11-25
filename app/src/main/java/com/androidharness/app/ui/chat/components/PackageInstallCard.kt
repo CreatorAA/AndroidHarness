@@ -15,11 +15,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.androidharness.app.R
 import com.androidharness.app.agent.packageInstallPresentation
 import com.androidharness.app.core.ChatMessage
 import com.androidharness.app.core.ToolCallData
@@ -48,11 +50,11 @@ internal fun PackageInstallCard(call: ToolCallData, result: ChatMessage?, runnin
                 Text(info.title, style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f), maxLines = 2, overflow = TextOverflow.Ellipsis)
                 result?.let {
                     Icon(if (it.isError) Icons.Filled.Close else Icons.Filled.CheckCircle,
-                        if (it.isError) "Installation failed" else "Installation complete", Modifier.size(18.dp),
+                        stringResource(if (it.isError) R.string.package_status_failed else R.string.ui_installation_complete), Modifier.size(18.dp),
                         tint = if (it.isError) scheme.error else LocalStatusColors.current.success)
                 }
                 Icon(if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                    if (expanded) "Hide installation details" else "Show installation details", Modifier.size(20.dp), tint = scheme.onSurfaceVariant)
+                    stringResource(if (expanded) R.string.package_hide_details else R.string.package_show_details), Modifier.size(20.dp), tint = scheme.onSurfaceVariant)
             }
             info.phase?.let { phase ->
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -67,7 +69,7 @@ internal fun PackageInstallCard(call: ToolCallData, result: ChatMessage?, runnin
                 info.bytes?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant) }
                 info.count?.let { Text(it, style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant) }
                 if (info.recent.isNotEmpty()) {
-                    Text("Recently unpacked · ${info.recent.joinToString(", ")}", style = MaterialTheme.typography.bodySmall,
+                    Text(stringResource(R.string.package_recently_unpacked, info.recent.joinToString(", ")), style = MaterialTheme.typography.bodySmall,
                         color = scheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 }
             }
@@ -78,7 +80,7 @@ internal fun PackageInstallCard(call: ToolCallData, result: ChatMessage?, runnin
                     HorizontalDivider(color = scheme.outlineVariant.copy(alpha = .5f))
                     info.reason?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant) }
                     progress?.takeIf { active && it.packages.isNotEmpty() }?.let {
-                        Text("Packages · ${it.packages.joinToString(", ")}", style = MaterialTheme.typography.bodySmall,
+                        Text(stringResource(R.string.ui_packages, it.packages.size.toString(), it.packages.joinToString(", ")), style = MaterialTheme.typography.bodySmall,
                             color = scheme.onSurfaceVariant)
                     }
                     result?.let { MonoBlock(it.text.take(4000)) }

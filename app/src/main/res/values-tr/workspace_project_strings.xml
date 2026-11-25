@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Başka projelerdeki şu sohbetler bu çalışma alanını kullanıyor: %1$s. Silmeden önce çalışma alanını bu sohbetlerden kaldırın. Kaydedilmiş değişiklikleri olan sohbetler çalışma alanına erişimini korumalıdır.</string>
+    <string name="wp_delete_running_blocked">Bu projeyi silmeden önce çalışan görevleri durdurun.</string>
+    <string name="wp_reset_shared_blocked">Şu sohbetler de uygulama çalışma alanını kullanıyor: %1$s. Sıfırlamadan önce çalışma alanını bu sohbetlerden kaldırın.</string>
+    <string name="wp_reset_running_blocked">Bu çalışma alanını sıfırlamadan önce çalışan görevleri durdurun.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d otomasyon</item>
+        <item quantity="other">%1$d otomasyon</item>
+    </plurals>
+    <string name="wp_picked_folder">Seçilen klasör</string>
+    <string name="wp_review_changed">Ayrıntılar değişti. Bu pencereyi kapatıp işlemi yeniden inceleyin.</string>
+    <string name="wp_editor_toggle_wrap">Satır kaydırmayı aç veya kapat</string>
+    <string name="wp_editor_undo_available">Geri alınabilir</string>
+    <string name="wp_reset_app_only">Yalnızca uygulamanın çalışma alanı sıfırlanabilir.</string>
+    <string name="wp_editor_find_replace">Projede ara ve değiştir</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d dosya değişti</item>
+        <item quantity="other">%1$d dosya değişti</item>
+    </plurals>
     <string name="wp_add_shared">"Paylaşılan klasör"</string>
     <string name="wp_add_shared_sub">"Kaldırmadan sonra da kalır. Kararlı ve nightly sürümler ikisi de görür"</string>
     <string name="wp_add_shared_failed">"%1$s oluşturulamadı. Tüm dosyalara erişimin açık olduğunu kontrol edip tekrar deneyin."</string>

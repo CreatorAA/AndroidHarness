@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_hide_panel">Assistent ausblenden</string>
+    <string name="phone_background_off_hint">Die Ausführung im Hintergrund ist aus. Wenn du die App verlässt, wird diese Aufgabe pausiert.</string>
+    <string name="phone_background_paused">Pausiert, weil die Ausführung im Hintergrund aus ist. Öffne diesen Chat in der App, um fortzufahren.</string>
+    <string name="phone_island_title">Handy-Assistent</string>
+    <string name="phone_island_planning">Nächste Schritte werden geplant</string>
+    <string name="phone_island_looking">Seite wird geprüft</string>
+    <string name="phone_island_finding">App wird auf dem Startbildschirm gesucht</string>
+    <string name="phone_island_tap">Bedienelement wird ausgewählt</string>
+    <string name="phone_island_type">Text wird eingegeben</string>
+    <string name="phone_island_swipe">Seite wird durchsucht</string>
+    <string name="phone_island_gesture">Element wird gezogen</string>
+    <string name="phone_island_action">Schritt wird ausgeführt</string>
+    <string name="phone_island_batch">Schritt %1$d von %2$d</string>
+    <string name="phone_island_check">Ergebnis wird geprüft</string>
+    <string name="phone_island_done">Abgeschlossen</string>
+    <string name="phone_island_ended">Beendet · Ergebnis prüfen</string>
+    <string name="phone_island_stopped">Gestoppt</string>
+    <string name="phone_island_failed">Nicht abgeschlossen</string>
+    <string name="phone_island_review">Deine Aufmerksamkeit ist gefragt</string>
+    <string name="phone_island_paused">Handy-Steuerung pausiert</string>
+    <string name="phone_island_chat">Chat ansehen</string>
+    <string name="phone_island_resume">Aufgabe fortsetzen</string>
+    <string name="phone_island_stop">Aufgabe stoppen</string>
+    <string name="phone_island_details">Aufgabenfortschritt: %1$s</string>
+</resources>

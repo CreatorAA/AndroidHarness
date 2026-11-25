@@ -1,7 +1,15 @@
 package com.androidharness.app.tools.mcp
 
 import com.androidharness.app.tools.ToolFailure
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -10,7 +18,12 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import java.io.File
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.PipedInputStream
+import java.io.PipedOutputStream
+import java.util.concurrent.CountDownLatch
 
 class McpModelsTest {
 
@@ -72,63 +85,95 @@ class McpConnectionTest {
     @get:Rule
     val tmp = TemporaryFolder()
 
-    /**
-     * A minimal stdio MCP server in /bin/sh: echoes the request id back and
-     * answers initialize, tools/list and tools/call. The JVM test host is a
-     * Linux box, so a shell process is the cheapest protocol double.
-     * "@D" becomes a shell dollar (Kotlin templating workaround).
-     */
-    private val fakeServer = """
-        while IFS= read -r line; do
-            id=@D(printf '%s' "@Dline" | sed -n 's/.*"id":\([0-9][0-9]*\).*/\1/p')
-            case "@Dline" in
-                *'"initialize"'*) printf '{"jsonrpc":"2.0","id":%s,"result":{"protocolVersion":"2024-11-05","capabilities":{},"serverInfo":{"name":"fake","version":"1"}}}\n' "@Did" ;;
-                *'"tools/list"'*) printf '{"jsonrpc":"2.0","id":%s,"result":{"tools":[{"name":"echo","description":"Echoes","inputSchema":{"type":"object"}}]}}\n' "@Did" ;;
-                *'"tools/call"'*) printf '{"jsonrpc":"2.0","id":%s,"result":{"content":[{"type":"text","text":"hello from fake"}]}}\n' "@Did" ;;
-            esac
-        done
-    """.trimIndent().replace("@D", "$")
+    /** Newline-delimited JSON over actual streams, without requiring a shell on the host. */
+    private class FakeServer : Process() {
+        private val exit = CountDownLatch(1)
+        private val output = PipedInputStream()
+        private val replies = PipedOutputStream(output)
+        val waiting = CompletableDeferred<Unit>()
+        private val input = object : ByteArrayOutputStream() {
+            override fun flush() {
+                if (!isAlive) throw IOException("Server closed")
+                val request = Json.parseToJsonElement(toString("UTF-8").trim()).jsonObject
+                reset()
+                val id = request["id"] ?: return
+                val result = when (request["method"]?.jsonPrimitive?.content) {
+                    "initialize" -> "{}"
+                    "tools/list" -> """{"tools":[{"name":"echo","inputSchema":{"type":"object"}}]}"""
+                    "tools/call" -> {
+                        if (request["params"]?.jsonObject?.get("name")?.jsonPrimitive?.content == "wait") {
+                            waiting.complete(Unit)
+                            return
+                        }
+                        """{"content":[{"type":"text","text":"hello from fake"}]}"""
+                    }
+                    else -> error("Unexpected request: $request")
+                }
+                replies.write(("""{"jsonrpc":"2.0","id":$id,"result":$result}""" + "\n").toByteArray())
+                replies.flush()
+            }
+        }
+        override fun getInputStream() = output
+        override fun getOutputStream(): ByteArrayOutputStream = input
+        override fun getErrorStream() = ByteArrayInputStream(byteArrayOf())
+        override fun isAlive() = exit.count != 0L
+        override fun waitFor(): Int { exit.await(); return 0 }
+        override fun exitValue(): Int = if (isAlive) throw IllegalThreadStateException() else 0
+        override fun destroy() { replies.close(); exit.countDown() }
+    }
 
-    @Test
-    fun `handshake discovery and call work over stdio`() = runBlocking {
-        val conn = McpConnection(
-            serverName = "fake",
-            config = McpServerConfig("fake", "sh"),
-            processFactory = { _ ->
-                ProcessBuilder("/bin/sh", "-c", fakeServer).start()
-            },
-        )
+    private fun connection(server: FakeServer) = McpConnection("fake", McpServerConfig("fake", "fixture"),
+        processFactory = { server }, handshakeTimeoutMs = 5_000)
+
+    @Test fun `handshake discovery and call work over stdio`() = runBlocking {
+        val conn = connection(FakeServer())
         try {
             conn.connect(tmp.root)
             assertEquals(listOf("echo"), conn.tools.map { it.name })
-            val (text, isError) = conn.callTool(
-                "echo",
-                buildJsonObject { put("text", "hi") },
-            )
+            val (text, isError) = conn.callTool("echo", buildJsonObject { put("text", "hi") })
             assertEquals("hello from fake", text)
             assertTrue(!isError)
-        } finally {
-            conn.close()
+        } finally { conn.close() }
+    }
+
+    @Test fun `a server that dies immediately fails the handshake with ToolFailure`() = runBlocking {
+        val conn = connection(FakeServer().also { it.destroy() })
+        try {
+            conn.connect(tmp.root)
+            error("Expected the handshake to fail")
+        } catch (expected: ToolFailure) {
+            assertTrue(expected.message.orEmpty().contains("fake"))
+        } finally { conn.close() }
+    }
+
+    @Test fun `closing a connection or losing stdout fails the waiting tool not the caller`() = runBlocking {
+        for (disconnectInSettings in listOf(true, false)) {
+            val server = FakeServer()
+            val conn = connection(server)
+            try {
+                conn.connect(tmp.root)
+                val call = async { runCatching { conn.callTool("wait", buildJsonObject {}) }.exceptionOrNull() }
+                withTimeout(5_000) {
+                    server.waiting.await()
+                    if (disconnectInSettings) conn.close() else server.destroy()
+                    assertTrue(call.await() is ToolFailure)
+                }
+                assertEquals(ConnectionState.DEAD, conn.state)
+            } finally { conn.close() }
         }
     }
 
-    @Test
-    fun `a server that dies immediately fails the handshake with ToolFailure`() = runBlocking {
-        val conn = McpConnection(
-            serverName = "dead",
-            config = McpServerConfig("dead", "sh"),
-            processFactory = { _ ->
-                ProcessBuilder("/bin/sh", "-c", "exit 0").start()
-            },
-            handshakeTimeoutMs = 5_000,
-        )
+    @Test fun `cancelling a caller leaves the stdio connection usable`() = runBlocking {
+        val server = FakeServer()
+        val conn = connection(server)
         try {
             conn.connect(tmp.root)
-            error("expected connect to fail")
-        } catch (expected: ToolFailure) {
-            assertTrue(expected.message.orEmpty().contains("dead"))
-        } finally {
-            conn.close()
-        }
+            val observed = CompletableDeferred<Throwable?>()
+            val call = async { observed.complete(runCatching { conn.callTool("wait", buildJsonObject {}) }.exceptionOrNull()) }
+            withTimeout(5_000) { server.waiting.await() }
+            call.cancelAndJoin()
+            assertTrue(observed.await() is CancellationException)
+            assertEquals("hello from fake", conn.callTool("echo", buildJsonObject {}).first)
+        } finally { conn.close() }
     }
 }

@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Mises à jour, configuration et informations sur l'application",
-      "summary": "Recherchez votre version, reconnectez la configuration et comprenez les options d'assistance.",
-      "location": "Paramètres → Mises à jour, Guide d'installation ou À propos.",
+      "title": "Version et configuration",
+      "summary": "Consultez la version installée ou installez une édition personnalisée plus récente.",
+      "location": "Paramètres → À propos ou Guide de configuration.",
       "before": [
-        "Une connexion réseau pour les vérifications de mise à jour et les pages d'assistance externes."
+        "Le numéro de version est disponible hors ligne."
       ],
       "steps": [
         {
           "title": "Vérifiez la version installée",
-          "body": "Ouvrez À propos ou Mises à jour pour voir la version/build réellement installée. Incluez cette version lorsque vous décrivez un problème reproductible."
+          "body": "Ouvrez « À propos ». La version apparaît sous le nom de l’application. Cette page indique également le code source, la licence et les crédits."
         },
         {
-          "title": "Utilisez le chemin de mise à jour proposé",
-          "body": "Recherchez les mises à jour et lisez les détails de la version. Utilisez l'action de téléchargement/installation proposée pour cette distribution et suivez n'importe quelle étape du programme d'installation de Android."
+          "title": "Installer une édition plus récente",
+          "body": "Ouvrez l’APK fourni pour cette édition personnalisée et suivez les étapes du programme d’installation Android."
         },
         {
           "title": "Revoir la configuration si nécessaire",
           "body": "Utilisez la configuration pour passer en revue les choix d’intégration et les autorisations/connexions requises. Vérifiez chaque choix plutôt que de supposer qu'une réinstallation est nécessaire."
-        },
-        {
-          "title": "Trouver des crédits et du soutien",
-          "body": "À propos répertorie les sources/licences/crédits et les liens d’assistance ou de don disponibles. Un don soutient l'application ; il n'achète pas de crédits API ni d'abonnement fournisseur."
         }
       ],
-      "outcome": "Vous connaissez la version installée, le chemin de mise à jour/configuration disponible et l’emplacement des informations de l’application.",
+      "outcome": "Indiquez la version installée lorsque vous signalez un problème.",
       "limits": [
-        "Le comportement de livraison et d’installation des mises à jour diffère selon la distribution et les autorisations disponibles sur les appareils.",
+        "Cette édition ne recherche ni n’installe les versions du projet d’origine.",
         "Une mise à jour de l'application ne peut pas garantir un nouvel accès à un modèle externe, réparer une panne de fournisseur ou restaurer des fichiers supprimés."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Ouvrir les mises à jour"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Vérifier la configuration"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Faites d'AndroidHarness l'assistant de votre téléphone et posez des questions sur l'app où vous êtes.",
       "location": "Réglages → Assistant par-dessus les autres apps ; puis maintenez le bouton d'alimentation ou d'accueil, ou glissez vers le haut depuis un coin inférieur.",
       "before": [
-        "Choisissez d'abord un modèle Chat et ajoutez sa clé. L'assistant utilise le même modèle et les mêmes réglages que Chat.",
+        "Par défaut, l’assistant utilise le modèle de Chat. Vous pouvez en choisir un autre dans les paramètres de l’assistant.",
         "Android doit laisser AndroidHarness être l'app d'assistant numérique. Sur certains téléphones, c'est dans Apps par défaut."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Posez une question sur l'écran",
-          "body": "Écrivez une question ou touchez une suggestion comme Résumer. Il ne regarde l'écran que si votre question le concerne, et rien de l'écran n'apparaît dans le panneau. Il fonctionne comme Chat et peut chercher sur le web, lire des pages et montrer ses sources."
+          "body": "Posez une question sur ce que vous voyez ou indiquez ce que vous souhaitez faire dans l’application. Par défaut, vous vérifiez la tâche avant son démarrage."
         },
         {
           "title": "Parlez au lieu d'écrire",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Continuez dans l'app",
-          "body": "Le panneau grandit avec la réponse et se fait glisser à toute hauteur. Continuer dans l'app ouvre la même conversation dans Chat, où elle reste avec vos autres chats."
+          "body": "« Continuer dans l'app » ouvre la même conversation dans l’application complète. La prochaine fois que vous appellerez l’assistant dans ce projet, il reprendra votre dernière conversation."
         }
       ],
-      "outcome": "Vous pouvez poser des questions sur l'app à l'écran sans la quitter, et chaque conversation est enregistrée comme un Chat normal.",
+      "outcome": "Les 10 dernières conversations utilisées avec l’assistant du téléphone sont conservées, tous projets confondus. Les plus anciennes sont supprimées avec leurs messages dès qu’elles ne sont plus actives. Les historiques de Chat et de Code restent intacts.",
       "limits": [
         "Les apps qui bloquent les captures, comme les apps bancaires, et les écrans protégés par Android n'envoient ni image ni texte. Vous pouvez quand même poser une question.",
-        "L'image de l'écran n'est envoyée que si le modèle Chat voit les images. Sinon, seul le texte de l'écran est envoyé, et certaines apps partagent très peu de texte."
+        "L'image de l'écran n'est envoyée que si le modèle Chat voit les images. Sinon, seul le texte de l'écran est envoyé, et certaines apps partagent très peu de texte.",
+        "L’autorisation d’agir sans intervention vaut pour la tâche en cours, y compris pour envoyer ou supprimer du contenu. Si vous activez le démarrage automatique, les prochaines tâches commenceront sans confirmation initiale. Les commandes et les scripts restent soumis à votre accord."
       ],
       "fixes": [
         {

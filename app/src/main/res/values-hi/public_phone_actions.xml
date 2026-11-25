@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">एक बार का अलार्म सेट करें</string>
+    <string name="phone_public_timer">टाइमर शुरू करें</string>
+    <string name="phone_public_map">कोई जगह खोजें</string>
+    <string name="phone_public_calendar">कैलेंडर का ड्राफ़्ट खोलें</string>
+    <string name="phone_public_note">नया नोट खोलें</string>
+</resources>

@@ -2,6 +2,8 @@ package com.androidharness.app.core
 
 import org.junit.Assert.*
 import org.junit.Test
+import java.time.Instant
+import java.time.ZoneId
 
 class ChatExperienceTest {
     @Test fun ordinaryChatAndCodeQuestionsDoNotOfferHandoff() {
@@ -10,9 +12,9 @@ class ChatExperienceTest {
         }
     }
 
-    @Test fun explicitRequestsAndSuccessfulAssistantOffersAreConditionalOnLatestTurn() {
-        assertTrue(ChatExperience.offersCode(listOf(ChatMessage(Role.USER, "Please continue in Code"))))
-        assertTrue(ChatExperience.offersCode(listOf(ChatMessage(Role.USER, "Can we switch to Code?"))))
+    @Test fun handoffWaitsForTheAgentsOfferEvenWhenTheUserNamesTheMode() {
+        assertFalse(ChatExperience.offersCode(listOf(ChatMessage(Role.USER, "Please continue in Code"))))
+        assertFalse(ChatExperience.offersCode(listOf(ChatMessage(Role.USER, "Can we switch to Code?"))))
         val turn = listOf(ChatMessage(Role.USER, "Apply this to my project"),
             ChatMessage(Role.ASSISTANT, toolCalls = listOf(ToolCallData("offer", "offer_code_handoff", "{}"))),
             ChatMessage(Role.TOOL, "Offered", toolCallId = "offer", toolName = "offer_code_handoff"))
@@ -31,7 +33,7 @@ class ChatExperienceTest {
         assertNull(ChatExperience.codeHandoffOffer(turn.dropLast(1)))
         assertNull(ChatExperience.codeHandoffOffer(turn.dropLast(1) + turn.last().copy(isError = true)))
         assertNull(ChatExperience.codeHandoffOffer(turn + ChatMessage(Role.USER, "Just explain it")))
-        assertEquals(ChatExperience.CodeHandoffOffer(), ChatExperience.codeHandoffOffer(turn + ChatMessage(Role.USER, "Switch to Code")))
+        assertNull(ChatExperience.codeHandoffOffer(turn + ChatMessage(Role.USER, "Switch to Code")))
     }
 
     @Test fun oldAndMalformedOffersUseFallbackCopyWithoutLeakingArguments() {
@@ -45,12 +47,16 @@ class ChatExperienceTest {
         assertEquals(80, offer("""{"title":"${"x".repeat(200)}"}""")?.title?.length)
     }
 
-    @Test fun chatPromptUsesTheLocalCalendarDateAcrossTimezoneBoundaries() {
-        val instant = java.time.Instant.parse("2026-10-21T20:00:00Z")
-        val india = ChatExperience.systemPrompt(instant.atZone(java.time.ZoneId.of("Asia/Kolkata")))
-        val utc = ChatExperience.systemPrompt(instant.atZone(java.time.ZoneId.of("UTC")))
-        assertTrue(india.contains("Current local date: 2026-10-22 (Asia/Kolkata)"))
-        assertTrue(utc.contains("Current local date: 2026-10-21 (UTC)"))
+    @Test fun chatAndPhoneUseOneDeviceReadingForTheLocalDateTimeAndOffset() {
+        val instant = Instant.parse("2026-10-21T20:07:19Z")
+        for (phone in listOf(false, true)) {
+            val india = ChatExperience.systemPrompt(instant.atZone(ZoneId.of("Asia/Kolkata")), phone)
+            assertTrue(india.contains("2026-10-22 (Asia/Kolkata)"))
+            assertTrue(india.contains("01:37:19 UTC+05:30"))
+            val utc = ChatExperience.systemPrompt(instant.atZone(ZoneId.of("UTC")), phone)
+            assertTrue(utc.contains("2026-10-21 (UTC)"))
+            assertTrue(utc.contains("20:07:19 UTC+00:00"))
+        }
     }
 
     @Test fun titlesUseTheUsersWordsWithoutAttachmentBodies() {

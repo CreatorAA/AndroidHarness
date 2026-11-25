@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"ค่าเริ่มต้นของผู้ให้บริการ"</string>
     <string name="ui_add_custom_command">"เพิ่มคำสั่งที่กำหนดเอง"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"ถือ CPU ค้างไว้ในขณะที่รันหรือเทอร์มินัลทำงานอยู่ เพื่อให้เทอร์มินัลไม่ตายเมื่อแอปถูกย่อเล็กสุด"</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"ไม่รวม: Android จะไม่เร่งความเร็วการทำงานเบื้องหลัง"</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"เปิด: Samsung และ OEM อื่นๆ อาจทำให้การทำงานเบื้องหลังเสียหาย ไม่รวมแอปสำหรับการเรียกใช้ระยะยาวที่เชื่อถือได้"</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"ปิดการเพิ่มประสิทธิภาพแบตเตอรี่ของ Android สำหรับ AndroidHarness แล้ว"</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"เปิดการเพิ่มประสิทธิภาพแบตเตอรี่ของ Android อยู่ หากงานที่ใช้เวลานานหยุดชะงักเมื่อปิดหน้าจอ ให้อนุญาตให้ AndroidHarness ใช้แบตเตอรี่ได้โดยไม่จำกัด"</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"เวอร์ชันปัจจุบัน %1$s ตรวจสอบรุ่น GitHub สำหรับรุ่นที่ใหม่กว่า"</string>
     <string name="ui_available_see_the_dialog">"%1$s พร้อมใช้งาน โปรดดูกล่องโต้ตอบ"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"เอเจนต์การเข้ารหัสที่อาศัยอยู่บนโทรศัพท์ของคุณ"</string>
@@ -1845,4 +1845,9 @@
     <string name="lms_field_prompt_threads">"ความเร็วในการอ่าน"</string>
     <string name="lms_field_prompt_threads_help">"คอร์ CPU ที่ใช้ขณะอ่านข้อความของคุณ"</string>
     <string name="lms_unit_cores">"คอร์"</string>
+    <string name="voice_no_result">ไม่ได้รับข้อความถอดเสียงที่ครบถ้วน ลองพูดอีกครั้งหรือพิมพ์ข้อความ</string>
+    <string name="voice_service_interrupted">บริการเสียงของระบบหยุดก่อนทำงานเสร็จ ลองพูดอีกครั้งหรือพิมพ์ข้อความที่เหลือ</string>
+    <string name="voice_try_again">พูดอีกครั้ง</string>
+    <string name="voice_continue">พูดต่อ</string>
+    <string name="voice_finish_to_send">กำลังฟัง แตะส่งเมื่อพูดเสร็จ</string>
 </resources>

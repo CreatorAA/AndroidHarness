@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_public_alarm">ஒருமுறை ஒலிக்கும் அலாரத்தை அமைக்கவும்</string>
+    <string name="phone_public_timer">டைமரைத் தொடங்கவும்</string>
+    <string name="phone_public_map">இடத்தைத் தேடவும்</string>
+    <string name="phone_public_calendar">கேலெண்டரில் ஒரு வரைவைத் திறக்கவும்</string>
+    <string name="phone_public_note">புதிய குறிப்பைத் திறக்கவும்</string>
+</resources>

@@ -312,7 +312,6 @@ internal fun settingsIcon(page: SettingsPage): ImageVector = when (page) {
     SettingsPage.SYNC -> Icons.Rounded.CloudSync
     SettingsPage.FTP_SERVER -> Icons.Rounded.Storage
     SettingsPage.USAGE -> Icons.Rounded.BarChart
-    SettingsPage.UPDATES -> Icons.Rounded.SystemUpdate
     SettingsPage.SETUP -> Icons.Rounded.Checklist
     SettingsPage.ABOUT -> Icons.Rounded.Info
 }

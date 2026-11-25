@@ -3,7 +3,9 @@ package com.androidharness.app.workspace
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.androidharness.app.R
 import com.androidharness.app.data.db.HarnessDao
 import com.androidharness.app.data.db.ProjectEntity
 import com.androidharness.app.data.db.WorkProjectEntity
@@ -26,6 +28,11 @@ data class WorkspaceDescription(
     val kindSub: String,
     val shellCapable: Boolean,
 )
+
+internal fun ProjectEntity.displayWorkspaceName(context: Context): String =
+    if (kind == WorkspaceManager.KIND_APP && name == WorkspaceManager.DEFAULT_APP_WORKSPACE_NAME)
+        context.getString(R.string.wp_add_app)
+    else name
 
 /** Result of checking whether a path could be a real-path workspace. */
 data class PathAssessment(
@@ -232,7 +239,7 @@ class WorkspaceManager(
         // migrate: first access creates the app workspace project
         val project = existing.firstOrNull() ?: ProjectEntity(
             id = UUID.randomUUID().toString(),
-            name = "App workspace",
+            name = DEFAULT_APP_WORKSPACE_NAME,
             kind = KIND_APP,
             uri = null,
             lastUsedAt = System.currentTimeMillis(),
@@ -418,33 +425,33 @@ class WorkspaceManager(
      * Plain-language description + shell capability for the workspace list UI.
      */
     fun describe(project: ProjectEntity): WorkspaceDescription {
+        val resources = ContextCompat.getContextForLanguage(context).resources
         val kindLabel: String
         val kindSub: String
         val shellCapable: Boolean
         when (project.kind) {
             KIND_SSH -> {
-                kindLabel = "SSH workspace"
+                kindLabel = resources.getString(R.string.ui_ssh_workspace)
                 kindSub = "Files, terminal and Git on the connected host"
                 shellCapable = true
             }
             KIND_APP -> {
-                kindLabel = "App workspace"
+                kindLabel = resources.getString(R.string.wp_add_app)
                 kindSub = "Private app folder: shell always works, safest option"
                 shellCapable = true
             }
             KIND_SHELL -> {
-                kindLabel = "Device folder"
+                kindLabel = resources.getString(R.string.wp_add_device)
                 kindSub = "Real path: full shell, needs storage access or Shizuku"
                 shellCapable = true
             }
             else -> {
                 val real = project.uri?.let { writablePickedFolder(it.toUri()) }
+                kindLabel = resources.getString(R.string.wp_picked_folder)
                 if (real != null) {
-                    kindLabel = "Picked folder"
                     kindSub = "Mapped to $real. File tools and shell share this tree."
                     shellCapable = true
                 } else {
-                    kindLabel = "Picked folder"
                     kindSub = "Picker access: file tools only. Use the app workspace for shell commands."
                     shellCapable = false
                 }
@@ -482,6 +489,7 @@ class WorkspaceManager(
     }
 
     companion object {
+        internal const val DEFAULT_APP_WORKSPACE_NAME = "App workspace"
         const val KIND_APP = "APP"
         const val KIND_SAF = "SAF"
         const val KIND_SHELL = "SHELL"

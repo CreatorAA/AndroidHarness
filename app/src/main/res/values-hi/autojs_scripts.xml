@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">AutoJs6 स्क्रिप्ट</string>
+    <string name="autojs_allow">असिस्टेंट को AutoJs6 इस्तेमाल करने की अनुमति दें</string>
+    <string name="autojs_allow_hint">पेयर किया गया ड्राइवर और UI स्क्रिप्ट जोड़ता है। चालू होने पर बिल्ट-इन सेवा उपलब्ध रहती है।</string>
+    <string name="autojs_need_pair">अभी स्क्रिप्ट लिखें और जांचें। उन्हें फ़ोन पर चलाने से पहले लोकल AutoJs6 प्लगिन सेट करें।</string>
+    <string name="autojs_new">नई स्क्रिप्ट</string>
+    <string name="autojs_back">वापस</string>
+    <string name="autojs_source">UI स्क्रिप्ट</string>
+    <string name="autojs_sample_source">text(\"जारी रखें\").waitFor();</string>
+    <string name="autojs_name">नाम (आज़माने के लिए ज़रूरी नहीं)</string>
+    <string name="autojs_name_exists">इस नाम की स्क्रिप्ट पहले से है। उसे बदलने के लिए खोलें या दूसरा नाम चुनें।</string>
+    <string name="autojs_format">कंट्रोल ढूंढने के लिए text, desc या id का इस्तेमाल करें, फिर उसका इंतज़ार करें, उस पर टैप करें या टेक्स्ट डालें। हर लाइन में एक निर्देश दें।</string>
+    <string name="autojs_check">चरण जांचें</string>
+    <string name="autojs_prepare">चुने हुए ऐप में आज़माएं</string>
+    <string name="autojs_preview">मान्य चरण: %1$d · कुछ भी नहीं चलाया गया</string>
+    <string name="autojs_empty">बार-बार इस्तेमाल होने वाली कार्रवाई बनाने के लिए नई स्क्रिप्ट पर टैप करें। बिना सेव किए आज़माने के लिए नाम खाली छोड़ें।</string>
+    <string name="autojs_enabled_hint">असिस्टेंट इस लाइब्रेरी में चालू की गई स्क्रिप्ट इस्तेमाल कर सकता है।</string>
+    <string name="autojs_disabled_hint">इसे आज़माने से पहले लाइब्रेरी में यह स्क्रिप्ट चालू करें।</string>
+    <string name="autojs_delete">“%1$s” मिटाएं?</string>
+    <string name="autojs_delete_action">मिटाएं</string>
+    <string name="autojs_changed">लाइब्रेरी में यह स्क्रिप्ट बदल गई है। सेव करने या चलाने से पहले इसे फिर से खोलें।</string>
+    <string name="autojs_write_failed">स्क्रिप्ट सेव नहीं हो सकी।</string>
+    <string name="autojs_anonymous">बिना सेव की गई स्क्रिप्ट</string>
+    <string name="autojs_prepared">आज़माने के लिए तैयार: %1$s। चुना हुआ ऐप खोलें और 10 मिनट के अंदर फ़ोन असिस्टेंट को बुलाएं।</string>
+    <string name="autojs_trial_title">स्क्रिप्ट चलाएं · %1$s</string>
+    <string name="autojs_trial_here">सिर्फ़ %1$s में</string>
+    <string name="autojs_trial_other">जिस ऐप को जांचना है उसे खोलें, फिर वहीं असिस्टेंट को बुलाएं।</string>
+    <string name="autojs_trial_steps">%1$d चरण · देखने के लिए टैप करें</string>
+    <string name="autojs_trial_less">चरण छिपाएं</string>
+    <string name="autojs_trial_allow">अनुमति देकर यहां चलाएं</string>
+    <string name="autojs_trial_stale">इस परीक्षण की समय-सीमा खत्म हो गई है या ऐप बदल गया है। इसे स्क्रिप्ट लाइब्रेरी में फिर से तैयार करें।</string>
+    <string name="autojs_trial_request">“%1$s” को %2$s में चलाएं।</string>
+    <string name="autojs_trial_done">%3$s में स्क्रिप्ट के %2$d में से %1$d चरण पूरे हुए।</string>
+    <string name="autojs_trial_stopped">%3$s में स्क्रिप्ट %2$d में से %1$d चरणों के बाद रुक गई।</string>
+    <string name="autojs_trial_error">मौजूदा ऐप में यह स्क्रिप्ट शुरू नहीं हो सकी।</string>
+    <string name="autojs_trial_interrupted">स्क्रिप्ट बीच में रुक गई। फिर से कोशिश करने से पहले ऐप जांचें।</string>
+    <string name="autojs_not_selected">स्क्रिप्ट तैयार करने से पहले AutoJs6 चालू करें।</string>
+    <string name="autojs_activity_running">AutoJs6 स्क्रिप्ट चल रही है</string>
+    <string name="autojs_activity_ran">AutoJs6 स्क्रिप्ट चलाई गई</string>
+    <string name="autojs_activity_run_failed">AutoJs6 स्क्रिप्ट पूरी नहीं हुई</string>
+    <string name="autojs_activity_library_working">AutoJs6 स्क्रिप्ट लाइब्रेरी इस्तेमाल हो रही है</string>
+    <string name="autojs_activity_library_done">AutoJs6 स्क्रिप्ट लाइब्रेरी इस्तेमाल की गई</string>
+    <string name="autojs_activity_library_failed">AutoJs6 स्क्रिप्ट लाइब्रेरी की कार्रवाई पूरी नहीं हुई</string>
+</resources>

@@ -1,8 +1,8 @@
-# Learn, Tips, and What's New
+# Learn and In-Run Tips
 
-> Loads the bundled learning guide, rotates short in-run tips, and shows a one-time post-update summary.
+> Loads the bundled learning guide and rotates short tips during a run.
 
-The Learn page is a fully offline guide shipped as a JSON asset. `LearnCatalog` parses categories and lessons, `LearnSection` renders a searchable library and a lesson reader, and lesson actions deep link into Settings pages or app screens. Separately, `RunTips` defines short tips that `RunTipHost` shows while a run is working, and `WhatsNewDialog` shows a curated release summary once per install on Play builds. The first two systems are preference-driven; the third is a static, build-gated dialog.
+The Learn page is a fully offline guide shipped as a JSON asset. `LearnCatalog` parses categories and lessons, `LearnSection` renders a searchable library and a lesson reader, and lesson actions deep link into Settings pages or app screens. `RunTips` defines the short tips shown by `RunTipHost` during a run.
 
 ## Module Responsibilities
 
@@ -14,7 +14,6 @@ The Learn page is a fully offline guide shipped as a JSON asset. `LearnCatalog` 
 - **Tip catalog**: `RunTips.all` is an ordered list of 46 `RunTip` entries. Each tip has a string resource, a `TipScope`, an optional `SettingsPage`, an optional anchor resource, and a relevance predicate over `AppSettings`.
 - **Tip scheduling**: `RunTips.next` returns the next in-scope and relevant tip plus the next cursor. `RunTipHost` enforces the delay, cooldown, linger, dismissal, and turn-off behavior.
 - **Tip settings**: `AgentBehaviorSection` renders the `runTipsEnabled` switch, and `AgentSettingsCatalog` exposes the same toggle to the agent settings index. `ChatScreen` persists the cursor and opens the anchored setting.
-- **What's New**: `WhatsNewStore` is a one-boolean `SharedPreferences` flag. `WhatsNewDialog` renders fixed Added, Improved, and Fixed lists. `MainActivity` shows it only when `BuildConfig.PLAY_DISTRIBUTION` is true.
 
 ## Architecture and Flow
 
@@ -45,7 +44,6 @@ flowchart TD
 - **Screen deep link**: `AppNav` maps `LearnDestination.CHAT` and `CODE` to new conversations, `PROJECTS` to the projects list, `FILES`, `TERMINAL`, and `BUILD_TEST` to routes carrying the current project id, `AUTOMATION` to the automation screen, and `PROVIDERS` to the providers screen.
 - **Tip rotation**: `RunTips.next` starts at the saved cursor and scans forward with `Math.floorMod`, wrapping once. The first tip that matches scope and relevance wins, and the cursor advances past it.
 - **Tip display**: `RunTipHost` waits `DELAY_MS`, checks the process-wide cooldown, records `lastTipShownAt`, sets the tip id, and persists the new cursor. When the run ends, an unexpanded tip lingers for `LINGER_MS` before fading; an expanded tip stays so the user can finish reading.
-- **What's New gating**: after `AppNav` is composed, `MainActivity` checks `BuildConfig.PLAY_DISTRIBUTION` and `WhatsNewStore.seen`. Dismissing the dialog writes `seen = true`, so it never appears again for that install.
 
 ## Invocation Chain
 
@@ -57,7 +55,6 @@ flowchart TD
 6. In the reader, an action calls `onOpenSettings(SettingsPage)` or `onOpenDestination(LearnDestination)`. This ultimately reaches `SettingsScreen.openPage` or the `AppNav` mapping.
 7. For tips, `ChatScreen` calls `RunTipHost(busy, isChat, settings, onShown, onOpen, onTurnOff)` next to the task progress card.
 8. `RunTipHost` calls `RunTips.next`, then `onShown(cursor)` which invokes `setRunTipCursor`. `onOpen` writes `settingsTarget` and opens Settings. `onTurnOff` calls `setRunTipsEnabled(false)`.
-9. `MainActivity` composes `WhatsNewDialog` after `AppNav` when the Play build flag is set and the store has not recorded a view.
 
 ## Key State and Data Structures
 
@@ -72,7 +69,6 @@ flowchart TD
 - **`TipScope`**: `CHAT`, `CODE`, `BOTH`. Scope matching is `BOTH` or an exact match with the current conversation kind.
 - **Tip timing constants**: `DELAY_MS = 6_000L`, `COOLDOWN_MS = 3 * 60_000L`, `LINGER_MS = 8_000L`.
 - **Tip settings**: `run_tips_enabled` defaults to true; `run_tip_cursor` defaults to 0 and stores the index after the last shown tip.
-- **What's New store**: file `whats-new`, boolean key `seen`, default false. The dialog lists 10 Added, 3 Improved, and 3 Fixed string resources from `whats_new_strings.xml`.
 
 ## Boundary Conditions
 
@@ -88,8 +84,6 @@ flowchart TD
 - **Tip lifecycle**: the delay and linger effects are keyed on `busy`, `isChat`, and `expanded`. A run that ends during the delay cancels the effect before a tip appears. Dismissing sets the id to null but keeps `shown` so the exit animation still has content.
 - **Tip expansion**: only the first two lines of the tip text are shown while collapsed. Expanding reveals the full text and the Open setting and Turn off tips actions. Open setting is only offered when the tip has a `page`.
 - **Tip persistence**: the cursor is global, not per conversation. `onShown` fires before the user reads or dismisses, so a killed process can skip a tip permanently.
-- **What's New scope**: the dialog is compiled only for Play builds. It is gated on one install-wide boolean, not on the installed version code. Once dismissed, later updates never show it again.
-- **What's New content**: the three lists are hand-maintained resource arrays, not generated from `CHANGELOG.md` or the version. The `wn_workspace_learn` string says 96 Learn lessons while the current asset has 97.
 
 ## Extension Points
 
@@ -99,17 +93,15 @@ flowchart TD
 - **Add a settings action**: use an exact `SettingsPage` enum name as the target. Learn actions carry no anchor; anchors are used by run tips through `settingsTarget` and `settingsRevealFor`.
 - **Add a tip**: append a `RunTip` with a new string resource. Give it a page or anchor if it should offer navigation, and a relevance predicate if it becomes obsolete once configured.
 - **Change tip cadence**: edit the three constants in `RunTips` or the matching guard in `RunTipHost`. There is no settings control for delay or cooldown.
-- **Change What's New content**: edit `ADDED`, `IMPROVED`, and `FIXED` in `WhatsNewDialog.kt` and add the corresponding `wn_*` strings. To show it again per version, add a stored version code and compare it in `MainActivity`.
 
 ## Known gaps
 
 - `FEATURES.md` describes deep links that open the exact screen each lesson talks about. These are internal Compose callbacks into Settings and app routes, not external URI or intent links. There is no public URL scheme for a lesson id.
-- What's New is documented as a summary of everything since the last uploaded store version, but the implementation shows it at most once per install and never compares versions. The list content is curated by hand.
 - Guide content ships in English plus 21 translated variants. The English `guide.json` is the source of truth; localized files must be regenerated when lessons, actions, or links change.
 - The `sources` field in each lesson is present in the asset and used for review, but no UI exposes it.
 - Learn progress is stored outside `SettingsRepository`, so it does not travel with settings backups.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt](../app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt)#L77-L121)
+Sources: [app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt](../app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt)
 
 ## Source files
 
@@ -117,8 +109,6 @@ Sources: [app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt](../
 - `app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt`
 - `app/src/main/java/com/androidharness/app/ui/chat/RunTips.kt`
 - `app/src/main/java/com/androidharness/app/ui/chat/components/RunTipCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/whatsnew/WhatsNewDialog.kt`
-- `app/src/main/java/com/androidharness/app/ui/whatsnew/WhatsNewStore.kt`
 - `app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt`
 - `app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt`
 - `app/src/main/java/com/androidharness/app/ui/settings/SettingsHome.kt`
@@ -131,4 +121,3 @@ Sources: [app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt](../
 - `app/src/main/assets/learn/guide.json`
 - `app/src/main/res/values/learn_strings.xml`
 - `app/src/main/res/values/tips_strings.xml`
-- `app/src/main/res/values/whats_new_strings.xml`

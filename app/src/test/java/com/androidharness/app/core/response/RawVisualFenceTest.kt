@@ -16,6 +16,7 @@ class RawVisualFenceTest {
         assertEquals(RichResponse.Part.Markdown("Intro"), parts[0])
         val node = (parts[1] as RichResponse.Part.Content).node as RichResponse.Node.Preview
         assertEquals("Orbit demo", node.title)
+        assertFalse(node.standaloneSvg)
         assertEquals(html, node.html)
         assertEquals("After", (parts[2] as RichResponse.Part.Markdown).text.trim())
     }
@@ -24,7 +25,8 @@ class RawVisualFenceTest {
         val svg = "<svg viewBox=\"0 0 10 10\"><rect class=\"hx-node\" width=\"5\" height=\"5\"/></svg>"
         val node = (RichResponse.parse("```harness-svg title=\"Flow\"\n$svg\n```").single() as RichResponse.Part.Content).node as RichResponse.Node.Preview
         assertEquals("Flow", node.title)
-        assertEquals("<div class=\"hx-svg\">$svg</div>", node.html)
+        assertTrue(node.standaloneSvg)
+        assertEquals("<div class=\"hx-svg hx-figure\">$svg</div>", node.html)
         assertEquals(RichResponse.Part.Unavailable, RichResponse.parse("```harness-svg\n<div>not svg</div>\n```").single())
         assertEquals(RichResponse.Part.Unavailable, RichResponse.parse("```harness-html\n\n```").single())
     }
@@ -74,12 +76,12 @@ class RawVisualFenceTest {
         assertTrue(source.contains("--c1:#abcdef"))
     }
 
-    @Test fun `both Chat and Code prompts teach the raw fences and the guide`() {
-        for (prompt in listOf(RichResponse.INSTRUCTIONS, ChatExperience.SYSTEM_PROMPT)) {
+    @Test fun `shared Code Chat and phone prompts teach the raw fences and the guide`() {
+        for (prompt in listOf(RichResponse.INSTRUCTIONS, ChatExperience.SYSTEM_PROMPT, ChatExperience.systemPrompt(phoneConversation = true))) {
             assertTrue(prompt.contains("```harness-html"))
             assertTrue(prompt.contains("```harness-svg"))
             assertTrue(prompt.contains("visual_guide"))
-            assertTrue(prompt.contains("hx-card"))
+            assertTrue(prompt.contains("class=\"hx-stack\""))
         }
         assertTrue("visual_guide" in ChatExperience.tools)
     }

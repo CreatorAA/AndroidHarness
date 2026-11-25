@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Güncellemeler, kurulum ve uygulama bilgileri",
-      "summary": "Sürümünüzü bulun, kurulumu yeniden bağlayın ve destek seçeneklerini anlayın.",
-      "location": "Ayarlar → Güncellemeler, Kurulum kılavuzu veya Hakkında.",
+      "title": "Sürüm ve kurulum",
+      "summary": "Yüklü sürümü öğrenin veya daha yeni bir özel derleme yükleyin.",
+      "location": "Ayarlar → Hakkında veya Kurulum kılavuzu.",
       "before": [
-        "Güncelleme kontrolleri ve harici destek sayfaları için bir ağ bağlantısı."
+        "Sürüm numarasını çevrimdışı görebilirsiniz."
       ],
       "steps": [
         {
           "title": "Yüklü sürümü kontrol edin",
-          "body": "Gerçek yüklü sürümü/derlemeyi görmek için Hakkında veya Güncellemeler'i açın. Tekrarlanabilir bir sorunu açıklarken bu sürümü ekleyin."
+          "body": "Hakkında sayfasını açın. Sürüm numarası uygulama adının altında görünür. Aynı sayfada kaynak kodunu, lisansı ve kullanılan açık kaynak projeleri de bulabilirsiniz."
         },
         {
-          "title": "Sunulan güncelleme yolunu kullanın",
-          "body": "Güncellemeleri kontrol edin ve sürüm ayrıntılarını okuyun. Bu dağıtım için sunulan indirme/yükleme eylemini kullanın ve herhangi bir Android yükleyici adımını izleyin."
+          "title": "Daha yeni bir özel derleme yükleyin",
+          "body": "Bu özel derlemenin bakımını yapan kişinin sağladığı APK dosyasını açın ve Android yükleyicisinin adımlarını izleyin."
         },
         {
           "title": "Gerektiğinde kurulumu yeniden ziyaret edin",
           "body": "İlk katılım seçeneklerini ve gerekli izinleri/bağlantıları gözden geçirmek için Kurulum'u kullanın. Yeniden yüklemenin gerekli olduğunu varsaymak yerine her seçeneği işaretleyin."
-        },
-        {
-          "title": "Kredi ve destek bulun",
-          "body": "Hakkında kaynak/lisans/kredileri ve mevcut destek veya bağış bağlantılarını listeler. Bir bağış uygulamayı destekler; API kredisi veya sağlayıcı aboneliği satın almaz."
         }
       ],
-      "outcome": "Yüklü sürümü, mevcut güncelleme/kurulum yolunu ve uygulamanın kendi bilgilerinin nerede bulunduğunu biliyorsunuz.",
+      "outcome": "Sorun bildirirken yüklü sürüm numarasını belirtin.",
       "limits": [
-        "Güncelleme teslimi ve yükleme davranışı, dağıtıma ve mevcut cihaz izinlerine göre farklılık gösterir.",
+        "Bu derleme, asıl projenin yeni sürümlerini denetlemez veya yüklemez.",
         "Bir uygulama güncellemesi, harici bir modele yeni erişimi garanti edemez, sağlayıcı kesintisini düzeltemez veya silinen dosyaları geri yükleyemez."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Güncellemeleri Aç"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Kurulumu Gözden Geçir"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "AndroidHarness'ı telefonunun asistanı yap ve kullandığın uygulama hakkında sor.",
       "location": "Ayarlar → Diğer uygulamaların üzerinde asistan; sonra güç veya ana ekran düğmesini basılı tut ya da alt köşeden yukarı kaydır.",
       "before": [
-        "Önce bir Sohbet modeli seç ve anahtarını ekle. Asistan, Sohbet ile aynı modeli ve ayarları kullanır.",
+        "Asistan varsayılan olarak Sohbet modelini kullanır. Asistan ayarlarından başka bir model seçebilirsiniz.",
         "Android, AndroidHarness'ın dijital asistan uygulaması olmasına izin vermeli. Bazı telefonlarda bu, Varsayılan uygulamalar altındadır."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Ekran hakkında sor",
-          "body": "Bir soru yaz veya Özetle gibi bir öneriye dokun. Ekrana yalnızca sorun onunla ilgiliyse bakar ve ekrandan hiçbir şey panelde gösterilmez. Sohbet gibi çalışır; web'de arayabilir, sayfaları okuyabilir ve kaynakları gösterebilir."
+          "body": "Ekranda gördüklerinizi sorun veya asistana uygulamada ne yapmasını istediğinizi söyleyin. Varsayılan olarak telefon görevini başlamadan önce gözden geçirirsiniz."
         },
         {
           "title": "Yazmak yerine konuş",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Uygulamada devam et",
-          "body": "Panel yanıtla birlikte büyür ve istediğin yüksekliğe sürüklenebilir. Uygulamada devam et, aynı konuşmayı Sohbet'te açar; orada diğer sohbetlerinle kalır."
+          "body": "“Uygulamada devam et” aynı konuşmayı uygulamada açar. Bu projede asistanı yeniden çağırdığınızda son konuşmanıza dönersiniz."
         }
       ],
-      "outcome": "Ekrandaki uygulamadan çıkmadan onun hakkında sorabilirsin ve her konuşma normal bir Sohbet olarak kaydedilir.",
+      "outcome": "Tüm projelerde telefon asistanıyla en son kullandığınız toplam 10 konuşma saklanır. Daha eski konuşmalar etkinlikleri sona erdiğinde mesajlarıyla birlikte silinir. Sohbet ve Kod geçmişi etkilenmez.",
       "limits": [
         "Ekran görüntüsünü engelleyen uygulamalar (banka uygulamaları gibi) ve Android'in koruduğu ekranlar görüntü veya metin göndermez. Yine de soru sorabilirsin.",
-        "Ekran görüntüsü yalnızca Sohbet modeli görselleri okuyabiliyorsa gönderilir. Aksi halde yalnızca ekran metni gönderilir ve bazı uygulamalar çok az metin paylaşır."
+        "Ekran görüntüsü yalnızca Sohbet modeli görselleri okuyabiliyorsa gönderilir. Aksi halde yalnızca ekran metni gönderilir ve bazı uygulamalar çok az metin paylaşır.",
+        "Otomatik yürütme izni, gönderme ve silme dahil geçerli görevi kapsar. Telefon görevlerini otomatik başlatmayı açarsanız sonraki görevler başlangıç onayı istemez. Komutlar ve betikler için yine onay gerekir."
       ],
       "fixes": [
         {

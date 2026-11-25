@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Mesmo com os alertas desativados em “%1$s”, os lembretes continuam aqui.</string>
+    <string name="phone_events_title">Lembretes de eventos no celular</string>
+    <string name="phone_events_intro">Receba um lembrete quando um app escolhido for aberto ou enviar uma notificação. Revise a tarefa vinculada antes de executá-la.</string>
+    <string name="phone_event_ready">Lembrete de evento no celular</string>
+    <string name="phone_event_open_reminder">%1$s acionou seu lembrete. Toque para revisar.</string>
+    <string name="phone_events_grant_notifications">Permitir acesso às notificações</string>
+    <string name="phone_events_grant_window">Ativar os controles do celular do Harness em Acessibilidade</string>
+    <string name="phone_events_show_alerts">Permitir notificações de lembretes</string>
+    <string name="phone_event_opened">%1$s é aberto</string>
+    <string name="phone_event_notified">%1$s envia uma notificação</string>
+    <string name="phone_event_review_task">Revisar: %1$s</string>
+    <string name="phone_event_dismiss">Dispensar</string>
+    <string name="phone_event_remind_only">Apenas me lembrar</string>
+    <string name="phone_event_task_missing">A tarefa vinculada não está mais disponível</string>
+    <string name="phone_event_edit">Editar regra</string>
+    <string name="phone_event_remove">Remover regra</string>
+    <string name="phone_event_add">Adicionar regra de app</string>
+    <string name="phone_event_view_notices">Notificações ativas (%1$d)</string>
+    <string name="phone_event_active_notices">Notificações atuais</string>
+    <string name="phone_event_metadata_only">Apenas o app e o horário são exibidos. Abra uma notificação no app de origem para lê-la.</string>
+    <string name="phone_event_no_notices">Nenhuma notificação atual dos apps selecionados.</string>
+    <string name="phone_event_no_listener">O serviço de acesso às notificações não está conectado.</string>
+    <string name="phone_event_open_source">Abrir no app</string>
+    <string name="phone_event_mark_read">Marcar como lida</string>
+    <string name="phone_event_read_confirm">Pedir ao %1$s para marcar esta notificação como lida?</string>
+    <string name="phone_event_task_busy">Esta tarefa está pausada, já está em execução ou não é mais manual.</string>
+    <string name="phone_event_run_task">Executar tarefa</string>
+    <string name="phone_event_unavailable">Este item não está mais disponível.</string>
+    <string name="phone_event_choose_app">Escolha um app</string>
+    <string name="phone_event_search">Nome do app ou do pacote</string>
+    <string name="phone_event_when">Quando</string>
+    <string name="phone_event_when_open">Eu abrir este app</string>
+    <string name="phone_event_when_notified">Este app enviar uma notificação</string>
+    <string name="phone_event_then">Lembrar para revisar</string>
+    <string name="phone_event_save">Salvar regra</string>
+    <string name="phone_event_all_rules">Os dois eventos já estão configurados. Edite as regras existentes abaixo.</string>
+</resources>

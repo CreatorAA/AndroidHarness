@@ -18,12 +18,12 @@ they have the same signing identity or hardening as a production release.
 ## Reporting a Vulnerability
 
 Use **Report a vulnerability** from the repository's
-[security advisories page](https://github.com/Sanuu7/AndroidHarness/security/advisories)
+[security advisories page](https://github.com/CreatorAA/AndroidHarness/security/advisories)
 when GitHub private vulnerability reporting is available. Adding this policy
 file does not itself enable private reporting.
 
 If that option is unavailable, open an
-[issue requesting a private security contact](https://github.com/Sanuu7/AndroidHarness/issues/new?title=Private%20security%20reporting%20contact).
+[issue requesting a private security contact](https://github.com/CreatorAA/AndroidHarness/issues/new?template=private_contact.yml).
 Include no vulnerability details, credentials, sensitive logs, or working
 exploit in that public issue. GitHub documents this fallback in its
 [private reporting guidance](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/report-privately).
@@ -153,19 +153,16 @@ Relevant code: [browser](app/src/main/java/com/androidharness/app/browser/),
 
 ## Updates and Supply Chain
 
-The in-app updater restricts accepted release-asset URLs, checks download size
-and an advertised checksum when present, and validates package identity,
-non-decreasing version, and signing compatibility with the installed app before
-installation. A checksum alone does not authenticate a publisher. Start from an
-installation and signing identity you trust.
+This custom build does not check for or install upstream app releases. To
+upgrade, open Settings → About → GitHub Releases and install a trusted fork APK
+signed with the same key as your current installation.
 
 Build dependencies, native libraries, downloaded developer packages, and their
 upstream services are part of the trust boundary. Package or version pinning and
 checksums do not replace dependency advisory review. Keep Android and WebView
 updated, and use the least CI and account permissions needed.
 
-Relevant code: [update validation](app/src/main/java/com/androidharness/app/data/update/),
-[toolchain downloads](app/src/main/java/com/androidharness/app/data/env/LinuxEnvironment.kt),
+Relevant code: [toolchain downloads](app/src/main/java/com/androidharness/app/data/env/LinuxEnvironment.kt),
 [native build](app/src/main/cpp/CMakeLists.txt), and
 [CI workflow](.github/workflows/nightly.yml).
 

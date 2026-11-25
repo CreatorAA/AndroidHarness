@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Телефон</string>
+    <string name="conversation_new_phone">Новый чат на телефоне</string>
+    <string name="phone_conversation_intro">Задайте вопрос здесь. Чтобы ассистент использовал приложение, переключитесь в него и вызовите ассистента.</string>
+    <string name="phone_conversation_settings">Настройки ассистента</string>
+    <string name="settings_start_phone_desc">Открыть чаты с ассистентом на телефоне.</string>
+</resources>

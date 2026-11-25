@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import com.androidharness.app.core.ImageRef
 import java.io.File
 import java.util.UUID
 
@@ -55,6 +56,28 @@ class ImageStore(private val context: Context) {
                     originalWidth = fetched.width, originalHeight = fetched.height, originalMime = fetched.mimeType, originalBytes = bytes.size.toLong(), origin = "remote_web")
             } catch (e: Exception) { delete(ref.name); throw e }
         } finally { bitmap.recycle() }
+    }
+
+    /** Store encoded pixels directly: the phone driver already produced JPEG or PNG bytes. */
+    internal fun savePhoneFrame(bytes: ByteArray, mime: String, width: Int, height: Int,
+                                displayWidth: Int, displayHeight: Int, app: String): ImageRef =
+        saveEncodedImage(bytes, mime, width, height, "phone").copy(
+            caption = app, origin = "android_observe", originalWidth = displayWidth, originalHeight = displayHeight)
+
+    internal fun saveEncodedImage(bytes: ByteArray, mime: String, width: Int, height: Int, prefix: String): ImageRef {
+        val ext = when (mime) {
+            "image/jpeg" -> "jpg"
+            "image/png" -> "png"
+            else -> error("Unsupported encoded image type")
+        }
+        val file = File(dir, "$prefix-${UUID.randomUUID()}.$ext")
+        try {
+            file.writeBytes(bytes)
+            return ImageRef(file.name, mime, width = width, height = height, bytes = bytes.size.toLong())
+        } catch (failure: Exception) {
+            file.delete()
+            throw failure
+        }
     }
 
     fun saveResolved(image: com.androidharness.app.core.ImageData): com.androidharness.app.core.ImageRef {

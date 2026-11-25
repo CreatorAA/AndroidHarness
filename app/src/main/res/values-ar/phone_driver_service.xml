@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">عناصر التحكم في الهاتف من Harness</string>
+    <string name="phone_driver_service_description">تتيح لك مطالبة المساعد بقراءة الشاشة والنقر على عناصر التحكم وإدخال النص. لا تعمل عناصر التحكم في الهاتف إلا أثناء مهمة تبدأها أنت. أوقف المهمة لتستعيد التحكم.</string>
+</resources>

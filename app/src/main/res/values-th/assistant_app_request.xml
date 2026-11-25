@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">เปิด %1$s ไหม?</string>
+    <string name="app_request_search">ค้นหา “%2$s” ใน %1$s ไหม?</string>
+    <string name="app_request_choose_open">ต้องการเปิดแอปใด?</string>
+    <string name="app_request_choose_map">ต้องการค้นหา “%1$s” ในแอปแผนที่ใด?</string>
+    <string name="app_request_missing">ไม่พบแอปชื่อ “%1$s” ที่โทรศัพท์เครื่องนี้เปิดได้</string>
+    <string name="app_request_alternative">คุณค้นหา “%1$s” ด้วยแอปแผนที่ด้านล่างได้</string>
+    <string name="app_request_open_only">%1$s เปิดได้ แต่ไม่มีการค้นหาสถานที่แบบสาธารณะ ต้องการเปิดโดยไม่ค้นหาไหม?</string>
+    <string name="app_request_no_map">ไม่มีแอปที่ติดตั้งไว้ซึ่งค้นหา “%1$s” ในแผนที่ได้</string>
+    <string name="app_request_no_entry">%1$s ไม่มีช่องทางที่ใช้ได้สำหรับคำขอนี้</string>
+    <string name="app_request_opened">ส่งคำขอเปิด %1$s แล้ว</string>
+    <string name="app_request_sent">ส่งคำค้นหา “%2$s” ไปยัง %1$s แล้ว</string>
+    <string name="app_request_failed">ส่งคำขอนี้ไปยัง %1$s ไม่ได้ ลองขออีกครั้งเพื่อตรวจสอบแอปที่ใช้ได้</string>
+    <string name="app_request_cancelled">ยกเลิกแล้ว ไม่มีการเปิดแอป</string>
+</resources>

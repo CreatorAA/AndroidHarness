@@ -31,7 +31,7 @@ internal object AutoCompaction {
         if (configured <= 0 || threshold >= configured) return null
         val f = java.text.NumberFormat.getIntegerInstance(java.util.Locale.ROOT)
         return "Auto compact is set to ${f.format(configured)} tokens, but this model can take " +
-            "${f.format(contextLimit)} tokens per request here, so Code compacts at ${f.format(threshold)} " +
+            "${f.format(contextLimit)} tokens per request here, so this conversation compacts at ${f.format(threshold)} " +
             "to leave room for the reply. For a self-hosted server, start it with a larger context " +
             "or fewer parallel slots to compact later."
     }

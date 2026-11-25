@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s खोलें?</string>
+    <string name="app_request_search">%1$s में “%2$s” खोजें?</string>
+    <string name="app_request_choose_open">कौन-सा ऐप खोलें?</string>
+    <string name="app_request_choose_map">“%1$s” किस मैप ऐप में खोजें?</string>
+    <string name="app_request_missing">“%1$s” नाम का ऐसा कोई ऐप नहीं मिला जिसे इस फ़ोन पर खोला जा सके।</string>
+    <string name="app_request_alternative">नीचे दिए गए किसी मैप ऐप में “%1$s” खोज सकते हैं।</string>
+    <string name="app_request_open_only">%1$s खुल सकता है, लेकिन इसमें सार्वजनिक जगहें खोजने की सुविधा नहीं है। बिना खोजे ऐप खोलें?</string>
+    <string name="app_request_no_map">इंस्टॉल किए गए किसी भी ऐप में “%1$s” को मैप पर खोजने की सुविधा नहीं है।</string>
+    <string name="app_request_no_entry">%1$s में यह अनुरोध शुरू करने का कोई विकल्प उपलब्ध नहीं है।</string>
+    <string name="app_request_opened">%1$s खोलने का अनुरोध भेज दिया गया।</string>
+    <string name="app_request_sent">“%2$s” खोजने का अनुरोध %1$s को भेज दिया गया।</string>
+    <string name="app_request_failed">%1$s को यह अनुरोध नहीं भेजा जा सका। कौन-से ऐप उपलब्ध हैं, यह जानने के लिए फिर से पूछें।</string>
+    <string name="app_request_cancelled">रद्द कर दिया गया। कोई ऐप नहीं खोला गया।</string>
+</resources>

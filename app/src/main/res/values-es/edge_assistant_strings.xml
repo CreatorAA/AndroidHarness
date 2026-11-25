@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Tirador lateral</string>
+    <string name="assistant_edge_desc">Desliza hacia dentro el tirador del borde derecho para abrir el asistente.</string>
+    <string name="assistant_edge_permission_hint">En los ajustes de Android, permite que AndroidHarness se muestre sobre otras apps.</string>
+    <string name="assistant_edge_permission_unavailable">No se pudieron abrir los ajustes del permiso de superposición.</string>
+    <string name="assistant_edge_handle_description">Abrir el asistente sobre otras apps</string>
+    <string name="assistant_edge_start_failed">No se pudo activar el tirador lateral. Inténtalo de nuevo.</string>
+    <string name="assistant_edge_disconnected">El sistema ha desconectado el asistente.</string>
+    <string name="assistant_edge_reconnect">Volver a conectar</string>
+    <string name="assistant_edge_reconnect_steps">En los ajustes del asistente de Android, selecciona Ninguno y después vuelve a seleccionar AndroidHarness.</string>
+    <string name="assistant_edge_grant_overlay">Permitir mostrar sobre otras apps</string>
+</resources>

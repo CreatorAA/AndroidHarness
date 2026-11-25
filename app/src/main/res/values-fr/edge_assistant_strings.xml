@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Poignée latérale</string>
+    <string name="assistant_edge_desc">Faites glisser la poignée du bord droit vers l’intérieur pour ouvrir l’assistant.</string>
+    <string name="assistant_edge_permission_hint">Dans les réglages Android, autorisez AndroidHarness à s’afficher par-dessus les autres applications.</string>
+    <string name="assistant_edge_permission_unavailable">Impossible d’ouvrir les réglages d’autorisation de superposition.</string>
+    <string name="assistant_edge_handle_description">Ouvrir l’assistant par-dessus les autres applications</string>
+    <string name="assistant_edge_start_failed">Impossible d’activer la poignée latérale. Réessayez.</string>
+    <string name="assistant_edge_disconnected">Le système a déconnecté l’assistant.</string>
+    <string name="assistant_edge_reconnect">Reconnecter</string>
+    <string name="assistant_edge_reconnect_steps">Dans les paramètres de l’assistant Android, choisissez Aucun, puis sélectionnez à nouveau AndroidHarness.</string>
+    <string name="assistant_edge_grant_overlay">Autoriser la superposition</string>
+</resources>

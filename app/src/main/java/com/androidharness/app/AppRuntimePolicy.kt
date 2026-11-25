@@ -6,6 +6,7 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import com.androidharness.app.data.SettingsRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -17,6 +18,13 @@ internal data class AppRuntimeState(
     val notificationsEnabled: Boolean = false,
 ) {
     val canRun: Boolean get() = ready && (visible || runInBackground)
+
+    internal fun shouldStartKeepaliveAfter(previous: AppRuntimeState, serviceRunning: Boolean, activeWork: Boolean): Boolean {
+        if (!ready || !runInBackground || (!visible && !activeWork)) return false
+        // Android can bind the assistant before any activity opens. An idle background launch
+        // must wait for the next visible entry, including when a previous start was denied.
+        return !previous.runInBackground || !previous.ready || (visible && !previous.visible && !serviceRunning)
+    }
 }
 
 /** Tracks the whole app, including secondary activities, rather than an individual chat. */
@@ -48,21 +56,30 @@ internal class AppRuntimePolicy(private val context: Context, private val settin
     }
 
     /** The assistant panel over other apps counts as the app being on screen. Main thread only. */
-    private var overlayShown = false
+    private val overlayShown = MutableStateFlow(false)
+    val assistantPanelVisible = overlayShown.asStateFlow()
 
     fun setOverlayShown(shown: Boolean) {
-        overlayShown = shown
-        if (shown) { leaving?.cancel(); visible.value = true } else leaveIfHidden()
+        overlayShown.value = shown
+        if (shown) {
+            leaving?.cancel()
+            visible.value = true
+        } else {
+            leaveIfHidden()
+        }
     }
 
     private fun leaveIfHidden() {
-        if (started.isNotEmpty() || overlayShown) return
+        if (started.isNotEmpty() || overlayShown.value) return
         // Activity replacement and rotation must not interrupt an active agent.
         leaving?.cancel()
-        leaving = scope.launch { delay(700); if (started.isEmpty() && !overlayShown) visible.value = false }
+        leaving = scope.launch {
+            delay(700)
+            if (started.isEmpty() && !overlayShown.value) visible.value = false
+        }
     }
 
-    suspend fun canRun(): Boolean =settings.settings.first().runInBackground || visible.value
+    suspend fun canRun(): Boolean = settings.settings.first().runInBackground || visible.value
 
     suspend fun <T> whileAllowed(block: suspend () -> T): T = coroutineScope {
         if (!canRun()) throw BackgroundExecutionDisabled()
@@ -85,11 +102,11 @@ internal class AppRuntimePolicy(private val context: Context, private val settin
                     withContext(Dispatchers.IO) { onBackgroundDisabled() }
                 } else {
                     if (!previous.canRun || next.visible && !previous.visible) onAvailable()
-                    if (next.runInBackground && (!previous.runInBackground || !previous.ready)) {
+                    val activeWork = RuntimeNotifier.active.value
+                    if (next.shouldStartKeepaliveAfter(previous, AgentService.isRunning, activeWork)) {
                         runCatching {
-                            if (RuntimeNotifier.active.value) AgentService.acquireKeepalive(context)
-                            else if (next.visible) AgentService.startPersistent(context)
-                        }
+                            AgentService.startPersistent(context)
+                        }.onFailure { Log.w("AppRuntimePolicy", "Could not start the background service", it) }
                     } else if (!next.runInBackground) AgentService.stop(context)
                 }
             }

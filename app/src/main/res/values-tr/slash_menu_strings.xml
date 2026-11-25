@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Yeni bir sohbet başlat</string>
+    <string name="slash_menu_compact">Bağlamı sıkıştır</string>
+    <string name="slash_menu_compact_hint">Eski bağlamı özetle</string>
+    <string name="slash_menu_cost">Maliyet</string>
+    <string name="slash_menu_cost_hint">Toplam token sayısını ve maliyeti göster</string>
+    <string name="slash_menu_btw_hint">Sohbete eklemeden mevcut bağlam hakkında soru sor</string>
+    <string name="slash_menu_doctor">Harness tanılama</string>
+    <string name="slash_menu_doctor_hint">Harness araçlarının kendi kendini sınamasını çalıştır</string>
+    <string name="slash_menu_init">Projeyi başlat</string>
+    <string name="slash_menu_init_hint">AGENTS.md dosyasını oluştur veya güncelle</string>
+    <string name="slash_menu_review_hint">Bekleyen değişiklikleri düzenlemeden incele. Odağı komuttan sonra belirt.</string>
+    <string name="slash_menu_plan_hint">Planlama becerisini yükle ve plan moduna geç</string>
+    <string name="slash_menu_skills">Becerilere göz at</string>
+    <string name="slash_menu_skills_hint">Tam beceri listesini aç</string>
+    <string name="slash_menu_env_hint">Linux ortamını denetle, güncelle, kur veya onar</string>
+    <string name="slash_menu_snippet">Parçacık</string>
+    <string name="slash_menu_snippet_hint">Kaydedilmiş istem parçacığı</string>
+</resources>

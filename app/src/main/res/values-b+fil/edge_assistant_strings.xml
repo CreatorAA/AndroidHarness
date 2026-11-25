@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">Hawakan sa gilid</string>
+    <string name="assistant_edge_desc">I-swipe papasok ang hawakan sa kanang gilid para buksan ang assistant.</string>
+    <string name="assistant_edge_permission_hint">Sa settings ng Android, payagang lumabas ang AndroidHarness sa ibabaw ng ibang app.</string>
+    <string name="assistant_edge_permission_unavailable">Hindi mabuksan ang settings ng pahintulot para lumabas sa ibabaw ng ibang app.</string>
+    <string name="assistant_edge_handle_description">Buksan ang assistant sa ibabaw ng ibang app</string>
+    <string name="assistant_edge_start_failed">Hindi ma-on ang hawakan sa gilid. Subukan ulit.</string>
+    <string name="assistant_edge_disconnected">Diniskonekta ng system ang assistant.</string>
+    <string name="assistant_edge_reconnect">Kumonektang muli</string>
+    <string name="assistant_edge_reconnect_steps">Sa mga setting ng assistant ng Android, piliin ang Wala, at pagkatapos ay piliin muli ang AndroidHarness.</string>
+    <string name="assistant_edge_grant_overlay">Payagan ang overlay</string>
+</resources>

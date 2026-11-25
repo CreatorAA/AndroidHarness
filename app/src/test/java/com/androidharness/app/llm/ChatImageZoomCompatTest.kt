@@ -11,6 +11,20 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ChatImageZoomCompatTest {
+    @Test fun phoneObservationIdLabelsTheExactScreenBytesInTheRequest() {
+        val provider = OpenAiCompatProvider(okhttp3.OkHttpClient(), ProviderFactory.json)
+        val name = "android_observe"
+        val image = ChatMessage(Role.TOOL, """{"ok":true,"observationId":"frame-12","image_attached":false}""",
+            toolCallId = "observe-1", toolName = name, images = listOf(com.androidharness.app.core.ImageRef("frame.png", "image/png")),
+            imageData = listOf(ImageData("image/png", "frame-bytes")))
+        val messages = provider.buildRequestBody(ProviderConfig("fixture", "Fixture", ProviderType.OPENAI_COMPAT,
+            "https://example.invalid", "gpt-4o"), "system", listOf(ChatMessage(Role.ASSISTANT,
+            toolCalls = listOf(ToolCallData("observe-1", name, "{}"))), image), emptyList(), RequestOptions())
+            .getValue("messages").jsonArray.map { it.jsonObject }
+        val payload = messages.last().getValue("content").jsonArray
+        assertTrue(payload[0].jsonObject.getValue("text").jsonPrimitive.content.contains("frame-12"))
+        assertEquals("data:image/png;base64,frame-bytes", payload[1].jsonObject.getValue("image_url").jsonObject.getValue("url").jsonPrimitive.content)
+    }
     @Test fun rehydratedBytesAndTheSerializedDeliveryContractAlwaysAgree() {
         val provider = OpenAiCompatProvider(okhttp3.OkHttpClient(), ProviderFactory.json)
         val original = ChatMessage(Role.TOOL, """{"ok":false,"image_attached":false,"error":"not_in_current_context","image_id":"img_logo","available_image":{"attachment_id":"img_crop","width":540,"height":576,"attached_bytes":123}}""",

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Chỉ dùng tiếng Quan Thoại ngoại tuyến</string>
+    <string name="voice_local_only_on">Sử dụng mô hình tiếng Quan Thoại đi kèm. Âm thanh của bạn không rời khỏi điện thoại.</string>
+    <string name="voice_system_first">Ưu tiên nhận dạng giọng nói của Android. Nếu không khả dụng, tính năng nhập bằng giọng nói tiếng Quan Thoại sẽ tiếp tục trên điện thoại.</string>
+    <string name="voice_live_handoff">Đang tiếp tục trên điện thoại này. Các từ đã hiển thị được giữ lại; bạn hãy tiếp tục nói.</string>
+    <string name="voice_local_stopped">Tính năng nhập bằng giọng nói trên thiết bị đã dừng. Bạn có thể giữ lại các từ đã hiển thị và tiếp tục nói hoặc nhập phần còn lại.</string>
+    <string name="voice_clip_unavailable">Không thể khôi phục bản chép lời đầy đủ từ bản ghi âm này.</string>
+    <string name="voice_continue_offline">Tiếp tục trên thiết bị</string>
+    <string name="voice_clip_handoff">Nhà cung cấp dịch vụ nhận dạng giọng nói không khả dụng. Đang chép lời bản ghi âm này trên điện thoại của bạn.</string>
+</resources>

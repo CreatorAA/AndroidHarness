@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Kawalan telefon Harness</string>
+    <string name="phone_driver_service_description">Membolehkan anda meminta pembantu membaca skrin, mengetik kawalan dan memasukkan teks. Kawalan telefon hanya berfungsi semasa tugas yang anda mulakan. Hentikan tugas untuk mengambil alih.</string>
+</resources>

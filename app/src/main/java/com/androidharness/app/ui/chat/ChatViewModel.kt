@@ -3,6 +3,7 @@ package com.androidharness.app.ui.chat
 import com.androidharness.app.data.SteeringMode
 import com.androidharness.app.R
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
@@ -30,6 +31,8 @@ import com.androidharness.app.llm.ProviderConfig
 import com.androidharness.app.llm.ProviderType
 import com.androidharness.app.llm.effectiveApiKey
 import com.androidharness.app.llm.RequestOptions
+import com.androidharness.app.workspace.WorkspaceManager
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -72,6 +75,8 @@ data class UsageStats(
 }
 
 sealed interface NavEvent {
+    data object PhoneSetup : NavEvent
+    data class PhoneNotice(val message: Int) : NavEvent
     data object NewChat : NavEvent
     data class OpenSession(val id: String) : NavEvent
     data class SelectSection(val kind: com.androidharness.app.data.ConversationKind) : NavEvent
@@ -505,7 +510,7 @@ class ChatViewModel(
         viewModelScope.launch {
             activeWorkspace.collect { project ->
                 mentionCacheKey = null
-                _state.update { it.copy(workspaceName = project?.name ?: "Workspace unavailable", mentionFiles = emptyList()) }
+                _state.update { it.copy(workspaceName = project?.name ?: ContextCompat.getContextForLanguage(c.appContext).getString(R.string.ui_workspace_unavailable), mentionFiles = emptyList()) }
             }
         }
         viewModelScope.launch {
@@ -637,7 +642,7 @@ class ChatViewModel(
         if (initialSessionId != null) {
             viewModelScope.launch {
                 c.settings.setLastActiveSessionId(initialSessionId)
-                val sess = c.sessions.session(initialSessionId)
+                val sess = c.sessions.openSession(initialSessionId)
                 _state.update {
                     it.copy(
                         sessionId = initialSessionId,
@@ -832,7 +837,7 @@ class ChatViewModel(
      */
     private fun ChatUiState.computeCurrentAction(): String? = when {
         pendingQuestion != null -> c.appContext.getString(R.string.ui_waiting_for_your_answer)
-        pendingApproval != null -> "Waiting for your approval"
+        pendingApproval != null -> ContextCompat.getContextForLanguage(c.appContext).getString(R.string.ui_waiting_for_your_approval)
         installingEnvironment != null -> c.appContext.getString(R.string.ui_installing_linux_environment)
         pendingEnvironment != null -> when {
             envState is com.androidharness.app.data.env.EnvState.NotInstalled -> c.appContext.getString(R.string.ui_waiting_for_your_approval)
@@ -945,6 +950,36 @@ class ChatViewModel(
             }
             SlashCommands.Kind.ENV -> {
                 _state.update { it.copy(showEnvSheet = true) }
+                return true
+            }
+            SlashCommands.Kind.PHONE -> {
+                val arg = resolved.phoneArgument.orEmpty()
+                if (arg.isEmpty()) { _navEvents.tryEmit(NavEvent.PhoneSetup); return true }
+                if (!_state.value.conversationReady || _state.value.conversation.isChat) return false
+                viewModelScope.launch {
+                    try {
+                        when (arg) {
+                            "--cancel" -> _navEvents.emit(NavEvent.PhoneNotice(if (c.codePhoneHandoff.cancel(sessionId))
+                                R.string.android_use_draft_cancelled else R.string.android_use_no_draft))
+                            "--result" -> {
+                                val task = sessionId?.let { c.sessions.latestPhoneTask(it) }
+                                _navEvents.emit(if (task == null) NavEvent.PhoneNotice(R.string.android_use_no_result)
+                                    else NavEvent.OpenSession(task))
+                            }
+                            else -> {
+                                val project = c.workspace.projectForChat(sessionId).first()
+                                if (project == null || project.kind == WorkspaceManager.KIND_SSH) {
+                                    _navEvents.emit(NavEvent.PhoneNotice(R.string.android_use_local_only))
+                                    return@launch
+                                }
+                                val source = ensureSession(arg.take(48))
+                                c.codePhoneHandoff.offer(source, project.id, arg)
+                                _navEvents.emit(NavEvent.PhoneNotice(R.string.android_use_draft_ready))
+                            }
+                        }
+                    } catch (e: CancellationException) { throw e }
+                    catch (e: Exception) { _state.update { it.copy(error = e.message) } }
+                }
                 return true
             }
             SlashCommands.Kind.BTW -> return askAside(resolved.sideQuestion.orEmpty())
@@ -2500,7 +2535,7 @@ class ChatViewModel(
             summary.filesFailed > 0 ->
                 c.appContext.getString(R.string.ui_undo_incomplete_file_s_restored_failed, (summary.filesRestored).toString(), (summary.filesFailed).toString()) +
                     c.appContext.getString(R.string.ui_history_and_failed_checkpoints_were_kept_retry)
-            summary.filesTouched == 0 && summary.messagesDeleted == 0 -> "Nothing to rewind for that turn."
+            summary.filesTouched == 0 && summary.messagesDeleted == 0 -> ContextCompat.getContextForLanguage(c.appContext).getString(R.string.chat_rewind_no_changes)
             else ->
                 c.appContext.getString(R.string.ui_undo_complete_file_s_restored, (summary.filesRestored).toString()) +
                     c.appContext.getString(R.string.ui_message_s_removed, (summary.messagesDeleted).toString())
@@ -2596,13 +2631,14 @@ class ChatViewModel(
 
     private suspend fun forceCompact() {
         val sid = sessionId ?: return
+        val context = ContextCompat.getContextForLanguage(c.appContext)
         val current = _state.value
         if (!current.modelSelectionReady || current.modelSelectionBusy || current.modelSelectionError != null) {
-            _state.update { it.copy(error = current.modelSelectionError ?: "Choose a model before compacting this chat.") }
+            _state.update { it.copy(error = current.modelSelectionError ?: context.getString(R.string.ui_choose_a_model_for_this_chat)) }
             return
         }
         val provider = current.activeProvider?.let { it.copy(model = current.effectiveModel ?: it.model) } ?: return
-        _state.update { it.copy(busy = true, error = null, compactionNote = "Preparing chat summary…") }
+        _state.update { it.copy(busy = true, error = null, compactionNote = context.getString(R.string.chat_compaction_preparing)) }
         var keepalive = false
         var committed = false
         try {
@@ -2611,9 +2647,9 @@ class ChatViewModel(
             kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                 val key = if (provider.id == com.androidharness.app.llm.HarnessProvider.ID) c.providers.harnessApiKey()
                     else provider.effectiveApiKey(c.providers.apiKey(provider.id))
-                check(key.isNotBlank()) { "Add this provider's API key before compacting." }
+                check(key.isNotBlank()) { context.getString(R.string.ui_provider_has_no_api_key_edit_it, provider.name) }
                 val snapshot = c.sessions.compactionSnapshot(sid)
-                check(snapshot.history.size >= 4) { "There are too few messages to compact yet." }
+                check(snapshot.history.size >= 4) { context.getString(R.string.chat_compaction_too_few_messages) }
                 val routing = com.androidharness.app.llm.FallbackRun(provider) {
                     val record = c.runManager.controls.flow(sid).value
                     com.androidharness.app.llm.effectiveFallback(c.settings.settings.first().fallbackPolicy, record.fallbackMode, record.fallbackOverride)
@@ -2638,7 +2674,7 @@ class ChatViewModel(
                             if (sessionId == sid) _state.update { it.copy(compactionNote = event.reason) }
                         }
                         is com.androidharness.app.llm.StreamEvent.Retrying -> if (sessionId == sid)
-                            _state.update { it.copy(compactionNote = "Retrying summary · attempt ${event.attempt} · ${event.reason}") }
+                            _state.update { it.copy(compactionNote = context.getString(R.string.chat_compaction_retrying, event.attempt, event.reason)) }
                         else -> Unit
                     } }) }
                 val before = c.sessions.commitCompaction(sid, summary, snapshot)
@@ -2653,12 +2689,12 @@ class ChatViewModel(
             }
         } catch (e: kotlinx.coroutines.CancellationException) {
             if (!committed) saveCompactionNotice(sid, ChatMessage(role = Role.SYSTEM,
-                text = "Compaction stopped. History was kept. Retry /compact when ready."))
+                text = CompactionResult.STOPPED.storedText()))
             throw e
         } catch (e: Exception) {
-            val message = if (committed) "Chat compacted, but its task settings or context estimate could not refresh: ${e.message}"
-                else "Compaction failed: ${e.message}. History was kept. Retry /compact or choose another model."
-            if (sessionId == sid) _state.update { it.copy(error = message) }
+            val result = if (committed) CompactionResult.SAVED else CompactionResult.FAILED
+            val message = result.storedText(e.message.toString())
+            if (sessionId == sid) _state.update { it.copy(error = result.localizedDetails(context, message)) }
             saveCompactionNotice(sid, ChatMessage(role = Role.SYSTEM, text = message, isError = true))
         } finally {
             if (sessionId == sid) _state.update { it.copy(busy = false, compactionNote = null) }

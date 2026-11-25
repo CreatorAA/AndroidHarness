@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** Pushes the agent's live status for the notification to display. */
 object RuntimeNotifier {
@@ -120,6 +121,8 @@ data class PendingPrompt(
     val detail: String? = null,
     /** Predefined answer buttons for [Kind.QUESTION]. */
     val options: List<String> = emptyList(),
+    /** Device actions must be approved on their own card, not by a session-wide notification button. */
+    val reviewInChat: Boolean = false,
 ) {
     enum class Kind { APPROVAL, QUESTION, ENVIRONMENT }
 }
@@ -215,6 +218,11 @@ class AgentService : Service() {
         createChannels()
         startForeground(NOTIFICATION_ID, buildNotification(RuntimeNotifier.status.value))
         scope.launch {
+            (applicationContext as HarnessApp).container.runManager.wakeLockDemand.collect { needed ->
+                if (needed) acquireWakeLock() else releaseWakeLock()
+            }
+        }
+        scope.launch {
             RuntimeNotifier.status.collect { text ->
                 runCatching {
                     AppNotifications.post(this@AgentService, NOTIFICATION_ID, buildNotification(text))
@@ -267,13 +275,9 @@ class AgentService : Service() {
             stopSelf()
             return START_NOT_STICKY
         }
-        when (intent?.action) {
-            ACTION_ACQUIRE_WAKELOCK -> acquireWakeLock()
-            ACTION_RELEASE_WAKELOCK -> releaseWakeLock()
-            ACTION_STOP -> {
-                stopFromNotification()
-                return START_NOT_STICKY
-            }
+        if (intent?.action == ACTION_STOP) {
+            stopFromNotification()
+            return START_NOT_STICKY
         }
         return START_STICKY
     }
@@ -289,7 +293,7 @@ class AgentService : Service() {
     }
 
     private fun acquireWakeLock() {
-        if (wakeLock != null) return
+        if (wakeLock?.isHeld == true) return
         runCatching {
             val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "harness:agent").apply {
@@ -355,7 +359,7 @@ class AgentService : Service() {
             )
         // The live card only surfaces actions on this ongoing notification, so a
         // blocked run must expose its answer buttons here too.
-        RuntimeNotifier.pendingPrompts.value.firstOrNull()?.takeIf { alertsEnabled }?.let { prompt ->
+        RuntimeNotifier.pendingPrompts.value.firstOrNull()?.takeIf { alertsEnabled && !it.reviewInChat }?.let { prompt ->
             when (prompt.kind) {
                 PendingPrompt.Kind.APPROVAL -> {
                     // Keep the live card to the two answers the chip promises;
@@ -399,12 +403,14 @@ class AgentService : Service() {
     )
 
     private fun stopFromNotification() {
-        scope.launch(Dispatchers.IO) {
-            val container = (applicationContext as? HarnessApp)?.container
-            runCatching { container?.telegram?.stopAndPause() }
-            runCatching { container?.runManager?.stopAllAndJoin() }
-            runCatching { container?.terminal?.stopTerminal() }
-            runCatching { container?.backgroundProcesses?.killAll() }
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val container = (applicationContext as? HarnessApp)?.container
+                runCatching { container?.telegram?.stopAndPause() }
+                runCatching { container?.runManager?.stopAllAndJoin() }
+                runCatching { container?.terminal?.stopTerminal() }
+                runCatching { container?.backgroundProcesses?.killAll() }
+            }
             releaseWakeLock()
             runCatching { stopForeground(STOP_FOREGROUND_REMOVE) }
             stopSelf()
@@ -429,6 +435,14 @@ class AgentService : Service() {
     }
 
     private fun buildActionNeeded(p: PendingPrompt): Notification {
+        if (p.reviewInChat) return Notification.Builder(this, ALERT_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_monochrome)
+            .setContentTitle(getString(R.string.phone_island_title))
+            .setContentText(getString(R.string.ui_approval_needed))
+            .setContentIntent(contentIntent(p.sessionId))
+            .setVisibility(Notification.VISIBILITY_PRIVATE)
+            .setAutoCancel(true)
+            .build()
         val body = buildString {
             append(p.headline)
             p.detail?.let { append("\n\n").append(it) }
@@ -550,13 +564,12 @@ class AgentService : Service() {
         const val EXTRA_SUBAGENT_CALL_ID = "subagent_call_id"
 
         private const val ACTION_START = "com.androidharness.app.action.START_BACKGROUND"
-        private const val ACTION_ACQUIRE_WAKELOCK = "com.androidharness.app.action.ACQUIRE_WAKELOCK"
-        private const val ACTION_RELEASE_WAKELOCK = "com.androidharness.app.action.RELEASE_WAKELOCK"
         private const val ACTION_STOP = "com.androidharness.app.action.STOP_APP"
         private const val OPEN_APP_REQUEST_CODE = 9104
         private const val STOP_REQUEST_CODE = 9105
 
         @Volatile private var current: AgentService? = null
+        internal val isRunning: Boolean get() = current != null
 
         fun stop(context: Context) { context.stopService(Intent(context, AgentService::class.java)) }
 
@@ -568,17 +581,5 @@ class AgentService : Service() {
             )
         }
 
-        fun acquireKeepalive(context: Context) {
-            if ((context.applicationContext as? HarnessApp)?.container?.runtimePolicy?.state?.value?.runInBackground != true) return
-            ContextCompat.startForegroundService(
-                context,
-                Intent(context, AgentService::class.java).setAction(ACTION_ACQUIRE_WAKELOCK),
-            )
-        }
-
-        fun releaseKeepalive(context: Context) {
-            // Releasing the last task must never resurrect a service stopped by the user.
-            current?.releaseWakeLock()
-        }
     }
 }

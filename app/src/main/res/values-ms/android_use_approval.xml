@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Ketik</string>
+    <string name="phone_review_long_press">Sentuh dan tahan</string>
+    <string name="phone_review_type">Masukkan teks</string>
+    <string name="phone_review_volume">Tetapkan kelantangan media</string>
+    <string name="phone_review_scroll_forward">Tatal ke hadapan</string>
+    <string name="phone_review_scroll_backward">Tatal ke belakang</string>
+    <string name="phone_review_swipe">Leret</string>
+    <string name="phone_review_drag">Seret</string>
+    <string name="phone_review_home">Kembali ke skrin utama</string>
+    <string name="android_use_launcher_trip">Dari %1$s, cari dan ketik %2$s pada skrin utama, kemudian teruskan tugas ini dalam %3$s.</string>
+    <string name="android_use_action_approval">Benarkan tindakan ini sekali sahaja?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Benarkan kawalan telefon untuk perbualan ini? Ejen boleh menghantar skrin apl sasaran kepada model yang dipilih, serta mengetik dan menaip. Ini juga membenarkan perintah telefon yang dibenarkan dalam perbualan ini membaca dan mengubah fail serta tetapan. Kebenaran akan diminta lagi sebelum menyerahkan perubahan dalam apl sasaran.</string>
+    <string name="android_use_submit_approval">Benarkan penyerahan ini sekali sahaja?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Tukar tugas ini kepada apl lain? Ejen akan dapat membaca skrin apl tersebut dan berinteraksi dengannya.\n\n%1$s</string>
+    <string name="android_use_code_entry">Hantar tugas kepada pembantu telefon</string>
+    <string name="android_use_code_hint">Tambah arahan, atau hantar /phone sahaja untuk membuka tetapan.</string>
+    <string name="android_use_draft_ready">Buka apl sasaran dan pilih Kawal telefon dalam pembantu dalam masa 10 minit. Gunakan /phone --result di sini untuk melihat perbualan.</string>
+    <string name="android_use_draft_expired">Draf ini telah tamat tempoh, dibatalkan atau diganti. Tutup dialog ini dan pilih Kawal telefon sekali lagi.</string>
+    <string name="android_use_draft_cancelled">Draf telefon dibatalkan.</string>
+    <string name="android_use_no_draft">Tiada draf telefon yang menunggu dalam perbualan ini.</string>
+    <string name="android_use_no_result">Tiada tugas telefon yang dimulakan daripada perbualan ini.</string>
+    <string name="android_use_local_only">Mulakan tugas telefon daripada ruang kerja Code setempat.</string>
+    <string name="android_use_from_code">Draf daripada Code</string>
+</resources>

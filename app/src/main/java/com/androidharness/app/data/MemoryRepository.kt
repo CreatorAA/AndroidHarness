@@ -156,7 +156,8 @@ class MemoryRepository(private val db: AppDatabase, private val settings: Settin
     val folders: Flow<List<MemoryFolderEntity>> get() = dao.memoryFoldersFlow()
 
     /** Every memory in backup form, each carrying its folder's agent limit. */
-    suspend fun backup(): List<BackupMemory> = dao.allMemories().toBackupMemories(dao.memoryFolders())
+    suspend fun backup(): List<BackupMemory> = backupSnapshot().memories
+    internal suspend fun backupSnapshot(): MemoryBackupSnapshot = db.withTransaction { dao.memorySnapshot() }
 
     suspend fun sectionForSession(sessionId: String?): MemorySection =
         if (sessionId != null && ConversationConfig.decode(dao.session(sessionId)?.conversationJson).isChat) MemorySection.CHAT else MemorySection.CODE
@@ -331,7 +332,8 @@ class MemoryRepository(private val db: AppDatabase, private val settings: Settin
                 val gated = checkedTriggerOnly(triggerOnly == true, words)
                 viewer.checkFolder(MemoryFolders.target(folder, category ?: MemoryCategory.FACT).folder)
                 val (target, created) = ensure(MemoryFolders.target(folder, category ?: MemoryCategory.FACT))
-                save(clean, target, scope, projectId, sessionId, section, owner, words, gated).copy(createdFolder = created)
+                // Duplicate detection above already used this conversation's permitted folders.
+                insert(clean, target, scope, projectId, sessionId, section, owner, words, gated).copy(createdFolder = created)
             }
         }
     }
@@ -342,24 +344,25 @@ class MemoryRepository(private val db: AppDatabase, private val settings: Settin
     ): MemoryEntity? =
         if (text.isBlank()) null else db.withTransaction {
             val words = MemoryKeywords.checked(keywords)
-            save(checkedText(text), ensure(MemoryFolderTarget(category, folder)).first, requestedScope, projectId, null, section, keywords = words,
-                triggerOnly = checkedTriggerOnly(triggerOnly, words)).memory
+            val clean = checkedText(text)
+            val target = ensure(MemoryFolderTarget(category, folder)).first
+            val scope = if (requestedScope == MemoryScope.PROJECT && projectId != null) MemoryScope.PROJECT else MemoryScope.GLOBAL
+            val actualProject = projectId.takeIf { scope == MemoryScope.PROJECT }
+            val gated = checkedTriggerOnly(triggerOnly, words)
+            val existing = dao.allMemories().firstOrNull { it.consolidatedInto == null && !it.isSummary && it.scope == scope.name &&
+                it.projectId == actualProject && MemoryAccess.belongsTo(it, section) && MemoryMatch.key(it.text) == MemoryMatch.key(clean) }
+            if (existing != null) {
+                check(existing.enabled) { "This fact already exists as a disabled memory. Enable it in Settings before using it again." }
+                existing
+            } else insert(clean, target, scope, actualProject, null, section, keywords = words, triggerOnly = gated).memory
         }
 
-    private suspend fun save(
-        text: String, target: MemoryFolderTarget, requestedScope: MemoryScope, projectId: String?, sessionId: String?, section: MemorySection,
+    private suspend fun insert(
+        text: String, target: MemoryFolderTarget, scope: MemoryScope, projectId: String?, sessionId: String?, section: MemorySection,
         owner: String? = null, keywords: String = "", triggerOnly: Boolean = false,
     ): WriteResult {
-        val scope = if (requestedScope == MemoryScope.PROJECT && projectId != null) MemoryScope.PROJECT else MemoryScope.GLOBAL
-        val actualProject = projectId.takeIf { scope == MemoryScope.PROJECT }
-        val existing = dao.allMemories().firstOrNull { it.consolidatedInto == null && !it.isSummary && it.scope == scope.name &&
-            it.projectId == actualProject && MemoryAccess.belongsTo(it, section, owner) && MemoryMatch.key(it.text) == MemoryMatch.key(text) }
-        if (existing != null) {
-            check(existing.enabled) { "This fact already exists as a disabled memory. Enable it in Settings before using it again." }
-            return WriteResult(existing, Action.UNCHANGED)
-        }
         val now = System.currentTimeMillis()
-        val memory = MemoryEntity(UUID.randomUUID().toString(), text, target.category.name, scope.name, actualProject,
+        val memory = MemoryEntity(UUID.randomUUID().toString(), text, target.category.name, scope.name, projectId,
             sessionId, createdAt = now, updatedAt = now, section = section.name, agentId = owner, folder = target.folder, keywords = keywords, triggerOnly = triggerOnly)
         dao.upsertMemory(memory)
         trim()
@@ -477,21 +480,11 @@ class MemoryRepository(private val db: AppDatabase, private val settings: Settin
     suspend fun importMissing(
         incoming: List<BackupMemory>,
         remapProject: (String?) -> String? = { it },
-    ): Int {
-        val plan = MemoryBackupMerge.plan(dao.allMemories(), incoming, remapProject)
-        if (plan.isEmpty()) return 0
-        val now = System.currentTimeMillis()
-        db.withTransaction {
-            // Reuse an existing folder's spelling so "termux" never sits beside "Termux".
-            val known = folderNames()
-            MemoryBackupMerge.newFolders(plan, known, now).forEach { dao.insertMemoryFolder(it) }
-            plan.forEach { entry ->
-                val folder = entry.folder?.let { name -> known.firstOrNull { MemoryFolders.same(it, name) } ?: name }
-                dao.upsertMemory(MemoryBackupMerge.entity(entry.copy(folder = folder), now))
-            }
-        }
-        return plan.size
-    }
+    ): Int = importMissing(incoming, emptyList(), remapProject)
+
+    internal suspend fun importMissing(incoming: List<BackupMemory>, folders: List<BackupMemoryFolder>,
+                                       remapProject: (String?) -> String?): Int =
+        db.withTransaction { MemoryBackupMerge.restore(dao, incoming, folders, remapProject) }
 
     suspend fun recallById(id: String, sessionId: String?, requestedSection: MemorySection? = null): MemoryEntity {
         check(isEnabled(sessionId)) { "Memory is off for this conversation." }

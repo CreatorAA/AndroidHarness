@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Управление телефоном Harness</string>
+    <string name="phone_driver_service_description">Позволяет попросить ассистента прочитать экран, нажать элементы управления и ввести текст. Управление телефоном работает только во время запущенной вами задачи. Остановите задачу, чтобы снова управлять телефоном самостоятельно.</string>
+</resources>

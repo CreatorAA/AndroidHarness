@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">%1$s ஐத் திறக்கவா?</string>
+    <string name="app_request_search">%1$s இல் “%2$s” என்பதைத் தேடவா?</string>
+    <string name="app_request_choose_open">எந்த ஆப்ஸைத் திறக்க வேண்டும்?</string>
+    <string name="app_request_choose_map">“%1$s” என்பதை எந்த வரைபட ஆப்ஸில் தேட வேண்டும்?</string>
+    <string name="app_request_missing">இந்த ஃபோனில் திறக்கக்கூடிய “%1$s” என்ற ஆப்ஸைக் கண்டுபிடிக்க முடியவில்லை.</string>
+    <string name="app_request_alternative">கீழே உள்ள வரைபட ஆப்ஸ்களில் ஒன்றைப் பயன்படுத்தி “%1$s” என்பதைத் தேடலாம்.</string>
+    <string name="app_request_open_only">%1$s ஐத் திறக்கலாம், ஆனால் அதில் பொது இடங்களைத் தேட முடியாது. தேடாமல் திறக்கவா?</string>
+    <string name="app_request_no_map">நிறுவப்பட்ட எந்த ஆப்ஸிலும் “%1$s” என்பதை வரைபடத்தில் தேட முடியாது.</string>
+    <string name="app_request_no_entry">இந்தக் கோரிக்கைக்கு %1$s இல் பயன்படுத்தக்கூடிய நுழைவுப் புள்ளி இல்லை.</string>
+    <string name="app_request_opened">%1$s ஐத் திறப்பதற்கான கோரிக்கை அனுப்பப்பட்டது.</string>
+    <string name="app_request_sent">“%2$s” என்பதற்கான தேடல் %1$s க்கு அனுப்பப்பட்டது.</string>
+    <string name="app_request_failed">இந்தக் கோரிக்கையை %1$s க்கு அனுப்ப முடியவில்லை. கிடைக்கும் ஆப்ஸ்களைச் சரிபார்க்க மீண்டும் கேட்கவும்.</string>
+    <string name="app_request_cancelled">ரத்துசெய்யப்பட்டது. எந்த ஆப்ஸும் திறக்கப்படவில்லை.</string>
+</resources>

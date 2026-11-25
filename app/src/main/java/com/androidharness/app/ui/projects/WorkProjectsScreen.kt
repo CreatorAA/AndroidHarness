@@ -66,6 +66,7 @@ import com.androidharness.app.ui.common.ExpressiveSectionLabel
 import com.androidharness.app.ui.common.TextButton
 import com.androidharness.app.ui.common.formatRelativeTime
 import com.androidharness.app.ui.common.workspaceKindIcon
+import com.androidharness.app.workspace.displayWorkspaceName
 import com.androidharness.app.ui.settings.SettingsExpressiveTheme
 import com.androidharness.app.ui.settings.SettingsHeroBadge
 import com.androidharness.app.ui.theme.expressiveEffectsSpec
@@ -177,7 +178,7 @@ fun WorkProjectScreen(
                     val grants = selection?.grants.orEmpty()
                     itemsIndexed(grants, key = { _, it -> "workspace-${it.projectId}" }) { index, grant ->
                         val workspace = workspaces.firstOrNull { it.id == grant.projectId }
-                        ExpressiveListRow(index, grants.size + 1, workspace?.name ?: context.getString(R.string.wp_editor_unavailable),
+                        ExpressiveListRow(index, grants.size + 1, workspace?.displayWorkspaceName(context) ?: context.getString(R.string.wp_editor_unavailable),
                             subtitle = workspace?.let { container.workspace.describe(it).kindLabel },
                             onClick = workspace?.let { { onOpenWorkspace(it.id) } },
                             modifier = Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec()),

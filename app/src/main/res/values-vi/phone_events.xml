@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">Bạn vẫn có thể xem lời nhắc ở đây khi đã tắt cảnh báo trong mục «%1$s».</string>
+    <string name="phone_events_title">Lời nhắc sự kiện trên điện thoại</string>
+    <string name="phone_events_intro">Nhận lời nhắc khi một ứng dụng đã chọn mở hoặc gửi thông báo. Xem lại tác vụ được liên kết trước khi chạy.</string>
+    <string name="phone_event_ready">Lời nhắc sự kiện trên điện thoại</string>
+    <string name="phone_event_open_reminder">%1$s đã kích hoạt lời nhắc của bạn. Nhấn để xem lại.</string>
+    <string name="phone_events_grant_notifications">Cho phép truy cập thông báo</string>
+    <string name="phone_events_grant_window">Bật Điều khiển điện thoại bằng Harness trong phần Trợ năng</string>
+    <string name="phone_events_show_alerts">Cho phép thông báo nhắc nhở</string>
+    <string name="phone_event_opened">%1$s mở</string>
+    <string name="phone_event_notified">%1$s gửi thông báo</string>
+    <string name="phone_event_review_task">Xem lại: %1$s</string>
+    <string name="phone_event_dismiss">Bỏ qua</string>
+    <string name="phone_event_remind_only">Chỉ nhắc tôi</string>
+    <string name="phone_event_task_missing">Tác vụ được liên kết không còn khả dụng</string>
+    <string name="phone_event_edit">Chỉnh sửa quy tắc</string>
+    <string name="phone_event_remove">Xóa quy tắc</string>
+    <string name="phone_event_add">Thêm quy tắc cho ứng dụng</string>
+    <string name="phone_event_view_notices">Thông báo đang hiển thị (%1$d)</string>
+    <string name="phone_event_active_notices">Thông báo hiện tại</string>
+    <string name="phone_event_metadata_only">Chỉ hiển thị ứng dụng và thời gian. Mở thông báo trong ứng dụng gốc để đọc.</string>
+    <string name="phone_event_no_notices">Không có thông báo hiện tại từ các ứng dụng bạn đã chọn.</string>
+    <string name="phone_event_no_listener">Dịch vụ theo dõi thông báo chưa được kết nối.</string>
+    <string name="phone_event_open_source">Mở trong ứng dụng</string>
+    <string name="phone_event_mark_read">Đánh dấu đã đọc</string>
+    <string name="phone_event_read_confirm">Yêu cầu %1$s đánh dấu thông báo này là đã đọc?</string>
+    <string name="phone_event_task_busy">Tác vụ này đang tạm dừng, đã chạy hoặc không còn được chạy thủ công.</string>
+    <string name="phone_event_run_task">Chạy tác vụ</string>
+    <string name="phone_event_unavailable">Mục này không còn khả dụng.</string>
+    <string name="phone_event_choose_app">Chọn ứng dụng</string>
+    <string name="phone_event_search">Tên ứng dụng hoặc tên gói</string>
+    <string name="phone_event_when">Khi</string>
+    <string name="phone_event_when_open">Tôi mở ứng dụng này</string>
+    <string name="phone_event_when_notified">Ứng dụng này gửi thông báo</string>
+    <string name="phone_event_then">Nhắc tôi xem lại</string>
+    <string name="phone_event_save">Lưu quy tắc</string>
+    <string name="phone_event_all_rules">Cả hai sự kiện đã được thiết lập. Hãy chỉnh sửa các quy tắc hiện có bên dưới.</string>
+</resources>

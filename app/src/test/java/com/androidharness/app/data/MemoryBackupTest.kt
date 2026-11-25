@@ -49,6 +49,12 @@ class MemoryBackupTest {
         assertEquals(listOf("b"), plan.map { it.id })
     }
 
+    @Test fun `the same fact in a different folder keeps its own audience on restore`() {
+        val plan = MemoryBackupMerge.plan(listOf(existing("restricted", "Use metric").copy(folder = "Team")),
+            listOf(incoming("public", "Use metric"), incoming("duplicate", "Use metric").copy(folder = "team")))
+        assertEquals(listOf("public"), plan.map { it.id })
+    }
+
     @Test
     fun `a project memory whose project is gone becomes global`() {
         val plan = MemoryBackupMerge.plan(

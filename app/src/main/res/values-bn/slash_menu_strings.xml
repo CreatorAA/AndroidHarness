@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">নতুন কথোপকথন শুরু করুন</string>
+    <string name="slash_menu_compact">প্রসঙ্গ সংক্ষিপ্ত করুন</string>
+    <string name="slash_menu_compact_hint">পুরোনো প্রসঙ্গের সারাংশ তৈরি করুন</string>
+    <string name="slash_menu_cost">খরচ</string>
+    <string name="slash_menu_cost_hint">মোট টোকেন ও খরচ দেখান</string>
+    <string name="slash_menu_btw_hint">চ্যাটে যোগ না করে বর্তমান প্রসঙ্গ নিয়ে প্রশ্ন করুন</string>
+    <string name="slash_menu_doctor">Harness ডায়াগনস্টিক</string>
+    <string name="slash_menu_doctor_hint">Harness টুলগুলোর স্ব-পরীক্ষা চালান</string>
+    <string name="slash_menu_init">প্রকল্প শুরু করুন</string>
+    <string name="slash_menu_init_hint">AGENTS.md তৈরি বা হালনাগাদ করুন</string>
+    <string name="slash_menu_review_hint">সম্পাদনা না করে অপেক্ষমাণ পরিবর্তন পর্যালোচনা করুন। কমান্ডের পরে পর্যালোচনার বিষয় লিখুন।</string>
+    <string name="slash_menu_plan_hint">পরিকল্পনা দক্ষতা লোড করে পরিকল্পনা মোডে যান</string>
+    <string name="slash_menu_skills">দক্ষতাগুলো দেখুন</string>
+    <string name="slash_menu_skills_hint">দক্ষতা বাছাইয়ের সম্পূর্ণ তালিকা খুলুন</string>
+    <string name="slash_menu_env_hint">Linux পরিবেশ পরীক্ষা, হালনাগাদ, ইনস্টল বা মেরামত করুন</string>
+    <string name="slash_menu_snippet">খণ্ডাংশ</string>
+    <string name="slash_menu_snippet_hint">সংরক্ষিত প্রম্পটের খণ্ডাংশ</string>
+</resources>

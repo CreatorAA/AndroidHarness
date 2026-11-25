@@ -1,6 +1,14 @@
 package com.androidharness.app.agent
 
+import com.androidharness.app.R
+import com.androidharness.app.androiduse.AndroidUseSession
+import com.androidharness.app.llm.ModelPrices
+import com.androidharness.app.llm.ModelsDev
+import com.androidharness.app.llm.ServerContext
+import com.androidharness.app.tools.SuggestAppActionTool
+
 import android.content.Context
+import android.util.Log
 import com.androidharness.app.AgentService
 import com.androidharness.app.PendingPrompt
 import com.androidharness.app.RuntimeNotifier
@@ -36,12 +44,15 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.UUID
@@ -70,6 +81,7 @@ class RunManager(
     private val repoMap: com.androidharness.app.repomap.RepoMapCache? = null,
     private val chatModels: com.androidharness.app.data.ChatModelRepository =
         com.androidharness.app.data.ChatModelRepository(settings, providers, sessions),
+    private val phone: AndroidUseSession? = null,
     private val canRun: suspend () -> Boolean = { true },
 ) {
 
@@ -260,13 +272,13 @@ class RunManager(
     private val deltaBuffers = mutableMapOf<String, DeltaBuffers>()
 
     private val keepalive = KeepaliveTracker(
-        onAcquire = { runCatching { AgentService.acquireKeepalive(context) } },
-        onRelease = { runCatching { AgentService.releaseKeepalive(context) } },
+        onFirstLease = { runCatching { AgentService.startPersistent(context) } },
         onActiveChanged = { active ->
             RuntimeNotifier.setActive(active)
             if (!active) RuntimeNotifier.update(RuntimeNotifier.IDLE_STATUS)
         },
     )
+    internal val wakeLockDemand = keepalive.wakeLockDemand(settings.settings)
 
     val subagents = SubagentRuns(
         java.io.File(context.noBackupFilesDir, "subagent-runs.json"), appScope,
@@ -274,10 +286,7 @@ class RunManager(
             when (event) {
                 is AgentEvent.SubagentMessageCommitted -> sessions.addMessage(run.sessionId, event.message, run.turnId)
                 is AgentEvent.Usage -> {
-                    val price = if (event.providerName.startsWith("ChatGPT · ")) null else com.androidharness.app.llm.ModelPrices.estimateAt(
-                        model = event.model, totalInputTokens = event.inputTokens.toLong(), outputTokens = event.outputTokens.toLong(),
-                        cachedTokens = event.cachedInputTokens.toLong(), cacheWriteTokens = event.cacheWriteTokens.toLong(),
-                        providerKey = event.providerKey, atMillis = System.currentTimeMillis())
+                    val price = event.estimatedCost()
                     kotlin.coroutines.coroutineContext[TaskBudget]?.let { budget ->
                         budget.add(event.inputTokens, event.outputTokens, price)
                         val usage = budget.usage()
@@ -321,6 +330,35 @@ class RunManager(
     private val subagentFollowUps = java.util.concurrent.ConcurrentHashMap<String, Job>()
     private val stoppedSubagentSessions = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
 
+    // Run state turns idle before its queued successor has finished deciding whether to run.
+    private val phoneHistoryIdle = MutableStateFlow(0L)
+    init {
+        appScope.launch(Dispatchers.IO) {
+            var deferred = false
+            val retries = combine(runningSessionIds, phone?.activeSession ?: flowOf(null), phoneHistoryIdle) { _, _, _ -> false }
+            merge(sessions.sessionInsertions.map { true }, retries).collect { inserted ->
+                if (!inserted && !deferred) return@collect
+                try {
+                    // Wait for streamed archive rows and images before blocking new run starts.
+                    sessions.chatArchiveLock.withLock { workspaceGuard.withLock {
+                        deferred = false
+                        val removed = sessions.prunePhoneHistory { sid ->
+                            val busy = phone?.isActive(sid) == true || hasActiveSubagents(sid) || subagentFollowUps.containsKey(sid) ||
+                                synchronized(lock) { sid in jobs || sid in followUpJobs }
+                            if (busy) deferred = true
+                            busy
+                        }
+                        if (removed.isNotEmpty()) {
+                            settings.forgetSidebarSessions(removed)
+                            removed.forEach(controls::forget)
+                        }
+                    } }
+                } catch (e: CancellationException) { throw e }
+                catch (e: Exception) { Log.w("PhoneHistory", "Could not finish pruning assistant history", e) }
+            }
+        }
+    }
+
     private fun scheduleSubagentFollowUp(sessionId: String) {
         if (sessionId in stoppedSubagentSessions) return
         val next = appScope.launch(start = kotlinx.coroutines.CoroutineStart.LAZY) {
@@ -345,7 +383,10 @@ class RunManager(
             catch (_: Exception) { /* Results remain pending for the next user turn. */ }
         }
         subagentFollowUps.put(sessionId, next)?.cancel()
-        next.invokeOnCompletion { subagentFollowUps.remove(sessionId, next) }
+        next.invokeOnCompletion {
+            subagentFollowUps.remove(sessionId, next)
+            phoneHistoryIdle.update { it + 1 }
+        }
         next.start()
     }
 
@@ -450,12 +491,17 @@ class RunManager(
         allowModelFallback: Boolean = true,
         /** Research depth for this run only, instead of the saved setting (Chat's "Dig deeper"). */
         searchDepthOverride: com.androidharness.app.data.SearchDepth? = null,
+        /** Set only by the foreground phone-task entry; never persisted or inherited on resume. */
+        androidUse: Boolean = false,
+        appProposal: SuggestAppActionTool? = null,
+        /** Panel runs normally deliver in-window; check the current result surface on Main at finish. */
+        notifyWhenHidden: (() -> Boolean)? = null,
     ): String = kotlinx.coroutines.withContext(Dispatchers.IO) { workspaceGuard.withLock {
         startRunLocked(sessionId, text, imageRefs, config, apiKey, permissionMode, mode,
             maxOutputTokens, maxContextTokens, thinking, maxIterations, workspaceOverride,
             notifyOnFinish, resume, queuedPromptId, replacementMessageId,
             onlyIfIdle = onlyIfIdle, automationRunId = automationRunId, allowModelFallback = allowModelFallback,
-            searchDepthOverride = searchDepthOverride)
+            searchDepthOverride = searchDepthOverride, androidUse = androidUse, appProposal = appProposal, notifyWhenHidden = notifyWhenHidden)
     } }
 
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
@@ -482,10 +528,17 @@ class RunManager(
         allowModelFallback: Boolean = true,
         subagentContinuation: Boolean = false,
         searchDepthOverride: com.androidharness.app.data.SearchDepth? = null,
+        androidUse: Boolean = false,
+        appProposal: SuggestAppActionTool? = null,
+        notifyWhenHidden: (() -> Boolean)? = null,
         /** A turn the goal loop started: usage and the task list carry on, so limits cover the whole goal. */
         goalContinuation: Boolean = false,
     ): String {
-        check(canRun()) { context.getString(com.androidharness.app.R.string.background_run_blocked) }
+        val allowedAtRegistration = canRun()
+        // The user may have hidden the panel during model/session setup. Save the submitted
+        // question and its normal recovery record; execution still requires canRun() below.
+        val savePanelQuestion = notifyWhenHidden != null && sessionId != null && !resume && replacementMessageId == null
+        check(allowedAtRegistration || savePanelQuestion) { context.getString(R.string.background_run_blocked) }
         val sid = sessionId ?: sessions.createSession(
             text.take(48),
             projectId = workspace.currentProjectOnce().id,
@@ -511,7 +564,7 @@ class RunManager(
         }
         val conversation = com.androidharness.app.data.ConversationConfig.decode(sessions.session(sid)?.conversationJson)
         // A llama.cpp server holds only what it was started with, whatever the settings say.
-        val serverContext = com.androidharness.app.llm.ServerContext.tokens(runConfig, apiKey)
+        val serverContext = if (allowedAtRegistration) ServerContext.tokens(runConfig, apiKey) else null
         val catalogContext = providers.catalogs.first()[runConfig.id]?.firstOrNull { it.id == runConfig.model }?.contextTokens
         // A gateway can serve a model with less than its own window; its rejection told us how much.
         val learnedContext = reasoningPrefs.learnedContextLimits[TextFileWrites.modelKey(runConfig.id, runConfig.model)]
@@ -639,6 +692,7 @@ class RunManager(
             var recoverableInterruption = false
             try {
                 startSignal.await()
+                if (savePanelQuestion && !allowedAtRegistration) throw AppLeftForeground()
                 check(canRun()) { context.getString(com.androidharness.app.R.string.background_run_blocked) }
                 kotlin.coroutines.coroutineContext.ensureActive()
                 // SSE chunks arrive far faster than frames render; batch them so
@@ -705,6 +759,8 @@ class RunManager(
                     autoCompactTokens = { controls.flow(sid).value.autoCompactTokens
                         ?: settings.settings.first().autoCompactTokens },
                     mode = if (conversation.isChat) AgentMode.ACT else mode,
+                    androidUse = androidUse && mode == AgentMode.ACT && !resume && !subagentContinuation &&
+                        automationRunId == null && followUpRunId == null,
                     conversation = conversation,
                     searchDepth = searchDepthOverride ?: reasoningPrefs.searchDepth,
                     chatImageFrequency = reasoningPrefs.chatImageFrequency,
@@ -712,7 +768,12 @@ class RunManager(
                     maxIterations = maxIterations,
                     // Connected MCP servers ride into this run; a failing
                     // server must never block the run itself.
-                    extraTools = if (conversation.isChat || runWorkspace is ChatWorkspaceFs) emptyList() else mcp?.activeTools(runWorkspace, loadedConfiguration, settings.settings.first().permissionMode, "$sid:$turnId").orEmpty(),
+                    extraTools = when {
+                        conversation.isChat -> listOfNotNull(appProposal?.takeIf { mode == AgentMode.ACT && !androidUse &&
+                            !resume && !subagentContinuation && automationRunId == null && followUpRunId == null })
+                        runWorkspace is ChatWorkspaceFs -> emptyList()
+                        else -> mcp?.activeTools(runWorkspace, loadedConfiguration, settings.settings.first().permissionMode, "$sid:$turnId").orEmpty()
+                    },
                     projectConfiguration = projectConfiguration,
                     pluginsApproved = projectToolsApproved,
                     resolveSubagentModel = modelResolver::resolve,
@@ -724,13 +785,7 @@ class RunManager(
                         if (event is AgentEvent.Finished) finishedNormally = event.reason == null
                         if (event is AgentEvent.Error) recoverableInterruption = event.recoverable
                         if (event is AgentEvent.Usage) {
-                            val price = if (event.providerName.startsWith("ChatGPT · ")) null else com.androidharness.app.llm.ModelPrices.estimateAt(
-                                model = event.model, totalInputTokens = event.inputTokens.toLong(),
-                                outputTokens = event.outputTokens.toLong(), cachedTokens = event.cachedInputTokens.toLong(),
-                                cacheWriteTokens = event.cacheWriteTokens.toLong(),
-                                providerKey = event.providerKey ?: com.androidharness.app.llm.ModelsDev.providerKeyFor(runConfig.baseUrl),
-                                atMillis = System.currentTimeMillis(),
-                            )
+                            val price = event.estimatedCost(runConfig.baseUrl)
                             budget.add(event.inputTokens, event.outputTokens, price)
                             if (record.limits.cost > 0 && price == null) {
                                 controls.update(sid) { it.copy(reason = "Cost unavailable for this model") }
@@ -747,12 +802,18 @@ class RunManager(
             } catch (paused: TaskPaused) {
                 controls.update(sid) { it.copy(reason = paused.reasonText) }
             } catch (ce: CancellationException) {
-                live.update { it.copy(cancelled = true) }
+                if (ce is AppLeftForeground && conversation.isPhone) {
+                    val reason = context.getString(R.string.phone_background_paused)
+                    live.update { it.copy(error = reason) }
+                    // Unlike an explicit Stop this turn remains resumable, without a device grant.
+                } else live.update { it.copy(cancelled = true) }
                 throw ce
             } catch (e: Exception) {
                 live.update { it.copy(error = e.message ?: "Unexpected error") }
             } finally {
                 kotlinx.coroutines.withContext(kotlinx.coroutines.NonCancellable) {
+                val deliverResult = notifyOnFinish || notifyWhenHidden?.let { withContext(Dispatchers.Main.immediate) { it() } } == true
+                if (androidUse) phone?.end(sid)
                 mcp?.releaseWorkspaceTools("$sid:$turnId")
                 compactionSnapshots.remove(sid)
                 flushJob?.cancel()
@@ -812,9 +873,9 @@ class RunManager(
                 }
                 try {
                     // A goal that will be checked notifies once it is met or stops, not after every turn.
-                    val goalPending = completed && mode != AgentMode.PLAN && record.automationRunId == null &&
+                    val goalPending = completed && !conversation.isChat && mode != AgentMode.PLAN && record.automationRunId == null &&
                         !hasActiveSubagents(sid) && controls.flow(sid).value.let { it.goal?.checking == true && it.queue.isEmpty() }
-                    val result = if (notifyOnFinish && !goalPending) notifyFinished(sid, if (completed) live.value.error else
+                    val result = if (deliverResult && !goalPending && (!live.value.cancelled || notifyOnFinish)) notifyFinished(sid, if (completed) live.value.error else
                         controls.flow(sid).value.reason ?: "Task paused") else null
                     end = RunFollowUps.End(sid, runId,
                         finishedNotification = completed && (!notifyOnFinish || goalPending || result?.ok == true),
@@ -826,9 +887,12 @@ class RunManager(
             }
         }
         job.invokeOnCompletion {
-            synchronized(lock) { if (jobs[sid] === job) jobs.remove(sid) }
-            val ended = end ?: return@invokeOnCompletion
-            if (record.automationRunId != null) return@invokeOnCompletion
+            val ended = end
+            if (ended == null || record.automationRunId != null) {
+                synchronized(lock) { if (jobs[sid] === job) jobs.remove(sid) }
+                if (conversation.isPhone) phoneHistoryIdle.update { it + 1 }
+                return@invokeOnCompletion
+            }
             val successor = appScope.launch(start = kotlinx.coroutines.CoroutineStart.LAZY) {
                 // Wait outside the completed job so starting its successor cannot join itself.
                 job.join()
@@ -869,8 +933,14 @@ class RunManager(
                         allowModelFallback = controls.flow(sid).value.allowModelFallback, goalContinuation = true)
                 }
             }
-            synchronized(lock) { followUpJobs[sid] = successor }
-            successor.invokeOnCompletion { synchronized(lock) { if (followUpJobs[sid] === successor) followUpJobs.remove(sid) } }
+            synchronized(lock) {
+                if (jobs[sid] === job) jobs.remove(sid)
+                followUpJobs[sid] = successor
+            }
+            successor.invokeOnCompletion {
+                synchronized(lock) { if (followUpJobs[sid] === successor) followUpJobs.remove(sid) }
+                if (conversation.isPhone) phoneHistoryIdle.update { it + 1 }
+            }
             successor.start()
         }
         synchronized(lock) {
@@ -979,7 +1049,7 @@ class RunManager(
             is AgentEvent.QuestionNeeded -> {
                 live.update { it.copy(pendingQuestion = event.request, questionAutoAt = null) }
                 // Only Code questions continue on their own, and only when there is something to recommend.
-                if (QuestionAutoContinue.answer(event.request) != null &&
+                if (!event.request.phoneClarification && QuestionAutoContinue.answer(event.request) != null &&
                     !com.androidharness.app.data.ConversationConfig.decode(sessions.session(sessionId)?.conversationJson).isChat)
                     watchQuestion(sessionId, event.request)
             }
@@ -1042,8 +1112,9 @@ class RunManager(
                 }
             }
 
-            // Already saved by the steering inbox, before it left the queue.
-            is AgentEvent.UserMessageInjected -> live.update { it.copy(queuedMessage = null) }
+            is AgentEvent.UserMessageInjected -> {
+                live.update { it.copy(queuedMessage = null) }
+            }
 
             is AgentEvent.Usage -> {
                 if (event.parentCallId == null) live.update { st -> st.copy(reasoningTokens = event.reasoningTokens, codeDrafts = st.codeDrafts.mapValues { (_, draft) ->
@@ -1142,26 +1213,28 @@ class RunManager(
     // User actions during a run
     // ------------------------------------------------------------------
 
-    fun approve(sessionId: String, rememberForSession: Boolean) {
+    fun approve(sessionId: String, rememberForSession: Boolean, fromNotification: Boolean = false) {
         val state = stateOf(sessionId).value
         val pending = state.pendingApproval ?: return
-        resolveApproval(sessionId, state.turnId ?: return, pending.call.id, true, rememberForSession)
+        resolveApproval(sessionId, state.turnId ?: return, pending.call.id, true, rememberForSession, outsideApp = fromNotification)
     }
 
-    fun deny(sessionId: String) {
+    fun deny(sessionId: String, fromNotification: Boolean = false) {
         val state = stateOf(sessionId).value
-        resolveApproval(sessionId, state.turnId ?: return, state.pendingApproval?.call?.id ?: return, false, false)
+        resolveApproval(sessionId, state.turnId ?: return, state.pendingApproval?.call?.id ?: return, false, false, outsideApp = fromNotification)
     }
 
     /** A delayed Telegram button can resolve only the exact run and tool shown on that button. */
     fun respondToRemoteApproval(sessionId: String, turnId: String, callId: String, allow: Boolean, fingerprint: String? = null): Boolean =
-        resolveApproval(sessionId, turnId, callId, allow, false, fingerprint)
+        resolveApproval(sessionId, turnId, callId, allow, false, fingerprint, outsideApp = true)
 
-    private fun resolveApproval(sessionId: String, turnId: String, callId: String, allow: Boolean, remember: Boolean, fingerprint: String? = null): Boolean {
+    private fun resolveApproval(sessionId: String, turnId: String, callId: String, allow: Boolean, remember: Boolean,
+        fingerprint: String? = null, outsideApp: Boolean = false): Boolean {
         val live = stateOf(sessionId)
         while (true) {
             val current = live.value
             val pending = current.pendingApproval ?: return false
+            if (outsideApp && pending.requiresPhoneReview) return false
             if (current.turnId != turnId || pending.call.id != callId) return false
             if (fingerprint != null && RemotePromptIdentity.approval(pending) != fingerprint) return false
             if (!live.compareAndSet(current, current.copy(pendingApproval = null))) continue
@@ -1271,6 +1344,7 @@ class RunManager(
     }
 
     fun stop(sessionId: String) {
+        phone?.end(sessionId)
         stoppedSubagentSessions += sessionId
         subagentFollowUps.remove(sessionId)?.cancel()
         subagents.stopSession(sessionId)
@@ -1281,18 +1355,25 @@ class RunManager(
 
     /** Serializes stopping with run registration, including queued and subagent continuations. */
     internal suspend fun stopIfBackgroundDisabled() = workspaceGuard.withLock {
-        if (!canRun()) stopAllAndJoin()
+        if (!canRun()) stopAllAndJoin(AppLeftForeground())
     }
 
+    private class AppLeftForeground : CancellationException("App left foreground with background running off")
+
     /** Cancels every live agent run and waits for each run's cleanup. */
-    suspend fun stopAllAndJoin() {
+    suspend fun stopAllAndJoin() = stopAllAndJoin(null)
+
+    private suspend fun stopAllAndJoin(cause: CancellationException?) {
+        // Give the run the policy interruption before ending a phone lease wakes a pending prompt.
+        if (cause != null) synchronized(lock) { jobs.values.toList() }.forEach { it.cancel(cause) }
+        synchronized(lock) { jobs.keys.toList() }.forEach { phone?.end(it) }
         stoppedSubagentSessions += runningSessionIds.value
         subagentFollowUps.values.toList().forEach { it.cancel() }
         followUps.stopAll()
         val successors = synchronized(lock) { followUpJobs.values.toList() }
         successors.forEach { it.cancel() }
         val active = synchronized(lock) { jobs.values.toList() }
-        active.forEach { it.cancel() }
+        if (cause == null) active.forEach { it.cancel() }
         subagents.stopAllAndJoin()
         active.forEach { runCatching { it.join() } }
         successors.forEach { runCatching { it.join() } }
@@ -1303,6 +1384,7 @@ class RunManager(
      * [startRun] cannot race the old job's finally block.
      */
     suspend fun stopAndJoin(sessionId: String) {
+        phone?.end(sessionId)
         stoppedSubagentSessions += sessionId
         subagentFollowUps.remove(sessionId)?.cancelAndJoin()
         followUps.stop(sessionId)
@@ -1782,17 +1864,33 @@ class RunManager(
         notify: Boolean,
         start: suspend (String) -> Unit,
     ) {
-        val goal = controls.flow(sid).value.goal?.takeIf { it.checking } ?: return followUps.stop(sid)
+        val record = controls.flow(sid).value
+        val goal = record.goal?.takeIf { it.checking } ?: return followUps.stop(sid)
+        val budget = TaskBudget(record.limits, record.usedTokens, record.usedCost, record.elapsedMs)
         acquireKeepalive()
         val verdict = try {
-            Result.success(judgeGoal(sid, turnId, goal, config, apiKey, maxContextTokens))
+            budget.check()
+            Result.success(judgeGoal(sid, turnId, goal, config, apiKey, maxContextTokens, budget))
         } catch (ce: CancellationException) { throw ce }
         catch (e: Exception) { Result.failure(e) }
-        finally { releaseKeepalive() }
+        finally {
+            releaseKeepalive()
+            val (tokens, cost, elapsed) = budget.usage()
+            controls.update(sid) {
+                if (it.turnId == turnId) it.copy(usedTokens = tokens, usedCost = cost, elapsedMs = elapsed) else it
+            }
+        }
         kotlinx.coroutines.withContext(Dispatchers.IO) { workspaceGuard.withLock {
             if (!followUps.isCurrent(sid, runId)) return@withLock
             val latest = controls.flow(sid).value.goal
             if (latest == null || latest.setAt != goal.setAt) return@withLock followUps.stop(sid)
+            (verdict.exceptionOrNull() as? TaskPaused)?.let { paused ->
+                // The preceding work exhausted its budget: don't pay for a separate check.
+                controls.update(sid) { it.copy(status = "paused", reason = paused.reasonText,
+                    goal = latest.copy(status = GoalState.Status.PAUSED, lastReason = paused.reasonText)) }
+                if (notify) appScope.launch { notifyGoal(sid, false, paused.reasonText) }
+                return@withLock followUps.stop(sid)
+            }
             // Every check lands in the goal's history, even one that finishes after a pause.
             // Keep improving spends every turn it was given: "reached" becomes another improvement
             // pass, and the turn limit or budget ends it. Without it, "improve" counts as reached.
@@ -1868,6 +1966,7 @@ class RunManager(
         config: ProviderConfig,
         apiKey: String,
         maxContextTokens: Int,
+        budget: TaskBudget,
     ): GoalVerdict = kotlinx.coroutines.withContext(Dispatchers.IO) {
         val history = sessions.messages(sid)
         val prompt = GoalJudge.prompt(goal.text, VerificationEvidence.collect(history), goal.checkCommand, goal.parts,
@@ -1897,7 +1996,7 @@ class RunManager(
                         sessions.recordUsage(sid, providerName, model, inputTokens.toLong(), outputTokens.toLong(),
                             cachedInputTokens.toLong(), cacheWriteTokens.toLong(), turnId = usageTurn,
                             cacheReported = cacheReported, cachePrices = cachePrices)
-                        controls.update(sid) { it.copy(usedTokens = it.usedTokens + inputTokens + outputTokens) }
+                        budget.add(inputTokens, outputTokens, estimatedCost(side.config.baseUrl))
                     }
                     is SideEvent.Failed -> failure = event.message
                     is SideEvent.Finished -> if (reply.isBlank()) failure = event.reason ?: failure
@@ -1907,6 +2006,13 @@ class RunManager(
         }
         GoalJudge.parse(reply) ?: error(failure ?: "the check gave no verdict")
     }
+
+    private fun AgentEvent.Usage.estimatedCost(baseUrl: String? = null): Double? =
+        if (providerName.startsWith("ChatGPT · ")) null else ModelPrices.estimateAt(
+            model, inputTokens.toLong(), outputTokens.toLong(), cachedInputTokens.toLong(), cacheWriteTokens.toLong(),
+            providerKey = providerKey ?: baseUrl?.let(ModelsDev::providerKeyFor),
+            atMillis = System.currentTimeMillis(),
+        )
 
     private suspend fun notifyGoal(sessionId: String, ok: Boolean, summary: String) {
         val title = runCatching { sessions.session(sessionId)?.title }.getOrNull() ?: "Chat"
@@ -1939,12 +2045,14 @@ class RunManager(
         internal fun pendingPromptsOf(state: LiveRunState, sessionTitle: String): List<PendingPrompt> =
             buildList {
                 state.pendingApproval?.let { r ->
+                    val phone = r.requiresPhoneReview
                     add(PendingPrompt(
                         sessionId = state.sessionId,
                         kind = PendingPrompt.Kind.APPROVAL,
                         sessionTitle = sessionTitle,
                         headline = "${r.call.name}: ${r.toolDescription}",
-                        detail = r.diffPreview,
+                        detail = r.diffPreview.takeUnless { phone },
+                        reviewInChat = phone,
                     ))
                 }
                 state.pendingQuestion?.let { q ->

@@ -105,6 +105,22 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Sembang dalam projek lain menggunakan ruang kerja ini: %1$s. Alih keluar ruang kerja ini daripada sembang tersebut sebelum memadamkannya. Sembang yang mempunyai perubahan tersimpan mesti kekal mempunyai akses kepada ruang kerja.</string>
+    <string name="wp_delete_running_blocked">Hentikan tugasan yang sedang berjalan dalam projek ini sebelum memadamkannya.</string>
+    <string name="wp_reset_shared_blocked">Sembang lain juga menggunakan ruang kerja apl: %1$s. Alih keluar ruang kerja ini daripada sembang tersebut sebelum menetapkan semula ruang kerja.</string>
+    <string name="wp_reset_running_blocked">Hentikan tugasan yang sedang berjalan dalam ruang kerja ini sebelum menetapkannya semula.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="other">%1$d automasi</item>
+    </plurals>
+    <string name="wp_picked_folder">Folder dipilih</string>
+    <string name="wp_review_changed">Butiran telah berubah. Tutup dialog ini dan semak semula tindakan tersebut.</string>
+    <string name="wp_editor_toggle_wrap">Togol balutan baris</string>
+    <string name="wp_editor_undo_available">Boleh dibuat asal</string>
+    <string name="wp_reset_app_only">Hanya ruang kerja apl boleh ditetapkan semula.</string>
+    <string name="wp_editor_find_replace">Cari dan ganti dalam projek</string>
+    <plurals name="wp_changed_files">
+        <item quantity="other">%1$d fail berubah</item>
+    </plurals>
     <string name="wp_add_shared">"Folder dikongsi"</string>
     <string name="wp_add_shared_sub">"Kekal selepas nyahpasang. Bina stabil dan nightly kedua-duanya melihatnya"</string>
     <string name="wp_add_shared_failed">"Tidak dapat mencipta %1$s. Pastikan akses semua fail dihidupkan, kemudian cuba lagi."</string>

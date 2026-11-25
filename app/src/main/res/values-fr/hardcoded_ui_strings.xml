@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Rien à annuler pour ce tour.</string>
+    <string name="chat_compaction_preparing">Préparation du résumé de la discussion…</string>
+    <string name="chat_compaction_too_few_messages">Il n’y a pas encore assez de messages à compacter.</string>
+    <string name="chat_compaction_retrying">Nouvelle tentative de résumé · essai %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Compactage arrêté. L’historique est conservé. Relancez /compact quand vous êtes prêt.</string>
+    <string name="chat_compaction_refresh_failed">Discussion compactée, mais impossible d’actualiser les paramètres de la tâche ou l’estimation du contexte : %1$s</string>
+    <string name="chat_compaction_failed_notice">Échec du compactage : %1$s. L’historique est conservé. Réessayez /compact ou choisissez un autre modèle.</string>
+    <string name="reasoning_from_catalog">Raisonnement indiqué dans le catalogue de modèles</string>
+    <string name="reasoning_from_provider">Raisonnement signalé par le fournisseur</string>
+    <string name="reasoning_from_user">Raisonnement défini par vos soins</string>
+    <string name="reasoning_from_name">Raisonnement déduit du nom du modèle</string>
+    <string name="automation_every_day">Tous les jours</string>
+    <string name="automation_daily_at">chaque jour à %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Compilez l’APK de débogage et corrigez les erreurs de compilation.</string>
+    <string name="app_update_checking">Recherche de mises à jour…</string>
+    <string name="app_update_up_to_date">Vous utilisez la dernière version</string>
+    <string name="files_directory">Dossier</string>
+    <string name="cache_status_unavailable">Données de cache indisponibles</string>
+    <string name="cache_status_hit">Accès au cache · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · données partielles</string>
+    <string name="cache_estimated_price">env. %1$s</string>
+    <string name="chat_live_sites_suffix">" sites"</string>
+    <string name="chat_research_sources_suffix">/%1$d sources</string>
+    <string name="chat_research_read_suffix">" lues"</string>
+    <string name="package_status_failed">Échec de l’installation</string>
+    <string name="package_hide_details">Masquer les détails de l’installation</string>
+    <string name="package_show_details">Afficher les détails de l’installation</string>
+    <string name="package_recently_unpacked">Récemment décompressé · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d élément</item>
+        <item quantity="many">%1$d éléments</item>
+        <item quantity="other">%1$d éléments</item>
+    </plurals>
+</resources>

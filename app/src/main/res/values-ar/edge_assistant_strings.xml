@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assistant_edge_title">مقبض جانبي عائم</string>
+    <string name="assistant_edge_desc">اسحب المقبض من الحافة اليمنى نحو الداخل لفتح المساعد.</string>
+    <string name="assistant_edge_permission_hint">في إعدادات Android، اسمح لـ AndroidHarness بالظهور فوق التطبيقات الأخرى.</string>
+    <string name="assistant_edge_permission_unavailable">تعذر فتح إعدادات إذن العرض فوق التطبيقات.</string>
+    <string name="assistant_edge_handle_description">فتح المساعد عبر التطبيقات</string>
+    <string name="assistant_edge_start_failed">تعذر تشغيل المقبض الجانبي. أعد المحاولة.</string>
+    <string name="assistant_edge_disconnected">قطع النظام اتصال المساعد.</string>
+    <string name="assistant_edge_reconnect">إعادة الاتصال</string>
+    <string name="assistant_edge_reconnect_steps">في إعدادات المساعد في Android، اختر «بلا»، ثم اختر AndroidHarness مرة أخرى.</string>
+    <string name="assistant_edge_grant_overlay">السماح بالظهور فوق التطبيقات</string>
+</resources>

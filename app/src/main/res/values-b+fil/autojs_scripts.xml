@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Mga script ng AutoJs6</string>
+    <string name="autojs_allow">Payagan ang assistant na gumamit ng AutoJs6</string>
+    <string name="autojs_allow_hint">Idinadagdag ang ipinares na driver at mga UI script. Available pa rin ang built-in na serbisyo kapag naka-enable.</string>
+    <string name="autojs_need_pair">Sumulat at suriin ang mga script ngayon. I-configure ang lokal na AutoJs6 plugin bago patakbuhin ang mga ito sa telepono.</string>
+    <string name="autojs_new">Bagong script</string>
+    <string name="autojs_back">Bumalik</string>
+    <string name="autojs_source">Script ng UI</string>
+    <string name="autojs_sample_source">text(\"Magpatuloy\").waitFor();</string>
+    <string name="autojs_name">Pangalan (opsyonal para sa pagsubok)</string>
+    <string name="autojs_name_exists">May script nang gumagamit ng pangalang ito. Buksan ito para i-edit, o pumili ng ibang pangalan.</string>
+    <string name="autojs_format">Gumamit ng text, desc o id para maghanap ng control, at hintayin ito, i-tap o maglagay ng text. Gumamit ng isang tagubilin sa bawat linya.</string>
+    <string name="autojs_check">Suriin ang mga hakbang</string>
+    <string name="autojs_prepare">Subukan sa target na app</string>
+    <string name="autojs_preview">Mga wastong hakbang: %1$d · walang pinatakbo</string>
+    <string name="autojs_empty">I-tap ang Bagong script para gumawa ng aksyong magagamit muli. Huwag lagyan ng pangalan para subukan ito nang hindi sine-save.</string>
+    <string name="autojs_enabled_hint">Magagamit ng assistant ang mga naka-enable na script sa library na ito.</string>
+    <string name="autojs_disabled_hint">I-enable ang script na ito sa library bago ito subukan.</string>
+    <string name="autojs_delete">I-delete ang “%1$s”?</string>
+    <string name="autojs_delete_action">I-delete</string>
+    <string name="autojs_changed">Nagbago ang script na ito sa library. Buksan itong muli bago i-save o patakbuhin.</string>
+    <string name="autojs_write_failed">Hindi ma-save ang script.</string>
+    <string name="autojs_anonymous">Hindi na-save na script</string>
+    <string name="autojs_prepared">Handa na ang pagsubok: %1$s. Buksan ang target na app at tawagin ang assistant ng telepono sa loob ng 10 minuto.</string>
+    <string name="autojs_trial_title">Patakbuhin ang script · %1$s</string>
+    <string name="autojs_trial_here">Sa %1$s lang</string>
+    <string name="autojs_trial_other">Buksan ang app na gusto mong subukan, at tawagin ang assistant doon.</string>
+    <string name="autojs_trial_steps">%1$d hakbang · i-tap para suriin</string>
+    <string name="autojs_trial_less">Itago ang mga hakbang</string>
+    <string name="autojs_trial_allow">Payagan at patakbuhin dito</string>
+    <string name="autojs_trial_stale">Nag-expire ang pagsubok na ito, o nagbago ang app. Ihanda itong muli sa library ng mga script.</string>
+    <string name="autojs_trial_request">Patakbuhin ang “%1$s” sa %2$s.</string>
+    <string name="autojs_trial_done">Natapos ang %1$d sa %2$d hakbang ng script sa %3$s.</string>
+    <string name="autojs_trial_stopped">Huminto ang script sa %3$s pagkatapos ng %1$d sa %2$d hakbang.</string>
+    <string name="autojs_trial_error">Hindi masimulan ang script na ito sa kasalukuyang app.</string>
+    <string name="autojs_trial_interrupted">Naantala ang script. Suriin ang app bago subukang muli.</string>
+    <string name="autojs_not_selected">I-enable ang AutoJs6 bago maghanda ng script.</string>
+    <string name="autojs_activity_running">Pinapatakbo ang AutoJs6 script</string>
+    <string name="autojs_activity_ran">Pinatakbo ang AutoJs6 script</string>
+    <string name="autojs_activity_run_failed">Hindi natapos ang AutoJs6 script</string>
+    <string name="autojs_activity_library_working">Ginagamit ang library ng mga AutoJs6 script</string>
+    <string name="autojs_activity_library_done">Ginamit ang library ng mga AutoJs6 script</string>
+    <string name="autojs_activity_library_failed">Nabigo ang aksyon sa library ng mga AutoJs6 script</string>
+</resources>

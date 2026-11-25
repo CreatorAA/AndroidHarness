@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"lalai pembekal"</string>
     <string name="ui_add_custom_command">"Tambah arahan tersuai"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Pegang CPU semasa larian atau terminal aktif supaya terminal tidak akan mati apabila apl diminimumkan."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Dikecualikan: Android tidak akan mendikit larian latar belakang."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Hidup: Samsung dan OEM lain mungkin mematikan kerja latar belakang. Kecualikan apl untuk jangka masa panjang yang boleh dipercayai."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"Pengoptimuman bateri Android dimatikan untuk AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Pengoptimuman bateri Android dihidupkan. Jika tugas yang mengambil masa lama terhenti apabila skrin dimatikan, benarkan AndroidHarness menggunakan bateri tanpa sekatan."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Versi semasa %1$s. Menyemak Keluaran GitHub untuk binaan yang lebih baharu."</string>
     <string name="ui_available_see_the_dialog">"%1$s tersedia, lihat dialog"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Ejen pengekodan yang hidup pada telefon anda."</string>
@@ -1845,4 +1845,9 @@
     <string name="lms_field_prompt_threads">"Kelajuan membaca"</string>
     <string name="lms_field_prompt_threads_help">"Teras CPU semasa membaca mesej anda."</string>
     <string name="lms_unit_cores">"teras"</string>
+    <string name="voice_no_result">Transkrip lengkap tidak diterima. Cuba bercakap lagi atau taip mesej anda.</string>
+    <string name="voice_service_interrupted">Perkhidmatan pertuturan sistem berhenti sebelum selesai. Cuba imlak semula atau taip selebihnya.</string>
+    <string name="voice_try_again">Imlak semula</string>
+    <string name="voice_continue">Teruskan imlak</string>
+    <string name="voice_finish_to_send">Sedang mendengar. Ketik hantar apabila selesai.</string>
 </resources>

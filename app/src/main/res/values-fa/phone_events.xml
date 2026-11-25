@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_events_alerts_off">تا وقتی هشدارها در بخش «%1$s» خاموش باشند، یادآوری‌ها همچنان اینجا می‌مانند.</string>
+    <string name="phone_events_title">یادآورهای رویداد گوشی</string>
+    <string name="phone_events_intro">وقتی برنامه‌ای انتخاب‌شده باز می‌شود یا اعلانی ارسال می‌کند، یادآوری دریافت کنید. پیش از اجرای هر کار مرتبط، آن را بررسی کنید.</string>
+    <string name="phone_event_ready">یادآور رویداد گوشی</string>
+    <string name="phone_event_open_reminder">%1$s یادآور شما را فعال کرد. برای بررسی ضربه بزنید.</string>
+    <string name="phone_events_grant_notifications">اجازه دسترسی به اعلان‌ها</string>
+    <string name="phone_events_grant_window">فعال کردن کنترل‌های گوشی Harness در دسترس‌پذیری</string>
+    <string name="phone_events_show_alerts">اجازه نمایش اعلان‌های یادآور</string>
+    <string name="phone_event_opened">%1$s باز می‌شود</string>
+    <string name="phone_event_notified">%1$s اعلانی ارسال می‌کند</string>
+    <string name="phone_event_review_task">بررسی: %1$s</string>
+    <string name="phone_event_dismiss">بستن</string>
+    <string name="phone_event_remind_only">فقط یادآوری کن</string>
+    <string name="phone_event_task_missing">کار مرتبط دیگر در دسترس نیست</string>
+    <string name="phone_event_edit">ویرایش قانون</string>
+    <string name="phone_event_remove">حذف قانون</string>
+    <string name="phone_event_add">افزودن قانون برنامه</string>
+    <string name="phone_event_view_notices">اعلان‌های فعال (%1$d)</string>
+    <string name="phone_event_active_notices">اعلان‌های فعلی</string>
+    <string name="phone_event_metadata_only">فقط برنامه و زمان نمایش داده می‌شوند. برای خواندن اعلان، آن را در برنامه اصلی باز کنید.</string>
+    <string name="phone_event_no_notices">در حال حاضر اعلانی از برنامه‌های انتخاب‌شده ندارید.</string>
+    <string name="phone_event_no_listener">سرویس دریافت اعلان‌ها متصل نیست.</string>
+    <string name="phone_event_open_source">باز کردن در برنامه</string>
+    <string name="phone_event_mark_read">علامت‌گذاری به‌عنوان خوانده‌شده</string>
+    <string name="phone_event_read_confirm">از %1$s خواسته شود این اعلان را خوانده‌شده علامت‌گذاری کند؟</string>
+    <string name="phone_event_task_busy">این کار موقتاً متوقف شده، در حال اجراست یا دیگر دستی نیست.</string>
+    <string name="phone_event_run_task">اجرای کار</string>
+    <string name="phone_event_unavailable">این مورد دیگر در دسترس نیست.</string>
+    <string name="phone_event_choose_app">انتخاب برنامه</string>
+    <string name="phone_event_search">نام برنامه یا نام بسته</string>
+    <string name="phone_event_when">زمان</string>
+    <string name="phone_event_when_open">این برنامه را باز می‌کنم</string>
+    <string name="phone_event_when_notified">این برنامه اعلانی ارسال می‌کند</string>
+    <string name="phone_event_then">برای بررسی یادآوری کن</string>
+    <string name="phone_event_save">ذخیره قانون</string>
+    <string name="phone_event_all_rules">هر دو رویداد قبلاً تنظیم شده‌اند. قوانین موجود را در زیر ویرایش کنید.</string>
+</resources>

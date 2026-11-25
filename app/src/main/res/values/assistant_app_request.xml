@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Open %1$s?</string>
+    <string name="app_request_search">Search for “%2$s” in %1$s?</string>
+    <string name="app_request_choose_open">Which app should open?</string>
+    <string name="app_request_choose_map">Which map should search for “%1$s”?</string>
+    <string name="app_request_missing">Could not find an app named “%1$s” that this phone can open.</string>
+    <string name="app_request_alternative">You can search for “%1$s” with one of the maps below.</string>
+    <string name="app_request_open_only">%1$s can open, but it does not offer a public place search. Open it without searching?</string>
+    <string name="app_request_no_map">No installed app offers a map search for “%1$s”.</string>
+    <string name="app_request_no_entry">%1$s has no available entry point for this request.</string>
+    <string name="app_request_opened">Sent the request to open %1$s.</string>
+    <string name="app_request_sent">Sent the search for “%2$s” to %1$s.</string>
+    <string name="app_request_failed">Could not send this request to %1$s. Ask again to check which apps are available.</string>
+    <string name="app_request_cancelled">Cancelled. No app was opened.</string>
+</resources>

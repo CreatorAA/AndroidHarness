@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">このターンに取り消せる変更はありません。</string>
+    <string name="chat_compaction_preparing">チャットの要約を準備中…</string>
+    <string name="chat_compaction_too_few_messages">圧縮できるほどメッセージがありません。</string>
+    <string name="chat_compaction_retrying">要約を再試行中 · %1$d 回目 · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">圧縮を停止しました。履歴は保持されています。準備ができたら /compact を再実行してください。</string>
+    <string name="chat_compaction_refresh_failed">チャットは圧縮されましたが、タスク設定またはコンテキストの推定値を更新できませんでした：%1$s</string>
+    <string name="chat_compaction_failed_notice">圧縮に失敗しました：%1$s。履歴は保持されています。/compact を再試行するか、別のモデルを選んでください。</string>
+    <string name="reasoning_from_catalog">モデルカタログに推論対応と記載されています</string>
+    <string name="reasoning_from_provider">プロバイダーが推論対応を報告しています</string>
+    <string name="reasoning_from_user">推論対応は手動で設定されています</string>
+    <string name="reasoning_from_name">モデル名から推論対応を推定しています</string>
+    <string name="automation_every_day">毎日</string>
+    <string name="automation_daily_at">毎日 %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">デバッグ APK をビルドし、ビルドエラーを修正してください。</string>
+    <string name="app_update_checking">更新を確認中…</string>
+    <string name="app_update_up_to_date">最新バージョンを使用しています</string>
+    <string name="files_directory">フォルダ</string>
+    <string name="cache_status_unavailable">キャッシュ情報を取得できません</string>
+    <string name="cache_status_hit">キャッシュヒット · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · 一部のみ</string>
+    <string name="cache_estimated_price">約 %1$s</string>
+    <string name="chat_live_sites_suffix">" サイト"</string>
+    <string name="chat_research_sources_suffix">/%1$d ソース</string>
+    <string name="chat_research_read_suffix">" 件を閲覧"</string>
+    <string name="package_status_failed">インストールに失敗しました</string>
+    <string name="package_hide_details">インストールの詳細を非表示</string>
+    <string name="package_show_details">インストールの詳細を表示</string>
+    <string name="package_recently_unpacked">最近展開したパッケージ · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="other">%1$d 項目</item>
+    </plurals>
+</resources>

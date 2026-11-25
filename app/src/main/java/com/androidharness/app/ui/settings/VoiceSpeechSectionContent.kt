@@ -169,7 +169,7 @@ internal fun VoiceProvidersSection(
 
     // --- Sheets and dialogs -------------------------------------------------
     if (picker == VoicePicker.STT_MODEL && sttProvider != null) {
-        val selected = settings.voiceSelections[sttProvider.id]?.sttModel?.ifBlank { null } ?: sttProvider.sttModel
+        val selected = sttProvider.transcriptionModel(settings)
         VoiceChoiceSheet(
             title = stringResource(R.string.settings_stt_model),
             options = sttModels?.map { VoiceChoice(it, it) },

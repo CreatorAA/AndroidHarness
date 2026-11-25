@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Somente mandarim off-line</string>
+    <string name="voice_local_only_on">Usa o modelo de mandarim incluído. Seu áudio permanece no celular.</string>
+    <string name="voice_system_first">O reconhecimento de fala do Android é usado preferencialmente. Se estiver indisponível, o ditado em mandarim continua no celular.</string>
+    <string name="voice_live_handoff">Continuando neste celular. As palavras já exibidas serão mantidas; continue falando.</string>
+    <string name="voice_local_stopped">O ditado no dispositivo foi interrompido. Você pode manter as palavras já exibidas e continuar ou digitar o restante.</string>
+    <string name="voice_clip_unavailable">Não foi possível recuperar uma transcrição completa desta gravação.</string>
+    <string name="voice_continue_offline">Continuar no dispositivo</string>
+    <string name="voice_clip_handoff">O serviço de reconhecimento de fala está indisponível. Transcrevendo esta gravação no celular.</string>
+</resources>

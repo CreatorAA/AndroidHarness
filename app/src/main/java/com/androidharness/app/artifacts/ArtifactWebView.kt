@@ -80,7 +80,7 @@ class ArtifactWebView(
                     val data = kotlinx.serialization.json.Json.parseToJsonElement(title.removePrefix("harness-response:")) as kotlinx.serialization.json.JsonObject
                     val height = (data["height"] as? kotlinx.serialization.json.JsonPrimitive)?.content?.toIntOrNull() ?: return
                     val summary = (data["summary"] as? kotlinx.serialization.json.JsonPrimitive)?.takeIf { it.isString }?.content.orEmpty()
-                    responseContentHeight = height.coerceIn(80, 12_000)
+                    responseContentHeight = height.coerceIn(1, 12_000)
                     onResponseLayout(responseContentHeight, summary.take(1500))
                 }
             }

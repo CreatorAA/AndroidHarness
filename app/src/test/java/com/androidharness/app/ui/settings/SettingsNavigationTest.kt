@@ -5,6 +5,13 @@ import org.junit.Test
 import com.androidharness.app.R
 
 class SettingsNavigationTest {
+    @Test fun `the custom build does not offer the upstream app updater`() {
+        assertNull(settingsDeepLink("updates"))
+        assertNull(settingsDeepLink("page:UPDATES:0"))
+        assertTrue(allSettingsEntries.none { it.page.name == "UPDATES" })
+        assertTrue(SettingsPage.ABOUT in matchingSettingsPages("version", settingsTestStrings()))
+    }
+
     @Test fun `chat option follows language and its startup choice is searchable`() {
         assertEquals(SettingsPage.LANGUAGE.ordinal + 1, SettingsPage.CHAT_OPTIONS.ordinal)
         assertTrue(SettingsPage.CHAT_OPTIONS in matchingSettingsPages("last selected", settingsTestStrings()))

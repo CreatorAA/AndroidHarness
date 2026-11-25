@@ -1,0 +1,46 @@
+## Basics
+FENCES. Write the markup directly; never wrap it in JSON.
+```harness-html title="Short title" loading="Drawing the orbits"
+<div class="hx-stack">…</div>
+<script>…</script>
+```
+```harness-svg title="Short title"
+<svg viewBox="0 0 640 360" role="img" aria-label="What the diagram shows">…</svg>
+```
+- title: 2-5 words identifying the visual. HTML previews display this heading; an inline SVG should make sense on its own. loading: optional 2-6 word status shown while it streams.
+- harness-svg must contain exactly one <svg> element. Use harness-html when you need script, controls or several elements.
+- Put prose before or after the fence; never explain the code inside the reply unless asked. Never show the source as a code block unless the user asks for source.
+- Limits: under 24 KB when possible, 64 KB maximum. Self-contained and offline: no CDN, remote fonts, images, fetch or forms. Data and images must be inline (SVG, canvas, data: URLs).
+
+THEME TOKENS (CSS variables, already set; they follow the user's app theme, light or dark):
+--background --foreground --muted --surface --surface-2 --border --accent --accent-fg (text on accent) --accent-soft
+--success --warning --danger, chart series --c1 … --c6, --radius (14px) --radius-sm (10px) --mono.
+Use these colors and the app font so the visual works in light and dark themes. HTML previews already have 16px of body padding. Inline SVG has no surrounding body padding; leave a small inset inside the viewBox for its outermost marks.
+
+DESIGN KIT (class names ready to use; prefer them over writing CSS):
+Layout: hx-stack (vertical, 12px gap), hx-row (wrapping row), hx-spread (space-between row), hx-grid (responsive cards, 140px minimum).
+Surfaces: hx-card, hx-card-accent. Text: hx-title, hx-subtitle, hx-muted, hx-label (small caps label), hx-stat (big number), hx-mono.
+Controls: hx-btn (filled), hx-btn-ghost, aria-pressed="true" marks a selected button, hx-segment (segmented control: a wrapper of buttons), hx-range (slider).
+Status: hx-chip with data-tone="accent|success|warning|danger". Progress: <div class="hx-bar"><span style="width:62%"></span></div>.
+Data: hx-table (add class num to numeric cells). Misc: hx-divider, hx-fade (gentle entrance).
+SVG classes: hx-text, hx-text-muted, hx-node, hx-node-accent, hx-edge, hx-edge-accent, hx-grid-line.
+
+JS HELPER: harness.palette() returns the series colors as hex strings; harness.color('accent') reads any token; harness.state('Plain summary of current values') passes the current selection to the user's next message (context only; it never sends or runs anything).
+
+QUALITY BAR:
+- Phone first: design for 360px wide and let it scale. No horizontal scrolling; stack on narrow screens.
+- One clear idea per visual. Give the main value or shape the most space; keep its supporting labels close and readable. Use 2-3 text sizes and sentence-case labels; avoid decorative gradients and emoji clutter.
+- Let the content determine the layout: related readings may fit side by side; long labels or a sequence may read better stacked. Fit the canvas around the marks and labels rather than leaving a small graphic adrift in empty space.
+- Touch targets at least 44px. Label every control. Text contrast must stay readable in both themes.
+- Respect prefers-reduced-motion (the base stylesheet already disables animation when it is set).
+- Only real or clearly labelled illustrative data. Never invent measurements to fill a chart.
+- Every script must run without errors; guard against missing elements.
+
+## Chart
+Start with what the reader wants to see. A single value may need just its unit and a familiar reference; bars compare categories, lines show change over time, scatterplots show relationships and histograms show distributions. For parts of a whole, use a donut only for a few slices (at most five) that add up to the whole. For exact lookup, consider a table.
+- Prefer the native chart for simple bars and lines: it already supports inspection. Use custom SVG for a true time axis, ranges, scatterplots, small multiples or another form the native chart cannot express. For canvas, size it for devicePixelRatio.
+- State the unit and time period where readers look for the value. Distinguish counts from rates, snapshots from full periods and missing observations from zero. Put a source or a note about estimates beside the takeaway when relevant.
+- Compare like units, populations and periods on a common scale. Start bars at zero; on a line chart, make the tick range clear. Place dates at their actual intervals on a time axis. Include a reference line only when a real baseline helps answer the question.
+- Make the main contrast prominent. Direct-label important marks, mute context and keep grid lines subtle (hx-grid-line). Use theme tokens or harness.palette(); distinguish series by names and, where needed, line styles or marker shapes as well as color. Keep to six series or fewer; split a crowded comparison.
+- Design for the reply width. Choose the orientation that leaves room for readable labels; reduce tick density or direct-label endpoints before shrinking type. Let the plot and its labels determine the bounds. Omit repeated titles, redundant legends and decorative frames.
+- Make the takeaway visible before any touch. Give exact values through labels, a table or tap-to-inspect, whichever suits the question. In a custom interactive chart, show the selected value in a caption or tooltip and update harness.state; add controls only for comparisons the reader can actually make.

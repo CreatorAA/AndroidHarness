@@ -1,5 +1,6 @@
 package com.androidharness.app.ui.projects
 
+import android.content.Context
 import com.androidharness.app.ui.theme.motionBlur
 import com.androidharness.app.R
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -25,12 +26,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.androidharness.app.AppContainer
+import com.androidharness.app.automation.AutomationSchedule
 import com.androidharness.app.automation.AutomationTask
 import com.androidharness.app.data.AppSettings
 import com.androidharness.app.data.db.ProjectEntity
 import com.androidharness.app.ui.common.AddWorkspaceDialog
 import com.androidharness.app.ui.common.AppHeader
 import com.androidharness.app.ui.common.formatRelativeTime
+import com.androidharness.app.ui.automation.labelRes
 import com.androidharness.app.ui.github.GitHubWorkspaceDialog
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -58,6 +61,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import com.androidharness.app.ui.common.IconButton
 import com.androidharness.app.ui.common.OutlinedButton
 import com.androidharness.app.ui.common.TextButton
+import com.androidharness.app.workspace.displayWorkspaceName
 
 @Composable
 fun ProjectsScreen(container: AppContainer, onBack: () -> Unit, onOpenProject: (String) -> Unit,
@@ -92,15 +96,17 @@ fun ProjectsScreen(container: AppContainer, onBack: () -> Unit, onOpenProject: (
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
             itemsIndexed(projects, key = { _, it -> it.id }) { index, project ->
                 val count = counts[project.id] ?: 0
+                val title = project.displayWorkspaceName(uiContext)
+                val chats = uiContext.resources.getQuantityString(R.plurals.backup_chip_chats, count, count)
                 var menu by remember { mutableStateOf(false) }
-                ExpressiveListRow(index, projects.size, project.name,
-                    subtitle = "${container.workspace.describe(project).kindLabel} · $count ${if (count == 1) "chat" else "chats"}",
+                ExpressiveListRow(index, projects.size, title,
+                    subtitle = "${container.workspace.describe(project).kindLabel} · $chats",
                     onClick = { onOpenProject(project.id) }, onLongClick = { menu = true },
                     modifier = Modifier.animateItem(fadeInSpec = expressiveEffectsSpec(), placementSpec = expressiveSpatialSpec(), fadeOutSpec = expressiveEffectsSpec()),
                     leading = { ExpressiveIconBadge(workspaceKindIcon(project.kind)) },
                     trailing = {
                         Box {
-                            ExpressiveIconButton(onClick = { menu = true }) { Icon(Icons.Outlined.MoreVert, uiContext.getString(R.string.wp_actions_for_workspace, project.name)) }
+                            ExpressiveIconButton(onClick = { menu = true }) { Icon(Icons.Outlined.MoreVert, uiContext.getString(R.string.wp_actions_for_workspace, title)) }
                             ExpressiveDropdownMenu(menu, { menu = false }) {
                                 if (project.kind == com.androidharness.app.workspace.WorkspaceManager.KIND_APP) {
                                     ExpressiveDropdownMenuItem(text = { Text(uiContext.getString(R.string.wp_app_workspace_reset), color = MaterialTheme.colorScheme.error) },
@@ -243,7 +249,7 @@ fun ProjectScreen(
     SettingsExpressiveTheme {
     Scaffold(topBar = {
         Column {
-            AppHeader(project?.name ?: uiContext.getString(R.string.wp_workspace_page), subtitle = project?.let { container.workspace.describe(it).kindLabel }, onBack = onBack,
+            AppHeader(project?.displayWorkspaceName(uiContext) ?: uiContext.getString(R.string.wp_workspace_page), subtitle = project?.let { container.workspace.describe(it).kindLabel }, onBack = onBack,
                 actions = { ExpressiveRefreshButton(uiContext.getString(R.string.wp_refresh_workspace), onClick = { refresh++ }) })
             com.androidharness.app.ui.common.SshWorkspaceBar(container, ssh, includeStatusBarPadding = false)
         }
@@ -258,10 +264,11 @@ fun ProjectScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                         SettingsHeroBadge(project.id.hashCode(), size = 72.dp) { tint -> Icon(workspaceKindIcon(project.kind), null, Modifier.size(32.dp), tint = tint) }
                         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                            Text(project.name, style = MaterialTheme.typography.headlineSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            Text(project.displayWorkspaceName(uiContext), style = MaterialTheme.typography.headlineSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
                             Text(git?.branch?.let { uiContext.getString(R.string.ui_branch_1649, (it).toString()) } ?: git?.note ?: uiContext.getString(R.string.ui_checking_repository),
                                 style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
-                            git?.changedFiles?.let { count -> Text(if (count == 0) uiContext.getString(R.string.ui_working_tree_clean) else "$count changed ${if (count == 1) "file" else "files"}",
+                            git?.changedFiles?.let { count -> Text(if (count == 0) uiContext.getString(R.string.ui_working_tree_clean)
+                                else uiContext.resources.getQuantityString(R.plurals.wp_changed_files, count, count),
                                 style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant) }
                             if (git?.branch != null && git?.note != null) Text(git!!.note!!, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
                         }
@@ -322,7 +329,7 @@ fun ProjectScreen(
                     if (projectTasks.isEmpty()) item { Text(uiContext.getString(R.string.ui_no_automations_yet), color = scheme.onSurfaceVariant, modifier = Modifier.padding(16.dp)) }
                     val extra = if (projectTasks.isNotEmpty()) 2 else 1
                     itemsIndexed(projectTasks, key = { _, it -> it.id }) { index, task ->
-                        ProjectRow(task.title, task.projectStatus(), Icons.Outlined.Schedule, index = index, count = projectTasks.size + extra,
+                        ProjectRow(task.title, task.projectStatus(uiContext), Icons.Outlined.Schedule, index = index, count = projectTasks.size + extra,
                             onClick = { onAutomation(task.id, false) })
                     }
                     item { ProjectRow(uiContext.getString(R.string.ui_add_automation), icon = Icons.Outlined.Add, index = projectTasks.size, count = projectTasks.size + extra, onClick = { onAutomation(null, true) }) }
@@ -339,7 +346,7 @@ fun ProjectScreen(
         }
     }
     }
-    if (showRepository && project != null) GitHubWorkspaceDialog(container, project.id, project.name,
+    if (showRepository && project != null) GitHubWorkspaceDialog(container, project.id, project.displayWorkspaceName(uiContext),
         onOpenSettings = onOpenSettings, onDismiss = { showRepository = false })
     if (showDetails && project != null) ProjectDetailsDialog(container, project, onDismiss = { showDetails = false },
         onDelete = { showDetails = false; deletingProject = project },
@@ -350,12 +357,12 @@ fun ProjectScreen(
         onDismiss = { resettingProject = null }, onReset = { resettingProject = null; onProjectDeleted() }) }
 }
 
-private fun AutomationTask.projectStatus(): String = when {
-    activeRun != null -> "${lastStatus.name.lowercase().replaceFirstChar { it.titlecase() }} · This project"
-    !enabled -> "Paused · This project"
-    schedule == com.androidharness.app.automation.AutomationSchedule.MANUAL -> "Manual · This project"
-    else -> "Scheduled · This project"
-}
+private fun AutomationTask.projectStatus(context: Context): String = context.getString(when {
+    activeRun != null -> lastStatus.labelRes()
+    !enabled -> R.string.ui_paused
+    schedule == AutomationSchedule.MANUAL -> R.string.ui_manual
+    else -> R.string.ui_scheduled
+})
 
 @Composable
 internal fun ProjectRow(title: String, subtitle: String? = null, icon: ImageVector, index: Int = 0, count: Int = 1,
@@ -368,7 +375,8 @@ internal fun ProjectRow(title: String, subtitle: String? = null, icon: ImageVect
 @Composable
 private fun ProjectDetailsDialog(container: AppContainer, project: ProjectEntity, onDismiss: () -> Unit, onDelete: () -> Unit, onResetApp: () -> Unit) {
     val uiContext = androidx.compose.ui.platform.LocalContext.current
-    var name by rememberSaveable(project.id) { mutableStateOf(project.name) }
+    val displayedName = project.displayWorkspaceName(uiContext)
+    var name by rememberSaveable(project.id, displayedName) { mutableStateOf(displayedName) }
     var error by remember { mutableStateOf<String?>(null) }
     var saving by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -400,7 +408,10 @@ private fun ProjectDetailsDialog(container: AppContainer, project: ProjectEntity
         TextButton(enabled = !saving && name.isNotBlank(), onClick = {
             saving = true
             scope.launch {
-                try { container.workspace.renameProject(project.id, name); onDismiss() }
+                try {
+                    if (name != displayedName) container.workspace.renameProject(project.id, name)
+                    onDismiss()
+                }
                 catch (e: CancellationException) { throw e }
                 catch (e: Exception) { error = e.message }
                 finally { saving = false }

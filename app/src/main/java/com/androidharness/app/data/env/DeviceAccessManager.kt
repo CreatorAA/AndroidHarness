@@ -1,6 +1,8 @@
 package com.androidharness.app.data.env
 
 import android.content.Context
+import androidx.core.content.ContextCompat
+import com.androidharness.app.R
 import com.androidharness.app.tools.ToolResult
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -74,21 +76,26 @@ class DeviceAccessManager(
                     "Do not retry it or reach the same result another way; tell the user what you wanted to do instead."
             }
         }
-        fun allowed(prefs: AccessPreferences) = !prefs.askPhoneControl || gate.sessionId in prefs.phoneControlChats
+        return clearChatPhoneControl(gate.sessionId, gate.turnId) { gate.ask(backend, command, risk) }
+    }
+
+    /** Shared by privileged shell and the foreground GUI driver; neither grants the other's OS permissions. */
+    internal suspend fun clearChatPhoneControl(sessionId: String, turnId: String, ask: suspend () -> Boolean): String? {
+        fun allowed(prefs: AccessPreferences) = !prefs.askPhoneControl || sessionId in prefs.phoneControlChats
         if (allowed(store.preferences.first())) return null
         val refusal = "The user has not allowed phone control in this chat. Commands that control the phone are off for the rest of this run; " +
             "read-only device checks (dumpsys, getprop, pm list, settings get) still work. " +
             "Do not retry other privileged commands; continue with the app shell, or tell the user what needs phone access."
-        if (gate.turnId in refusedTurns) return refusal
+        if (turnId in refusedTurns) return refusal
         // Parallel tool calls wait here, so one card covers them all.
-        return phoneLocks.getOrPut(gate.sessionId) { Mutex() }.withLock {
+        return phoneLocks.getOrPut(sessionId) { Mutex() }.withLock {
             when {
                 allowed(store.preferences.first()) -> null
-                gate.turnId in refusedTurns -> refusal
-                gate.ask(backend, command, risk) -> { store.allowPhoneControl(gate.sessionId, true); null }
+                turnId in refusedTurns -> refusal
+                ask() -> { store.allowPhoneControl(sessionId, true); null }
                 else -> {
                     synchronized(refusedTurns) {
-                        refusedTurns += gate.turnId
+                        refusedTurns += turnId
                         if (refusedTurns.size > 64) refusedTurns.remove(refusedTurns.first())
                     }
                     refusal
@@ -102,6 +109,18 @@ class DeviceAccessManager(
         val prefs = preferences.value
         return !prefs.askPhoneControl || (sessionId != null && sessionId in prefs.phoneControlChats)
     }
+
+    internal suspend fun phoneControlAllowedNow(sessionId: String): Boolean =
+        store.preferences.first().let { !it.askPhoneControl || sessionId in it.phoneControlChats }
+
+    internal fun guiApprovalPreview(submission: String? = null, retarget: Boolean = false): String {
+        val localized = ContextCompat.getContextForLanguage(context)
+        return if (submission == null) localized.getString(R.string.android_use_chat_approval)
+        else localized.getString(if (retarget) R.string.android_use_retarget_approval else R.string.android_use_submit_approval, submission)
+    }
+
+    internal fun guiActionPreview(action: String): String =
+        ContextCompat.getContextForLanguage(context).getString(R.string.android_use_action_approval, action)
 
     init {
         scope.launch {
@@ -290,27 +309,6 @@ class DeviceAccessManager(
         val result = root.run(builder.command().toTypedArray(), rootEnv.map { "${it.key}=${it.value}" }.toTypedArray(), cwd.path, timeoutMs, maxOutput) ?: return null
         return ShellRunResult(result.exitCode, result.timedOut, result.output, result.stderr, ExecutionTier.ROOT, null)
     }
-
-    /** A self-update is one manual action. Only an unavailable, undispatched call may fall back. */
-    internal suspend fun installUpdate(apk: File, requested: DeviceBackend?, onDispatch: (DeviceBackend) -> Unit): Pair<DeviceBackend, PrivilegedResult>? =
-        withRequest(null, null, requireRoot = requested == DeviceBackend.ROOT, requireShizuku = requested == DeviceBackend.SHIZUKU,
-            forceDevice = true, manual = true) {
-            val request = currentCoroutineContext()[AccessRequest]!!
-            val excluded = if (requested == DeviceBackend.ROOT) setOf(DeviceBackend.SHIZUKU, DeviceBackend.NORMAL) else emptySet()
-            val decision = select(excluded = excluded)
-            val backend = decision.backend?.takeIf { it != DeviceBackend.NORMAL } ?: return@withRequest null
-            if (backend == DeviceBackend.ROOT && !claimRoot(request)) return@withRequest null
-            val command = com.androidharness.app.data.update.UpdateInstallPolicy.command(apk, android.os.Process.myUid() / 100000)
-            active.update { it + 1 }
-            try {
-                withContext(VerifiedDeviceAccess(backend, decision.uid)) {
-                    onDispatch(backend)
-                    val result = if (backend == DeviceBackend.ROOT) root.run(command, null, null, 120_000, 4000)
-                        else shizuku.runPrivileged(command, null, null, 120_000, 4000)
-                    result?.let { backend to it }
-                }
-            } finally { active.update { (it - 1).coerceAtLeast(0) } }
-        }
 
     suspend fun statusForAgent(workspace: com.androidharness.app.workspace.WorkspaceFs, sessionId: String?): String {
         val prefs = store.preferences.first()

@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">दूसरे प्रोजेक्ट की ये चैट इस वर्कस्पेस का उपयोग करती हैं: %1$s। मिटाने से पहले वर्कस्पेस को उन चैट से हटाएँ। जिन चैट में बदलाव सेव हैं, उनकी वर्कस्पेस तक पहुँच बनी रहनी चाहिए।</string>
+    <string name="wp_delete_running_blocked">प्रोजेक्ट मिटाने से पहले उसमें चल रहे काम रोकें।</string>
+    <string name="wp_reset_shared_blocked">ये चैट भी ऐप का वर्कस्पेस इस्तेमाल करती हैं: %1$s। रीसेट करने से पहले वर्कस्पेस को उन चैट से हटाएँ।</string>
+    <string name="wp_reset_running_blocked">रीसेट करने से पहले इस वर्कस्पेस में चल रहे काम रोकें।</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d ऑटोमेशन</item>
+        <item quantity="other">%1$d ऑटोमेशन</item>
+    </plurals>
+    <string name="wp_picked_folder">चुना गया फ़ोल्डर</string>
+    <string name="wp_review_changed">जानकारी बदल गई है। यह डायलॉग बंद करें और कार्रवाई की फिर से समीक्षा करें।</string>
+    <string name="wp_editor_toggle_wrap">लाइन रैप चालू या बंद करें</string>
+    <string name="wp_editor_undo_available">पहले जैसा कर सकते हैं</string>
+    <string name="wp_reset_app_only">सिर्फ़ ऐप का वर्कस्पेस रीसेट किया जा सकता है।</string>
+    <string name="wp_editor_find_replace">प्रोजेक्ट में खोजें और बदलें</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d फ़ाइल बदली</item>
+        <item quantity="other">%1$d फ़ाइलें बदलीं</item>
+    </plurals>
     <string name="wp_add_shared">"साझा फ़ोल्डर"</string>
     <string name="wp_add_shared_sub">"अनइंस्टॉल के बाद भी रहता है। स्थिर और नाइटली बिल्ड दोनों इसे देखते हैं"</string>
     <string name="wp_add_shared_failed">"%1$s नहीं बनाया जा सका। जाँचें कि सभी फ़ाइलों तक पहुँच चालू है, फिर दोबारा कोशिश करें।"</string>

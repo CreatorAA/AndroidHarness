@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">فقط ماندارین آفلاین</string>
+    <string name="voice_local_only_on">از مدل ماندارین همراه برنامه استفاده می‌کند. صدای شما در گوشی می‌ماند.</string>
+    <string name="voice_system_first">تشخیص گفتار Android در اولویت است. اگر در دسترس نباشد، تبدیل گفتار ماندارین به متن در گوشی ادامه می‌یابد.</string>
+    <string name="voice_live_handoff">ادامه در این گوشی. واژه‌های نمایش‌داده‌شده حفظ می‌شوند؛ به صحبت کردن ادامه دهید.</string>
+    <string name="voice_local_stopped">تبدیل گفتار به متن در دستگاه متوقف شد. می‌توانید واژه‌های نمایش‌داده‌شده را نگه دارید و ادامه دهید یا بقیه را تایپ کنید.</string>
+    <string name="voice_clip_unavailable">متن کامل این صدای ضبط‌شده بازیابی نشد.</string>
+    <string name="voice_continue_offline">ادامه در دستگاه</string>
+    <string name="voice_clip_handoff">ارائه‌دهنده خدمات گفتار در دسترس نیست. در حال تبدیل این صدای ضبط‌شده به متن در گوشی شما.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Offline na Mandarin lang</string>
+    <string name="voice_local_only_on">Ginagamit ang kasamang Mandarin model. Nananatili sa telepono ang iyong audio.</string>
+    <string name="voice_system_first">Mas pinipili ang speech service ng Android. Kung hindi ito available, magpapatuloy sa telepono ang pagdidikta sa Mandarin.</string>
+    <string name="voice_live_handoff">Nagpapatuloy sa teleponong ito. Mananatili ang mga salitang ipinakita na; magpatuloy sa pagsasalita.</string>
+    <string name="voice_local_stopped">Huminto ang pagdidikta sa device. Maaari mong panatilihin ang mga salitang ipinakita na at magpatuloy o i-type ang natitira.</string>
+    <string name="voice_clip_unavailable">Walang kumpletong transcript na nakuha mula sa recording na ito.</string>
+    <string name="voice_continue_offline">Magpatuloy sa device</string>
+    <string name="voice_clip_handoff">Hindi available ang speech provider. Tina-transcribe ang recording na ito sa iyong telepono.</string>
+</resources>

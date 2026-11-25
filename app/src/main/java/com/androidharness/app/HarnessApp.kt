@@ -8,10 +8,15 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.room.Room
 import com.androidharness.app.agent.AgentEngine
 import com.androidharness.app.agent.TodoStore
+import com.androidharness.app.androiduse.AndroidUseSession
+import com.androidharness.app.assistant.AutoJsScriptDrafts
+import com.androidharness.app.assistant.CodePhoneHandoff
+import com.androidharness.app.assistant.PanelConversation
 import com.androidharness.app.data.ChatBackupManager
 import com.androidharness.app.data.CheckpointStore
 import com.androidharness.app.data.ImageStore
 import com.androidharness.app.data.KeyStoreManager
+import com.androidharness.app.data.PhonePanelHistory
 import com.androidharness.app.data.ProviderRepository
 import com.androidharness.app.data.SessionRepository
 import com.androidharness.app.data.SettingsRepository
@@ -19,9 +24,11 @@ import com.androidharness.app.data.db.AppDatabase
 import com.androidharness.app.llm.ProviderFactory
 import com.androidharness.app.llm.effectiveApiKey
 import com.androidharness.app.tools.ToolRegistry
+import com.androidharness.app.tools.mcp.McpManager
 import com.androidharness.app.workspace.WorkspaceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -70,8 +77,8 @@ class HarnessApp : Application() {
 }
 
 class AppContainer(val appContext: Context) {
-    /** Deep-link channel: run-result notifications deliver a session id here. */
-    val pendingSessionId = kotlinx.coroutines.flow.MutableSharedFlow<String>(extraBufferCapacity = 1)
+    /** Activity intents can arrive before AppNav exists. Keep the destination until it opens. */
+    val pendingSessionId = MutableStateFlow<String?>(null)
     val pendingSubagentChat = kotlinx.coroutines.flow.MutableStateFlow<Pair<String, String>?>(null)
     /** Successful repository imports open their own files, independent of the old chat's workspace. */
     val pendingImportedWorkspace = kotlinx.coroutines.flow.MutableStateFlow<String?>(null)
@@ -158,6 +165,7 @@ class AppContainer(val appContext: Context) {
         }
     }
     internal val runtimePolicy = AppRuntimePolicy(appContext, settings)
+    internal var panelConversation: PanelConversation? = null
     /** Voice providers (speech-to-text and text-to-speech) with per-provider keys. */
     val voiceProviders = com.androidharness.app.data.audio.VoiceProviderRepository(appContext, keys)
     /** Microsoft Edge voice catalogue, cached on disk for a day. */
@@ -211,6 +219,7 @@ class AppContainer(val appContext: Context) {
     /** On-device text reading for models that cannot see images. */
     val imageText = com.androidharness.app.data.ImageText(images)
     val sessions = SessionRepository(db, images)
+    val phoneHistory = PhonePanelHistory(appContext, sessions, settings)
     val memory = com.androidharness.app.data.MemoryRepository(db, settings)
     val chatModels = com.androidharness.app.data.ChatModelRepository(settings, providers, sessions)
     suspend fun startChatAgent(profile: com.androidharness.app.data.ChatAgentProfile): String {
@@ -247,6 +256,9 @@ class AppContainer(val appContext: Context) {
     val dhizuku = com.androidharness.app.data.env.DhizukuManager(appContext)
     val deviceAccess = com.androidharness.app.data.env.DeviceAccessManager(appContext, shizuku, linuxEnv,
         projectForSession = { sessions.session(it)?.projectId }, dhizuku = dhizuku)
+    val androidUse = AndroidUseSession(appContext, images)
+    internal val codePhoneHandoff = CodePhoneHandoff()
+    internal val autoJsScriptDrafts = AutoJsScriptDrafts()
     val shellRouter = com.androidharness.app.data.env.ShellTierRouter(appContext, shizuku, linuxEnv, deviceAccess)
     val codeGraph = com.androidharness.app.data.env.CodeGraphManager(linuxEnv, shellRouter)
     private val deployScope = kotlinx.coroutines.CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -270,7 +282,6 @@ class AppContainer(val appContext: Context) {
         }
     }
 
-    val updates = com.androidharness.app.data.update.UpdateManager(appContext, deviceAccess)
     internal val sync by lazy { com.androidharness.app.data.transfer.SyncManager(keys, sshConnections) { fs, action ->
         runManager.withIdleWorkspace(fs, "Stop running tasks in this workspace before syncing files.", action)
     } }
@@ -375,7 +386,8 @@ class AppContainer(val appContext: Context) {
             manager = { automation },
         ),
     )
-    val mcp = com.androidharness.app.tools.mcp.McpManager(appContext, linuxEnv, keys, codeGraph, configuration)
+    val mcp = McpManager(appContext, linuxEnv, keys, codeGraph, configuration,
+        imageStore = images)
     val github = com.androidharness.app.github.GitHubAuth(BuildConfig.GITHUB_CLIENT_ID,
         keys::githubCredential, keys::putGitHubCredential, { refreshGitHubAuth() })
     fun routedProvider(): com.androidharness.app.llm.LlmProvider =
@@ -405,6 +417,7 @@ class AppContainer(val appContext: Context) {
         )
 
     val engine: AgentEngine = AgentEngine(
+        phone = androidUse,
         providerFactory = { routedProvider() },
         registry = registry,
         checkpointer = checkpoints,
@@ -452,6 +465,7 @@ class AppContainer(val appContext: Context) {
         imageTextEnabled = { settings.settings.first().readImageText },
     )
     val runManager = com.androidharness.app.agent.RunManager(
+        phone = androidUse,
         context = appContext,
         engine = engine,
         sessions = sessions,

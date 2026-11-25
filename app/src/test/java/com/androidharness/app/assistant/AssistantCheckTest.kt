@@ -18,6 +18,16 @@ class AssistantCheckTest {
         assertEquals(AssistantAvailability.ACTIVE, AssistantCheck.availability(facts(active = true, voiceFeature = false)))
     }
 
+    @Test fun `an already selected assistant with no active service gets the reconnect path and report`() {
+        val disconnected = facts().copy(roleHeld = true)
+        assertEquals(AssistantAvailability.RECONNECT, AssistantCheck.availability(disconnected))
+        val report = AssistantCheck.report(disconnected, "4.1")
+        assertTrue(report.contains("Result: reconnect"))
+        assertTrue(report.contains("Voice service active: no"))
+        assertTrue(report.contains("Assistant role held: yes"))
+        assertEquals(AssistantAvailability.ACTIVE, AssistantCheck.availability(disconnected.copy(active = true)))
+    }
+
     @Test fun `a second profile explains itself before the role does`() {
         assertEquals(AssistantAvailability.OTHER_PROFILE, AssistantCheck.availability(facts(mainProfile = false, roleAvailable = false)))
     }

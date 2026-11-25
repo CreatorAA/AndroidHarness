@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_request_open">Открыть %1$s?</string>
+    <string name="app_request_search">Найти «%2$s» в %1$s?</string>
+    <string name="app_request_choose_open">Какое приложение открыть?</string>
+    <string name="app_request_choose_map">В каком приложении карт найти «%1$s»?</string>
+    <string name="app_request_missing">Не удалось найти приложение «%1$s», которое можно открыть на этом телефоне.</string>
+    <string name="app_request_alternative">Вы можете найти «%1$s» в одном из приложений карт ниже.</string>
+    <string name="app_request_open_only">%1$s можно открыть, но оно не предоставляет общедоступный поиск мест. Открыть без поиска?</string>
+    <string name="app_request_no_map">Ни одно из установленных приложений не предлагает поиск «%1$s» на карте.</string>
+    <string name="app_request_no_entry">В %1$s нет доступного способа выполнить этот запрос.</string>
+    <string name="app_request_opened">Запрос на открытие %1$s отправлен.</string>
+    <string name="app_request_sent">Запрос на поиск «%2$s» отправлен в %1$s.</string>
+    <string name="app_request_failed">Не удалось отправить этот запрос в %1$s. Повторите запрос, чтобы проверить доступные приложения.</string>
+    <string name="app_request_cancelled">Отменено. Ни одно приложение не открыто.</string>
+</resources>

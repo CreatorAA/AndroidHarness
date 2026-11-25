@@ -14,6 +14,9 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption.ATOMIC_MOVE
+import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -98,7 +101,7 @@ class SubagentRuns(
             stream.write(json.encodeToString(snapshot).toByteArray(Charsets.UTF_8))
             stream.fd.sync()
         }
-        check(next.renameTo(file)) { "Could not save subagent progress" }
+        Files.move(next.toPath(), file.toPath(), ATOMIC_MOVE, REPLACE_EXISTING)
     }
 
     private suspend fun change(sessionId: String, id: String, durable: Boolean = true, transform: (SubagentRun) -> SubagentRun) {

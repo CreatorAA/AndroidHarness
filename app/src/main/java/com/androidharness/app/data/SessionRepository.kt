@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.Json
 import java.util.UUID
@@ -37,6 +38,7 @@ data class MessageHit(
 )
 
 internal const val MAX_PERSISTED_FIELD_CHARS = 250_000
+internal const val PHONE_HISTORY_LIMIT = 10
 
 /** Greeting the agent posts as the first message when Chat continues in Code. */
 internal const val CONTINUED_IN_CODE_PREFIX = "Continuing in Code."
@@ -204,6 +206,34 @@ class SessionRepository(
     }
 
     suspend fun session(id: String): SessionEntity? = db.dao().session(id)
+
+    /** Viewing a Phone conversation makes it recent, without reordering ordinary Chat or Code. */
+    internal suspend fun openSession(id: String, accept: (SessionEntity) -> Boolean = { true }): SessionEntity? = db.withTransaction {
+        val row = db.dao().session(id)?.takeIf(accept) ?: return@withTransaction null
+        if (ConversationConfig.decode(row.conversationJson).isPhone)
+            db.dao().touchSession(id, System.currentTimeMillis())
+        row
+    }
+
+    internal val sessionInsertions = db.dao().lastInsertedSessionId().distinctUntilChanged()
+    internal val chatArchiveLock get() = db.chatArchiveLock
+
+    /** Keep the newest ten across workspaces. A busy older conversation waits outside the ten. */
+    internal suspend fun prunePhoneHistory(isBusy: (String) -> Boolean): Set<String> {
+        val (expired, refs) = db.withTransaction {
+            val ids = db.dao().sessionKindsByRecency().asSequence()
+                .filter { ConversationConfig.decode(it.conversationJson).isPhone }
+                .drop(PHONE_HISTORY_LIMIT).map { it.id }.filterNot(isBusy).toSet()
+            ids to deleteSessionRows(ids)
+        }
+        collectUnusedImages(refs, deletePreviews = true)
+        return expired
+    }
+
+    /** A fresh phone Chat is created for each handoff. An edited older task is not the latest handoff. */
+    suspend fun latestPhoneTask(source: String): String? =
+        db.dao().phoneTasksFrom("\"phoneOriginCodeId\":" + JsonPrimitive(source))
+            .firstOrNull { ConversationConfig.decode(it.conversationJson).let { c -> c.isChat && c.phoneOriginCodeId == source } }?.id
 
     fun sessionFlow(id: String): Flow<SessionEntity?> = db.dao().sessionFlow(id)
 
@@ -422,7 +452,10 @@ class SessionRepository(
                 projectId = parent.projectId,
                 modelSelectionJson = parent.modelSelectionJson,
                 workspaceSelectionJson = parent.workspaceSelectionJson,
-                conversationJson = parent.conversationJson,
+                conversationJson = ConversationConfig.decode(parent.conversationJson).let {
+                    if (it.phoneOriginCodeId == null) parent.conversationJson
+                    else ConversationConfig.encode(it.copy(phoneOriginCodeId = null))
+                },
                 compactionSummary = finalSummary,
                 compactionBefore = if (finalSummary.isNotBlank()) now else 0L,
             )
@@ -876,7 +909,7 @@ class SessionRepository(
         db.dao().deleteMessages(sessionId)
         db.dao().deleteCheckpoints(sessionId)
         db.dao().setCompaction(sessionId, "", 0)
-        removeUnreferencedOriginals(originals)
+        collectUnusedImages(originals)
     }
 
     /**
@@ -931,48 +964,60 @@ class SessionRepository(
 
     /** Delete the selected histories together, then collect images no remaining chat uses. */
     suspend fun deleteSessions(sessions: List<SessionEntity>) {
-        val targets = sessions.distinctBy { it.id }
-        if (targets.isEmpty()) return
-        val names = targets.map { originalNames(it.id) }
-        val originals = if (names.any { it == null }) null else names.filterNotNull().flatten().toSet()
-        db.withTransaction {
-            targets.forEach { session ->
-                db.dao().deleteChatAnswerVersions(session.id)
-                db.dao().deleteSavedAnswers(session.id)
-                db.dao().deleteMessages(session.id)
-                db.dao().deleteCheckpoints(session.id)
-                db.dao().deleteUsageEvents(session.id)
-                db.dao().deleteFileEdits(session.id)
-                db.dao().deleteSessionFileChanges(session.id)
-                db.dao().deleteSession(session)
-            }
+        if (sessions.isEmpty()) return
+        val ids = sessions.mapTo(mutableSetOf()) { it.id }
+        collectUnusedImages(db.withTransaction { deleteSessionRows(ids) })
+    }
+
+    private suspend fun deleteSessionRows(ids: Set<String>): Set<String>? {
+        val names = ids.map { originalNames(it) }
+        for (id in ids) {
+            db.dao().deleteChatAnswerVersions(id)
+            db.dao().deleteSavedAnswers(id)
+            db.dao().deleteMessages(id)
+            db.dao().deleteCheckpoints(id)
+            db.dao().deleteUsageEvents(id)
+            db.dao().deleteFileEdits(id)
+            db.dao().deleteSessionFileChanges(id)
+            db.dao().deleteSessionById(id)
         }
-        removeUnreferencedOriginals(originals)
+        return if (names.any { it == null }) null else names.filterNotNull().flatten().toSet()
     }
 
     /** Branches and saved answer versions can share image references. */
     private suspend fun originalNames(sessionId: String): Set<String>? {
         if (images == null) return null
         return try {
-            val rows = db.dao().messages(sessionId) + db.dao().chatAnswerVersions(sessionId).first().flatMap {
-                json.decodeFromString(ListSerializer(MessageEntity.serializer()), it.messagesJson)
-            }
-            rows.flatMap { json.decodeFromString(imageList, it.imagesJson).map(ImageRef::name) }.toSet()
+            val refs = db.dao().messageImageRefs(sessionId) + versionImageRefs(sessionId)
+            refs.flatMap { json.decodeFromString(imageList, it).map(ImageRef::name) }.toSet()
         } catch (e: kotlinx.coroutines.CancellationException) { throw e }
         catch (_: Exception) { null }
     }
 
-    private suspend fun removeUnreferencedOriginals(candidates: Set<String>?) {
+    private suspend fun versionImageRefs(sessionId: String): List<String> =
+        db.dao().chatAnswerVersions(sessionId).first().flatMap {
+            json.decodeFromString(ListSerializer(MessageEntity.serializer()), it.messagesJson).map(MessageEntity::imagesJson)
+        }
+
+    private suspend fun collectUnusedImages(candidates: Set<String>?, deletePreviews: Boolean = false) {
         if (images == null || candidates.isNullOrEmpty()) return
         // If any saved data cannot be inspected, retain the originals rather
         // than risking a reference in another chat or answer version.
         try {
-            val used = db.dao().allSessionIds().flatMap { id ->
-                originalNames(id) ?: error("Could not inspect chat images")
-            }.toSet()
-            (candidates - used).forEach { name ->
-                images.deleteOriginal(name)
-                images.deleteChatZoom(name)
+            db.withTransaction {
+                val unused = candidates.toMutableSet()
+                fun retain(raw: String) { json.decodeFromString(imageList, raw).forEach { unused.remove(it.name) } }
+                db.dao().allMessageImageRefs().forEach(::retain)
+                for (id in db.dao().sessionsWithAnswerVersions()) {
+                    if (unused.isEmpty()) break
+                    versionImageRefs(id).forEach(::retain)
+                }
+                for (name in unused) {
+                    if (deletePreviews) images.delete(name) else {
+                        images.deleteOriginal(name)
+                        images.deleteChatZoom(name)
+                    }
+                }
             }
         } catch (e: kotlinx.coroutines.CancellationException) { throw e }
         catch (_: Exception) { /* Keep originals if reference checking fails. */ }

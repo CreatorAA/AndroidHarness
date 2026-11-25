@@ -21,11 +21,11 @@ fun ModelReasoningIcon(entry: ModelEntry, providerType: ProviderType? = null, di
     val status = ModelReasoning.of(entry, providerType)
     if (status == ModelReasoning.UNKNOWN || status == ModelReasoning.UNSUPPORTED) return
     var details by remember { mutableStateOf(false) }
-    val description = when (status) {
-        ModelReasoning.REPORTED -> if (directory) "Reasoning listed in model directory" else "Reasoning reported by provider"
-        ModelReasoning.CUSTOM -> "Reasoning set by you"
-        else -> "Reasoning inferred from model name"
-    }
+    val description = uiContext.getString(when (status) {
+        ModelReasoning.REPORTED -> if (directory) R.string.reasoning_from_catalog else R.string.reasoning_from_provider
+        ModelReasoning.CUSTOM -> R.string.reasoning_from_user
+        else -> R.string.reasoning_from_name
+    })
     IconButton(onClick = { details = true }) {
         Icon(painterResource(R.drawable.ic_brain),
             contentDescription = description, modifier = Modifier.size(20.dp),

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="conversation_phone">Celular</string>
+    <string name="conversation_new_phone">Nova conversa no celular</string>
+    <string name="phone_conversation_intro">Faça uma pergunta aqui. Para que o assistente use um app, abra esse app e chame o assistente.</string>
+    <string name="phone_conversation_settings">Configurações do assistente</string>
+    <string name="settings_start_phone_desc">Abra suas conversas com o assistente do celular.</string>
+</resources>

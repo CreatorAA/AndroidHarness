@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Hanya bahasa Mandarin offline</string>
+    <string name="voice_local_only_on">Menggunakan model bahasa Mandarin bawaan. Audio Anda tetap di ponsel.</string>
+    <string name="voice_system_first">Pengenalan suara Android diutamakan. Jika tidak tersedia, dikte bahasa Mandarin dilanjutkan di ponsel.</string>
+    <string name="voice_live_handoff">Melanjutkan di ponsel ini. Kata-kata yang sudah muncul tetap tersimpan; silakan lanjutkan berbicara.</string>
+    <string name="voice_local_stopped">Dikte di perangkat berhenti. Anda dapat menyimpan kata-kata yang sudah muncul dan melanjutkan atau mengetik sisanya.</string>
+    <string name="voice_clip_unavailable">Transkrip lengkap tidak dapat dipulihkan dari rekaman ini.</string>
+    <string name="voice_continue_offline">Lanjutkan di perangkat</string>
+    <string name="voice_clip_handoff">Penyedia layanan suara tidak tersedia. Mentranskripsikan rekaman ini di ponsel Anda.</string>
+</resources>

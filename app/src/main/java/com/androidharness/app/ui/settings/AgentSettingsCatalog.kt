@@ -231,8 +231,8 @@ internal object AgentSettingsCatalog {
             read = { it.rumbleSkipOnBatterySaver.toString() }, write = { r, v -> r.setRumbleSkipOnBatterySaver(bool(v)) }),
         // Chat options
         AgentSetting("start_screen", R.string.settings_start_screen, SettingsPage.CHAT_OPTIONS, enumChoice(StartScreen.entries.toTypedArray(),
-            mapOf("LAST_SELECTED" to R.string.settings_start_last_selected)),
-            "What the app opens to: CODE, CHAT, or the last one used.", R.string.settings_start_screen, "launch open startup",
+            mapOf("LAST_SELECTED" to R.string.settings_start_last_selected, "PHONE" to R.string.conversation_phone)),
+            "What the app opens to: Code, Chat, Phone, or the last section used.", R.string.settings_start_screen, "launch open startup",
             read = { it.startScreen.name }, write = { r, v -> r.setStartScreen(StartScreen.valueOf(v)) }),
         AgentSetting("chat_start", R.string.settings_chat_start, SettingsPage.CHAT_OPTIONS, enumChoice(ChatStartMode.entries.toTypedArray(),
             mapOf("NEW_CHAT" to R.string.settings_chat_start_new, "LAST_CHAT" to R.string.settings_chat_start_last)),

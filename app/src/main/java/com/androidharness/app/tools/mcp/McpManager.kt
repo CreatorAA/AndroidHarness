@@ -2,6 +2,7 @@ package com.androidharness.app.tools.mcp
 
 import android.content.Context
 import android.net.Uri
+import com.androidharness.app.data.ImageStore
 import com.androidharness.app.data.KeyStoreManager
 import com.androidharness.app.data.env.EnvState
 import com.androidharness.app.data.env.LinuxEnvironmentManager
@@ -39,6 +40,7 @@ class McpManager(
     private val keys: KeyStoreManager,
     private val codeGraph: com.androidharness.app.data.env.CodeGraphManager? = null,
     private val configuration: com.androidharness.app.config.HarnessConfigRepository? = null,
+    private val imageStore: ImageStore? = null,
 ) {
 
     private val json = Json { ignoreUnknownKeys = true; prettyPrint = true }
@@ -225,9 +227,16 @@ class McpManager(
     suspend fun setServerEnabled(name: String, enabled: Boolean) =
         persist(_servers.value.map { if (it.name == name) it.copy(enabled = enabled) else it })
 
-    fun disconnect(name: String) {
-        synchronized(connections) { connections.remove(name) }?.close()
-        _statuses.update { it - name }
+    fun disconnect(name: String) = disconnect(name, null)
+
+    /** A tool from an earlier turn must not disconnect a replacement with the same server name. */
+    private fun disconnect(name: String, expected: McpConnection?) {
+        val connection = synchronized(connections) {
+            if (expected != null && connections[name] !== expected) return
+            _statuses.update { it - name }
+            connections.remove(name)
+        }
+        connection?.close()
     }
 
     fun disconnectAll() {
@@ -426,7 +435,7 @@ class McpManager(
             if (isProject && leaseId != null) retainWorkspaceTool(leaseId, config.name)
             val conn = connectionFor(config, if (original.deviceLocal) context.filesDir else cwd, remote) ?: continue
             tools += conn.tools.map { info ->
-                McpToolAdapter(original.name, info, conn) { disconnect(config.name) }
+                McpToolAdapter(original.name, info, conn, imageStore = imageStore) { disconnect(config.name, conn) }
             }
         }
         return tools

@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"پیش فرض ارائه دهنده"</string>
     <string name="ui_add_custom_command">"دستور سفارشی را اضافه کنید"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"CPU را در حالی که یک اجرا یا ترمینال فعال است نگه دارید تا وقتی برنامه به حداقل برسد، ترمینال از بین نرود."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"مستثنی شده: اندروید اجرای پس‌زمینه را کاهش نمی‌دهد."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"روشن: سامسونگ و سایر OEM ها ممکن است کار پس زمینه را از بین ببرند. برنامه را برای اجرای طولانی مدت قابل اعتماد حذف."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"بهینه‌سازی باتری اندروید برای AndroidHarness خاموش است."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"بهینه‌سازی باتری اندروید روشن است. اگر اجرای کارهای طولانی با خاموش شدن صفحه متوقف می‌شود، به AndroidHarness اجازهٔ استفادهٔ نامحدود از باتری بدهید."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"نسخه فعلی %1$s. نسخه‌های GitHub را برای ساخت‌های جدیدتر بررسی می‌کند."</string>
     <string name="ui_available_see_the_dialog">"%1$s موجود است، گفتگو را ببینید"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"یک عامل برنامه نویسی که در تلفن شما زندگی می کند."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"سرعت خواندن"</string>
     <string name="lms_field_prompt_threads_help">"هسته‌های CPU هنگام خواندن پیام شما."</string>
     <string name="lms_unit_cores">"هسته"</string>
+    <string name="voice_no_result">متن کامل گفتار دریافت نشد. دوباره صحبت کنید یا پیام خود را تایپ کنید.</string>
+    <string name="voice_service_interrupted">سرویس گفتار سیستم پیش از اتمام متوقف شد. دوباره دیکته کنید یا بقیه را تایپ کنید.</string>
+    <string name="voice_try_again">دیکته دوباره</string>
+    <string name="voice_continue">ادامه دیکته</string>
+    <string name="voice_finish_to_send">در حال گوش دادن. پس از اتمام، روی ارسال بزنید.</string>
 </resources>

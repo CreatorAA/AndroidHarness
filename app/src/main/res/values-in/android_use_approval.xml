@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Ketuk</string>
+    <string name="phone_review_long_press">Sentuh dan tahan</string>
+    <string name="phone_review_type">Masukkan teks</string>
+    <string name="phone_review_volume">Atur volume media</string>
+    <string name="phone_review_scroll_forward">Gulir maju</string>
+    <string name="phone_review_scroll_backward">Gulir mundur</string>
+    <string name="phone_review_swipe">Usap</string>
+    <string name="phone_review_drag">Tarik</string>
+    <string name="phone_review_home">Kembali ke layar utama</string>
+    <string name="android_use_launcher_trip">Dari %1$s, cari dan ketuk %2$s di layar utama, lalu lanjutkan tugas ini di %3$s.</string>
+    <string name="android_use_action_approval">Izinkan tindakan ini sekali saja?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Izinkan kontrol ponsel untuk chat ini? Agen dapat mengirim tampilan layar aplikasi tujuan ke model yang dipilih, mengetuk layar, dan mengetik. Perintah ponsel yang diizinkan dalam chat ini juga dapat membaca dan mengubah file serta setelan. Asisten akan meminta izin lagi sebelum mengirim perubahan di aplikasi tujuan.</string>
+    <string name="android_use_submit_approval">Izinkan pengiriman ini sekali saja?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Pindahkan tugas ini ke aplikasi lain? Agen akan dapat membaca layar aplikasi tersebut dan berinteraksi dengannya.\n\n%1$s</string>
+    <string name="android_use_code_entry">Kirim tugas ke asisten ponsel</string>
+    <string name="android_use_code_hint">Tambahkan instruksi, atau kirim /phone saja untuk membuka setelan.</string>
+    <string name="android_use_draft_ready">Dalam 10 menit, buka aplikasi tujuan dan pilih Operasikan ponsel di asisten. Gunakan /phone --result di sini untuk melihat percakapan.</string>
+    <string name="android_use_draft_expired">Draf ini sudah kedaluwarsa, dibatalkan, atau diganti. Tutup dialog ini, lalu pilih Operasikan ponsel lagi.</string>
+    <string name="android_use_draft_cancelled">Draf tugas ponsel dibatalkan.</string>
+    <string name="android_use_no_draft">Tidak ada draf tugas ponsel yang menunggu di percakapan ini.</string>
+    <string name="android_use_no_result">Belum ada tugas ponsel yang dimulai dari percakapan ini.</string>
+    <string name="android_use_local_only">Mulai tugas ponsel dari ruang kerja Code lokal.</string>
+    <string name="android_use_from_code">Draf dari Code</string>
+</resources>

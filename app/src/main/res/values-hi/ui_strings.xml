@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"प्रदाता डिफ़ॉल्ट"</string>
     <string name="ui_add_custom_command">"कस्टम कमांड जोड़ें"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"रन या टर्मिनल सक्रिय होने पर CPU को दबाए रखें ताकि ऐप के छोटा होने पर टर्मिनल बंद न हो जाए।"</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"बहिष्कृत: Android पृष्ठभूमि रन को बाधित नहीं करेगा।"</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"चालू: Samsung और अन्य OEM पृष्ठभूमि कार्य को ख़त्म कर सकते हैं। विश्वसनीय लंबे समय तक चलने के लिए ऐप को बाहर निकालें।"</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness के लिए Android का बैटरी ऑप्टिमाइज़ेशन बंद है।"</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android का बैटरी ऑप्टिमाइज़ेशन चालू है। अगर स्क्रीन बंद होने पर लंबे काम रुक जाते हैं, तो AndroidHarness को बिना पाबंदी के बैटरी इस्तेमाल करने दें।"</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"वर्तमान संस्करण %1$s. नए बिल्ड के लिए GitHub रिलीज़ की जाँच करता है।"</string>
     <string name="ui_available_see_the_dialog">"%1$s उपलब्ध है, संवाद देखें"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"एक कोडिंग एजेंट जो आपके फ़ोन पर रहता है।"</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"पढ़ने की गति"</string>
     <string name="lms_field_prompt_threads_help">"आपका संदेश पढ़ते समय CPU कोर।"</string>
     <string name="lms_unit_cores">"कोर"</string>
+    <string name="voice_no_result">पूरा ट्रांसक्रिप्ट नहीं मिला। फिर से बोलकर देखें या अपना संदेश टाइप करें।</string>
+    <string name="voice_service_interrupted">सिस्टम की वॉइस सेवा पूरी होने से पहले ही बंद हो गई। फिर से बोलकर देखें या बाकी संदेश टाइप करें।</string>
+    <string name="voice_try_again">फिर से बोलें</string>
+    <string name="voice_continue">बोलना जारी रखें</string>
+    <string name="voice_finish_to_send">सुन रहा है। पूरा होने पर भेजें पर टैप करें।</string>
 </resources>

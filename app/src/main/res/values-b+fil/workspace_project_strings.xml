@@ -105,6 +105,24 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">Ginagamit ito ng mga chat sa ibang proyekto: %1$s. Alisin ang workspace na ito sa mga chat na iyon bago ito i-delete. Dapat manatili ang access sa workspace ng mga chat na may naka-save na pagbabago.</string>
+    <string name="wp_delete_running_blocked">Ihinto ang mga tumatakbong task sa proyektong ito bago ito i-delete.</string>
+    <string name="wp_reset_shared_blocked">Ginagamit din ng ibang chat ang workspace ng app: %1$s. Alisin ang workspace na ito sa mga chat na iyon bago ito i-reset.</string>
+    <string name="wp_reset_running_blocked">Ihinto ang mga tumatakbong task sa workspace na ito bago ito i-reset.</string>
+    <plurals name="wp_automation_count">
+        <item quantity="one">%1$d automation</item>
+        <item quantity="other">%1$d automation</item>
+    </plurals>
+    <string name="wp_picked_folder">Napiling folder</string>
+    <string name="wp_review_changed">Nagbago ang mga detalye. Isara ang dialog at suriin muli ang aksyon.</string>
+    <string name="wp_editor_toggle_wrap">I-toggle ang word wrap</string>
+    <string name="wp_editor_undo_available">Puwedeng i-undo</string>
+    <string name="wp_reset_app_only">Ang workspace lang ng app ang puwedeng i-reset.</string>
+    <string name="wp_editor_find_replace">Maghanap at magpalit sa proyekto</string>
+    <plurals name="wp_changed_files">
+        <item quantity="one">%1$d binagong file</item>
+        <item quantity="other">%1$d binagong file</item>
+    </plurals>
     <string name="wp_add_shared">"Shared na folder"</string>
     <string name="wp_add_shared_sub">"Nananatili pagkatapos ng uninstall. Nakikita ito ng stable at nightly build"</string>
     <string name="wp_add_shared_failed">"Hindi magawa ang %1$s. Tingnan kung naka-on ang access sa lahat ng file, pagkatapos subukan ulit."</string>

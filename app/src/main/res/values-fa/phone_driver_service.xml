@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">کنترل‌های گوشی Harness</string>
+    <string name="phone_driver_service_description">به شما امکان می‌دهد از دستیار بخواهید صفحه را بخواند، روی دکمه‌ها بزند و متن وارد کند. کنترل‌های گوشی فقط هنگام اجرای کاری که خودتان شروع کرده‌اید فعال‌اند. برای در دست گرفتن کنترل، کار را متوقف کنید.</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="slash_menu_clear_hint">Start a fresh conversation</string>
+    <string name="slash_menu_compact">Compact</string>
+    <string name="slash_menu_compact_hint">Summarize older context</string>
+    <string name="slash_menu_cost">Cost</string>
+    <string name="slash_menu_cost_hint">Show total tokens and cost</string>
+    <string name="slash_menu_btw_hint">Ask about the current context without adding to the chat</string>
+    <string name="slash_menu_doctor">Harness doctor</string>
+    <string name="slash_menu_doctor_hint">Run self-tests for Harness tools</string>
+    <string name="slash_menu_init">Initialize project</string>
+    <string name="slash_menu_init_hint">Write or refresh AGENTS.md</string>
+    <string name="slash_menu_review_hint">Review pending changes without editing. Add a focus after the command.</string>
+    <string name="slash_menu_plan_hint">Load the plan skill and switch to Plan mode</string>
+    <string name="slash_menu_skills">Browse skills</string>
+    <string name="slash_menu_skills_hint">Open the full skill picker</string>
+    <string name="slash_menu_env_hint">Check, update, install or repair the Linux environment</string>
+    <string name="slash_menu_snippet">Snippet</string>
+    <string name="slash_menu_snippet_hint">Saved prompt snippet</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_driver_service_name">Điều khiển điện thoại bằng Harness</string>
+    <string name="phone_driver_service_description">Cho phép bạn yêu cầu trợ lý đọc màn hình, nhấn các nút điều khiển và nhập văn bản. Tính năng điều khiển điện thoại chỉ hoạt động trong tác vụ bạn bắt đầu. Dừng tác vụ để tự điều khiển.</string>
+</resources>

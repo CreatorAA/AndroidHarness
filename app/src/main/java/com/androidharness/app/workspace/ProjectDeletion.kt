@@ -1,6 +1,8 @@
 package com.androidharness.app.workspace
 
+import androidx.core.content.ContextCompat
 import com.androidharness.app.AppContainer
+import com.androidharness.app.R
 import com.androidharness.app.data.db.ProjectEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -25,8 +27,9 @@ data class AppWorkspaceResetPreview(
 
 class ProjectDeletion(private val c: AppContainer) {
     suspend fun preview(projectId: String): ProjectDeletionPreview {
+        val context = ContextCompat.getContextForLanguage(c.appContext)
         val project = requireNotNull(c.workspace.projects.first().firstOrNull { it.id == projectId }) {
-            "This project is no longer available."
+            context.getString(R.string.wp_project_unavailable)
         }
         val related = c.workspace.projectChats(projectId)
         val owned = related.filter { it.projectId == projectId }.map { it.id }.toSet()
@@ -35,10 +38,10 @@ class ProjectDeletion(private val c: AppContainer) {
             it.projectId == projectId || it.targetSessionId in owned || it.activeRun?.sessionId in owned
         }.map { it.id }.toSet()
         val blocker = when {
-            project.kind == WorkspaceManager.KIND_APP -> "The app workspace cannot be deleted."
-            shared.isNotEmpty() -> "Used by chats in other projects: ${shared.joinToString { it.title }}. Remove this workspace from those chats before deleting it. Chats with saved changes must keep their workspace access."
+            project.kind == WorkspaceManager.KIND_APP -> context.getString(R.string.ui_the_app_workspace_cannot_be_deleted)
+            shared.isNotEmpty() -> context.getString(R.string.wp_delete_shared_blocked, shared.joinToString { it.title })
             related.any { c.runManager.isRunning(it.id) || c.runManager.hasPendingFollowUp(it.id) } ->
-                "Stop running tasks in this project before deleting it."
+                context.getString(R.string.wp_delete_running_blocked)
             else -> null
         }
         return ProjectDeletionPreview(project, owned, automations, blocker)
@@ -51,7 +54,7 @@ class ProjectDeletion(private val c: AppContainer) {
                 check(current.blocker == null) { current.blocker.orEmpty() }
                 check(current.chatIds == reviewed.chatIds && current.automationIds == reviewed.automationIds &&
                     current.project.copy(lastUsedAt = 0) == reviewed.project.copy(lastUsedAt = 0)) {
-                    "This project changed. Close this dialog and review deletion again."
+                    ContextCompat.getString(c.appContext, R.string.wp_review_changed)
                 }
                 // Complete cleanup even if navigation disposes the confirmation dialog.
                 withContext(NonCancellable) {
@@ -69,10 +72,11 @@ class ProjectDeletion(private val c: AppContainer) {
      * workspace, because the app always needs one; this path empties it instead.
      */
     suspend fun previewAppWorkspace(projectId: String): AppWorkspaceResetPreview {
+        val context = ContextCompat.getContextForLanguage(c.appContext)
         val project = requireNotNull(c.workspace.projects.first().firstOrNull { it.id == projectId }) {
-            "This workspace is no longer available."
+            context.getString(R.string.ui_workspace_unavailable)
         }
-        require(project.kind == WorkspaceManager.KIND_APP) { "Only the app workspace can be reset." }
+        require(project.kind == WorkspaceManager.KIND_APP) { context.getString(R.string.wp_reset_app_only) }
         val related = c.workspace.projectChats(projectId)
         val owned = related.filter { it.projectId == projectId }.map { it.id }.toSet()
         val shared = related.filter { it.projectId != projectId }
@@ -81,9 +85,9 @@ class ProjectDeletion(private val c: AppContainer) {
         }.map { it.id }.toSet()
         val blocker = when {
             shared.isNotEmpty() ->
-                "Other chats also use the app workspace: ${shared.joinToString { it.title }}. Remove this workspace from those chats before resetting it."
+                context.getString(R.string.wp_reset_shared_blocked, shared.joinToString { it.title })
             related.any { c.runManager.isRunning(it.id) || c.runManager.hasPendingFollowUp(it.id) } ->
-                "Stop running tasks in this workspace before resetting it."
+                context.getString(R.string.wp_reset_running_blocked)
             else -> null
         }
         val bytes = withContext(Dispatchers.IO) { c.workspace.appWorkspaceBytes() }
@@ -97,7 +101,7 @@ class ProjectDeletion(private val c: AppContainer) {
                 val current = previewAppWorkspace(reviewed.project.id)
                 check(current.blocker == null) { current.blocker.orEmpty() }
                 check(current.chatIds == reviewed.chatIds && current.automationIds == reviewed.automationIds) {
-                    "This workspace changed. Close this dialog and review the reset again."
+                    ContextCompat.getString(c.appContext, R.string.wp_review_changed)
                 }
                 // Complete cleanup even if navigation disposes the confirmation dialog.
                 withContext(NonCancellable) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Yalnızca çevrimdışı Mandarin Çincesi</string>
+    <string name="voice_local_only_on">Uygulamayla birlikte gelen Mandarin Çincesi modelini kullanır. Sesiniz telefonda kalır.</string>
+    <string name="voice_system_first">Android\'in konuşma hizmeti tercih edilir. Kullanılamıyorsa Mandarin Çincesi dikte işlemi telefonda devam eder.</string>
+    <string name="voice_live_handoff">Bu telefonda devam ediliyor. Şimdiye kadar gösterilen sözcükler korunur; konuşmaya devam edin.</string>
+    <string name="voice_local_stopped">Cihazda dikte durduruldu. Gösterilen sözcükleri koruyup devam edebilir veya kalanını yazabilirsiniz.</string>
+    <string name="voice_clip_unavailable">Bu kayıttan eksiksiz bir döküm elde edilemedi.</string>
+    <string name="voice_continue_offline">Cihazda devam et</string>
+    <string name="voice_clip_handoff">Konuşma hizmeti kullanılamıyor. Bu kayıt telefonunuzda metne dönüştürülüyor.</string>
+</resources>

@@ -2,6 +2,10 @@ package com.androidharness.app.agent
 
 import com.androidharness.app.PendingPrompt
 import com.androidharness.app.core.ToolCallData
+import com.androidharness.app.tools.ToolResult
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -39,6 +43,28 @@ class PendingPromptMappingTest {
         assertEquals("My Chat", prompt.sessionTitle)
         assertEquals("edit_file: Edit an existing file", prompt.headline)
         assertEquals("--- a.py\n+++ b.py", prompt.detail)
+    }
+
+    @Test
+    fun phoneSubmissionRequiresItsOwnCardAndDoesNotPublishScreenText() {
+        for (tool in listOf("android_action", "android_sequence", "autojs_run")) {
+            val request = ApprovalRequest(ToolCallData("id", tool, "{}"), "Submit once", "Private task content")
+            val alert = RunManager.pendingPromptsOf(stateWith(approval = request), "Phone").single()
+            assertTrue(alert.reviewInChat)
+            assertEquals(null, alert.detail)
+        }
+    }
+
+    @Test
+    fun timedPhoneReceiptsStayReadableInTheTranscript() {
+        for ((name, status) in listOf("android_action" to "dispatched_unverified",
+            "android_sequence" to "verified", "autojs_run" to "ran")) {
+            val result = ToolResult(true, """{"status":"$status"}""").withElapsedTime(name, 310)
+            val receipt = Json.parseToJsonElement(result.output).jsonObject
+            assertEquals(status, receipt.getValue("status").jsonPrimitive.content)
+            assertEquals("310", receipt.getValue("elapsed_ms").jsonPrimitive.content)
+        }
+        assertTrue(ToolResult(true, "hello").withElapsedTime("shell", 310).output.startsWith("hello\n[took "))
     }
 
     @Test

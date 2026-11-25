@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.androidharness.app.AppContainer
 import com.androidharness.app.R
 import com.androidharness.app.data.AppSettings
+import com.androidharness.app.ui.common.SystemGrants
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,9 +31,13 @@ internal fun BackgroundSettingsSection(container: AppContainer, settings: AppSet
     val owner = LocalLifecycleOwner.current
     val scope = rememberCoroutineScope()
     var androidAllowsNotifications by remember { mutableStateOf(NotificationManagerCompat.from(context).areNotificationsEnabled()) }
+    var batteryExempt by remember(context) { mutableStateOf(SystemGrants.isIgnoringBatteryOptimizations(context)) }
     DisposableEffect(owner, context) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) androidAllowsNotifications = NotificationManagerCompat.from(context).areNotificationsEnabled()
+            if (event == Lifecycle.Event.ON_RESUME) {
+                androidAllowsNotifications = NotificationManagerCompat.from(context).areNotificationsEnabled()
+                batteryExempt = SystemGrants.isIgnoringBatteryOptimizations(context)
+            }
         }
         owner.lifecycle.addObserver(observer)
         onDispose { owner.lifecycle.removeObserver(observer) }
@@ -60,7 +65,7 @@ internal fun BackgroundSettingsSection(container: AppContainer, settings: AppSet
     }
     LiveUpdatesSetting(settings) { enabled -> scope.launch { container.settings.setLiveUpdatesEnabled(enabled) } }
     // Keeping runs alive and the battery exemption decide whether background work survives at all.
-    BatteryCard(container)
+    BatteryCard(container, batteryExempt)
 }
 
 @Composable

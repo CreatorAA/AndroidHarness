@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"සැපයුම්කරු default"</string>
     <string name="ui_add_custom_command">"Custom Command එකතු කරන්න"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"තබන්න CPU ධාවනය හෝ තර්කය ක්‍රියාකාරී වන අතර, එම නිසා තර්කය අවම වශයෙන් යෙදුම මරණයට පත් වූ විට තර්කය මැරෙන්නේ නැත."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"අතුරුදහන්: Android පසුබිම ධාවනය නොකරයි."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"මත: සැම්සුන් සහ අනෙකුත් OEM පසුබිම වැඩ මරා දැමීමට හැකිය."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"AndroidHarness සඳහා Android බැටරි ප්‍රශස්තකරණය ක්‍රියාවිරහිත කර ඇත."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"Android බැටරි ප්‍රශස්තකරණය සක්‍රිය කර ඇත. තිරය නිවා දැමූ විට දිගු කාර්යයන් නතර වේ නම්, සීමාවකින් තොරව බැටරිය භාවිත කිරීමට AndroidHarness වෙත ඉඩ දෙන්න."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"වර්තමාන අනුවාදය %1$sචෙක්පත් GitHub නව ගොඩනැගිලි සඳහා නිවේදනය"</string>
     <string name="ui_available_see_the_dialog">"%1$s විවෘතව, View the Dialogue"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"ඔබගේ දුරකථනයේ ජීවත් වන කේතය නියෝජිතයා."</string>
@@ -1847,4 +1847,9 @@
     <string name="lms_field_prompt_threads">"කියවීමේ වේගය"</string>
     <string name="lms_field_prompt_threads_help">"ඔබේ පණිවිඩය කියවන විට CPU කෝර."</string>
     <string name="lms_unit_cores">"කෝර"</string>
+    <string name="voice_no_result">සම්පූර්ණ පිටපතක් ලැබුණේ නැත. නැවත කතා කරන්න හෝ ඔබේ පණිවිඩය ටයිප් කරන්න.</string>
+    <string name="voice_service_interrupted">පද්ධතියේ කථන සේවාව අවසන් වීමට පෙර නතර විය. නැවත කියවන්න හෝ ඉතිරිය ටයිප් කරන්න.</string>
+    <string name="voice_try_again">නැවත කියවන්න</string>
+    <string name="voice_continue">දිගටම කියවන්න</string>
+    <string name="voice_finish_to_send">සවන් දෙමින්. අවසන් වූ විට යවන්න තට්ටු කරන්න.</string>
 </resources>

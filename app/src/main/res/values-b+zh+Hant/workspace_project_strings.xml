@@ -105,6 +105,22 @@
     <string name="wp_project_name_chat_title">New chat</string>
     <string name="wp_project_chat_name">Chat name</string>
     <string name="ui_replay_intro">Replay intro</string>
+    <string name="wp_delete_shared_blocked">其他專案的對話正在使用此工作區：%1$s。請先從這些對話中移除此工作區，再予以刪除。已有儲存變更的對話必須保留工作區存取權。</string>
+    <string name="wp_delete_running_blocked">刪除前，請先停止此專案中正在執行的任務。</string>
+    <string name="wp_reset_shared_blocked">其他對話也在使用應用程式工作區：%1$s。請先從這些對話中移除此工作區，再進行重設。</string>
+    <string name="wp_reset_running_blocked">重設前，請先停止此工作區中正在執行的任務。</string>
+    <plurals name="wp_automation_count">
+        <item quantity="other">%1$d 個自動化任務</item>
+    </plurals>
+    <string name="wp_picked_folder">選取的資料夾</string>
+    <string name="wp_review_changed">詳細資料已變更。請關閉此對話框，再重新確認操作。</string>
+    <string name="wp_editor_toggle_wrap">切換自動換行</string>
+    <string name="wp_editor_undo_available">可以復原</string>
+    <string name="wp_reset_app_only">只有應用程式工作區可以重設。</string>
+    <string name="wp_editor_find_replace">在專案中尋找和取代</string>
+    <plurals name="wp_changed_files">
+        <item quantity="other">%1$d 個檔案已變更</item>
+    </plurals>
     <string name="wp_add_shared">"共用資料夾"</string>
     <string name="wp_add_shared_sub">"解除安裝後仍保留。穩定版與每夜版都能看到它"</string>
     <string name="wp_add_shared_failed">"無法建立 %1$s。請確認已開啟所有檔案存取權限後再試。"</string>

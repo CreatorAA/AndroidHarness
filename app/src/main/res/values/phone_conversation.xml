@@ -1,0 +1,7 @@
+<resources>
+    <string name="conversation_phone">Phone</string>
+    <string name="conversation_new_phone">New phone conversation</string>
+    <string name="phone_conversation_intro">Ask a question here. To have the assistant use an app, switch to that app and summon the assistant.</string>
+    <string name="phone_conversation_settings">Assistant settings</string>
+    <string name="settings_start_phone_desc">Open your phone assistant conversations.</string>
+</resources>

@@ -51,6 +51,7 @@ class ChatImageZoomDeviceTest {
         }
         val uri = androidx.core.content.FileProvider.getUriForFile(c.appContext, c.appContext.packageName + ".update", shared)
         val sid = c.sessions.createSession("Image composer", conversation = ConversationConfig(ConversationKind.CHAT))
+        val codeSid = c.sessions.createSession("Code image workspace", conversation = ConversationConfig(ConversationKind.CODE))
         val store = ViewModelStore()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         lateinit var chat: ChatViewModel
@@ -59,7 +60,7 @@ class ChatImageZoomDeviceTest {
             instrumentation.runOnMainSync {
                 chat = ChatViewModel(c, sid); store.put("chat", chat)
                 chat.attachImage(uri)
-                code = ChatViewModel(c, null, ConversationKind.CODE); store.put("code", code)
+                code = ChatViewModel(c, codeSid); store.put("code", code)
                 code.attachImage(uri)
             }
             val chatState = withTimeout(10_000) { chat.state.first { it.attachments.isNotEmpty() || it.attachmentImports.any { item -> item.status != AttachmentImportStatus.READING } } }
@@ -70,11 +71,31 @@ class ChatImageZoomDeviceTest {
             val codeName = codeState.attachments.single()
             assertTrue(c.images.originalFile(chatName).isFile)
             assertFalse(c.images.originalFile(codeName).exists())
+            // Chat zoom owns a private original. Code instead gives the shell a copy
+            // of the original bytes (not the downsampled preview) in this workspace.
+            val attachments = c.workspace.forSession(codeSid).resolve(".harness/attachments")
+            fun workspaceCopy() = attachments.list().singleOrNull { it.name.endsWith("-" + shared.name) }
+            val workspaceImage = requireNotNull(workspaceCopy())
+            assertArrayEquals(original.readBytes(), workspaceImage.openInputStream()!!.use { it.readBytes() })
             instrumentation.runOnMainSync { chat.removeAttachment(0); code.removeAttachment(0) }
+            withTimeout(10_000) { while (workspaceCopy() != null) kotlinx.coroutines.delay(50) }
+
+            instrumentation.runOnMainSync {
+                code.beginEdit(ChatMessage(Role.USER, "original", id = "fixture-message"))
+                code.attachEditImage(uri)
+            }
+            val edit = withTimeout(10_000) { code.state.first { it.editDraft?.images?.isNotEmpty() == true } }.editDraft!!
+            val image = edit.images.single()
+            assertEquals(workspaceCopy()!!.relPath, image.workspacePath)
+            assertTrue(code.state.value.attachments.isEmpty())
+            instrumentation.runOnMainSync { code.cancelEdit() }
+            withTimeout(10_000) { while (workspaceCopy() != null) kotlinx.coroutines.delay(50) }
+            assertFalse(File(c.images.imagesDir, image.name).exists())
             assertFalse(c.images.originalFile(chatName).exists())
         } finally {
             instrumentation.runOnMainSync { store.clear() }
             c.sessions.session(sid)?.let { c.sessions.deleteSession(it) }
+            c.sessions.session(codeSid)?.let { c.sessions.deleteSession(it) }
             shared.delete(); original.delete()
         }
         Unit

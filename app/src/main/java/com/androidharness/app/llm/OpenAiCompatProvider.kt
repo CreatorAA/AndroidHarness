@@ -214,7 +214,7 @@ class OpenAiCompatProvider(
                         val metadata = com.androidharness.app.tools.ImageInspectionDelivery.envelope(message.text)?.body
                         message.imageData.forEachIndexed { imageIndex, data ->
                             imageLabels += "Image ${closeUps.size + 1}: tool_call_id=${message.toolCallId}, tool=${message.toolName}, attachment_index=${imageIndex + 1}" +
-                                metadata?.let { " " + JsonObject(it.filterKeys { key -> key in setOf("source_image_id", "image_id", "caption", "attached_image", "source_region") }) }.orEmpty()
+                                metadata?.let { " " + JsonObject(it.filterKeys { key -> key in setOf("source_image_id", "image_id", "observationId", "caption", "attached_image", "source_region") }) }.orEmpty()
                             closeUps += data
                         }
                     }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">오프라인 표준 중국어만 사용</string>
+    <string name="voice_local_only_on">앱에 포함된 표준 중국어 모델을 사용합니다. 음성은 휴대전화 밖으로 전송되지 않습니다.</string>
+    <string name="voice_system_first">Android 음성 인식을 우선 사용합니다. 이용할 수 없으면 휴대전화에서 표준 중국어 받아쓰기를 계속합니다.</string>
+    <string name="voice_live_handoff">휴대전화에서 받아쓰기를 계속합니다. 이미 표시된 내용은 유지되니 계속 말씀하세요.</string>
+    <string name="voice_local_stopped">기기에서 받아쓰기가 중지되었습니다. 이미 표시된 내용은 유지됩니다. 이어서 말하거나 나머지를 입력하세요.</string>
+    <string name="voice_clip_unavailable">이 녹음에서 전체 받아쓰기 결과를 복구하지 못했습니다.</string>
+    <string name="voice_continue_offline">기기에서 계속</string>
+    <string name="voice_clip_handoff">음성 서비스를 사용할 수 없어 휴대전화에서 이 녹음을 텍스트로 변환하고 있습니다.</string>
+</resources>

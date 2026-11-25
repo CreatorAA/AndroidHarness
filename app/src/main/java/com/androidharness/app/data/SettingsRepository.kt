@@ -12,6 +12,7 @@ import com.androidharness.app.agent.PermissionMode
 import com.androidharness.app.agent.ThinkingLevel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.Transient
 
 val Context.settingsStore by preferencesDataStore(name = "settings")
 
@@ -120,6 +121,8 @@ data class AppSettings(
     val biometricLockTimeoutMinutes: Int = 0,
     /** Voice speech-to-text engine: "inbuilt" (native Android recognizer) or a [VoiceProviderConfig] id. */
     val voiceEngine: String = "inbuilt",
+    /** In the phone speech engine, use bundled Mandarin without contacting a system provider. */
+    val offlineMandarinOnly: Boolean = false,
     /** Legacy Groq Whisper model; kept in sync while Groq is the selected provider. */
     val groqWhisperModel: String = "whisper-large-v3",
     /** Text-to-speech engine: "system" (Android TTS) or a [VoiceProviderConfig] id. */
@@ -146,6 +149,9 @@ data class AppSettings(
     val voiceAutoSendTimeoutMs: Int = 2000,
     /** The assistant panel over other apps starts listening as soon as it opens. */
     val assistantVoiceFirst: Boolean = false,
+    /** Device-local opt-in, separate from the Android permission and portable backups. */
+    @Transient
+    val assistantEdgeHandleEnabled: Boolean = false,
     /** How hard the assistant panel thinks; each model maps it to its own levels or ignores it. */
     val assistantThinking: ThinkingLevel = ThinkingLevel.LOW,
     /** The assistant panel reads its answer aloud when the question was spoken. */
@@ -403,6 +409,7 @@ class SettingsRepository(private val context: Context) {
         val BIOMETRIC_LOCK_ENABLED = booleanPreferencesKey("biometric_lock_enabled")
         val BIOMETRIC_LOCK_TIMEOUT = intPreferencesKey("biometric_lock_timeout_minutes")
         val VOICE_ENGINE = stringPreferencesKey("voice_engine")
+        val OFFLINE_MANDARIN_ONLY = booleanPreferencesKey("offline_mandarin_only")
         val GROQ_WHISPER_MODEL = stringPreferencesKey("groq_whisper_model")
         val TTS_ENGINE = stringPreferencesKey("tts_engine")
         val TTS_GROQ_MODEL = stringPreferencesKey("tts_groq_model")
@@ -414,6 +421,7 @@ class SettingsRepository(private val context: Context) {
         val VOICE_PROMO_SEEN = booleanPreferencesKey("voice_promo_seen")
         val VOICE_AUTO_SEND = booleanPreferencesKey("voice_auto_send")
         val ASSISTANT_VOICE_FIRST = booleanPreferencesKey("assistant_voice_first")
+        val ASSISTANT_EDGE_HANDLE = booleanPreferencesKey("assistant_edge_handle")
         val ASSISTANT_THINKING = stringPreferencesKey("assistant_thinking")
         val ASSISTANT_SPEAK_REPLIES = booleanPreferencesKey("assistant_speak_replies")
         val ASSISTANT_PROVIDER = stringPreferencesKey("assistant_provider_id")
@@ -564,6 +572,7 @@ class SettingsRepository(private val context: Context) {
             biometricLockEnabled = prefs[Keys.BIOMETRIC_LOCK_ENABLED] ?: false,
             biometricLockTimeoutMinutes = prefs[Keys.BIOMETRIC_LOCK_TIMEOUT] ?: 0,
             voiceEngine = prefs[Keys.VOICE_ENGINE] ?: AppSettings.VOICE_ENGINE_INBUILT,
+            offlineMandarinOnly = prefs[Keys.OFFLINE_MANDARIN_ONLY] ?: false,
             groqWhisperModel = prefs[Keys.GROQ_WHISPER_MODEL] ?: AppSettings.GROQ_MODEL_WHISPER_V3,
             ttsEngine = prefs[Keys.TTS_ENGINE] ?: AppSettings.TTS_ENGINE_SYSTEM,
             ttsGroqModel = prefs[Keys.TTS_GROQ_MODEL] ?: AppSettings.DEFAULT_TTS_GROQ_MODEL,
@@ -575,6 +584,7 @@ class SettingsRepository(private val context: Context) {
             voicePromoSeen = prefs[Keys.VOICE_PROMO_SEEN] ?: false,
             voiceAutoSend = prefs[Keys.VOICE_AUTO_SEND] ?: false,
             assistantVoiceFirst = prefs[Keys.ASSISTANT_VOICE_FIRST] ?: false,
+            assistantEdgeHandleEnabled = prefs[Keys.ASSISTANT_EDGE_HANDLE] ?: false,
             assistantThinking = prefs[Keys.ASSISTANT_THINKING]
                 ?.let { runCatching { ThinkingLevel.valueOf(it) }.getOrNull() }
                 ?: ThinkingLevel.LOW,
@@ -694,6 +704,7 @@ class SettingsRepository(private val context: Context) {
             p[Keys.WEB_SEARCH_PROVIDER] = s.webSearchProvider
             p[Keys.DISABLED_SEARCH_PROVIDERS] = s.disabledSearchProviders.filterTo(HashSet()) { it in WEB_SEARCH_PROVIDERS }
             p[Keys.VOICE_ENGINE] = s.voiceEngine
+            p[Keys.OFFLINE_MANDARIN_ONLY] = s.offlineMandarinOnly
             p[Keys.GROQ_WHISPER_MODEL] = s.groqWhisperModel
             p[Keys.TTS_ENGINE] = s.ttsEngine
             p[Keys.TTS_GROQ_MODEL] = s.ttsGroqModel
@@ -1037,6 +1048,10 @@ class SettingsRepository(private val context: Context) {
         context.settingsStore.edit { it[Keys.VOICE_ENGINE] = engine }
     }
 
+    suspend fun setOfflineMandarinOnly(value: Boolean) {
+        context.settingsStore.edit { it[Keys.OFFLINE_MANDARIN_ONLY] = value }
+    }
+
     suspend fun setGroqWhisperModel(model: String) {
         context.settingsStore.edit {
             it[Keys.GROQ_WHISPER_MODEL] = model
@@ -1092,6 +1107,10 @@ class SettingsRepository(private val context: Context) {
 
     suspend fun setAssistantVoiceFirst(enabled: Boolean) {
         context.settingsStore.edit { it[Keys.ASSISTANT_VOICE_FIRST] = enabled }
+    }
+
+    suspend fun setAssistantEdgeHandleEnabled(enabled: Boolean) {
+        context.settingsStore.edit { it[Keys.ASSISTANT_EDGE_HANDLE] = enabled }
     }
 
     suspend fun setAssistantThinking(level: ThinkingLevel) {
@@ -1335,6 +1354,9 @@ class SettingsRepository(private val context: Context) {
             prefs[Keys.PINNED] = (prefs[Keys.PINNED] ?: emptySet()) - sessionIds
             prefs[Keys.ARCHIVED] = (prefs[Keys.ARCHIVED] ?: emptySet()) - sessionIds
             if (prefs[Keys.LAST_ACTIVE_SESSION] in sessionIds) prefs.remove(Keys.LAST_ACTIVE_SESSION)
+            prefs.asMap().filter { (key, value) ->
+                key.name.startsWith(PhonePanelHistory.KEY_PREFIX) && value is String && value in sessionIds
+            }.keys.forEach { prefs.remove(it) }
         }
     }
 

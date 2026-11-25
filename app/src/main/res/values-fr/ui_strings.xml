@@ -1142,8 +1142,8 @@
     <string name="ui_provider_default">"Valeur par défaut du fournisseur"</string>
     <string name="ui_add_custom_command">"Ajouter une commande personnalisée"</string>
     <string name="ui_hold_the_cpu_while_a_run_or">"Maintenez le CPU pendant qu\'une exécution ou un terminal est actif afin que le terminal ne meure pas lorsque l\'application est réduite."</string>
-    <string name="ui_excluded_android_will_not_throttle_background_runs">"Exclus : Android ne limitera pas les exécutions en arrière-plan."</string>
-    <string name="ui_on_samsung_and_other_oems_may_kill">"Activé : Samsung et d\'autres OEM peuvent supprimer le travail en arrière-plan. Excluez l\'application pour de longues courses fiables."</string>
+    <string name="ui_excluded_android_will_not_throttle_background_runs">"L’optimisation de la batterie d’Android est désactivée pour AndroidHarness."</string>
+    <string name="ui_on_samsung_and_other_oems_may_kill">"L’optimisation de la batterie d’Android est activée. Si de longues tâches se bloquent lorsque l’écran est éteint, autorisez AndroidHarness à utiliser la batterie sans restriction."</string>
     <string name="ui_current_version_checks_github_releases_for_newer">"Version actuelle %1$s. Vérifie les versions GitHub pour les versions plus récentes."</string>
     <string name="ui_available_see_the_dialog">"%1$s disponible, voir la boîte de dialogue"</string>
     <string name="ui_a_coding_agent_that_lives_on_your">"Un agent de codage qui vit sur votre téléphone."</string>
@@ -1849,4 +1849,9 @@
     <string name="lms_field_prompt_threads">"Vitesse de lecture"</string>
     <string name="lms_field_prompt_threads_help">"Cœurs CPU pendant la lecture de votre message."</string>
     <string name="lms_unit_cores">"cœurs"</string>
+    <string name="voice_no_result">Aucune transcription complète n’a été reçue. Réessayez de parler ou saisissez votre message.</string>
+    <string name="voice_service_interrupted">Le service de reconnaissance vocale du système s’est arrêté avant la fin. Réessayez de dicter ou saisissez la suite.</string>
+    <string name="voice_try_again">Dicter à nouveau</string>
+    <string name="voice_continue">Continuer la dictée</string>
+    <string name="voice_finish_to_send">Écoute en cours. Appuyez sur Envoyer lorsque vous avez terminé.</string>
 </resources>

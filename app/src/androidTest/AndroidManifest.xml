@@ -1,6 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <permission android:name="com.androidharness.fixture.READ_PLUGIN_DOCUMENTS" android:protectionLevel="signature" />
     <application>
+        <!-- Separate test APK window: records real pointer timing from the built-in phone driver. -->
+        <activity android:name="com.androidharness.app.androiduse.DragTimingProbeActivity"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar" android:exported="true" />
+        <activity-alias android:name="com.androidharness.app.androiduse.AlternateLauncher"
+            android:targetActivity="com.androidharness.app.androiduse.DragTimingProbeActivity"
+            android:enabled="false" android:exported="true" android:label="Harness alias fixture">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
         <provider
             android:name="com.androidharness.app.plugins.PluginImportFixtureProvider"
             android:enabled="${localImportFixtureEnabled}"

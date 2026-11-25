@@ -5639,33 +5639,29 @@
     {
       "id": "updates-and-about",
       "category": "help",
-      "title": "Thông tin cập nhật, thiết lập và ứng dụng",
-      "summary": "Tìm phiên bản của bạn, kết nối lại thiết lập và hiểu các tùy chọn hỗ trợ.",
-      "location": "Cài đặt → Cập nhật, Hướng dẫn thiết lập hoặc Giới thiệu.",
+      "title": "Phiên bản và thiết lập",
+      "summary": "Xem phiên bản đã cài đặt hoặc cài một bản tùy chỉnh mới hơn.",
+      "location": "Cài đặt → Giới thiệu hoặc Hướng dẫn thiết lập.",
       "before": [
-        "Kết nối mạng để kiểm tra cập nhật và các trang hỗ trợ bên ngoài."
+        "Bạn có thể xem số phiên bản khi không có mạng."
       ],
       "steps": [
         {
           "title": "Kiểm tra phiên bản đã cài đặt",
-          "body": "Mở Giới thiệu hoặc Cập nhật để xem phiên bản/bản dựng đã cài đặt thực tế. Bao gồm phiên bản đó khi mô tả một vấn đề có thể tái tạo."
+          "body": "Mở Giới thiệu. Số phiên bản nằm bên dưới tên ứng dụng. Trang này cũng liệt kê mã nguồn, giấy phép và các dự án nguồn mở được sử dụng."
         },
         {
-          "title": "Sử dụng đường dẫn cập nhật được cung cấp",
-          "body": "Kiểm tra các bản cập nhật và đọc chi tiết phát hành. Sử dụng hành động tải xuống/cài đặt được cung cấp cho bản phân phối này và làm theo bất kỳ bước cài đặt Android nào."
+          "title": "Cài bản tùy chỉnh mới hơn",
+          "body": "Mở tệp APK do người duy trì bản tùy chỉnh này cung cấp rồi làm theo hướng dẫn của trình cài đặt Android."
         },
         {
           "title": "Xem lại quá trình thiết lập khi cần thiết",
           "body": "Sử dụng Thiết lập để xem lại các lựa chọn triển khai và các quyền/kết nối cần thiết. Kiểm tra từng lựa chọn thay vì cho rằng việc cài đặt lại là cần thiết."
-        },
-        {
-          "title": "Tìm tín dụng và hỗ trợ",
-          "body": "Giới thiệu về danh sách nguồn/giấy phép/tín dụng và các liên kết hỗ trợ hoặc quyên góp có sẵn. Một khoản đóng góp hỗ trợ ứng dụng; nó không mua tín dụng API hoặc đăng ký nhà cung cấp."
         }
       ],
-      "outcome": "Bạn biết phiên bản đã cài đặt, đường dẫn cài đặt/cập nhật có sẵn và nơi chứa thông tin của ứng dụng.",
+      "outcome": "Khi báo lỗi, hãy ghi rõ số phiên bản đang dùng.",
       "limits": [
-        "Hành vi phân phối và cài đặt bản cập nhật khác nhau tùy theo quyền phân phối và thiết bị có sẵn.",
+        "Bản này không kiểm tra hay cài đặt các bản phát hành từ dự án gốc.",
         "Bản cập nhật ứng dụng không thể đảm bảo quyền truy cập mới vào mô hình bên ngoài, khắc phục sự cố ngừng hoạt động của nhà cung cấp hoặc khôi phục các tệp đã xóa."
       ],
       "fixes": [
@@ -5682,11 +5678,6 @@
       "actions": [
         {
           "kind": "settings",
-          "target": "UPDATES",
-          "label": "Mở Cập nhật"
-        },
-        {
-          "kind": "settings",
           "target": "SETUP",
           "label": "Xem lại Thiết lập"
         },
@@ -5698,9 +5689,7 @@
       ],
       "sources": [
         "ui/settings/SettingsScreen.kt",
-        "ui/update/UpdateDialog.kt",
-        "ui/setup/SetupScreen.kt",
-        "data/update/UpdateManager.kt"
+        "ui/setup/SetupScreen.kt"
       ],
       "keywords": ""
     },
@@ -6025,7 +6014,7 @@
       "summary": "Đặt AndroidHarness làm trợ lý điện thoại và hỏi về ứng dụng bạn đang dùng.",
       "location": "Cài đặt → Trợ lý trên các ứng dụng khác; sau đó giữ nút nguồn hoặc trang chủ, hoặc vuốt lên từ góc dưới.",
       "before": [
-        "Chọn mô hình Chat và thêm khóa trước. Trợ lý dùng cùng mô hình và cài đặt như Chat.",
+        "Theo mặc định, trợ lý dùng mô hình của chế độ Chat. Bạn có thể chọn mô hình khác trong phần cài đặt trợ lý.",
         "Android phải cho phép AndroidHarness làm ứng dụng trợ lý số. Trên một số điện thoại, mục này nằm trong Ứng dụng mặc định."
       ],
       "steps": [
@@ -6039,7 +6028,7 @@
         },
         {
           "title": "Hỏi về màn hình",
-          "body": "Nhập câu hỏi hoặc nhấn gợi ý như Tóm tắt. Nó chỉ xem màn hình khi câu hỏi của bạn liên quan đến màn hình, và không có gì từ màn hình hiện trong bảng. Nó hoạt động như Chat, nên có thể tìm web, đọc trang và hiển thị nguồn."
+          "body": "Hỏi về nội dung trên màn hình hoặc nói rõ việc bạn muốn làm trong ứng dụng. Theo mặc định, bạn xem lại tác vụ trên điện thoại trước khi tác vụ bắt đầu."
         },
         {
           "title": "Nói thay vì gõ",
@@ -6051,13 +6040,14 @@
         },
         {
           "title": "Tiếp tục trong ứng dụng",
-          "body": "Bảng lớn dần theo câu trả lời và có thể kéo đến bất kỳ độ cao nào. Tiếp tục trong ứng dụng mở cùng cuộc trò chuyện trong Chat, nơi nó ở cùng các cuộc trò chuyện khác."
+          "body": "“Tiếp tục trong ứng dụng” mở chính cuộc trò chuyện đó trong ứng dụng. Lần tới khi gọi trợ lý trong dự án này, bạn sẽ tiếp tục cuộc trò chuyện gần nhất."
         }
       ],
-      "outcome": "Bạn có thể hỏi về ứng dụng trên màn hình mà không rời khỏi nó, và mỗi cuộc trò chuyện được lưu như một Chat bình thường.",
+      "outcome": "Ứng dụng giữ lại 10 cuộc trò chuyện với trợ lý điện thoại được dùng gần nhất, tính chung cho mọi dự án. Các cuộc trò chuyện cũ hơn sẽ bị xóa cùng tin nhắn khi không còn hoạt động. Lịch sử Chat và Code không bị ảnh hưởng.",
       "limits": [
         "Ứng dụng chặn ảnh chụp màn hình, như ứng dụng ngân hàng, và màn hình được Android bảo vệ không gửi ảnh hay văn bản. Bạn vẫn có thể hỏi.",
-        "Ảnh màn hình chỉ được gửi khi mô hình Chat đọc được ảnh. Nếu không, chỉ văn bản trên màn hình được gửi, và một số ứng dụng chia sẻ rất ít văn bản."
+        "Ảnh màn hình chỉ được gửi khi mô hình Chat đọc được ảnh. Nếu không, chỉ văn bản trên màn hình được gửi, và một số ứng dụng chia sẻ rất ít văn bản.",
+        "Quyền tự thực hiện áp dụng cho tác vụ hiện tại, kể cả thao tác gửi hoặc xóa. Nếu bật tự động chạy tác vụ điện thoại, các tác vụ sau sẽ bắt đầu mà không cần xác nhận. Lệnh và tập lệnh vẫn cần được phê duyệt."
       ],
       "fixes": [
         {

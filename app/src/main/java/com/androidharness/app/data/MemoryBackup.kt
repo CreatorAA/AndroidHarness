@@ -2,6 +2,7 @@ package com.androidharness.app.data
 
 import com.androidharness.app.data.db.MemoryEntity
 import com.androidharness.app.data.db.MemoryFolderEntity
+import com.androidharness.app.data.db.HarnessDao
 import com.androidharness.app.data.db.SnippetEntity
 import kotlinx.serialization.Serializable
 
@@ -34,6 +35,22 @@ data class BackupMemory(
 /** A saved prompt snippet, the chat's custom slash commands. */
 @Serializable
 data class BackupSnippet(val id: String, val name: String, val body: String)
+
+@Serializable
+data class BackupMemoryFolder(val name: String, val createdAt: Long = 0, val agentIds: String = "") {
+    internal fun valid() = runCatching { MemoryFolders.checkedName(name) }.getOrNull() == name &&
+        MemoryFolderAgents.parse(agentIds).all { it.length <= 100 }
+}
+
+internal data class MemoryBackupSnapshot(
+    val memories: List<BackupMemory> = emptyList(),
+    val folders: List<BackupMemoryFolder> = emptyList(),
+)
+
+internal suspend fun HarnessDao.memorySnapshot(): MemoryBackupSnapshot {
+    val folders = memoryFolders()
+    return MemoryBackupSnapshot(allMemories().toBackupMemories(folders), folders.map { BackupMemoryFolder(it.name, it.createdAt, it.agentIds) })
+}
 
 /** Backup form of every memory, each carrying its folder's agent limit. */
 internal fun List<MemoryEntity>.toBackupMemories(folders: List<MemoryFolderEntity>): List<BackupMemory> {
@@ -81,10 +98,10 @@ internal object MemoryBackupMerge {
         remapProject: (String?) -> String? = { it },
     ): List<BackupMemory> {
         val ids = existing.mapTo(mutableSetOf()) { it.id }
-        val facts = existing.mapTo(mutableSetOf()) { key(it.text, it.scope, it.projectId, it.section, it.consolidatedInto, it.isSummary, it.agentId) }
+        val facts = existing.mapTo(mutableSetOf()) { key(it.text, it.scope, it.projectId, it.section, it.consolidatedInto, it.isSummary, it.agentId, it.folder) }
         val plan = incoming.mapNotNull { normalize(it, remapProject) }
             .filter { entry ->
-                val fact = key(entry.text, entry.scope, entry.projectId, entry.section, entry.consolidatedInto, entry.isSummary, entry.agentId)
+                val fact = key(entry.text, entry.scope, entry.projectId, entry.section, entry.consolidatedInto, entry.isSummary, entry.agentId, entry.folder)
                 if (entry.id in ids || fact in facts) false else { ids += entry.id; facts += fact; true }
             }
         val summaries = (existing.filter { it.isSummary } .map { it.id } + plan.filter { it.isSummary }.map { it.id }).toSet()
@@ -151,16 +168,42 @@ internal object MemoryBackupMerge {
      * not have yet, keeping the agent limit each had. Folders already here
      * keep their own setting.
      */
-    fun newFolders(plan: List<BackupMemory>, known: Collection<String>, now: Long = System.currentTimeMillis()): List<MemoryFolderEntity> {
+    fun newFolders(plan: List<BackupMemory>, known: Collection<String>, now: Long = System.currentTimeMillis(),
+                   folders: List<BackupMemoryFolder> = emptyList()): List<MemoryFolderEntity> {
         val seen = known.mapTo(mutableSetOf()) { MemoryMatch.key(it) }
-        return plan.filter { it.folder != null }.mapNotNull { entry ->
+        val folderRows = folders.mapNotNull { saved ->
+            require(saved.valid()) { "Invalid memory folder in backup." }
+            val name = saved.name
+            if (!seen.add(MemoryMatch.key(name))) null else MemoryFolderEntity(name, saved.createdAt.takeIf { it > 0 } ?: now, saved.agentIds)
+        }
+        // Older archives carry folder metadata only on their individual memory entries.
+        return folderRows + plan.filter { it.folder != null }.mapNotNull { entry ->
             val name = entry.folder ?: return@mapNotNull null
             if (!seen.add(MemoryMatch.key(name))) null else MemoryFolderEntity(name, now, entry.folderAgents)
         }
     }
 
-    private fun key(text: String, scope: String, projectId: String?, section: String, parent: String?, summary: Boolean, agentId: String?): String =
-        MemoryMatch.key(text) + "\u0000" + scope + "\u0000" + projectId.orEmpty() + "\u0000" + section + "\u0000" + parent.orEmpty() + "\u0000" + summary + "\u0000" + agentId.orEmpty()
+    /** Both restore formats preserve existing folder rules and spelling, even for an empty folder. */
+    suspend fun restore(dao: HarnessDao, incoming: List<BackupMemory>, folders: List<BackupMemoryFolder>,
+                        remapProject: (String?) -> String?): Int {
+        val existing = dao.allMemories()
+        val plan = plan(existing, incoming, remapProject)
+        val known = dao.memoryFolders().map { it.name } + existing.mapNotNull { it.folder }
+        val now = System.currentTimeMillis()
+        val new = newFolders(plan, known, now, folders)
+        new.forEach { dao.insertMemoryFolder(it) }
+        val names = (known + new.map { it.name }).distinctBy(MemoryMatch::key).associateBy(MemoryMatch::key)
+        plan.forEach { entry ->
+            val folder = entry.folder?.let { names[MemoryMatch.key(it)] }
+            dao.upsertMemory(entity(entry.copy(folder = folder), now))
+        }
+        return plan.size
+    }
+
+    private fun key(text: String, scope: String, projectId: String?, section: String, parent: String?, summary: Boolean,
+                    agentId: String?, folder: String?): String =
+        listOf(MemoryMatch.key(text), scope, projectId.orEmpty(), section, parent.orEmpty(), summary.toString(), agentId.orEmpty(),
+            MemoryMatch.key(folder.orEmpty())).joinToString("\u0000")
 
 }
 

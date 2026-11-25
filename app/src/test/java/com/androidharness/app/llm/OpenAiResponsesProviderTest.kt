@@ -22,6 +22,18 @@ class OpenAiResponsesProviderTest {
     private fun el(payload: String) = json.parseToJsonElement(payload)
 
     @Test
+    fun `ID-only relay catalog offers medium for Sol and sends it in the Responses request`() {
+        val relay = config.copy(baseUrl = "https://relay.example/v1", model = "gpt-6.2-sol")
+        val entry = ModelCatalog.parseCatalog(relay.type, """{"data":[{"id":"gpt-6.2-sol"}]}""").single()
+        val options = RequestOptions(thinking = ThinkingLevel.MEDIUM, modelCatalogs = mapOf(relay.id to listOf(entry)))
+        assertEquals(ModelReasoning.INFERRED, ModelReasoning.of(entry, relay.type))
+        assertTrue(ThinkingLevel.MEDIUM in options.resolveThinking(relay).spec.levels)
+        val body = provider.buildRequestBody(relay, "sys", listOf(ChatMessage(Role.USER, "hello")), emptyList(), options)
+        assertEquals("medium", body["reasoning"]!!.jsonObject["effort"]!!.jsonPrimitive.content)
+        assertEquals(ModelReasoning.UNKNOWN, ModelReasoning.of(ModelEntry("gpt-6.2-unknown"), relay.type))
+    }
+
+    @Test
     fun `omitted cache count differs from explicit zero`() {
         fun usage(details: String): StreamEvent.Usage = provider.parseEvent(
             el("""{"type":"response.completed","response":{"usage":{"input_tokens":100,"output_tokens":5$details}}}"""),

@@ -34,7 +34,7 @@ object ArtifactSandbox {
 .hx-divider{height:1px;background:var(--border);border:0;margin:4px 0}.hx-bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}.hx-bar>span{display:block;height:100%;border-radius:inherit;background:var(--accent)}
 .hx-table{width:100%;border-collapse:collapse;font-size:13px}.hx-table th{color:var(--muted);font-weight:600;text-align:left}.hx-table th,.hx-table td{padding:8px 6px;border-bottom:1px solid var(--border)}.hx-table td.num,.hx-table th.num{text-align:right;font-variant-numeric:tabular-nums}
 .hx-range{width:100%;accent-color:var(--accent)}.hx-fade{animation:hx-in .35s ease-out both}@keyframes hx-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.hx-svg{display:flex;justify-content:center}.hx-svg svg{width:100%;height:auto}svg .hx-text{fill:var(--foreground);font:13px system-ui,sans-serif}svg .hx-text-muted{fill:var(--muted);font:12px system-ui,sans-serif}svg .hx-node{fill:var(--surface);stroke:var(--border);stroke-width:1.5}svg .hx-node-accent{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}svg .hx-edge{fill:none;stroke:var(--muted);stroke-width:1.5}svg .hx-edge-accent{fill:none;stroke:var(--accent);stroke-width:2}svg .hx-grid-line{stroke:var(--border);stroke-width:1}"""
+.hx-svg{display:flex;justify-content:center}.hx-svg svg{height:auto}.hx-svg:not(.hx-figure) svg,.hx-figure>svg:not([width]){width:100%}svg .hx-text{fill:var(--foreground);font:13px system-ui,sans-serif}svg .hx-text-muted{fill:var(--muted);font:12px system-ui,sans-serif}svg .hx-node{fill:var(--surface);stroke:var(--border);stroke-width:1.5}svg .hx-node-accent{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}svg .hx-edge{fill:none;stroke:var(--muted);stroke-width:1.5}svg .hx-edge-accent{fill:none;stroke:var(--accent);stroke-width:2}svg .hx-grid-line{stroke:var(--border);stroke-width:1}"""
 
     /** window.harness: theme colors for canvas/SVG code and the existing follow-up context message. */
     private const val HELPER = """window.harness={palette:function(){var s=getComputedStyle(document.documentElement),r=[];for(var i=1;i<=8;i++){var v=s.getPropertyValue('--c'+i).trim();if(v)r.push(v)}return r},color:function(name){return getComputedStyle(document.documentElement).getPropertyValue('--'+name).trim()},state:function(summary){try{parent.postMessage({type:'harness:state',summary:String(summary).slice(0,1500)},'*')}catch(e){}}};"""
@@ -47,7 +47,7 @@ object ArtifactSandbox {
     })();</script>"""
     private const val LAYOUT_HOST = """<script>(function(){let height=220,summary='';const frame=document.getElementById('response');
       addEventListener('message',function(e){if(e.source!==frame.contentWindow||!e.data)return;
-        if(e.data.type==='harness:height'&&typeof e.data.height==='number'&&Number.isFinite(e.data.height))height=Math.max(80,Math.min(12000,Math.round(e.data.height)));
+        if(e.data.type==='harness:height'&&typeof e.data.height==='number'&&Number.isFinite(e.data.height))height=Math.max(1,Math.min(12000,Math.round(e.data.height)));
         else if(e.data.type==='harness:state'&&typeof e.data.summary==='string')summary=e.data.summary.slice(0,1500);else return;
         document.title='harness-response:'+JSON.stringify({height:height,summary:summary});
       });})();</script>"""

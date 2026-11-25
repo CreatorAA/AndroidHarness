@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_review_tap">Tap</string>
+    <string name="phone_review_long_press">Touch and hold</string>
+    <string name="phone_review_type">Enter text</string>
+    <string name="phone_review_volume">Set media volume</string>
+    <string name="phone_review_scroll_forward">Scroll forward</string>
+    <string name="phone_review_scroll_backward">Scroll back</string>
+    <string name="phone_review_swipe">Swipe</string>
+    <string name="phone_review_drag">Drag</string>
+    <string name="phone_review_home">Return to the home screen</string>
+    <string name="android_use_launcher_trip">From %1$s, find and tap %2$s on the Home screen, then continue this task in %3$s.</string>
+    <string name="android_use_action_approval">Allow this action once?\n\n%1$s</string>
+    <string name="android_use_chat_approval">Allow phone control for this chat? The agent can send the target app’s screen to the selected model, tap and type. This also allows authorized phone commands in this chat to read and change files and settings. Submitting a change in the target app asks again.</string>
+    <string name="android_use_submit_approval">Allow this submission once?\n\n%1$s</string>
+    <string name="android_use_retarget_approval">Switch this task to another app? The agent will be able to read its screen and interact with it.\n\n%1$s</string>
+    <string name="android_use_code_entry">Send a task to the phone assistant</string>
+    <string name="android_use_code_hint">Add an instruction, or send /phone on its own to open settings.</string>
+    <string name="android_use_draft_ready">Open the target app and choose Operate phone in the assistant within 10 minutes. Use /phone --result here to view the conversation.</string>
+    <string name="android_use_draft_expired">This draft expired, was cancelled or was replaced. Close this dialog and choose Operate phone again.</string>
+    <string name="android_use_draft_cancelled">Phone draft cancelled.</string>
+    <string name="android_use_no_draft">This conversation has no pending phone draft.</string>
+    <string name="android_use_no_result">No phone task has been started from this conversation.</string>
+    <string name="android_use_local_only">Start a phone task from a local Code workspace.</string>
+    <string name="android_use_from_code">Draft from Code</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autojs_library">Scripts do AutoJs6</string>
+    <string name="autojs_allow">Permitir que o assistente use o AutoJs6</string>
+    <string name="autojs_allow_hint">Adiciona o driver pareado e os scripts de interface. O serviço integrado continua disponível quando ativado.</string>
+    <string name="autojs_need_pair">Escreva e confira scripts agora. Configure o plug-in local do AutoJs6 antes de executá-los no celular.</string>
+    <string name="autojs_new">Novo script</string>
+    <string name="autojs_back">Voltar</string>
+    <string name="autojs_source">Script de interface</string>
+    <string name="autojs_sample_source">text(\"Continuar\").waitFor();</string>
+    <string name="autojs_name">Nome (opcional para testar)</string>
+    <string name="autojs_name_exists">Já existe um script com esse nome. Abra-o para editar ou escolha outro nome.</string>
+    <string name="autojs_format">Use text, desc ou id para encontrar um controle. Depois, aguarde que ele apareça, toque nele ou digite texto. Use uma instrução por linha.</string>
+    <string name="autojs_check">Conferir etapas</string>
+    <string name="autojs_prepare">Testar no app de destino</string>
+    <string name="autojs_preview">Etapas válidas: %1$d · nada foi executado</string>
+    <string name="autojs_empty">Toque em Novo script para criar uma ação reutilizável. Deixe o nome em branco para testar sem salvar.</string>
+    <string name="autojs_enabled_hint">O assistente pode usar os scripts ativados nesta biblioteca.</string>
+    <string name="autojs_disabled_hint">Ative este script na biblioteca antes de testá-lo.</string>
+    <string name="autojs_delete">Excluir “%1$s”?</string>
+    <string name="autojs_delete_action">Excluir</string>
+    <string name="autojs_changed">Este script foi alterado na biblioteca. Abra-o novamente antes de salvar ou executar.</string>
+    <string name="autojs_write_failed">Não foi possível salvar o script.</string>
+    <string name="autojs_anonymous">Script não salvo</string>
+    <string name="autojs_prepared">Teste pronto: %1$s. Abra o app de destino e chame o assistente do celular em até 10 minutos.</string>
+    <string name="autojs_trial_title">Executar script · %1$s</string>
+    <string name="autojs_trial_here">Somente em %1$s</string>
+    <string name="autojs_trial_other">Abra o app que você quer testar e chame o assistente nele.</string>
+    <string name="autojs_trial_steps">%1$d etapas · toque para conferir</string>
+    <string name="autojs_trial_less">Ocultar etapas</string>
+    <string name="autojs_trial_allow">Permitir e executar aqui</string>
+    <string name="autojs_trial_stale">Este teste expirou ou o app mudou. Prepare-o novamente na biblioteca de scripts.</string>
+    <string name="autojs_trial_request">Executar “%1$s” em %2$s.</string>
+    <string name="autojs_trial_done">%1$d de %2$d etapas do script concluídas em %3$s.</string>
+    <string name="autojs_trial_stopped">Script interrompido em %3$s após %1$d de %2$d etapas.</string>
+    <string name="autojs_trial_error">Não foi possível iniciar este script no app atual.</string>
+    <string name="autojs_trial_interrupted">Script interrompido. Confira o app antes de tentar novamente.</string>
+    <string name="autojs_not_selected">Ative o AutoJs6 antes de preparar um script.</string>
+    <string name="autojs_activity_running">Executando script do AutoJs6</string>
+    <string name="autojs_activity_ran">Script do AutoJs6 executado</string>
+    <string name="autojs_activity_run_failed">O script do AutoJs6 não foi concluído</string>
+    <string name="autojs_activity_library_working">Usando a biblioteca de scripts do AutoJs6</string>
+    <string name="autojs_activity_library_done">Biblioteca de scripts do AutoJs6 usada</string>
+    <string name="autojs_activity_library_failed">Falha na ação da biblioteca de scripts do AutoJs6</string>
+</resources>

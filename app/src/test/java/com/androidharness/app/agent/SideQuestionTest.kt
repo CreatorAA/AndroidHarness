@@ -160,6 +160,10 @@ class SideQuestionTest {
         assertFalse(SideQuestion.allows(tool("shell", false)))
         for (name in listOf("ask_user", "create_artifact", "http_request", "github_api", "browser_read", "mcp__x__read", "codegraph_sync"))
             assertFalse(name, SideQuestion.allows(tool(name, true)))
+        for (name in com.androidharness.app.tools.AndroidUseScope.names) {
+            assertFalse(name, SideQuestion.allows(tool(name, true)))
+            assertFalse(name, GrantPolicy.canSave(name))
+        }
     }
 
     @Test

@@ -1,14 +1,16 @@
 package com.androidharness.app.tools.mcp
 
 import com.androidharness.app.tools.ToolFailure
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.CompletableDeferred
@@ -17,7 +19,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.intOrNull
@@ -50,6 +51,9 @@ class McpConnection(
     private val authHeader: suspend () -> String? = { null },
     private val handshakeTimeoutMs: Long = 15_000,
     private val httpClient: OkHttpClient = mcpHttpClient(),
+    /** Device actions must not be replayed. Also bounds the buffered HTTP response before parsing. */
+    private val deviceResponseLimit: Long? = null,
+    private val recheckDevice: () -> Unit = {},
 ) {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -78,7 +82,7 @@ class McpConnection(
         val t: McpTransport = when {
             config.type == "http" -> StreamableHttpTransport(
                 config.url ?: throw ToolFailure("MCP server '$serverName' has no URL configured"),
-                config.headers, authHeader, httpClient,
+                config.headers, authHeader, httpClient, deviceResponseLimit, recheckDevice,
             )
             config.type == "sse" -> SseLegacyTransport(
                 config.url ?: throw ToolFailure("MCP server '$serverName' has no URL configured"),
@@ -95,8 +99,8 @@ class McpConnection(
         scope.launch {
             try {
                 for (line in t.incoming) handleLine(line)
-            } catch (_: Exception) {
-                // Cancelled.
+            } finally {
+                if (t is StdioTransport) failPendingRequests()
             }
         }
         try {
@@ -119,17 +123,24 @@ class McpConnection(
             notify("notifications/initialized")
             val listed = rpc("tools/list", buildJsonObject {}, handshakeTimeoutMs)
             tools = parseTools(listed["result"])
-            _state.value = ConnectionState.READY
+            if (!_state.compareAndSet(ConnectionState.CONNECTING, ConnectionState.READY)) throw disconnected()
         } catch (e: McpAuthRequiredException) {
+            close()
+            throw e
+        } catch (e: DeviceHttpRateLimit) {
             close()
             throw e
         } catch (e: TimeoutCancellationException) {
             close()
+            currentCoroutineContext().ensureActive()
             throw ToolFailure(
                 "MCP server '$serverName' did not finish the initialize handshake within " +
                     "${handshakeTimeoutMs}ms. Check its stderr log and that the command is a " +
                     "working MCP server.",
             )
+        } catch (e: CancellationException) {
+            close()
+            throw e
         } catch (e: ToolFailure) {
             close()
             throw e
@@ -148,6 +159,14 @@ class McpConnection(
         args: JsonObject,
         timeoutMs: Long = 60_000,
     ): Pair<String, Boolean> {
+        val result = McpOutput.parse(callToolResult(toolName, args, timeoutMs))
+        val parts = listOfNotNull(result.text.takeIf { it.isNotEmpty() },
+            if (result.images.isEmpty()) null else "[MCP images omitted by text-only client]")
+        return parts.joinToString("\n").ifEmpty { "(empty response)" } to result.isError
+    }
+
+    /** Retains structuredContent and typed MCP blocks for consumers that deliver real images. */
+    internal suspend fun callToolResult(toolName: String, args: JsonObject, timeoutMs: Long): JsonObject {
         val resp = try {
             rpc(
                 "tools/call",
@@ -158,18 +177,17 @@ class McpConnection(
                 timeoutMs,
             )
         } catch (e: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             throw ToolFailure(
                 "MCP tool '$toolName' on '$serverName' timed out after ${timeoutMs}ms",
             )
         }
-        val result = resp["result"]?.jsonObject
+        return resp["result"] as? JsonObject
             ?: throw ToolFailure("MCP server '$serverName' returned no result for '$toolName'")
-        val isError = result["isError"]?.jsonPrimitive?.booleanOrNull ?: false
-        return contentToText(result["content"]) to isError
     }
 
     fun close() {
-        _state.value = ConnectionState.DEAD
+        failPendingRequests()
         transport?.close()
         transport = null
         stdio = null
@@ -178,20 +196,33 @@ class McpConnection(
 
     // --- protocol internals ---------------------------------------------------
 
+    private fun failPendingRequests() {
+        _state.value = ConnectionState.DEAD
+        pending.values.forEach { it.completeExceptionally(disconnected()) }
+    }
+
+    private fun disconnected() = ToolFailure("MCP server '$serverName' disconnected before replying")
+
     private suspend fun rpc(method: String, params: JsonObject, timeoutMs: Long): JsonObject {
         val t = transport ?: throw ToolFailure("MCP server '$serverName' is not connected")
         val id = nextId.getAndIncrement()
         val deferred = CompletableDeferred<JsonObject>()
         pending[id] = deferred
         try {
+            if (state == ConnectionState.DEAD) throw disconnected()
             val line = buildJsonObject {
                 put("jsonrpc", "2.0")
                 put("id", id)
                 put("method", method)
                 put("params", params)
             }.toString()
-            writeMutex.withLock { t.send(line) }
-            val resp = withTimeout(timeoutMs) { deferred.await() }
+            val resp = if (deviceResponseLimit != null) withTimeout(timeoutMs) {
+                writeMutex.withLock { t.send(line) }
+                deferred.await()
+            } else {
+                writeMutex.withLock { t.send(line) }
+                withTimeout(timeoutMs) { deferred.await() }
+            }
             resp["error"]?.jsonObject?.let { err ->
                 throw ToolFailure(
                     "MCP $method failed: " +
@@ -237,13 +268,4 @@ class McpConnection(
         }
     }
 
-    private fun contentToText(content: JsonElement?): String = when {
-        content == null -> "(empty response)"
-        content is JsonArray -> content.mapNotNull { el ->
-            (el as? JsonObject)?.get("text")?.jsonPrimitive?.contentOrNull
-                ?: if (el is JsonObject) el.toString() else null
-        }.joinToString("\n").ifEmpty { content.toString() }
-        content is JsonObject -> content["text"]?.jsonPrimitive?.contentOrNull ?: content.toString()
-        else -> content.toString()
-    }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_local_only">Nur Mandarin offline</string>
+    <string name="voice_local_only_on">Verwendet das mitgelieferte Mandarin-Modell. Deine Audiodaten bleiben auf dem Handy.</string>
+    <string name="voice_system_first">Die Android-Spracherkennung wird bevorzugt. Ist sie nicht verfügbar, wird das Mandarin-Diktat auf dem Handy fortgesetzt.</string>
+    <string name="voice_live_handoff">Die Erkennung läuft jetzt auf diesem Handy weiter. Dein bisheriger Text bleibt erhalten. Sprich einfach weiter.</string>
+    <string name="voice_local_stopped">Das Diktat auf dem Handy wurde angehalten. Dein bisheriger Text bleibt erhalten. Setze das Diktat fort oder tippe den Rest.</string>
+    <string name="voice_clip_unavailable">Aus dieser Aufnahme konnte keine vollständige Transkription wiederhergestellt werden.</string>
+    <string name="voice_continue_offline">Auf dem Gerät fortsetzen</string>
+    <string name="voice_clip_handoff">Der Spracherkennungsdienst ist nicht verfügbar. Die Aufnahme wird auf deinem Handy in Text umgewandelt.</string>
+</resources>

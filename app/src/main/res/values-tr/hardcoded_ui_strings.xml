@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_rewind_no_changes">Bu turda geri alınacak bir değişiklik yok.</string>
+    <string name="chat_compaction_preparing">Sohbet özeti hazırlanıyor…</string>
+    <string name="chat_compaction_too_few_messages">Henüz sıkıştırmak için yeterli mesaj yok.</string>
+    <string name="chat_compaction_retrying">Özet yeniden deneniyor · deneme %1$d · %2$s</string>
+    <string name="chat_compaction_cancelled_notice">Sıkıştırma durduruldu. Geçmiş korundu. Hazır olduğunda /compact komutunu yeniden çalıştır.</string>
+    <string name="chat_compaction_refresh_failed">Sohbet sıkıştırıldı ancak görev ayarları veya bağlam tahmini yenilenemedi: %1$s</string>
+    <string name="chat_compaction_failed_notice">Sıkıştırma başarısız: %1$s. Geçmiş korundu. /compact komutunu tekrar dene veya başka bir model seç.</string>
+    <string name="reasoning_from_catalog">Akıl yürütme model kataloğunda belirtiliyor</string>
+    <string name="reasoning_from_provider">Akıl yürütme sağlayıcı tarafından bildirildi</string>
+    <string name="reasoning_from_user">Akıl yürütmeyi sen ayarladın</string>
+    <string name="reasoning_from_name">Akıl yürütme model adından çıkarıldı</string>
+    <string name="automation_every_day">Her gün</string>
+    <string name="automation_daily_at">her gün %1$02d:%2$02d</string>
+    <string name="automation_instructions_example">Hata ayıklama APK’sını derle ve derleme hatalarını düzelt.</string>
+    <string name="app_update_checking">Güncellemeler kontrol ediliyor…</string>
+    <string name="app_update_up_to_date">En son sürümü kullanıyorsun</string>
+    <string name="files_directory">Klasör</string>
+    <string name="cache_status_unavailable">Önbellek verisi yok</string>
+    <string name="cache_status_hit">Önbellek isabeti · %1$s%%</string>
+    <string name="cache_status_partial">%1$s · kısmi</string>
+    <string name="cache_estimated_price">yakl. %1$s</string>
+    <string name="chat_live_sites_suffix">" site"</string>
+    <string name="chat_research_sources_suffix">/%1$d kaynak</string>
+    <string name="chat_research_read_suffix">" okundu"</string>
+    <string name="package_status_failed">Yükleme başarısız</string>
+    <string name="package_hide_details">Yükleme ayrıntılarını gizle</string>
+    <string name="package_show_details">Yükleme ayrıntılarını göster</string>
+    <string name="package_recently_unpacked">Son açılan paketler · %1$s</string>
+    <plurals name="files_directory_items">
+        <item quantity="one">%1$d öğe</item>
+        <item quantity="other">%1$d öğe</item>
+    </plurals>
+</resources>
